@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  Social Studies 8 - Unit Reflection tool (Mr. B)
+  Posts responses into the existing Google Form / responses sheet.
+  DEPLOY: host this file (e.g. GitHub Pages) and embed in Canvas with an iframe,
+  OR upload to Canvas Files and link it. Canvas Pages strip scripts, so it must
+  run from a hosted file or iframe, not pasted into the Rich Content Editor.
+  TO EDIT later: everything the form needs (form ID, question IDs, and the exact
+  option text Google expects) lives in the CONFIG object at the top of the script.
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Studies 8 &middot; Unit Reflection</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#fbf4e8; --paper:#fffdf8; --gold:#b8893b; --gold-deep:#956a23;
+    --maroon:#7c2d2d; --maroon-deep:#5e2020; --ink:#2c2218; --muted:#7a6b58;
+    --line:#e7d8bf; --line-soft:#f0e6d2; --good:#4f7d3f; --shadow:0 10px 30px rgba(94,32,32,.10);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;color:var(--ink);background:var(--cream);line-height:1.55;
+    -webkit-font-smoothing:antialiased;}
+  .shell{max-width:760px;margin:0 auto;padding:22px 18px 80px;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);
+    padding:26px 26px 30px;}
+  h1,h2,h3{font-family:'Playfair Display',serif;margin:0;color:var(--maroon-deep);line-height:1.15;}
+  .masthead{text-align:center;margin-bottom:18px;}
+  .masthead h1{font-size:clamp(26px,5vw,38px);font-weight:900;}
+  .masthead .sub{color:var(--muted);font-weight:700;letter-spacing:.5px;margin-top:8px;font-size:14px;}
+  .rule{height:3px;width:64px;background:var(--gold);border-radius:3px;margin:14px auto 0;}
+  .progress{display:flex;align-items:center;gap:6px;margin-bottom:18px;flex-wrap:wrap;justify-content:center;}
+  .pstep{font-size:11px;font-weight:800;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;
+    border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:#fff;white-space:nowrap;}
+  .pstep.on{background:var(--maroon);color:#fff;border-color:var(--maroon);}
+  .pstep.done{background:var(--gold);color:#3a2a10;border-color:var(--gold);}
+  .pbar{height:8px;background:var(--line-soft);border-radius:6px;overflow:hidden;margin-bottom:22px;}
+  .pbar > div{height:100%;background:linear-gradient(90deg,var(--gold),var(--maroon));width:0;transition:width .3s;}
+  .step-title{font-size:clamp(21px,3.5vw,27px);font-weight:800;}
+  .step-intro{color:var(--muted);margin:8px 0 22px;font-size:15px;}
+  .q{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--line-soft);}
+  .q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .q .label{font-weight:800;font-size:16px;display:block;margin-bottom:4px;}
+  .q .req{color:var(--maroon);font-weight:900;}
+  .q .help{color:var(--muted);font-size:13.5px;margin:0 0 12px;}
+  input[type=text], textarea, select{width:100%;font-family:'Nunito';font-size:16px;color:var(--ink);
+    background:#fff;border:1.5px solid var(--line);border-radius:11px;padding:12px 13px;outline:none;transition:.15s;}
+  input[type=text]:focus, textarea:focus, select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,137,59,.18);}
+  textarea{min-height:96px;resize:vertical;}
+  .starters-label{font-size:12.5px;font-weight:800;color:var(--muted);margin:10px 0 7px;letter-spacing:.3px;}
+  .starters{display:flex;flex-wrap:wrap;gap:7px;}
+  .starter{border:1.5px dashed var(--gold);background:#fffaf0;color:var(--gold-deep);font-family:'Nunito';
+    font-weight:700;font-size:13px;border-radius:999px;padding:6px 12px;cursor:pointer;transition:.12s;}
+  .starter:hover{background:var(--gold);color:#3a2a10;border-style:solid;}
+  .unit-card{border:1.5px solid var(--line);border-radius:14px;padding:16px 16px 14px;margin-bottom:14px;background:#fffefb;}
+  .unit-card .uname{font-family:'Playfair Display',serif;font-weight:800;font-size:18px;color:var(--maroon-deep);}
+  .unit-card .uact{color:var(--muted);font-size:13.5px;margin:3px 0 12px;}
+  .scale{display:flex;gap:8px;flex-wrap:wrap;}
+  .scale button{flex:1;min-width:54px;border:1.5px solid var(--line);background:#fff;border-radius:11px;
+    padding:11px 6px;cursor:pointer;font-family:'Nunito';font-weight:800;font-size:16px;color:var(--ink);transition:.12s;
+    position:relative;overflow:visible;}
+  .scale button:hover{border-color:var(--gold);}
+  .scale button.sel{background:var(--maroon);color:#fff;border-color:var(--maroon);transform:translateY(-1px);}
+  .scale .num{display:block;font-size:18px;} .scale .cap{display:block;font-size:10px;font-weight:700;color:inherit;opacity:.7;margin-top:2px;}
+  .scale .tip{position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);background:var(--ink);
+    color:#fff;font-size:12px;font-weight:700;line-height:1.35;padding:8px 10px;border-radius:9px;width:max-content;
+    max-width:170px;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.22);opacity:0;visibility:hidden;
+    transition:opacity .12s;z-index:6;pointer-events:none;white-space:normal;}
+  .scale .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+    border:6px solid transparent;border-top-color:var(--ink);}
+  .scale button:hover .tip, .scale button:focus .tip, .scale button:focus-visible .tip{opacity:1;visibility:visible;}
+  .anchors{display:flex;justify-content:space-between;gap:10px;margin-top:8px;color:var(--muted);font-size:12px;font-weight:700;}
+  .anchors span:last-child{text-align:right;}
+  .grid-row{border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:9px;background:#fffefb;}
+  .grid-row .grow-name{font-weight:800;font-size:15px;margin-bottom:9px;}
+  .opts{display:flex;gap:7px;flex-wrap:wrap;}
+  .opts button{flex:1;min-width:84px;border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:9px 6px;
+    cursor:pointer;font-family:'Nunito';font-weight:700;font-size:13px;color:var(--ink);transition:.12s;}
+  .opts button:hover{border-color:var(--gold);}
+  .opts button.sel{background:var(--gold);color:#3a2a10;border-color:var(--gold-deep);}
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:26px;}
+  .btn{font-family:'Nunito';font-weight:800;font-size:16px;cursor:pointer;border:none;border-radius:12px;
+    padding:13px 24px;transition:.15s;}
+  .btn.primary{background:var(--maroon);color:#fff;} .btn.primary:hover{background:var(--maroon-deep);}
+  .btn.ghost{background:#fff;color:var(--maroon);border:1.5px solid var(--line);} .btn.ghost:hover{border-color:var(--gold);}
+  .btn:disabled{opacity:.4;cursor:default;}
+  .savednote{text-align:center;color:var(--muted);font-size:12px;margin-top:14px;font-weight:700;}
+  .err{background:#fbeaea;border:1px solid #e6b9b9;color:var(--maroon-deep);border-radius:10px;
+    padding:10px 13px;font-size:14px;font-weight:700;margin-bottom:16px;display:none;}
+  .err.show{display:block;}
+  .field-flag{border-color:var(--maroon) !important;box-shadow:0 0 0 3px rgba(124,45,45,.14) !important;}
+  .review dl{margin:0;} .review .rrow{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line-soft);}
+  .review .rk{font-weight:800;color:var(--muted);font-size:13.5px;} .review .rv{text-align:right;font-weight:700;}
+  .done-wrap{text-align:center;padding:18px 6px;}
+  .done-wrap .big{font-size:56px;margin-bottom:6px;}
+  .done-wrap h2{font-size:28px;} .done-wrap p{color:var(--muted);font-weight:700;margin-top:10px;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:20px;font-weight:700;}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="masthead">
+    <h1>Social Studies 8 Reflection</h1>
+    <div class="sub">YOUR HONEST FEEDBACK MAKES THIS CLASS BETTER</div>
+    <div class="rule"></div>
+  </div>
+  <div class="progress" id="progress"></div>
+  <div class="pbar"><div id="pbarFill"></div></div>
+  <div class="card">
+    <div class="err" id="err"></div>
+    <div id="stepBody"></div>
+    <div class="nav" id="nav"></div>
+  </div>
+  <div class="savednote" id="savednote"></div>
+  <footer>Mr. B &middot; 8th Grade U.S. History</footer>
+</div>
+<iframe name="gformsink" id="gformsink" style="display:none" aria-hidden="true"></iframe>
+<script>
+/* ============================ CONFIG ============================ */
+/* Form + question IDs come from your pre-fill link. The OPTION TEXT for the
+   activity grid and the class dropdown must match your form EXACTLY. Verify
+   "Very helpful" spelling against your live form and fix here if needed. */
+const CONFIG = {
+  formId: "1FAIpQLSeNcdu3ufWILAazJqqh0KESR1dCB3BX76FNetrpPE5WQ3nP-w",
+  entries: {
+    name:"entry.1349897455", classPeriod:"entry.267434005",
+    unit1:"entry.1070320500", unit2:"entry.179969088", unit3:"entry.1844723500",
+    unit45:"entry.1264372706", unit6:"entry.1410900798", unit7:"entry.849461498", unit8:"entry.981890701",
+    highlights:"entry.1216511552", challenges:"entry.1876138951", skill:"entry.1704314018",
+    participation:"entry.1415666580", collaboration:"entry.598629922",
+    preparedness:"entry.1205906554", timeManagement:"entry.687087412", grade:"entry.1282980009",
+    actIndividual:"entry.1716014030", actPartner:"entry.273127645", actGroup:"entry.272393099",
+    actGuidedNotes:"entry.279783503", actStations:"entry.1495901887", actWebGames:"entry.459705399",
+    actStudyWeb:"entry.352647711", actSimulations:"entry.685472711",
+    nextYear:"entry.2085101203", mrBDifferent:"entry.451717835", comments:"entry.276448012"
+  },
+  classOptions: ["1st Period","2nd Period","4th Period","5th Period"],
+  usefulOptions: ["Not helpful","Somewhat helpful","Very helpful","N/A"]
+};
+const SUBMIT_URL = "https://docs.google.com/forms/d/e/"+CONFIG.formId+"/formResponse";
+const UNITS = [
+  {key:"unit1",  name:"Unit 1: 13 Colonies", act:"What does it mean to be an American?"},
+  {key:"unit2",  name:"Unit 2: Triangle Trade", act:"Mapping the Triangle Trade, in-class simulation"},
+  {key:"unit3",  name:"Unit 3: Revolutionary Voices", act:"Causes of the Revolution, the podcast"},
+  {key:"unit45", name:"Units 4 & 5: Constitution and Supreme Court", act:"Hamilton, group debates"},
+  {key:"unit6",  name:"Unit 6: Early Republic", act:"Lewis and Clark, the War of 1812"},
+  {key:"unit7",  name:"Unit 7: Westward Expansion", act:"Jackson, Western dossiers, Mexican-American War"},
+  {key:"unit8",  name:"Unit 8: The Civil War", act:"Civil War simulation, Worlds of North and South"}
+];
+const SELF = [
+  {key:"participation",  q:"Participation", lo:"I did not participate much", hi:"I participated regularly",
+   tips:["I almost never joined in or shared.","I joined in once in a while.","I participated about half the time.","I participated in most classes.","I participated regularly and shared often."]},
+  {key:"collaboration",  q:"Collaboration", lo:"I worked alone", hi:"I worked with others",
+   tips:["I worked on my own almost all the time.","I worked with others only when required.","I worked with others about half the time.","I worked well with others most of the time.","I worked with others and helped the team."]},
+  {key:"preparedness",   q:"Preparedness", lo:"I needed reminders to get ready", hi:"I was ready before the bell",
+   tips:["I usually needed several reminders to get started.","I often needed a reminder to get ready.","I was ready about half the time.","I was usually ready with my materials.","I had my materials out and was ready before the bell."]},
+  {key:"timeManagement", q:"Time Management", lo:"I missed multiple assignments", hi:"I turned things in on time and communicated",
+   tips:["I missed several assignments.","I was often late turning things in.","I turned in about half on time.","I usually turned work in on time.","I turned work in on time and asked when I needed more time."]},
+  {key:"grade",          q:"My Grade", lo:"My grade does not reflect what I learned", hi:"My grade is accurate",
+   tips:["My grade does not reflect what I learned at all.","My grade is a little off from what I learned.","My grade is somewhat accurate.","My grade mostly reflects what I learned.","My grade accurately reflects what I learned."]}
+];
+const ACTS = [
+  {key:"actIndividual", name:"Individual work"},
+  {key:"actPartner", name:"Partner work (2 people)"},
+  {key:"actGroup", name:"Group work (3+ people)"},
+  {key:"actGuidedNotes", name:"Guided notes"},
+  {key:"actStations", name:"Station activities"},
+  {key:"actWebGames", name:"Website games (Lewis and Clark, War of 1812, Civil War, etc.)"},
+  {key:"actStudyWeb", name:"Study website"},
+  {key:"actSimulations", name:"Simulations (Triangle Trade, Tea Party, games)"}
+];
+const STARTERS = {
+  highlights:  ["My favorite part was...", "I felt proud when...", "It really clicked when...", "I enjoyed ___ because..."],
+  challenges:  ["The hardest part was...", "I struggled most with...", "___ was tricky because...", "I wish I had..."],
+  skill:       ["I got better at...", "I improved most at ___ because...", "Now I can..."],
+  nextYear:    ["My advice is to...", "Make sure you...", "Don't stress about...", "The best way to succeed is..."],
+  mrBDifferent:["It would help if...", "I learn best when...", "The class would be better if...", "I wish we did more..."],
+  comments:    ["Something I want you to know is...", "One idea I have is...", "Here's a joke for you:"]
+};
+const STEPS = ["Start","Units","Looking Back","About You","Activities","Final Thoughts","Review"];
+const UNIT_CAPS = ["Terrible","","OK","","Great"];
+/* ============================ STATE ============================ */
+const SAVE_KEY = "mrb-ss8-reflection-v1";
+let A = {}; // answers
+let step = 0;
+try{ const raw = localStorage.getItem(SAVE_KEY); if(raw) A = JSON.parse(raw)||{}; }catch(e){}
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(A));
+  document.getElementById('savednote').textContent="Your progress is saved on this device. You can close and come back."; }catch(e){
+  document.getElementById('savednote').textContent=""; } }
+/* ============================ RENDER ============================ */
+const body = document.getElementById('stepBody');
+const errBox = document.getElementById('err');
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function renderProgress(){
+  const p=document.getElementById('progress'); p.innerHTML='';
+  STEPS.forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='pstep'+(i===step?' on':'')+(i<step?' done':'');
+    d.textContent=s; p.appendChild(d);
+  });
+  document.getElementById('pbarFill').style.width = Math.round((step/(STEPS.length-1))*100)+'%';
+}
+function scaleHTML(key, caps, tips){
+  let h='<div class="scale">';
+  for(let n=1;n<=5;n++){
+    const sel = String(A[key])===String(n)?' sel':'';
+    const cap = caps&&caps[n-1]?'<span class="cap">'+caps[n-1]+'</span>':'';
+    const tip = tips&&tips[n-1]?'<span class="tip">'+esc(tips[n-1])+'</span>':'';
+    const ttl = tips&&tips[n-1]?' title="'+esc(tips[n-1])+'"':'';
+    h+='<button type="button"'+ttl+' class="'+sel.trim()+'" data-scale="'+key+'" data-val="'+n+'"><span class="num">'+n+'</span>'+cap+tip+'</button>';
+  }
+  return h+'</div>';
+}
+function renderStep(){
+  errBox.classList.remove('show'); errBox.textContent='';
+  renderProgress();
+  if(step===0){ // Start
+    body.innerHTML =
+      '<div class="step-title">Let\'s start</div>'+
+      '<p class="step-intro">A few honest minutes here genuinely shapes how I run this class next year. There are no wrong answers.</p>'+
+      '<div class="q"><label class="label" for="fName">What is your name? <span class="req">*</span></label>'+
+        '<p class="help">First name is fine.</p>'+
+        '<input type="text" id="fName" value="'+esc(A.name||'')+'" oninput="setText(\'name\',this.value)"></div>'+
+      '<div class="q"><label class="label" for="fClass">Which class are you in? <span class="req">*</span></label>'+
+        '<select id="fClass" onchange="setText(\'classPeriod\',this.value)"><option value="">Choose your period...</option>'+
+        CONFIG.classOptions.map(o=>'<option'+(A.classPeriod===o?' selected':'')+'>'+esc(o)+'</option>').join('')+'</select></div>';
+  }
+  else if(step===1){ // Units
+    body.innerHTML =
+      '<div class="step-title">Rate each unit</div>'+
+      '<p class="step-intro">1 = terrible, 5 = great. Think about how much you learned and how it was to learn it.</p>'+
+      UNITS.map(u=>
+        '<div class="unit-card"><div class="uname">'+esc(u.name)+'</div>'+
+        '<div class="uact">'+esc(u.act)+'</div>'+ scaleHTML(u.key, UNIT_CAPS) +'</div>'
+      ).join('');
+  }
+  else if(step===2){ // Looking back
+    body.innerHTML =
+      '<div class="step-title">Looking back</div>'+
+      '<p class="step-intro">A sentence or two each is plenty.</p>'+
+      textQ('highlights','What were some highlights for you?','Times when things went well or were enjoyable.',true)+
+      textQ('challenges','What were your biggest challenges?','Which assignments, projects, or quizzes were hardest?',true)+
+      textQ('skill','One skill you improved most','Writing, debating, working in groups, analyzing sources, etc.',true);
+  }
+  else if(step===3){ // Self assessment
+    body.innerHTML =
+      '<div class="step-title">About you as a student</div>'+
+      '<p class="step-intro">Rate yourself 1 to 5. Be real, this is just between us.</p>'+
+      SELF.map(s=>
+        '<div class="q"><label class="label">'+esc(s.q)+' <span class="req">*</span></label>'+
+        scaleHTML(s.key,null,s.tips)+
+        '<div class="anchors"><span>1 &middot; '+esc(s.lo)+'</span><span>'+esc(s.hi)+' &middot; 5</span></div></div>'
+      ).join('');
+  }
+  else if(step===4){ // Activities grid
+    body.innerHTML =
+      '<div class="step-title">How useful were these?</div>'+
+      '<p class="step-intro">For each one, pick how helpful it was for your learning.</p>'+
+      ACTS.map(a=>{
+        const cur=A[a.key];
+        return '<div class="grid-row"><div class="grow-name">'+esc(a.name)+' <span class="req">*</span></div><div class="opts">'+
+          CONFIG.usefulOptions.map(o=>'<button type="button" class="'+(cur===o?'sel':'')+'" data-opt="'+a.key+'" data-val="'+esc(o)+'">'+esc(o)+'</button>').join('')+
+          '</div></div>';
+      }).join('');
+  }
+  else if(step===5){ // Final thoughts
+    body.innerHTML =
+      '<div class="step-title">Final thoughts</div>'+
+      '<p class="step-intro">The last stretch. Your advice here is gold.</p>'+
+      textQ('nextYear',"One thing you'd tell next year's class about 8th grade U.S. history","",true)+
+      textQ('mrBDifferent','What could I (Mr. B) do differently?','To help future students learn more and engage more deeply. Optional.',false)+
+      textQ('comments','Any other comments, ideas, or jokes I should hear?','',true);
+  }
+  else if(step===6){ // Review
+    body.innerHTML =
+      '<div class="step-title">Quick review</div>'+
+      '<p class="step-intro">Here\'s what you\'re sending. Use Back to fix anything, then submit.</p>'+
+      '<div class="review">'+ reviewHTML() +'</div>';
+  }
+  renderNav();
+  save();
+}
+function textQ(key,label,help,req){
+  return '<div class="q"><label class="label" for="ta_'+key+'">'+esc(label)+(req?' <span class="req">*</span>':' <span style="color:var(--muted);font-weight:700">(optional)</span>')+'</label>'+
+    (help?'<p class="help">'+esc(help)+'</p>':'')+
+    '<textarea id="ta_'+key+'" oninput="setText(\''+key+'\',this.value)">'+esc(A[key]||'')+'</textarea>'+
+    startersHTML(key)+'</div>';
+}
+function startersHTML(key){
+  const list=STARTERS[key]; if(!list) return '';
+  return '<div class="starters-label">Stuck? Tap a sentence starter:</div><div class="starters">'+
+    list.map(t=>'<button type="button" class="starter" data-starter-key="'+key+'" data-starter-text="'+esc(t)+'">'+esc(t)+'</button>').join('')+
+    '</div>';
+}
+function insertStarter(key,text){
+  const ta=document.getElementById('ta_'+key); if(!ta) return;
+  const cur=A[key]||'';
+  const next = cur.trim()==='' ? text+' ' : cur.replace(/\s+$/,'')+'\n'+text+' ';
+  ta.value=next; A[key]=next; save();
+  ta.focus(); try{ ta.selectionStart=ta.selectionEnd=ta.value.length; }catch(e){}
+}
+function reviewHTML(){
+  const rows=[];
+  const add=(k,v)=>rows.push('<div class="rrow"><span class="rk">'+esc(k)+'</span><span class="rv">'+esc(v||'-')+'</span></div>');
+  add('Name',A.name); add('Class',A.classPeriod);
+  UNITS.forEach(u=>add(u.name, A[u.key]?A[u.key]+'/5':'-'));
+  add('Highlights', trim(A.highlights)); add('Challenges', trim(A.challenges)); add('Skill improved', trim(A.skill));
+  SELF.forEach(s=>add(s.q, A[s.key]?A[s.key]+'/5':'-'));
+  ACTS.forEach(a=>add(a.name, A[a.key]));
+  add("For next year's class", trim(A.nextYear)); add('What Mr. B could change', trim(A.mrBDifferent)); add('Other comments', trim(A.comments));
+  return rows.join('');
+}
+function trim(s){ if(!s)return''; s=String(s); return s.length>52?s.slice(0,52)+'...':s; }
+function renderNav(){
+  const nav=document.getElementById('nav'); nav.innerHTML='';
+  const back=document.createElement('button');
+  back.className='btn ghost'; back.textContent='Back'; back.disabled=step===0;
+  back.onclick=()=>{ step=Math.max(0,step-1); window.scrollTo(0,0); renderStep(); };
+  nav.appendChild(back);
+  const next=document.createElement('button');
+  next.className='btn primary';
+  next.textContent = step===STEPS.length-1 ? 'Submit my reflection' : 'Next';
+  next.onclick = step===STEPS.length-1 ? submitForm : ()=>{ if(validateStep()){ step++; window.scrollTo(0,0); renderStep(); } };
+  nav.appendChild(next);
+}
+/* ============================ INPUT HANDLERS ============================ */
+function setText(key,val){ A[key]=val; save(); }
+document.addEventListener('click',e=>{
+  const sc=e.target.closest('[data-scale]');
+  if(sc){ const k=sc.getAttribute('data-scale'); A[k]=sc.getAttribute('data-val');
+    sc.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('sel')); sc.classList.add('sel'); save(); clearErr(); return; }
+  const op=e.target.closest('[data-opt]');
+  if(op){ const k=op.getAttribute('data-opt'); A[k]=op.getAttribute('data-val');
+    op.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('sel')); op.classList.add('sel'); save(); clearErr(); return; }
+  const stb=e.target.closest('[data-starter-key]');
+  if(stb){ insertStarter(stb.getAttribute('data-starter-key'), stb.getAttribute('data-starter-text')); return; }
+});
+function clearErr(){ errBox.classList.remove('show'); }
+/* ============================ VALIDATION ============================ */
+function showErr(msg){ errBox.textContent=msg; errBox.classList.add('show'); window.scrollTo(0,0); }
+function validateStep(){
+  document.querySelectorAll('.field-flag').forEach(el=>el.classList.remove('field-flag'));
+  let missing=[];
+  if(step===0){ if(!A.name||!A.name.trim()){missing.push('your name'); flag('fName');} if(!A.classPeriod){missing.push('your class'); flag('fClass');} }
+  else if(step===1){ UNITS.forEach(u=>{ if(!A[u.key]) missing.push(u.name); }); }
+  else if(step===2){ [['highlights','Highlights'],['challenges','Challenges'],['skill','Skill improved']].forEach(([k,n])=>{ if(!A[k]||!A[k].trim()){missing.push(n); flag('ta_'+k);} }); }
+  else if(step===3){ SELF.forEach(s=>{ if(!A[s.key]) missing.push(s.q); }); }
+  else if(step===4){ ACTS.forEach(a=>{ if(!A[a.key]) missing.push(a.name); }); }
+  else if(step===5){ [['nextYear',"Advice for next year's class"],['comments','Other comments']].forEach(([k,n])=>{ if(!A[k]||!A[k].trim()){missing.push(n); flag('ta_'+k);} }); }
+  if(missing.length){ showErr('Please answer: '+missing.slice(0,4).join(', ')+(missing.length>4?', and more':'')+'.'); return false; }
+  return true;
+}
+function flag(id){ const el=document.getElementById(id); if(el) el.classList.add('field-flag'); }
+/* ============================ SUBMIT ============================ */
+function submitForm(){
+  for(let s=0;s<6;s++){ step=s; if(!validateStep()){ renderStep(); return; } }
+  step=6;
+  const f=document.createElement('form');
+  f.action=SUBMIT_URL; f.method='POST'; f.target='gformsink'; f.style.display='none';
+  const addF=(name,value)=>{ const inp=document.createElement('input'); inp.type='hidden'; inp.name=name; inp.value=value==null?'':value; f.appendChild(inp); };
+  Object.keys(CONFIG.entries).forEach(k=>{ if(A[k]!=null && A[k]!=='') addF(CONFIG.entries[k], A[k]); });
+  addF('fvv','1'); addF('pageHistory','0,1,2,3,4,5');
+  document.body.appendChild(f);
+  let done=false;
+  const finish=()=>{ if(done)return; done=true; try{ localStorage.removeItem(SAVE_KEY);}catch(e){} showDone(); };
+  document.getElementById('gformsink').onload=finish;
+  f.submit();
+  setTimeout(finish, 1500); // confirm even if the hidden frame's load event is suppressed
+}
+function showDone(){
+  renderProgress();
+  document.getElementById('pbarFill').style.width='100%';
+  document.getElementById('nav').innerHTML='';
+  document.getElementById('savednote').textContent='';
+  body.innerHTML =
+    '<div class="done-wrap"><div class="big">&#127881;</div>'+
+    '<h2>Thank you, '+esc(A.name||'')+'!</h2>'+
+    '<p>Your reflection has been sent to Mr. B. You can close this tab now.</p></div>';
+  window.scrollTo(0,0);
+}
+renderStep();
+</script>
+</body>
+</html>

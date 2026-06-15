@@ -13,7 +13,8 @@ var SEMESTER_2 = [
   { number: "7", title: "The Early Republic", slug: "early-republic" },
   { number: "8", title: "Westward Expansion", slug: "westward-expansion" },
   { number: "9", title: "The Civil War", slug: "civil-war" },
-  { number: "", title: "Semester 2 Capstone", slug: "capstone-2" }
+  { number: "", title: "Semester 2 Capstone", slug: "capstone-2" },
+  { number: "", title: "End-of-Year Reflection", slug: "endofyear", root: true }
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -24,7 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
   var isUnitPage = path.indexOf("/units/") !== -1;
   var homeHref = isUnitPage ? "../index.html" : "index.html";
   var unitBase = isUnitPage ? "" : "units/";
+  var rootBase = isUnitPage ? "../" : "";
   var familiesHref = isUnitPage ? "../families.html" : "families.html";
+  var reflectionHref = rootBase + "endofyear.html";
 
   var currentSlug = "";
   if (isUnitPage) {
@@ -79,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
       var unit = units[i];
       var link = document.createElement("a");
       link.className = "nav-dropdown-link";
-      link.href = unitBase + unit.slug + ".html";
+      link.href = unit.root ? (rootBase + unit.slug + ".html") : (unitBase + unit.slug + ".html");
 
       if (unit.number) {
         link.textContent = "Unit " + unit.number + ": " + unit.title;
@@ -137,6 +140,15 @@ document.addEventListener("DOMContentLoaded", function () {
     familiesLink.classList.add("active");
   }
   linksContainer.appendChild(familiesLink);
+
+  var reflectionLink = document.createElement("a");
+  reflectionLink.className = "nav-link";
+  reflectionLink.href = reflectionHref;
+  reflectionLink.textContent = "Reflection";
+  if (currentPage === "endofyear.html") {
+    reflectionLink.classList.add("active");
+  }
+  linksContainer.appendChild(reflectionLink);
 
   var canvasLink = document.createElement("a");
   canvasLink.className = "nav-link";
