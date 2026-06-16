@@ -96,6 +96,14 @@
   .field-flag{border-color:var(--maroon) !important;box-shadow:0 0 0 3px rgba(124,45,45,.14) !important;}
   .review dl{margin:0;} .review .rrow{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid var(--line-soft);}
   .review .rk{font-weight:800;color:var(--muted);font-size:13.5px;} .review .rv{text-align:right;font-weight:700;}
+  .review .rsection{border:1.5px solid var(--line);border-radius:13px;padding:6px 15px 11px;margin-bottom:14px;background:#fffefb;}
+  .review .rsection:last-child{margin-bottom:0;}
+  .review .rsection-head{display:flex;justify-content:space-between;align-items:center;padding:9px 0 7px;margin-bottom:4px;border-bottom:1.5px solid var(--line);}
+  .review .rsection-title{font-family:'Playfair Display',serif;font-weight:800;font-size:16px;color:var(--maroon-deep);}
+  .review .redit{font-family:'Nunito';font-weight:800;font-size:13px;color:var(--maroon);background:#fff;
+    border:1.5px solid var(--line);border-radius:999px;padding:5px 14px;cursor:pointer;transition:.12s;}
+  .review .redit:hover{border-color:var(--gold);background:#fffaf0;color:var(--gold-deep);}
+  .review .rsection .rrow:last-child{border-bottom:none;}
   .done-wrap{text-align:center;padding:18px 6px;}
   .done-wrap .big{font-size:56px;margin-bottom:6px;}
   .done-wrap h2{font-size:28px;} .done-wrap p{color:var(--muted);font-weight:700;margin-top:10px;}
@@ -305,16 +313,22 @@ function insertStarter(key,text){
   ta.focus(); try{ ta.selectionStart=ta.selectionEnd=ta.value.length; }catch(e){}
 }
 function reviewHTML(){
-  const rows=[];
-  const add=(k,v)=>rows.push('<div class="rrow"><span class="rk">'+esc(k)+'</span><span class="rv">'+esc(v||'-')+'</span></div>');
-  add('Name',A.name); add('Class',A.classPeriod);
-  UNITS.forEach(u=>add(u.name, A[u.key]?A[u.key]+'/5':'-'));
-  add('Highlights', trim(A.highlights)); add('Challenges', trim(A.challenges)); add('Skill improved', trim(A.skill));
-  SELF.forEach(s=>add(s.q, A[s.key]?A[s.key]+'/5':'-'));
-  ACTS.forEach(a=>add(a.name, A[a.key]));
-  add("For next year's class", trim(A.nextYear)); add('What Mr. B could change', trim(A.mrBDifferent)); add('Other comments', trim(A.comments));
-  return rows.join('');
+  // Each row links back to the step where that answer lives, so students can jump
+  // straight to a section to edit it instead of clicking Back through every page.
+  const sections=[];
+  const section=(title,toStep,rows)=>sections.push(
+    '<div class="rsection"><div class="rsection-head"><span class="rsection-title">'+esc(title)+'</span>'+
+    '<button type="button" class="redit" data-goto="'+toStep+'">Edit</button></div>'+rows.join('')+'</div>');
+  const row=(k,v)=>'<div class="rrow"><span class="rk">'+esc(k)+'</span><span class="rv">'+esc(v||'-')+'</span></div>';
+  section('Start',0,[row('Name',A.name), row('Class',A.classPeriod)]);
+  section('Units',1, UNITS.map(u=>row(u.name, A[u.key]?A[u.key]+'/5':'-')));
+  section('Looking Back',2,[row('Highlights', trim(A.highlights)), row('Challenges', trim(A.challenges)), row('Skill improved', trim(A.skill))]);
+  section('About You',3, SELF.map(s=>row(s.q, A[s.key]?A[s.key]+'/5':'-')));
+  section('Activities',4, ACTS.map(a=>row(a.name, A[a.key])));
+  section('Final Thoughts',5,[row("For next year's class", trim(A.nextYear)), row('What Mr. B could change', trim(A.mrBDifferent)), row('Other comments', trim(A.comments))]);
+  return sections.join('');
 }
+function goToStep(n){ step=Math.max(0,Math.min(STEPS.length-1,n)); window.scrollTo(0,0); renderStep(); }
 function trim(s){ if(!s)return''; s=String(s); return s.length>52?s.slice(0,52)+'...':s; }
 function renderNav(){
   const nav=document.getElementById('nav'); nav.innerHTML='';
@@ -339,6 +353,8 @@ document.addEventListener('click',e=>{
     op.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('sel')); op.classList.add('sel'); save(); clearErr(); return; }
   const stb=e.target.closest('[data-starter-key]');
   if(stb){ insertStarter(stb.getAttribute('data-starter-key'), stb.getAttribute('data-starter-text')); return; }
+  const gt=e.target.closest('[data-goto]');
+  if(gt){ goToStep(parseInt(gt.getAttribute('data-goto'),10)); return; }
 });
 function clearErr(){ errBox.classList.remove('show'); }
 /* ============================ VALIDATION ============================ */
@@ -364,7 +380,11 @@ function submitForm(){
   f.action=SUBMIT_URL; f.method='POST'; f.target='gformsink'; f.style.display='none';
   const addF=(name,value)=>{ const inp=document.createElement('input'); inp.type='hidden'; inp.name=name; inp.value=value==null?'':value; f.appendChild(inp); };
   Object.keys(CONFIG.entries).forEach(k=>{ if(A[k]!=null && A[k]!=='') addF(CONFIG.entries[k], A[k]); });
-  addF('fvv','1'); addF('pageHistory','0,1,2,3,4,5');
+  addF('fvv','1');
+  // NOTE: do NOT send pageHistory. This HTML has 7 UI steps, but the Google Form's
+  // own page structure is different, so a pageHistory of "0,1,2,3,4,5" fails Google's
+  // validation and the whole POST is rejected with HTTP 400 (response not recorded).
+  // Omitting pageHistory lets Google accept the submission normally.
   document.body.appendChild(f);
   let done=false;
   const finish=()=>{ if(done)return; done=true; try{ localStorage.removeItem(SAVE_KEY);}catch(e){} showDone(); };
