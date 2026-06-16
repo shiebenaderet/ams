@@ -381,10 +381,13 @@ function submitForm(){
   const addF=(name,value)=>{ const inp=document.createElement('input'); inp.type='hidden'; inp.name=name; inp.value=value==null?'':value; f.appendChild(inp); };
   Object.keys(CONFIG.entries).forEach(k=>{ if(A[k]!=null && A[k]!=='') addF(CONFIG.entries[k], A[k]); });
   addF('fvv','1');
-  // NOTE: do NOT send pageHistory. This HTML has 7 UI steps, but the Google Form's
-  // own page structure is different, so a pageHistory of "0,1,2,3,4,5" fails Google's
-  // validation and the whole POST is rejected with HTTP 400 (response not recorded).
-  // Omitting pageHistory lets Google accept the submission normally.
+  // The Google Form has 6 SECTIONS (page breaks): Start, Units, Looking Back,
+  // About You, Activities, Final Thoughts. Google only records answers for the
+  // sections listed in pageHistory; omitting it makes Google save section 0 only
+  // (name + class) and silently drop everything else. So we must declare all six.
+  // If you ADD or REMOVE a section in the Google Form, update this list to match
+  // (it is always 0,1,...,(number of sections - 1)).
+  addF('pageHistory','0,1,2,3,4,5');
   document.body.appendChild(f);
   let done=false;
   const finish=()=>{ if(done)return; done=true; try{ localStorage.removeItem(SAVE_KEY);}catch(e){} showDone(); };

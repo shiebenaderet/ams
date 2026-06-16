@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
   var rootBase = isUnitPage ? "../" : "";
   var familiesHref = isUnitPage ? "../families.html" : "families.html";
   var reflectionHref = rootBase + "endofyear.html";
+  var standardsHref = rootBase + "standards.html";
 
   var currentSlug = "";
   if (isUnitPage) {
@@ -149,6 +150,15 @@ document.addEventListener("DOMContentLoaded", function () {
     reflectionLink.classList.add("active");
   }
   linksContainer.appendChild(reflectionLink);
+
+  var standardsLink = document.createElement("a");
+  standardsLink.className = "nav-link";
+  standardsLink.href = standardsHref;
+  standardsLink.textContent = "Standards";
+  if (currentPage === "standards.html") {
+    standardsLink.classList.add("active");
+  }
+  linksContainer.appendChild(standardsLink);
 
   var canvasLink = document.createElement("a");
   canvasLink.className = "nav-link";
