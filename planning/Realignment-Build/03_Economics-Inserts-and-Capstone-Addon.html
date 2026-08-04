@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Economics Inserts &amp; Civic Action Capstone Add-On</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap');
+:root{--ink:#2a1f12;--ink-soft:#6b5840;--rule:#c9b486;--rule-strong:#a08a5e;--bg:#f4ecd8;--card:#fbf6e8;--card-warm:#ede1c4;--brand:#6b2419;--brand-soft:#f0d9c5;--brand-deep:#4a1810;--shadow:0 1px 2px rgba(120,90,30,.10),0 0 0 1px rgba(180,150,90,.08);--econ:#8b3a1f;--civic:#2c4a6b;--now:#2d5040;}
+*{box-sizing:border-box;}
+html,body{background:var(--bg);color:var(--ink);font-family:'Old Standard TT',Georgia,'Times New Roman',serif;font-size:12pt;line-height:1.5;margin:0;-webkit-font-smoothing:antialiased;}
+.sheet{background:var(--card);max-width:8.5in;margin:.4in auto;padding:.7in .75in .8in;border:1px solid var(--rule);box-shadow:var(--shadow);}
+.label,.eyebrow,.pill,.meta,.num,.role-tag,.timing,.masthead .meta,footer,.rubric th,.card-tag,.dateline,.stamp{font-family:'Special Elite','Courier New',monospace;letter-spacing:.035em;}
+.masthead{border-bottom:3px double var(--brand);padding-bottom:.35rem;margin-bottom:1rem;}
+.masthead .eyebrow{font-size:9.5pt;text-transform:uppercase;color:var(--brand);}
+.masthead h1{font-size:24pt;font-weight:700;margin:.1rem 0 .25rem;line-height:1.08;letter-spacing:-.01em;}
+.masthead .meta{font-size:9.5pt;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:.4rem 1rem;border-top:1px solid var(--rule);padding-top:.35rem;}
+h2{font-size:15pt;font-weight:700;margin:1.3rem 0 .5rem;padding-bottom:.2rem;border-bottom:1px solid var(--rule-strong);}
+h3{font-size:12.5pt;font-weight:700;margin:1rem 0 .35rem;}
+p{margin:.4rem 0;}
+.support-banner{background:var(--brand-soft);border:1px solid var(--brand);border-left:5px solid var(--brand);padding:.4rem .7rem;margin-bottom:1rem;font-family:'Special Elite',monospace;font-size:9.5pt;color:var(--brand-deep);text-transform:uppercase;letter-spacing:.05em;}
+.card{background:var(--card-warm);border:1px solid var(--rule-strong);border-radius:3px;padding:.7rem .85rem;margin:.7rem 0;}
+.card .card-tag{display:inline-block;font-size:8.5pt;text-transform:uppercase;color:#fff;background:var(--brand);padding:.1rem .5rem;border-radius:2px;margin-bottom:.35rem;}
+.card-tag.econ{background:var(--econ);}.card-tag.civic{background:var(--civic);}.card-tag.now{background:var(--now);}
+.bigq{background:var(--card-warm);border:1px solid var(--rule-strong);border-left:5px solid var(--brand);border-radius:3px;padding:.6rem .85rem;margin:.8rem 0;font-style:italic;font-size:12.5pt;}
+ul.fr,ol.fr{margin:.4rem 0;padding-left:1.25rem;}
+ul.fr li,ol.fr li{margin:.3rem 0;padding-left:.15rem;}
+ul.fr{list-style:none;padding-left:0;}
+ul.fr>li{position:relative;padding-left:1.1rem;}
+ul.fr>li::before{content:"\25B8";position:absolute;left:0;top:0;color:var(--brand);}
+.gloss{font-style:italic;color:var(--ink-soft);}
+.lines>div{border-bottom:1px solid var(--rule);height:1.5rem;}
+table.fr{width:100%;border-collapse:collapse;margin:.6rem 0;font-size:10.5pt;}
+table.fr th,table.fr td{border:1px solid var(--rule-strong);padding:.4rem .5rem;vertical-align:top;text-align:left;}
+table.fr th{background:var(--brand);color:#fff;font-family:'Special Elite',monospace;font-size:9pt;text-transform:uppercase;letter-spacing:.03em;}
+table.fr tr:nth-child(even) td{background:#f6efdd;}
+.rubric td:first-child{font-weight:700;width:22%;}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.7rem 0;}
+.opt{border:1px solid var(--rule-strong);border-top:4px solid var(--brand);border-radius:3px;background:var(--card-warm);padding:.6rem .7rem;}
+.opt h3{margin:0 0 .25rem;}
+.opt .role-tag{font-size:8.5pt;text-transform:uppercase;color:var(--brand-deep);}
+.role-card{border:1px dashed var(--rule-strong);border-radius:3px;padding:.55rem .7rem;margin:.5rem 0;background:var(--card);}
+.role-card .role-tag{display:inline-block;background:var(--civic);color:#fff;font-size:8.5pt;text-transform:uppercase;padding:.1rem .5rem;border-radius:2px;margin-bottom:.25rem;}
+footer{margin-top:1.2rem;padding-top:.4rem;border-top:1px solid var(--rule);font-size:8.5pt;color:var(--ink-soft);text-align:center;}
+.page-break{page-break-before:always;}
+@media print{html,body{background:#fff;}.sheet{margin:0;box-shadow:none;border:none;max-width:100%;padding:.35in .4in;}@page{size:letter portrait;margin:.5in;}}
+</style>
+</head>
+<body>
+
+<!-- ============ SHEET 1: ECONOMICS · TEACHER MAP ============ -->
+<div class="sheet">
+  <div class="masthead">
+    <div class="eyebrow">Teacher Guide</div>
+    <h1>Naming the Economics You Already Teach</h1>
+    <div class="meta"><span>Three small inserts, no new lessons</span></div>
+  </div>
+  <p>The economics standards were the thinnest part of the standards check, but you already teach the content. These three short moves just name it and frame it, so the coverage shows up. The Hamilton piece is now handled inside the Early Republic project (the National Bank decision), so it is covered there.</p>
+  <table class="fr">
+    <tr><th>Where</th><th>The move</th><th>Standard named</th></tr>
+    <tr><td>Unit 2 · Triangle Trade</td><td>Add the economics exit ticket (next sheet) after the simulation</td><td>E1.6-8.3, E2.6-8.1</td></tr>
+    <tr><td>Unit 7 · Early Republic</td><td>The National Bank decision in the Big Decisions project</td><td>E3.6-8.3</td></tr>
+    <tr><td>Unit 9 · Civil War</td><td>Label your North/South "Economy" lens as the standard it meets (last sheet move)</td><td>E4.6-8.5, E2.6-8.5</td></tr>
+  </table>
+
+  <h2>Triangle Trade economics exit ticket</h2>
+  <p class="gloss">Run this right after the simulation reflection. Print as a half sheet.</p>
+  <div class="card">
+    <span class="card-tag econ">Exit ticket</span>
+    <ul class="fr" style="margin:.2rem 0;">
+      <li><b>Supply and demand.</b> Which goods were in high demand <span class="gloss">(lots of people wanted them)</span> in the triangle trade? How did that shape what got traded?</li>
+      <li><b>Costs and benefits.</b> Who gained wealth from this trade? Who paid the cost? Be specific.</li>
+      <li><b>Profit vs. people.</b> The trade was profitable <span class="gloss">(it made money)</span>. Why is "it made money" not enough to call a choice good?</li>
+    </ul>
+  </div>
+  <p><b>Support stems:</b> People wanted ____________ the most. The people who gained were ____________. The people who paid the cost were ____________.</p>
+
+  <footer>Economics Inserts · Teacher Guide · Mr. B's Social Studies</footer>
+</div>
+
+<!-- ============ SHEET 2: NORTH/SOUTH ECONOMY LENS LABEL ============ -->
+<div class="sheet page-break">
+  <div class="masthead">
+    <div class="eyebrow">Unit 9 Insert</div>
+    <h1>The Economy Lens, Named</h1>
+    <div class="meta"><span>Add to your North &amp; South stations</span></div>
+  </div>
+  <p>You already study the North and the South through four lenses: Geography, Economy, Transportation, and Society. The Economy lens is doing real economics standards work. This insert just makes students name it.</p>
+
+  <div class="card">
+    <span class="card-tag econ">At the Economy station, add these two questions</span>
+    <ul class="fr" style="margin:.2rem 0;">
+      <li><b>Resources and wealth (E4.6-8.5).</b> How was wealth spread differently in the North and the South? Who held it, and what was it built on?</li>
+      <li><b>Supply and demand (E2.6-8.5).</b> The South grew cotton the world wanted. How did that demand <span class="gloss">(how much people wanted it)</span> shape the South's choices about labor and land?</li>
+    </ul>
+  </div>
+  <p><b>Support stems:</b> In the North, wealth came from ____________. In the South, wealth came from ____________. Because the world wanted cotton, the South ____________.</p>
+
+  <div class="card">
+    <span class="card-tag now">Then &amp; Now</span>
+    <p style="margin:0;">When one product drives a whole region's economy, the region depends on it. Can you name a place today whose economy leans on one thing?</p>
+  </div>
+
+  <footer>Economics Inserts · Unit 9 · Mr. B's Social Studies</footer>
+</div>
+
+<!-- ============ SHEET 3: CAPSTONE CIVIC ACTION ADD-ON ============ -->
+<div class="sheet page-break">
+  <div class="masthead">
+    <div class="eyebrow">Capstone Add-On</div>
+    <h1>The Struggle Continues</h1>
+    <div class="meta"><span>Adds to "The Struggle for American Ideals"</span><span>Civic action, fed by your Now &amp; Then log</span></div>
+  </div>
+
+  <p>Your capstone already ends on a powerful idea: that excluded groups did not reject America's ideals, they demanded access to them. This add-on takes the next step. Students carry one ideal into today and take action on it. Because the Now &amp; Then log gathered current stories all year, the heavy lifting is already done.</p>
+
+  <h2>Question 3 (the new panel)</h2>
+  <div class="bigq">Pick one ideal you wrote about. Where is it still being fought for today? What will you do about it?</div>
+  <ul class="fr">
+    <li>Find the issue in your Now &amp; Then log (you starred it during the year).</li>
+    <li>Make a claim: what should happen, and why, using one example from history and one from today.</li>
+    <li>Take one real action from the menu below.</li>
+  </ul>
+
+  <h2>Action menu (pick one)</h2>
+  <div class="menu-grid">
+    <div class="opt"><h3>Letter to a decision maker</h3><span class="role-tag">Write</span><p style="margin:.2rem 0;">A short, cited letter to someone with power over the issue.</p></div>
+    <div class="opt"><h3>Poster or cartoon</h3><span class="role-tag">Draw</span><p style="margin:.2rem 0;">A visual that makes your case and calls people to act.</p></div>
+    <div class="opt"><h3>PSA or speech</h3><span class="role-tag">Speak</span><p style="margin:.2rem 0;">A 60 second recorded message or a short spoken piece.</p></div>
+    <div class="opt"><h3>Proposal</h3><span class="role-tag">Build</span><p style="margin:.2rem 0;">A one page plan for a fix, shared at the gallery walk.</p></div>
+  </div>
+
+  <h2>Scoring (add one row to your 20 point rubric)</h2>
+  <table class="fr rubric">
+    <tr><th>What we score</th><th>4 · Exemplary</th><th>3 · Proficient</th><th>2 · Progressing</th><th>1 · Beginning</th></tr>
+    <tr><td>From past to present to action</td><td>Links a clear historical ideal to a current issue and to a real, doable action</td><td>Links past, present, and an action</td><td>Two of the three are linked</td><td>The links are missing</td></tr>
+  </table>
+
+  <p><b>Support stems:</b> The ideal I chose is ____________. Back then, ____________ had to fight for it. Today, the same fight shows up in ____________. My action is to ____________.</p>
+
+  <div class="card">
+    <span class="card-tag civic">Standards</span>
+    <p style="margin:0;">C4.6-8.5 (civic action on a national issue, your one true content gap) · C4.6-8.4 (rights vs. common good) · H4.6-8.3 (history informs today) · SSS4.6-8.1 (a thesis driven product).</p>
+  </div>
+
+  <footer>The Struggle Continues · Capstone Add-On · Mr. B's Social Studies</footer>
+</div>
+
+</body>
+</html>

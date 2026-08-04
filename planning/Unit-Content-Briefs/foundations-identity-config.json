@@ -1,0 +1,227 @@
+{
+    "unit": {
+        "id": "foundations-identity",
+        "title": "Foundations & Identity Study Tool",
+        "subtitle": "Who gets to define what an American is? Learn the vocabulary, explore the colonies, and track your progress.",
+        "essentialQuestion": "Who gets to define what an “American” is — and whose stories get told?",
+        "theme": {
+            "primary": "#1F4D3A",
+            "secondary": "#2E6B52",
+            "accent": "#B8893B"
+        }
+    },
+    "activities": [
+        "flashcards",
+        "resources",
+        "typing-practice",
+        "timeline",
+        "wordle",
+        "hangman",
+        "flip-match",
+        "term-catcher",
+        "crossword"
+    ],
+    "categorySchedule": {
+        "Identity & Perspective": "2026-09-02",
+        "Contact & Exchange": "2026-09-08",
+        "The Three Colonial Regions": "2026-09-11",
+        "Trade & the Triangle": "2026-09-15"
+    },
+    "vocabulary": [
+        {
+            "term": "Identity",
+            "definition": "The qualities, beliefs, and experiences that make a person or group who they are",
+            "simpleExplanation": "Everything that makes you YOU — your family, culture, language, interests, and story. In this class we ask the same question about a whole country: what makes America America, and who decides?",
+            "example": "A student's identity might include being a soccer player, a big sibling, and part of a family that came from the Philippines",
+            "category": "Identity & Perspective",
+            "typingSnippet": "Identity is the mix of qualities, beliefs, and experiences that make a person or group who they are. This year we study American identity: what it has meant at different times, and who got to define it. The answer has changed again and again throughout history."
+        },
+        {
+            "term": "Perspective",
+            "definition": "The point of view from which a person sees and understands events",
+            "simpleExplanation": "Where you stand changes what you see. A colonist, an Indigenous leader, and an enslaved person all lived through the same years — but they would tell completely different stories about them.",
+            "example": "The arrival of English settlers looked like opportunity from a colonist's perspective and invasion from a Wampanoag perspective",
+            "category": "Identity & Perspective",
+            "typingSnippet": "Perspective is the point of view from which someone understands events. Historians gather many perspectives on the same moment to get closer to the full story. Asking whose voice is missing is one of the most important habits in this class."
+        },
+        {
+            "term": "Primary Source",
+            "definition": "A document, image, or object created during the time period being studied",
+            "simpleExplanation": "Evidence straight from the past — a letter, a drawing, a tool, a diary. It's the difference between hearing about a game from someone who played in it versus someone who heard about it later.",
+            "example": "A 1620 passenger list from the Mayflower is a primary source; a textbook chapter about it is not",
+            "category": "Identity & Perspective",
+            "typingSnippet": "A primary source is a document, image, or object created during the time being studied. Letters, diaries, maps, and artifacts are all primary sources. Historians treat them as evidence, always asking who made them and why."
+        },
+        {
+            "term": "Bias",
+            "definition": "A leaning for or against something that shapes how information is presented",
+            "simpleExplanation": "Every source was made by a person, and every person has opinions. Bias isn't always lying — it's the slant that comes from who you are and what you want your audience to believe.",
+            "example": "A recruitment poster for colonists showed rich farmland but left out disease and conflict — that's bias at work",
+            "category": "Identity & Perspective",
+            "typingSnippet": "Bias is a leaning for or against something that shapes how information is presented. Every source carries some bias because every source has an author with a purpose. Good historians don't ignore biased sources; they read them carefully and ask what the author wanted."
+        },
+        {
+            "term": "Indigenous Peoples",
+            "definition": "The original inhabitants of a land and their descendants, such as the many Native nations of North America",
+            "simpleExplanation": "The peoples who were already here — hundreds of distinct nations with their own languages, governments, and histories — long before any European ship arrived.",
+            "example": "The Coast Salish peoples, including tribes here in Washington, have lived in the Pacific Northwest for thousands of years",
+            "category": "Contact & Exchange",
+            "typingSnippet": "Indigenous peoples are the original inhabitants of a land and their descendants. North America was home to hundreds of Native nations with distinct languages, governments, and trade networks. Their histories did not begin with European contact, and they continue today."
+        },
+        {
+            "term": "Columbian Exchange",
+            "definition": "The transfer of plants, animals, people, and diseases between the Americas and the rest of the world after 1492",
+            "simpleExplanation": "After 1492, two halves of the world that had been separate started swapping everything: horses and wheat came west, corn and potatoes went east — and so did deadly diseases, in the worst trade of all.",
+            "example": "Through the Columbian Exchange, tomatoes reached Italy and horses reached the Great Plains",
+            "category": "Contact & Exchange",
+            "typingSnippet": "The Columbian Exchange was the transfer of plants, animals, people, and diseases between the Americas, Europe, Africa, and Asia after 1492. It reshaped diets and economies on every continent. It also carried epidemics that devastated Indigenous communities across the Americas."
+        },
+        {
+            "term": "Colonization",
+            "definition": "The act of one country taking control of another land and settling people on it",
+            "simpleExplanation": "When a powerful country plants its own settlements on land that already belongs to someone else, and rules it for its own benefit. The 13 colonies were England doing exactly this.",
+            "example": "English colonization of Virginia began at Jamestown in 1607, on land of the Powhatan people",
+            "category": "Contact & Exchange",
+            "typingSnippet": "Colonization is when one country takes control of another land and settles its own people there. European powers colonized the Americas for wealth, resources, and power. For Indigenous peoples, colonization meant the loss of land, lives, and sovereignty."
+        },
+        {
+            "term": "Epidemic",
+            "definition": "A disease outbreak that spreads rapidly through a population",
+            "simpleExplanation": "A sickness that tears through a community faster than anyone can stop it. Diseases carried from Europe, like smallpox, killed millions of Indigenous people who had never been exposed before.",
+            "example": "Smallpox epidemics wiped out entire Indigenous communities before some settlers ever arrived",
+            "category": "Contact & Exchange",
+            "typingSnippet": "An epidemic is a disease outbreak that spreads rapidly through a population. European diseases such as smallpox and measles caused epidemics that killed millions of Indigenous people after contact. Historians consider this one of the most devastating consequences of the Columbian Exchange."
+        },
+        {
+            "term": "New England Colonies",
+            "definition": "The northern English colonies (Massachusetts, Connecticut, Rhode Island, New Hampshire), known for small farms, trade, and town life",
+            "simpleExplanation": "The cold, rocky north — think small family farms, fishing boats, shipbuilding, and tight-knit towns built around a church. Founded largely by Puritans seeking to build their own religious community.",
+            "example": "In New England Colonies like Massachusetts, thin soil pushed people toward fishing, lumber, and trade instead of big farms",
+            "category": "The Three Colonial Regions",
+            "typingSnippet": "The New England Colonies were the northern English colonies, including Massachusetts and Connecticut. Long winters and rocky soil meant small farms, so New Englanders turned to fishing, shipbuilding, and trade. Town meetings there became an early practice ground for self-government."
+        },
+        {
+            "term": "Middle Colonies",
+            "definition": "The central English colonies (New York, Pennsylvania, New Jersey, Delaware), known for grain farming and diverse populations",
+            "simpleExplanation": "The “breadbasket” in the middle — rich soil for wheat, busy port cities like Philadelphia and New York, and the most mixed population in the colonies: English, Dutch, German, and more, with many religions side by side.",
+            "example": "Pennsylvania, a Middle Colony founded by William Penn, welcomed Quakers and many other religious groups",
+            "category": "The Three Colonial Regions",
+            "typingSnippet": "The Middle Colonies included New York, Pennsylvania, New Jersey, and Delaware. Fertile soil made them the breadbasket of the colonies, growing wheat and other grains. They were also the most diverse region, with many languages, cultures, and religions living side by side."
+        },
+        {
+            "term": "Southern Colonies",
+            "definition": "The southern English colonies (Maryland, Virginia, the Carolinas, Georgia), built on cash-crop plantations and enslaved labor",
+            "simpleExplanation": "The warm south, where a long growing season made huge profits possible from tobacco and rice plantations — profits built on the forced labor of enslaved African people.",
+            "example": "In Southern Colonies like Virginia, tobacco plantations depended on enslaved workers to make owners wealthy",
+            "category": "The Three Colonial Regions",
+            "typingSnippet": "The Southern Colonies included Virginia, Maryland, the Carolinas, and Georgia. A warm climate and rich soil supported plantations growing tobacco, rice, and indigo. That plantation economy was built on the labor of enslaved African people, a fact at the center of this unit's driving question."
+        },
+        {
+            "term": "Cash Crop",
+            "definition": "A crop grown to be sold for profit rather than used by the farmer",
+            "simpleExplanation": "Farming as a business. You don't grow tobacco to eat it — you grow it to sell it. Cash crops made the Southern Colonies rich and drove the demand for more land and more forced labor.",
+            "example": "Tobacco was Virginia's first great cash crop, so valuable it was sometimes used as money",
+            "category": "The Three Colonial Regions",
+            "typingSnippet": "A cash crop is grown to be sold for profit rather than eaten by the farmer. Tobacco, rice, and indigo were the great cash crops of the Southern Colonies. The profits they promised drove the demand for land taken from Indigenous nations and labor forced from enslaved people."
+        },
+        {
+            "term": "Mercantilism",
+            "definition": "The idea that colonies exist to make the parent country wealthy through controlled trade",
+            "simpleExplanation": "England's rulebook for the colonies: send us your raw materials, buy our finished goods, and don't trade with anyone else. The whole point of a colony, in this view, was to make the home country richer.",
+            "example": "Under mercantilism, colonists shipped raw lumber to England and bought back finished furniture at higher prices",
+            "category": "Trade & the Triangle",
+            "typingSnippet": "Mercantilism was the idea that colonies exist to enrich the parent country through controlled trade. England expected the colonies to supply raw materials and buy English goods. This one-way relationship planted seeds of resentment that would grow into revolution."
+        },
+        {
+            "term": "Triangle Trade",
+            "definition": "The three-legged Atlantic trade network linking the Americas, Europe, and Africa",
+            "simpleExplanation": "A trade loop across the Atlantic: colonial raw materials to Europe, European goods to Africa, and — the brutal leg — enslaved African people to the Americas. Follow the arrows and you follow the money.",
+            "example": "In the Triangle Trade, a ship might carry rum to Africa, enslaved people to the West Indies, and sugar back to New England",
+            "category": "Trade & the Triangle",
+            "typingSnippet": "The Triangle Trade was the Atlantic network linking the Americas, Europe, and Africa. Raw materials, manufactured goods, and enslaved human beings moved along its three legs. Every region in the triangle, including the northern colonies, profited from the system."
+        },
+        {
+            "term": "Middle Passage",
+            "definition": "The horrific forced voyage of enslaved Africans across the Atlantic to the Americas",
+            "simpleExplanation": "The middle leg of the Triangle Trade, where millions of kidnapped African men, women, and children were chained below deck for a weeks-long voyage. Many did not survive. It is one of history's greatest crimes.",
+            "example": "Olaudah Equiano's autobiography gives a rare first-person account of surviving the Middle Passage",
+            "category": "Trade & the Triangle",
+            "typingSnippet": "The Middle Passage was the forced voyage of enslaved Africans across the Atlantic Ocean. Millions of people were transported in inhumane conditions, and many died on the journey. First-person accounts like Olaudah Equiano's help historians tell this story from the perspective of those who lived it."
+        },
+        {
+            "term": "Export",
+            "definition": "A good sent out of a country or colony to be sold somewhere else",
+            "simpleExplanation": "Anything a place sells to the outside world. The colonies' big exports — tobacco, rice, lumber, fish — tell you exactly what each region's economy ran on.",
+            "example": "Virginia's main export was tobacco, shipped by the ton to England",
+            "category": "Trade & the Triangle",
+            "typingSnippet": "An export is a good sent out of a country or colony to be sold elsewhere. Each colonial region had signature exports: fish and lumber from New England, grain from the Middle Colonies, and tobacco and rice from the South. Reading a region's export list is like reading its economic ID card."
+        }
+    ],
+    "timelineEvents": [
+        {
+            "id": 1,
+            "title": "Columbus Reaches the Americas",
+            "year": "1492",
+            "description": "Contact between the hemispheres begins, launching the Columbian Exchange"
+        },
+        {
+            "id": 2,
+            "title": "Jamestown Founded",
+            "year": "1607",
+            "description": "First permanent English colony in North America, on Powhatan land in Virginia"
+        },
+        {
+            "id": 3,
+            "title": "First Enslaved Africans in Virginia",
+            "year": "1619",
+            "description": "A ship brings the first enslaved Africans to English North America"
+        },
+        {
+            "id": 4,
+            "title": "Mayflower Compact Signed",
+            "year": "1620",
+            "description": "Plymouth colonists agree to govern themselves by majority rule"
+        },
+        {
+            "id": 5,
+            "title": "Massachusetts Bay Colony Founded",
+            "year": "1630",
+            "description": "Puritans begin the Great Migration to New England"
+        },
+        {
+            "id": 6,
+            "title": "Rhode Island Founded",
+            "year": "1636",
+            "description": "Roger Williams establishes a colony with religious freedom after his banishment"
+        },
+        {
+            "id": 7,
+            "title": "Pennsylvania Founded",
+            "year": "1681",
+            "description": "William Penn creates a Quaker colony known for tolerance and diversity"
+        },
+        {
+            "id": 8,
+            "title": "Salem Witch Trials",
+            "year": "1692",
+            "description": "Fear and accusations in Massachusetts lead to twenty executions"
+        },
+        {
+            "id": 9,
+            "title": "Great Awakening Spreads",
+            "year": "1730s–1740s",
+            "description": "A religious revival sweeps the colonies, challenging old authorities"
+        },
+        {
+            "id": 10,
+            "title": "Georgia Founded",
+            "year": "1733",
+            "description": "The last of the thirteen colonies is established"
+        }
+    ],
+    "reflectionPrompts": [
+        "How does {term} connect to the question of who gets to call themselves an American?",
+        "Whose perspective would change the way you explain {term}?",
+        "Where do you see something like {term} in the world today?"
+    ]
+}

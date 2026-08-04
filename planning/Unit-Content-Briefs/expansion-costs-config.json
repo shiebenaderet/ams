@@ -1,0 +1,243 @@
+{
+    "unit": {
+        "id": "expansion-costs",
+        "title": "Expansion & Its Costs Study Tool",
+        "subtitle": "What drove the nation westward, and who paid the price? Learn the vocabulary, layer the maps, and track your progress.",
+        "essentialQuestion": "What drove the nation westward, and who paid the price?",
+        "theme": {
+            "primary": "#8F3F1E",
+            "secondary": "#AF5A35",
+            "accent": "#B8893B"
+        }
+    },
+    "activities": [
+        "flashcards",
+        "resources",
+        "typing-practice",
+        "timeline",
+        "wordle",
+        "hangman",
+        "flip-match",
+        "term-catcher",
+        "crossword"
+    ],
+    "categorySchedule": {
+        "Doubling the Nation": "2027-02-22",
+        "Removal": "2027-03-01",
+        "Trails West": "2027-03-08",
+        "War & the Price of Land": "2027-03-15"
+    },
+    "vocabulary": [
+        {
+            "term": "Louisiana Purchase",
+            "definition": "The 1803 deal in which the United States bought France's claim to the land west of the Mississippi River, doubling the size of the nation",
+            "simpleExplanation": "In 1803, President Jefferson bought France's claim to a massive stretch of land for about $15 million — roughly three cents an acre — and the country doubled overnight. But notice what was actually for sale: France's claim, not empty land. Tens of thousands of Indigenous people already lived there, and nobody asked them.",
+            "example": "The Louisiana Purchase stretched from New Orleans to the Rocky Mountains and later became all or part of fifteen states",
+            "category": "Doubling the Nation",
+            "typingSnippet": "The Louisiana Purchase was the 1803 deal in which the United States bought France's claim to the land west of the Mississippi River. It doubled the size of the country for about fifteen million dollars. The many Indigenous nations living on that land were never part of the negotiation."
+        },
+        {
+            "term": "Corps of Discovery",
+            "definition": "The expedition team led by Meriwether Lewis and William Clark that explored the Louisiana Purchase and the route to the Pacific, 1804–1806",
+            "simpleExplanation": "Jefferson's hand-picked crew of about three dozen — including York, a man enslaved by Clark — sent to map the new territory, record its plants and animals, and meet the nations who already lived there. They made it to the Pacific and back, and their journals shaped how Americans imagined the West.",
+            "example": "The Corps of Discovery traveled from St. Louis to the Pacific Ocean and back, more than 8,000 miles over about two and a half years",
+            "category": "Doubling the Nation",
+            "typingSnippet": "The Corps of Discovery was the team led by Lewis and Clark that explored the Louisiana Purchase from 1804 to 1806. They mapped rivers and mountains and recorded hundreds of plants and animals new to American science. The expedition depended on the knowledge and help of Indigenous nations at nearly every stage."
+        },
+        {
+            "term": "Expedition",
+            "definition": "A journey organized for a specific purpose, such as exploration or scientific study",
+            "simpleExplanation": "A trip with a mission. Lewis and Clark's expedition had a to-do list straight from the president: find a route to the Pacific, make maps, take notes on everything, and establish relations with the nations along the way.",
+            "example": "The Lewis and Clark expedition kept detailed journals that historians and scientists still study today",
+            "category": "Doubling the Nation",
+            "typingSnippet": "An expedition is a journey organized for a specific purpose, such as exploration or research. The Lewis and Clark expedition was ordered by President Jefferson to explore the West after the Louisiana Purchase. Its maps and journals shaped how Americans pictured the lands beyond the Mississippi."
+        },
+        {
+            "term": "Sacagawea",
+            "definition": "A Lemhi Shoshone woman who traveled with the Corps of Discovery as an interpreter and guide, 1804–1806",
+            "simpleExplanation": "A Shoshone teenager — kidnapped from her people as a girl, and carrying her infant son the whole way — whose language skills and knowledge of the land helped the expedition survive. Her presence also signaled to nations they met that the group came in peace; war parties didn't travel with a mother and baby.",
+            "example": "When the Corps needed horses to cross the Rockies, Sacagawea translated during negotiations with a Shoshone band led by her own brother",
+            "category": "Doubling the Nation",
+            "typingSnippet": "Sacagawea was a Lemhi Shoshone woman who traveled with the Corps of Discovery as an interpreter and guide. She helped the expedition trade for horses and find routes through the mountains, all while caring for her baby son. Her story is a reminder that the West was explored with Indigenous help, on Indigenous land."
+        },
+        {
+            "term": "Indian Removal Act",
+            "definition": "An 1830 law signed by President Andrew Jackson authorizing the forced removal of Native nations from the Southeast to lands west of the Mississippi",
+            "simpleExplanation": "Congress made it official policy: Native nations in the Southeast would exchange their homelands for land in the West — voluntary on paper, but with enormous pressure and, eventually, soldiers behind it. White settlers wanted the land, especially after gold was discovered in Cherokee territory.",
+            "example": "Under the Indian Removal Act, the Cherokee, Choctaw, Chickasaw, Muscogee (Creek), and Seminole nations were pushed off their homelands",
+            "category": "Removal",
+            "typingSnippet": "The Indian Removal Act was an 1830 law authorizing the removal of Native nations from the Southeast to land west of the Mississippi. President Jackson signed it, and tens of thousands of people were forced from their homelands. Many Americans, and the Cherokee themselves, fought the policy in Congress and in court."
+        },
+        {
+            "term": "Trail of Tears",
+            "definition": "The forced march of the Cherokee Nation to present-day Oklahoma in 1838–39, during which roughly 4,000 people died; also used for the removals of other southeastern nations",
+            "simpleExplanation": "In 1838, U.S. soldiers forced about 16,000 Cherokee people from their homes and marched them roughly a thousand miles west, much of it through winter. Around 4,000 died of cold, hunger, and disease along the way. In Cherokee, it is remembered as the trail where they cried.",
+            "example": "The Trail of Tears crossed Tennessee, Kentucky, Illinois, Missouri, and Arkansas, with most people traveling on foot",
+            "category": "Removal",
+            "typingSnippet": "The Trail of Tears was the forced removal of the Cherokee Nation to present-day Oklahoma in 1838 and 1839. Roughly four thousand people died on the journey west. It stands as one of the clearest answers to this unit's question about who paid the price of expansion."
+        },
+        {
+            "term": "Worcester v. Georgia",
+            "definition": "An 1832 Supreme Court case ruling that the Cherokee Nation was a sovereign nation and that Georgia's laws had no force within its territory",
+            "simpleExplanation": "The Cherokee took their fight to the Supreme Court — and won. Chief Justice John Marshall ruled that Georgia had no power over Cherokee land. But President Jackson's government simply refused to enforce the decision, and removal happened anyway. A court victory only counts if someone carries it out.",
+            "example": "Worcester v. Georgia is still cited in court today in cases about tribal sovereignty",
+            "category": "Removal",
+            "typingSnippet": "Worcester v. Georgia was an 1832 Supreme Court case that recognized the Cherokee Nation as a sovereign nation. The Court ruled that Georgia's laws had no force on Cherokee land. President Jackson's government ignored the ruling, and the removals continued anyway."
+        },
+        {
+            "term": "Assimilation",
+            "definition": "The process of pressuring a group to give up its own culture and adopt the culture of another group",
+            "simpleExplanation": "Pressure to stop being who you are. The United States pushed Native peoples to abandon their languages, religions, and ways of life and 'become American.' Here's the hard part: even nations that adapted the most, like the Cherokee — with their own newspaper, written language, and constitution — were removed anyway.",
+            "example": "The Cherokee developed a writing system, a newspaper, and a constitution, yet assimilation did not protect them from removal",
+            "category": "Removal",
+            "typingSnippet": "Assimilation is the process of pressuring a group to give up its culture and adopt another. The United States expected Native nations to abandon their languages and traditions. The Cherokee adopted farming, a newspaper, and a written constitution, and were still forced from their land."
+        },
+        {
+            "term": "Sovereignty",
+            "definition": "The right of a nation to govern itself and control its own land, laws, and future",
+            "simpleExplanation": "Self-rule. Native nations were — and are — sovereign nations with their own governments, and U.S. treaties recognized exactly that. This unit asks what happened when the United States acknowledged that sovereignty on paper and then violated it when settlers wanted the land.",
+            "example": "Treaties between the United States and Native nations were agreements between sovereign governments, just like treaties with France or Britain",
+            "category": "Removal",
+            "typingSnippet": "Sovereignty is a nation's right to govern itself and control its own land and laws. Native nations held sovereignty long before the United States existed, and treaties recognized it on paper. The removal era showed how often that recognition was broken when settlers wanted the land."
+        },
+        {
+            "term": "Manifest Destiny",
+            "definition": "The nineteenth-century belief that the United States was destined — even divinely meant — to expand across the continent",
+            "simpleExplanation": "The idea that America spreading west wasn't just likely — it was meant to be. To many white Americans it felt like a mission to spread democracy. To Mexico and to Native nations, it looked like a polished excuse for taking their land. Every time you meet this term, ask: belief, justification, or both?",
+            "example": "Journalist John O'Sullivan coined the phrase 'Manifest Destiny' in 1845 while arguing for the annexation of Texas",
+            "category": "Trails West",
+            "typingSnippet": "Manifest Destiny was the belief that the United States was destined to expand across the continent. Many Americans saw expansion as a God-given mission to spread democracy. Others, then and now, saw the phrase as a justification for taking land that already belonged to someone else."
+        },
+        {
+            "term": "Oregon Trail",
+            "definition": "The roughly 2,000-mile overland route from Missouri to the Oregon Country, used by hundreds of thousands of emigrants from the 1840s to the 1860s",
+            "simpleExplanation": "The highway west before highways: four to six months of walking beside a wagon, river crossings, disease, and the hope of free farmland at the end. And every mile of it crossed the homelands of Native nations — some of whom traded with and guided the travelers, and all of whom watched the traffic grow year after year.",
+            "example": "A family on the Oregon Trail might walk fifteen miles a day for five months to reach the Willamette Valley",
+            "category": "Trails West",
+            "typingSnippet": "The Oregon Trail was the roughly two-thousand-mile route from Missouri to the Pacific Northwest. Between the 1840s and 1860s, hundreds of thousands of emigrants traveled it by wagon and on foot. Every mile of the trail crossed land that Indigenous nations had lived on for generations."
+        },
+        {
+            "term": "Pioneer",
+            "definition": "A person who is among the first from their society to settle in a region that is new to them",
+            "simpleExplanation": "The word Americans used for settlers heading into 'new' land — new to them, anyway. It's a word worth reading carefully: it tells the settlers' side of the story, and it quietly hides the fact that pioneers were usually moving onto someone's homeland.",
+            "example": "Pioneer families packed their wagons with tools, seed, and supplies for the farms they hoped to build in Oregon",
+            "category": "Trails West",
+            "typingSnippet": "A pioneer is a person who is among the first from their society to settle a region that is new to them. American pioneers built farms and towns across the West in the 1800s. The word tells the settlers' side of the story, because the land they settled was rarely empty."
+        },
+        {
+            "term": "Emigrant",
+            "definition": "A person who leaves their home region to settle somewhere else; the common term for overland travelers heading west",
+            "simpleExplanation": "Travelers on the trails called themselves emigrants because they were leaving the United States proper for distant territories — when the first wagons rolled, Oregon wasn't even fully American yet. Their letters and diaries are gold mines for historians.",
+            "example": "Guidebooks for emigrants listed exactly how much flour, bacon, and coffee a family should pack for the journey",
+            "category": "Trails West",
+            "typingSnippet": "An emigrant is a person who leaves home to settle somewhere else. Overland travelers to Oregon and California in the 1840s called themselves emigrants. Their letters and trail diaries are some of our best primary sources about the journey west."
+        },
+        {
+            "term": "Frontier",
+            "definition": "The edge of the area settled by a country's people; in U.S. history, the shifting western boundary of white settlement",
+            "simpleExplanation": "Americans talked about 'the frontier' like a line between civilization and wilderness. But there was no empty side of the line — the 'wilderness' was home to hundreds of nations with their own towns, trade routes, and governments. Whenever the frontier 'moved,' someone was being moved off.",
+            "example": "In 1800 the frontier sat near the Mississippi; by 1850 American settlement had leapt all the way to the Pacific coast",
+            "category": "Trails West",
+            "typingSnippet": "The frontier was the shifting edge of settlement as the United States expanded west. Americans imagined it as a line between civilization and wilderness. In reality, the land beyond the line was already home to hundreds of Indigenous nations."
+        },
+        {
+            "term": "Mexican-American War",
+            "definition": "The 1846–1848 war between the United States and Mexico, fought over Texas and westward expansion, ending in a massive U.S. land gain",
+            "simpleExplanation": "After the United States annexed Texas, a border dispute exploded into war. The U.S. won and took about half of Mexico's territory. Even at the time, Americans argued fiercely over it — a young congressman named Abraham Lincoln demanded to know exactly where the first blood was spilled, and on whose land.",
+            "example": "The Mexican-American War began after fighting broke out in disputed territory between the Nueces River and the Rio Grande",
+            "category": "War & the Price of Land",
+            "typingSnippet": "The Mexican-American War was fought between the United States and Mexico from 1846 to 1848. It began with a border dispute after the United States annexed Texas. Mexico lost about half of its territory, and Americans debated then and still debate now whether the war was justified."
+        },
+        {
+            "term": "Annexation",
+            "definition": "The formal act of adding a territory to a country",
+            "simpleExplanation": "When a country absorbs a territory and makes it official. The United States annexed Texas in 1845 — Anglo-Texan leaders wanted in, Mexico still considered Texas stolen, and within a year the two countries were at war. One signature on paper, enormous consequences on the map.",
+            "example": "The annexation of Texas in 1845 added a huge new slave state and pushed the United States toward war with Mexico",
+            "category": "War & the Price of Land",
+            "typingSnippet": "Annexation is the formal act of adding a territory to a country. The United States annexed Texas in 1845, nine years after Texas broke away from Mexico. Mexico saw the annexation as the taking of its land, and war followed the next year."
+        },
+        {
+            "term": "Mexican Cession",
+            "definition": "The vast territory Mexico ceded to the United States in 1848, including California, Nevada, Utah, and parts of several other future states",
+            "simpleExplanation": "The land Mexico gave up at the end of the war — about 525,000 square miles. Here's the thing to remember: around 100,000 Mexican citizens and many Native nations lived there. They didn't move; the border moved over them.",
+            "example": "The Mexican Cession included the California coast — where gold was discovered just days before the treaty was signed",
+            "category": "War & the Price of Land",
+            "typingSnippet": "The Mexican Cession was the huge territory Mexico gave up to the United States in 1848. It included California, Nevada, Utah, and parts of several other future states. The people already living there did not move anywhere; the border moved over them."
+        },
+        {
+            "term": "Treaty of Guadalupe Hidalgo",
+            "definition": "The 1848 treaty that ended the Mexican-American War; Mexico ceded vast territory, and the United States paid $15 million and promised rights to Mexican residents",
+            "simpleExplanation": "The peace deal that ended the war and drew the new border at the Rio Grande. On paper, it promised that Mexicans living in the ceded lands could keep their property and become U.S. citizens. In the decades that followed, those promises were broken again and again — which is why this treaty still comes up in courtrooms and classrooms today.",
+            "example": "Under the Treaty of Guadalupe Hidalgo, the Rio Grande became the southern border of Texas",
+            "category": "War & the Price of Land",
+            "typingSnippet": "The Treaty of Guadalupe Hidalgo ended the Mexican-American War in 1848. Mexico ceded about half of its territory, and the United States paid fifteen million dollars. The treaty promised property rights and citizenship to Mexican residents of the ceded lands, but those promises were frequently broken."
+        }
+    ],
+    "timelineEvents": [
+        {
+            "id": 1,
+            "title": "Louisiana Purchase",
+            "year": "1803",
+            "description": "The United States buys France's claim west of the Mississippi, doubling the nation — on land already home to many Indigenous nations"
+        },
+        {
+            "id": 2,
+            "title": "Lewis & Clark Expedition Begins",
+            "year": "1804",
+            "description": "The Corps of Discovery leaves St. Louis to map the West and find a route to the Pacific"
+        },
+        {
+            "id": 3,
+            "title": "Missouri Compromise",
+            "year": "1820",
+            "description": "Congress balances free and slave states as expansion forces the slavery question — a seed that grows into Unit 6"
+        },
+        {
+            "id": 4,
+            "title": "Indian Removal Act",
+            "year": "1830",
+            "description": "Congress and President Jackson make the removal of southeastern Native nations official U.S. policy"
+        },
+        {
+            "id": 5,
+            "title": "Worcester v. Georgia",
+            "year": "1832",
+            "description": "The Supreme Court affirms Cherokee sovereignty; President Jackson refuses to enforce the ruling"
+        },
+        {
+            "id": 6,
+            "title": "Trail of Tears",
+            "year": "1838–1839",
+            "description": "The Cherokee are forced west to present-day Oklahoma; roughly 4,000 people die on the journey"
+        },
+        {
+            "id": 7,
+            "title": "\"Manifest Destiny\" Coined",
+            "year": "1845",
+            "description": "Journalist John O'Sullivan names the belief that American expansion is destined and right"
+        },
+        {
+            "id": 8,
+            "title": "Texas Annexed",
+            "year": "1845",
+            "description": "The United States formally adds Texas, which Mexico still considers its own territory"
+        },
+        {
+            "id": 9,
+            "title": "Mexican-American War Begins",
+            "year": "1846",
+            "description": "Fighting in disputed borderland between the Nueces River and the Rio Grande ignites war"
+        },
+        {
+            "id": 10,
+            "title": "Treaty of Guadalupe Hidalgo",
+            "year": "1848",
+            "description": "The war ends; Mexico cedes about half its territory, and the border moves over the people living there"
+        }
+    ],
+    "reflectionPrompts": [
+        "How does {term} help explain what drove the nation westward — or who paid the price?",
+        "Whose perspective on {term} is most often left out when Americans tell the story of expansion?",
+        "If you added {term} to our layered map, which layer would it belong to, and what pattern would it help reveal?"
+    ]
+}

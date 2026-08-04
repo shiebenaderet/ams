@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year-at-a-Glance Calendar Map — 2026–27</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Outfit:wght@400;500;600;700&display=swap');
+:root{
+  --navy:#1B2D45;--gold:#B8893B;--warm:#C75B2A;--sage:#4A6741;
+  --bg:#F5F0E8;--card:#FEFCF8;--ink:#1F2124;--muted:#5C564E;--border:#D6CFC3;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--ink);padding:22px;line-height:1.45;}
+.wrap{max-width:1080px;margin:0 auto;}
+.crumb{font-size:.78rem;color:var(--muted);margin-bottom:8px;}
+.crumb a{color:var(--warm);text-decoration:none;}
+.crumb a:hover{text-decoration:underline;}
+h1{font-family:'Fraunces',serif;font-size:1.95rem;color:var(--navy);}
+.sub{color:var(--muted);margin:.3rem 0 1.1rem;font-size:.95rem;max-width:900px;}
+
+.rocks{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:8px;}
+.rock{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px 13px;border-left:4px solid var(--navy);}
+.rock.s2{border-left-color:var(--warm);}
+.rock .rl{font-size:.66rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;}
+.rock .rv{font-family:'Fraunces',serif;font-size:1.02rem;color:var(--navy);margin-top:1px;}
+.rock .rd{font-size:.74rem;color:var(--muted);}
+
+.legend{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 10px;font-size:.72rem;}
+.lu{display:inline-flex;align-items:center;gap:5px;color:var(--muted);}
+.lsw{width:13px;height:13px;border-radius:3px;display:inline-block;}
+
+.scroll{overflow-x:auto;border:1px solid var(--border);border-radius:10px;background:var(--card);}
+table{border-collapse:collapse;width:100%;min-width:760px;}
+th{background:var(--navy);color:#fff;font-size:.66rem;text-transform:uppercase;letter-spacing:.02em;padding:.5rem .5rem;text-align:left;position:sticky;top:0;}
+td{border-top:1px solid var(--border);padding:.42rem .5rem;font-size:.83rem;vertical-align:middle;}
+td.wk{width:44px;text-align:center;color:var(--muted);font-weight:600;}
+td.dates{width:150px;white-space:nowrap;}
+td.dates b{color:var(--navy);}
+td.dates span{color:var(--muted);font-size:.74rem;}
+td.days{width:52px;text-align:center;}
+.dbadge{display:inline-block;font-size:.72rem;font-weight:600;color:var(--muted);}
+.dbadge.short{color:var(--warm);}
+.upill{display:inline-flex;align-items:center;gap:7px;font-weight:600;font-size:.82rem;color:#fff;padding:.2rem .6rem;border-radius:16px;}
+.uphase{font-weight:400;opacity:.82;font-size:.74rem;}
+.mile{font-size:.76rem;color:var(--muted);}
+.mile .star{color:var(--warm);font-weight:700;}
+.mile .q{display:inline-block;background:#f0ece2;border:1px solid var(--border);border-radius:4px;padding:.05rem .4rem;font-size:.7rem;font-weight:600;color:var(--navy);}
+.mile .hd{font-size:.7rem;color:var(--muted);font-style:italic;}
+tr.brk td{background:repeating-linear-gradient(45deg,#efe9df,#efe9df 8px,#f5f0e8 8px,#f5f0e8 16px);text-align:center;font-weight:700;color:var(--muted);font-size:.8rem;letter-spacing:.03em;padding:.5rem;}
+tr.semstart td{background:var(--navy);color:#fff;font-family:'Fraunces',serif;font-size:.9rem;padding:.4rem .6rem;letter-spacing:.02em;}
+tr.semstart.s2 td{background:var(--warm);}
+tr.keystone td{box-shadow:inset 0 0 0 2px var(--warm);}
+
+.note{background:var(--card);border:1px dashed var(--border);border-radius:8px;padding:11px 15px;font-size:.83rem;color:var(--muted);margin-top:16px;}
+.note b{color:var(--navy);}
+footer{margin-top:22px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--border);padding-top:14px;}
+footer a{color:var(--warm);}
+@media print{body{background:#fff;}.scroll{overflow:visible;}th{position:static;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="crumb"><a href="Course-Overview.html">&larr; Course Overview</a> &middot; <a href="Unit-Theme-System.html">Unit Themes</a> &middot; <a href="Routines-Proficiency-Loop-Map.html">Loop Map</a></div>
+  <h1>Year-at-a-Glance Calendar Map</h1>
+  <p class="sub">The eight units mapped onto the real Edmonds 2026&ndash;27 calendar &mdash; 180 student days, breaks and grading dates built in, and the two keystones anchored to the semester and year ends.</p>
+
+  <div class="rocks">
+    <div class="rock"><div class="rl">First day</div><div class="rv">Wed, Sep 2</div><div class="rd">2-day launch week</div></div>
+    <div class="rock"><div class="rl">End of Q1</div><div class="rv">Nov 6</div><div class="rd">during Unit 3</div></div>
+    <div class="rock s2"><div class="rl">End of Semester 1</div><div class="rv">Jan 22 ★</div><div class="rd">CBA due · grading Jan 25</div></div>
+    <div class="rock s2"><div class="rl">End of Q3</div><div class="rv">Apr 2</div><div class="rd">during Unit 6</div></div>
+    <div class="rock s2"><div class="rl">Last day</div><div class="rv">Jun 22 ★</div><div class="rd">Civic Action · half day</div></div>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="scroll">
+    <table id="cal">
+      <thead><tr><th>Wk</th><th>Dates</th><th>Days</th><th>Unit</th><th>Milestones &amp; days off</th></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <div class="note">
+    <b>How the breaks shape the plan:</b> Winter Break lands neatly between CBA build (Dec) and CBA debates (Jan), so students return from break straight into performing the Constitutional CBA that closes Semester 1. Spring Break splits Unit 6 (A Nation Divided) &mdash; a natural pause in a heavy unit. The last three weeks funnel into the Civic Action product on the final half day. Snow make-up days (May 28, June 23&ndash;28) sit as buffer beyond the plan, so nothing here depends on them.
+  </div>
+
+  <footer>
+    Source: Edmonds SD 2026&ndash;27 Family &amp; Community Calendar. Colors match the <a href="Unit-Theme-System.html">Unit Theme System</a>; unit arcs match the <a href="Routines-Proficiency-Loop-Map.html">Loop Map</a>. Week counts: U1&nbsp;3 · U2&nbsp;5 · U3&nbsp;6 + CBA&nbsp;5 · U4&nbsp;4 · U5&nbsp;4 · U6&nbsp;4 · U7&nbsp;4 · U8&nbsp;5.
+  </footer>
+</div>
+
+<script>
+const UNITS = {
+  u1:   {name:"U1 · Foundations & Identity", deep:"#1F4D3A"},
+  u2:   {name:"U2 · Revolution", deep:"#7A2A28"},
+  u3:   {name:"U3 · Building a Government", deep:"#1B2D45", phase:"content"},
+  u3cba:{name:"U3 · Constitutional CBA", deep:"#1B2D45", phase:"SCOTUS debate"},
+  u4:   {name:"U4 · A New Nation & Its Economy", deep:"#7E5A15"},
+  u5:   {name:"U5 · Expansion & Its Costs", deep:"#8F3F1E"},
+  u6:   {name:"U6 · A Nation Divided", deep:"#43285A"},
+  u7:   {name:"U7 · A Changing Nation", deep:"#1F5155"},
+  u8:   {name:"U8 · Reform & Civic Action", deep:"#7C2A48"}
+};
+
+const ROWS = [{"wk":1,"weekOf":"Sep 02","end":"Sep 03","days":2,"sem":"S1","unit":"u1","off":["Fri"],"note":"","milestones":[]},{"wk":2,"weekOf":"Sep 08","end":"Sep 11","days":4,"sem":"S1","unit":"u1","off":["Mon"],"note":"half-day","milestones":[]},{"wk":3,"weekOf":"Sep 14","end":"Sep 18","days":5,"sem":"S1","unit":"u1","off":[],"note":"","milestones":[]},{"wk":4,"weekOf":"Sep 21","end":"Sep 25","days":5,"sem":"S1","unit":"u2","off":[],"note":"","milestones":[]},{"wk":5,"weekOf":"Sep 28","end":"Oct 02","days":5,"sem":"S1","unit":"u2","off":[],"note":"","milestones":[]},{"wk":6,"weekOf":"Oct 05","end":"Oct 09","days":5,"sem":"S1","unit":"u2","off":[],"note":"","milestones":[]},{"wk":7,"weekOf":"Oct 12","end":"Oct 16","days":5,"sem":"S1","unit":"u2","off":[],"note":"","milestones":[]},{"wk":8,"weekOf":"Oct 19","end":"Oct 22","days":4,"sem":"S1","unit":"u2","off":["Fri"],"note":"","milestones":[]},{"wk":9,"weekOf":"Oct 26","end":"Oct 30","days":5,"sem":"S1","unit":"u3","off":[],"note":"half-day","milestones":[]},{"wk":10,"weekOf":"Nov 02","end":"Nov 06","days":5,"sem":"S1","unit":"u3","off":[],"note":"","milestones":["End Q1"]},{"wk":11,"weekOf":"Nov 09","end":"Nov 13","days":4,"sem":"S1","unit":"u3","off":["Wed"],"note":"","milestones":[]},{"wk":12,"weekOf":"Nov 16","end":"Nov 20","days":5,"sem":"S1","unit":"u3","off":[],"note":"","milestones":[]},{"wk":13,"weekOf":"Nov 23","end":"Nov 24","days":2,"sem":"S1","unit":"u3","off":["Wed","Thu","Fri"],"note":"","milestones":[]},{"wk":14,"weekOf":"Nov 30","end":"Dec 04","days":5,"sem":"S1","unit":"u3","off":[],"note":"","milestones":[]},{"wk":15,"weekOf":"Dec 07","end":"Dec 11","days":5,"sem":"S1","unit":"u3cba","off":[],"note":"","milestones":[]},{"wk":16,"weekOf":"Dec 14","end":"Dec 18","days":5,"sem":"S1","unit":"u3cba","off":[],"note":"","milestones":[]},{"break":"Winter Break · Dec 21 – Jan 1"},{"wk":17,"weekOf":"Jan 04","end":"Jan 08","days":5,"sem":"S1","unit":"u3cba","off":[],"note":"","milestones":[]},{"wk":18,"weekOf":"Jan 11","end":"Jan 15","days":5,"sem":"S1","unit":"u3cba","off":[],"note":"","milestones":[]},{"wk":19,"weekOf":"Jan 19","end":"Jan 22","days":4,"sem":"S1","unit":"u3cba","off":["Mon"],"note":"","milestones":["★ CBA due · End Sem 1"]},{"wk":20,"weekOf":"Jan 26","end":"Jan 29","days":4,"sem":"S2","unit":"u4","off":["Mon"],"note":"","milestones":[]},{"wk":21,"weekOf":"Feb 01","end":"Feb 05","days":5,"sem":"S2","unit":"u4","off":[],"note":"","milestones":[]},{"wk":22,"weekOf":"Feb 08","end":"Feb 12","days":5,"sem":"S2","unit":"u4","off":[],"note":"","milestones":[]},{"wk":23,"weekOf":"Feb 17","end":"Feb 19","days":3,"sem":"S2","unit":"u4","off":["Mon","Tue"],"note":"","milestones":[]},{"wk":24,"weekOf":"Feb 22","end":"Feb 26","days":5,"sem":"S2","unit":"u5","off":[],"note":"","milestones":[]},{"wk":25,"weekOf":"Mar 01","end":"Mar 05","days":5,"sem":"S2","unit":"u5","off":[],"note":"","milestones":[]},{"wk":26,"weekOf":"Mar 08","end":"Mar 11","days":4,"sem":"S2","unit":"u5","off":["Fri"],"note":"","milestones":[]},{"wk":27,"weekOf":"Mar 15","end":"Mar 19","days":5,"sem":"S2","unit":"u5","off":[],"note":"","milestones":[]},{"wk":28,"weekOf":"Mar 22","end":"Mar 26","days":5,"sem":"S2","unit":"u6","off":[],"note":"","milestones":[]},{"wk":29,"weekOf":"Mar 29","end":"Apr 02","days":5,"sem":"S2","unit":"u6","off":[],"note":"","milestones":["End Q3"]},{"break":"Spring Break · Apr 5 – 9"},{"wk":30,"weekOf":"Apr 12","end":"Apr 16","days":5,"sem":"S2","unit":"u6","off":[],"note":"","milestones":[]},{"wk":31,"weekOf":"Apr 19","end":"Apr 23","days":5,"sem":"S2","unit":"u6","off":[],"note":"","milestones":[]},{"wk":32,"weekOf":"Apr 26","end":"Apr 30","days":5,"sem":"S2","unit":"u7","off":[],"note":"","milestones":[]},{"wk":33,"weekOf":"May 03","end":"May 07","days":5,"sem":"S2","unit":"u7","off":[],"note":"","milestones":[]},{"wk":34,"weekOf":"May 10","end":"May 14","days":5,"sem":"S2","unit":"u7","off":[],"note":"","milestones":[]},{"wk":35,"weekOf":"May 17","end":"May 21","days":5,"sem":"S2","unit":"u7","off":[],"note":"","milestones":[]},{"wk":36,"weekOf":"May 24","end":"May 27","days":4,"sem":"S2","unit":"u8","off":["Fri"],"note":"","milestones":[]},{"wk":37,"weekOf":"Jun 01","end":"Jun 04","days":4,"sem":"S2","unit":"u8","off":["Mon"],"note":"","milestones":[]},{"wk":38,"weekOf":"Jun 07","end":"Jun 11","days":5,"sem":"S2","unit":"u8","off":[],"note":"","milestones":[]},{"wk":39,"weekOf":"Jun 14","end":"Jun 17","days":4,"sem":"S2","unit":"u8","off":["Fri"],"note":"","milestones":[]},{"wk":40,"weekOf":"Jun 21","end":"Jun 22","days":2,"sem":"S2","unit":"u8","off":[],"note":"half-day","milestones":["★ Civic Action · Last day"]}];
+
+// legend
+const legend=document.getElementById('legend');
+Object.values(UNITS).filter((u,i,a)=>a.findIndex(x=>x.deep===u.deep&&x.name.slice(0,2)===u.name.slice(0,2))===i)
+  .forEach(u=>{
+    const s=document.createElement('span');s.className='lu';
+    s.innerHTML=`<span class="lsw" style="background:${u.deep}"></span>${u.name.split(' · ')[0]}`;
+    legend.appendChild(s);
+  });
+
+const body=document.getElementById('body');
+let lastSem=null;
+ROWS.forEach(r=>{
+  if(r.break){
+    const tr=document.createElement('tr');tr.className='brk';
+    tr.innerHTML=`<td colspan="5">✧ ${r.break} ✧</td>`;body.appendChild(tr);return;
+  }
+  if(r.sem!==lastSem){
+    const tr=document.createElement('tr');tr.className='semstart'+(r.sem==='S2'?' s2':'');
+    tr.innerHTML=`<td colspan="5">${r.sem==='S1'?'SEMESTER 1 — install &amp; first keystone (Constitutional CBA)':'SEMESTER 2 — student-led &amp; the Civic Action throughline'}</td>`;
+    body.appendChild(tr);lastSem=r.sem;
+  }
+  const u=UNITS[r.unit];
+  const tr=document.createElement('tr');
+  if(r.milestones.some(m=>m.includes('★'))) tr.className='keystone';
+  const dcls=r.days<5?'dbadge short':'dbadge';
+  const phase=u.phase?`<span class="uphase">${u.phase}</span>`:'';
+  let miles=r.milestones.map(m=>m.includes('★')?`<span class="star">${m}</span>`:`<span class="q">${m}</span>`).join(' ');
+  const offs=r.off&&r.off.length?`<span class="hd">${r.off.join(', ')} off${r.note?' · '+r.note:''}</span>`:(r.note?`<span class="hd">${r.note}</span>`:'');
+  tr.innerHTML=`
+    <td class="wk">${r.wk}</td>
+    <td class="dates"><b>${r.weekOf}</b> <span>– ${r.end}</span></td>
+    <td class="days"><span class="${dcls}">${r.days} day${r.days>1?'s':''}</span></td>
+    <td><span class="upill" style="background:${u.deep}">${u.name.split(' · ')[1]} ${phase}</span></td>
+    <td class="mile">${miles} ${offs}</td>`;
+  body.appendChild(tr);
+});
+</script>
+</body>
+</html>

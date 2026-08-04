@@ -1,0 +1,260 @@
+{
+    "unit": {
+        "id": "building-a-government",
+        "title": "Building a Government Study Tool",
+        "subtitle": "How do you build a government that limits its own power? Learn the vocabulary, follow the Constitution's story, and get ready for your SCOTUS debate.",
+        "essentialQuestion": "How do you build a government that limits its own power — and who decides what the Constitution means?",
+        "theme": {
+            "primary": "#1B2D45",
+            "secondary": "#2C4568",
+            "accent": "#B8893B"
+        }
+    },
+    "activities": [
+        "flashcards",
+        "resources",
+        "typing-practice",
+        "timeline",
+        "wordle",
+        "hangman",
+        "flip-match",
+        "term-catcher",
+        "crossword"
+    ],
+    "categorySchedule": {
+        "A Failed First Try": "2026-10-26",
+        "Structure & Powers": "2026-11-09",
+        "Rights on Paper": "2026-11-23",
+        "We the People?": "2026-12-07",
+        "The Court Decides": "2027-01-04"
+    },
+    "vocabulary": [
+        {
+            "term": "Articles of Confederation",
+            "definition": "America's first plan of national government (1781–1789), which created a weak central government and left most power with the states",
+            "simpleExplanation": "America's first try at a government — and a flop. It was like a group project where nobody is in charge: no president, no national courts, and a Congress that couldn't tax or make anyone follow its rules.",
+            "example": "Under the Articles of Confederation, Congress couldn't collect taxes, so it couldn't even pay the soldiers who had just won the Revolution",
+            "category": "A Failed First Try",
+            "typingSnippet": "The Articles of Confederation were America's first plan of national government, ratified in 1781. They created a deliberately weak central government with no president and no power to tax. Within a few years the plan's failures convinced many leaders that the country needed a stronger design."
+        },
+        {
+            "term": "Convention",
+            "definition": "A formal meeting of delegates called to make important decisions, such as the 1787 gathering in Philadelphia that wrote the Constitution",
+            "simpleExplanation": "A big official meeting where representatives get together to hammer out something important. In 1787, 55 delegates met in Philadelphia to fix the Articles — and ended up writing a whole new Constitution instead.",
+            "example": "The Constitutional Convention met in secret through the hot summer of 1787, with the windows nailed shut to keep the debates private",
+            "category": "A Failed First Try",
+            "typingSnippet": "A convention is a formal meeting of delegates called to make important decisions. The Constitutional Convention of 1787 gathered in Philadelphia to revise the Articles of Confederation. The delegates went further and wrote an entirely new Constitution."
+        },
+        {
+            "term": "Compromise",
+            "definition": "An agreement in which each side gives up part of what it wants so that everyone can move forward",
+            "simpleExplanation": "Nobody gets everything; everybody gets something. The Constitution is stitched together out of compromises — big states and small states, North and South — some wise, and some, like the deals protecting slavery, deeply unjust.",
+            "example": "The Great Compromise gave big states what they wanted in the House (representation by population) and small states what they wanted in the Senate (two votes each)",
+            "category": "A Failed First Try",
+            "typingSnippet": "A compromise is an agreement in which each side gives up part of what it wants so everyone can move forward. The Constitution only exists because of compromises between big and small states and between North and South. Some of those deals solved real problems, while others wrote injustice directly into the document."
+        },
+        {
+            "term": "Ratify",
+            "definition": "To formally approve something, such as a constitution or an amendment, making it officially valid",
+            "simpleExplanation": "The official yes vote. Writing the Constitution wasn't enough — nine of the thirteen states had to ratify it before it became the law of the land, and the fight over ratification nearly tore the country apart.",
+            "example": "New Hampshire became the ninth state to ratify the Constitution in 1788, officially putting it into effect",
+            "category": "A Failed First Try",
+            "typingSnippet": "To ratify means to formally approve something and make it official. The Constitution required nine states to ratify it before it took effect. Amendments still work this way today: three-fourths of the states must ratify a change before it becomes part of the Constitution."
+        },
+        {
+            "term": "Separation of Powers",
+            "definition": "Dividing government power among the legislative, executive, and judicial branches so that no single branch controls everything",
+            "simpleExplanation": "Don't put all the power in one place. The framers split the government into three branches — one to make laws, one to carry them out, one to judge them — so no person or group could grab it all.",
+            "example": "Congress writes a law, the president enforces it, and the courts decide what it means — three branches, three separate jobs",
+            "category": "Structure & Powers",
+            "typingSnippet": "Separation of powers divides government authority among the legislative, executive, and judicial branches. Each branch has its own job: making laws, enforcing laws, and interpreting laws. The framers designed this split so that no single person or group could control everything."
+        },
+        {
+            "term": "Checks and Balances",
+            "definition": "The powers each branch of government has to limit the other branches, keeping any one branch from becoming too powerful",
+            "simpleExplanation": "Every branch gets a way to push back on the others: the president can veto Congress, Congress can override the veto, and the courts can strike down what either one does. It's a system built on healthy distrust.",
+            "example": "When Congress passes a bill the president opposes, the president can veto it — and Congress can override that veto with a two-thirds vote",
+            "category": "Structure & Powers",
+            "typingSnippet": "Checks and balances are the powers each branch uses to limit the other two. Vetoes, overrides, confirmations, and court rulings all keep any one branch from growing too strong. Your Supreme Court case for the CBA is checks and balances in action: a court checking the power of a school, a police force, or a state."
+        },
+        {
+            "term": "Federalism",
+            "definition": "The division of power between the national government and the state governments",
+            "simpleExplanation": "Two levels of government sharing one country. The national government handles things like war and money; states handle things like schools and driver's licenses; and they've argued about the line between them ever since 1787.",
+            "example": "Washington State sets its own school rules under federalism, but it can't print its own money or sign its own treaties",
+            "category": "Structure & Powers",
+            "typingSnippet": "Federalism is the division of power between the national government and the states. Some powers belong only to the nation, some only to the states, and some are shared. Arguments over where that line sits have shaped American history from ratification to the Supreme Court cases we study today."
+        },
+        {
+            "term": "Legislature",
+            "definition": "The branch of government that makes laws; in the United States, the Congress, made up of the House and the Senate",
+            "simpleExplanation": "The lawmaking branch. In the U.S. that's Congress — the House of Representatives (seats based on population) plus the Senate (two per state) — a two-chamber design that came straight out of the Great Compromise.",
+            "example": "Washington sends ten representatives to the House based on its population, but exactly two senators, just like every other state",
+            "category": "Structure & Powers",
+            "typingSnippet": "A legislature is the branch of government that makes laws. The United States legislature is Congress, split into the House of Representatives and the Senate. That two-chamber design was the heart of the Great Compromise between large and small states."
+        },
+        {
+            "term": "Veto",
+            "definition": "The president's constitutional power to reject a bill passed by Congress",
+            "simpleExplanation": "The president's 'no' stamp. Congress can pass a bill, but the president can veto it and send it back — and then Congress needs a two-thirds vote in both houses to override. One power, checked by another.",
+            "example": "George Washington cast the first presidential veto in 1792, rejecting a bill about how House seats were divided",
+            "category": "Structure & Powers",
+            "typingSnippet": "A veto is the president's power to reject a bill passed by Congress. A vetoed bill dies unless two-thirds of both houses vote to override it. The veto and the override are a perfect example of checks and balances working in both directions."
+        },
+        {
+            "term": "Bill of Rights",
+            "definition": "The first ten amendments to the Constitution, which protect individual freedoms from government power",
+            "simpleExplanation": "The Constitution's list of promises. Several states refused to ratify without one, so in 1791 the first ten amendments were added — freedom of speech, religion, fair trials, and more. Nearly every case in your CBA lives here.",
+            "example": "The First Amendment of the Bill of Rights protected the Tinker siblings' right to wear anti-war armbands to school",
+            "category": "Rights on Paper",
+            "typingSnippet": "The Bill of Rights is the first ten amendments to the Constitution, ratified in 1791. It protects individual freedoms such as speech, religion, and fair treatment by the law. It exists because many Americans refused to accept the Constitution without written guarantees against government power."
+        },
+        {
+            "term": "Amendment",
+            "definition": "An official change or addition to the Constitution",
+            "simpleExplanation": "The Constitution's edit button — deliberately hard to press. It takes two-thirds of Congress to propose a change and three-fourths of the states to approve it, which is why there have been only 27 amendments in over 230 years.",
+            "example": "The 19th Amendment, ratified in 1920, finally guaranteed women the right to vote",
+            "category": "Rights on Paper",
+            "typingSnippet": "An amendment is an official change or addition to the Constitution. The framers made amending difficult on purpose, requiring supermajorities in Congress and among the states. The 27 amendments include the Bill of Rights and the changes that ended slavery and expanded voting rights."
+        },
+        {
+            "term": "Due Process",
+            "definition": "The constitutional guarantee that the government must follow fair procedures before taking away a person's life, liberty, or property",
+            "simpleExplanation": "The government has to play by fair rules before it can punish you or take what's yours — fair notice, fair hearing, fair treatment. It's the difference between a government of laws and a government of whims.",
+            "example": "In Payton v. New York, the Court ruled that police entering a home without a warrant violated due process protections",
+            "category": "Rights on Paper",
+            "typingSnippet": "Due process means the government must follow fair procedures before taking away life, liberty, or property. The Fifth and Fourteenth Amendments both guarantee it. Several of our landmark cases turn on whether police or schools followed fair rules when they searched, questioned, or punished someone."
+        },
+        {
+            "term": "Freedom of Expression",
+            "definition": "The First Amendment rights to speak, write, publish, protest, and share ideas without government punishment",
+            "simpleExplanation": "Your right to say it, write it, post it, or wear it — even when the government or your school doesn't like it. But it has limits, and figuring out exactly where those limits sit is what half our Supreme Court cases are about.",
+            "example": "Tinker v. Des Moines protected students' freedom of expression at school; Mahanoy asked whether that protection follows students onto social media",
+            "category": "Rights on Paper",
+            "typingSnippet": "Freedom of expression is the First Amendment right to speak, write, publish, and protest without government punishment. It is powerful but not unlimited, and courts constantly decide where its edges are. Cases like Tinker and Mahanoy ask exactly how far that freedom stretches for students."
+        },
+        {
+            "term": "Preamble",
+            "definition": "The opening statement of the Constitution, beginning \"We the People,\" which announces the document's goals",
+            "simpleExplanation": "The Constitution's mission statement — one long sentence promising justice, peace at home, common defense, general welfare, and liberty. Beautiful words that raise this unit's hardest question: who counted as 'We the People'?",
+            "example": "The Preamble promises to \"secure the Blessings of Liberty\" — yet the same document protected slavery for decades",
+            "category": "We the People?",
+            "typingSnippet": "The Preamble is the Constitution's opening statement, beginning with the words We the People. It announces the document's goals: justice, domestic tranquility, common defense, general welfare, and liberty. Ever since 1787, Americans have argued over who is actually included in those three famous words."
+        },
+        {
+            "term": "Popular Sovereignty",
+            "definition": "The principle that government power comes from the people, who are the ultimate source of authority",
+            "simpleExplanation": "The people are the boss. Government only has the power the people give it — that's the whole idea behind 'We the People.' But in 1787, 'the people' who could actually vote were mostly white men who owned property.",
+            "example": "Popular sovereignty is why the Constitution had to be ratified by state conventions of citizens, not just approved by state governments",
+            "category": "We the People?",
+            "typingSnippet": "Popular sovereignty is the principle that all government power comes from the people. It is the idea announced by the first three words of the Constitution. Yet for most of American history, large groups of people were excluded from the voting and rights that make sovereignty real."
+        },
+        {
+            "term": "Three-Fifths Compromise",
+            "definition": "The Constitutional Convention agreement to count three-fifths of a state's enslaved population when determining representation and taxes",
+            "simpleExplanation": "The Convention's darkest deal. Southern states wanted enslaved people counted for representation (but given no rights); northern states objected. The compromise counted each enslaved person as three-fifths — treating human beings as arithmetic, and giving slave states extra power in Congress.",
+            "example": "Because of the Three-Fifths Compromise, Virginia gained extra seats in Congress from the very people it denied every right to",
+            "category": "We the People?",
+            "typingSnippet": "The Three-Fifths Compromise counted three-fifths of a state's enslaved population for representation and taxation. It gave slaveholding states extra power in Congress while denying enslaved people every right of citizenship. It is the clearest evidence that We the People did not yet mean everyone."
+        },
+        {
+            "term": "Judicial Review",
+            "definition": "The Supreme Court's power to declare laws or government actions unconstitutional, established by Marbury v. Madison in 1803",
+            "simpleExplanation": "The Court's trump card — the power to say 'that law breaks the Constitution, so it's void.' It isn't spelled out in the Constitution; Chief Justice John Marshall claimed it in Marbury v. Madison, and it made the Court a true equal branch.",
+            "example": "In Brown v. Board of Education, judicial review let the Court strike down school segregation laws as unconstitutional",
+            "category": "The Court Decides",
+            "typingSnippet": "Judicial review is the Supreme Court's power to strike down laws and government actions that violate the Constitution. Chief Justice John Marshall established it in Marbury v. Madison in 1803. Every landmark case you will debate exists because of this single power."
+        },
+        {
+            "term": "Precedent",
+            "definition": "A court decision that serves as a rule or example for deciding similar cases in the future",
+            "simpleExplanation": "Courts follow their own footprints. Once the Supreme Court decides a case, that ruling becomes the guide for every similar case afterward — which is why lawyers spend so much time arguing about what past cases really said.",
+            "example": "Tinker set the precedent that students don't \"shed their constitutional rights at the schoolhouse gate\" — later cases like Mahanoy had to work within it",
+            "category": "The Court Decides",
+            "typingSnippet": "A precedent is a court decision that guides how similar cases are decided later. When the Supreme Court rules, lower courts must follow that ruling in comparable situations. In your debate, the strongest arguments will connect your case to the precedents that came before it."
+        },
+        {
+            "term": "Petitioner & Respondent",
+            "definition": "The two sides in a Supreme Court case: the petitioner asks the Court to review a lower court's decision, and the respondent argues to keep that decision in place",
+            "simpleExplanation": "Every Supreme Court case name is a matchup: the petitioner (listed first) lost below and is asking the Court to change the result; the respondent won below and wants it to stand. Tinker v. Des Moines = the Tinkers vs. the school district.",
+            "example": "In Mahanoy Area School District v. B.L., the school district was the petitioner and the cheerleader was the respondent",
+            "category": "The Court Decides",
+            "typingSnippet": "In a Supreme Court case, the petitioner asks the Court to review a lower court's decision, while the respondent defends that decision. The petitioner's name comes first in the case title. Knowing which side is which tells you who lost below and what each side needs to prove."
+        },
+        {
+            "term": "Landmark Case",
+            "definition": "A Supreme Court case that sets a major precedent and changes how the Constitution is understood",
+            "simpleExplanation": "A case so big it redraws the map. Landmark cases like Brown and Tinker didn't just settle one dispute — they changed what the Constitution means for everyone. You'll spend the CBA living inside one of them.",
+            "example": "Brown v. Board of Education is a landmark case because it overturned segregation and changed American life far beyond one school district",
+            "category": "The Court Decides",
+            "typingSnippet": "A landmark case is a Supreme Court decision that sets a major precedent and reshapes how the Constitution is understood. Cases like Brown v. Board of Education and Tinker v. Des Moines changed life for millions of people. Your CBA asks you to argue one of these cases as if the outcome were still undecided."
+        }
+    ],
+    "timelineEvents": [
+        {
+            "id": 1,
+            "title": "Articles of Confederation Ratified",
+            "year": "1781",
+            "description": "America's first plan of government takes effect — a weak central government with most power left to the states"
+        },
+        {
+            "id": 2,
+            "title": "Shays' Rebellion",
+            "year": "1786–1787",
+            "description": "Debt-ridden Massachusetts farmers revolt, exposing how powerless the Articles government is to keep order"
+        },
+        {
+            "id": 3,
+            "title": "Constitutional Convention",
+            "year": "1787",
+            "description": "Fifty-five delegates meet in Philadelphia to fix the Articles — and write a new Constitution instead"
+        },
+        {
+            "id": 4,
+            "title": "Great Compromise",
+            "year": "1787",
+            "description": "The Convention settles the big-state vs. small-state fight: a House based on population and a Senate with two seats per state"
+        },
+        {
+            "id": 5,
+            "title": "Federalist Papers Begin",
+            "year": "1787",
+            "description": "Hamilton, Madison, and Jay publish essays arguing for ratification of the new Constitution"
+        },
+        {
+            "id": 6,
+            "title": "Constitution Ratified",
+            "year": "1788",
+            "description": "New Hampshire becomes the ninth state to ratify, making the Constitution the law of the land"
+        },
+        {
+            "id": 7,
+            "title": "Washington Inaugurated",
+            "year": "1789",
+            "description": "George Washington takes office as the first president, setting precedents for the new executive branch"
+        },
+        {
+            "id": 8,
+            "title": "Bill of Rights Ratified",
+            "year": "1791",
+            "description": "The first ten amendments are added, guaranteeing individual freedoms the ratification debates demanded"
+        },
+        {
+            "id": 9,
+            "title": "Marbury v. Madison",
+            "year": "1803",
+            "description": "Chief Justice John Marshall establishes judicial review — the Court's power to strike down unconstitutional laws"
+        },
+        {
+            "id": 10,
+            "title": "Tinker v. Des Moines",
+            "year": "1969",
+            "description": "Modern landmark for the CBA: students who wore anti-war armbands win, and the Court rules that constitutional rights don't stop at the schoolhouse gate"
+        }
+    ],
+    "reflectionPrompts": [
+        "How does {term} help build a government that limits its own power?",
+        "Who gets to decide what {term} means in practice — and who is left out of that decision?",
+        "How might {term} show up in the Supreme Court case you'll argue for the CBA?"
+    ]
+}

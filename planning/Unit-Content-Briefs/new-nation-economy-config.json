@@ -1,0 +1,243 @@
+{
+    "unit": {
+        "id": "new-nation-economy",
+        "title": "A New Nation & Its Economy Study Tool",
+        "subtitle": "What kind of nation — and economy — would America become? Learn the vocabulary, join the cabinet debate, and track your progress.",
+        "essentialQuestion": "What kind of nation — and economy — would the young United States become?",
+        "theme": {
+            "primary": "#7E5A15",
+            "secondary": "#9E762B",
+            "accent": "#B8893B"
+        }
+    },
+    "activities": [
+        "flashcards",
+        "resources",
+        "typing-practice",
+        "timeline",
+        "wordle",
+        "hangman",
+        "flip-match",
+        "term-catcher",
+        "crossword"
+    ],
+    "categorySchedule": {
+        "Setting Precedents": "2027-01-26",
+        "Hamilton's Plan": "2027-02-01",
+        "The First Parties": "2027-02-08",
+        "A Market Economy Grows": "2027-02-17"
+    },
+    "vocabulary": [
+        {
+            "term": "Inauguration",
+            "definition": "The official ceremony that swears a new president into office",
+            "simpleExplanation": "The day a president officially takes the job. When Washington did it in 1789, nobody had ever been sworn in as a president before — he was inventing the ceremony while performing it.",
+            "example": "Washington's first inauguration took place on a balcony in New York City, the nation's temporary capital, on April 30, 1789",
+            "category": "Setting Precedents",
+            "typingSnippet": "An inauguration is the official ceremony that swears a new president into office. Washington's inauguration in 1789 was the first in history, so every detail set an example. Even the words he added to the oath became part of the tradition."
+        },
+        {
+            "term": "Cabinet",
+            "definition": "The group of top advisors who lead the executive departments and help the president make decisions",
+            "simpleExplanation": "The president's brain trust. Washington's first cabinet included Alexander Hamilton at Treasury and Thomas Jefferson at State — two brilliant advisors who disagreed about almost everything, especially money.",
+            "example": "In Washington's cabinet, Hamilton and Jefferson argued face to face over whether the Constitution allowed a national bank",
+            "category": "Setting Precedents",
+            "typingSnippet": "The cabinet is the group of top advisors who lead the executive departments and help the president decide. The Constitution barely mentions it, but Washington created one anyway, and every president since has followed. The fights inside his cabinet over the economy gave birth to the first political parties."
+        },
+        {
+            "term": "Precedent",
+            "definition": "An action or decision that becomes an example for others to follow later",
+            "simpleExplanation": "When you're the first person to do a job, everything you do becomes the unofficial rulebook. Washington knew this — he said his every act would 'serve to establish a precedent' — so he chose carefully.",
+            "example": "Washington stepping down after two terms set a precedent that lasted until 1940 and later became law",
+            "category": "Setting Precedents",
+            "typingSnippet": "A precedent is an action or decision that becomes the example others follow later. As the first president, Washington set precedents with nearly everything he did, from forming a cabinet to leaving office after two terms. Later leaders treated his choices almost like rules."
+        },
+        {
+            "term": "National Bank",
+            "definition": "A central bank chartered by the federal government to hold its money, issue a stable currency, and make loans that fuel business",
+            "simpleExplanation": "Hamilton's big idea: one bank for the whole country that keeps the government's money safe, prints trustworthy paper money, and lends cash so businesses can grow. Jefferson thought the Constitution never allowed any such thing.",
+            "example": "The First Bank of the United States, chartered in 1791, was the most controversial piece of Hamilton's financial plan",
+            "category": "Hamilton's Plan",
+            "typingSnippet": "A national bank is a central bank chartered by the federal government to hold its money, issue stable currency, and make loans. Hamilton argued the young nation needed one to earn trust and fuel growth. Jefferson answered that the Constitution never granted that power, and the argument split the cabinet."
+        },
+        {
+            "term": "Tariff",
+            "definition": "A tax on imported goods that raises revenue for the government and protects domestic makers from cheaper foreign competition",
+            "simpleExplanation": "A tax at the border. A tariff does two jobs at once: it pours money into the treasury, and it makes foreign goods pricier so American-made goods can compete. That double duty is exactly why Hamilton loved it — and why farmers who bought imported goods didn't.",
+            "example": "The Tariff of 1789 taxed imported goods to fund the new government and give American manufacturers a fighting chance",
+            "category": "Hamilton's Plan",
+            "typingSnippet": "A tariff is a tax on imported goods. It raises revenue for the government and protects domestic makers by making foreign products more expensive. In Hamilton's plan the tariff was both a money machine and a shield for young American industry, which is why the debate over it never really ended."
+        },
+        {
+            "term": "National Debt",
+            "definition": "The total amount of money a national government owes to the people and countries that lent to it",
+            "simpleExplanation": "The country's IOU pile. After the Revolution, the U.S. owed about 77 million dollars it couldn't pay. Hamilton's shocking claim: if handled right, debt could actually be a good thing — paying it reliably would make lenders trust and invest in America.",
+            "example": "Hamilton's Report on Public Credit proposed paying the full national debt and taking over the states' war debts too",
+            "category": "Hamilton's Plan",
+            "typingSnippet": "The national debt is the total amount a national government owes its lenders. The Revolution left the United States deep in debt, and many doubted it would ever pay. Hamilton argued that paying debts in full would win the trust of investors and make the nation creditworthy."
+        },
+        {
+            "term": "Revenue",
+            "definition": "The money a government collects, mainly through taxes and tariffs, to pay for everything it does",
+            "simpleExplanation": "A government's income. No revenue means no army, no courts, no debt payments — no country, really. The young United States raised almost all of its revenue from tariffs on imports and taxes like the one on whiskey.",
+            "example": "Tariffs on imported goods provided most of the federal government's revenue in the 1790s",
+            "category": "Hamilton's Plan",
+            "typingSnippet": "Revenue is the money a government collects, mostly through taxes and tariffs, to pay for what it does. The new federal government desperately needed revenue to pay its debts and prove it could function. Choosing who and what to tax was one of the first great political fights."
+        },
+        {
+            "term": "Currency",
+            "definition": "The money a country uses, and the system that keeps its value stable and trusted",
+            "simpleExplanation": "The actual money in people's hands — and whether anyone trusts it. In the 1780s, different states and banks issued different paper money that could be worthless a town away. A stable national currency was part of what Hamilton's bank promised to fix.",
+            "example": "Before the national bank, a paper dollar from one state's bank might be refused or discounted in the next state over",
+            "category": "Hamilton's Plan",
+            "typingSnippet": "Currency is the money a country uses and the system that keeps its value stable. In the young republic, a confusing mix of state and bank notes made trade risky. Hamilton wanted the national bank to issue currency people could trust anywhere in the country."
+        },
+        {
+            "term": "Whiskey Rebellion",
+            "definition": "A 1794 uprising of western Pennsylvania farmers against the federal tax on whiskey, put down when Washington led militia troops against it",
+            "simpleExplanation": "Frontier farmers turned their extra grain into whiskey — it traveled better and sold better. So a federal whiskey tax felt like a tax aimed straight at them, and they fought back. Washington's answer, marching thousands of militia west, proved the new government could enforce its laws.",
+            "example": "During the Whiskey Rebellion, protesters tarred and feathered tax collectors before Washington's show of force ended the uprising",
+            "category": "Hamilton's Plan",
+            "typingSnippet": "The Whiskey Rebellion was a 1794 uprising of frontier farmers against the federal whiskey tax. To farmers who earned cash by distilling grain, the tax felt unfair and personal. Washington led militia forces to stop it, proving the new government would enforce its laws."
+        },
+        {
+            "term": "Federalist",
+            "definition": "A member of the first American political party, led by Hamilton, that favored a strong national government, the national bank, and an economy built on trade and manufacturing",
+            "simpleExplanation": "Team Hamilton. Federalists imagined America as a nation of cities, factories, banks, and busy ports — and believed a strong national government should steer the economy to get there.",
+            "example": "Federalists backed the national bank and tariffs, drawing support from merchants and manufacturers in the Northeast",
+            "category": "The First Parties",
+            "typingSnippet": "Federalists made up the first American political party, led by Alexander Hamilton. They wanted a strong national government and an economy powered by trade, banking, and manufacturing. Their vision of America clashed with Jefferson's nation of farmers."
+        },
+        {
+            "term": "Democratic-Republican",
+            "definition": "A member of the party led by Jefferson and Madison that favored limited federal power, states' rights, and an economy of independent farmers",
+            "simpleExplanation": "Team Jefferson. Democratic-Republicans pictured America as a nation of self-reliant farmers, and feared that banks, cities, and a powerful central government would hand the country to the wealthy few.",
+            "example": "Democratic-Republicans opposed Hamilton's bank, arguing it stretched the Constitution and favored rich investors over farmers",
+            "category": "The First Parties",
+            "typingSnippet": "Democratic-Republicans followed Thomas Jefferson and James Madison. They wanted limited federal power and an economy of independent farmers. They saw Hamilton's bank and tariffs as favors to the wealthy, and the disagreement hardened into America's first party system."
+        },
+        {
+            "term": "Strict Construction",
+            "definition": "Reading the Constitution to mean only what it directly says — if a power is not listed, the government does not have it",
+            "simpleExplanation": "The Constitution as an exact recipe: follow it word for word, add nothing. Jefferson used strict construction to argue the national bank was illegal — search the document all you want, the word 'bank' isn't in there.",
+            "example": "Using strict construction, Jefferson told Washington the Constitution gave Congress no power to charter a bank",
+            "category": "The First Parties",
+            "typingSnippet": "Strict construction means reading the Constitution to allow only the powers it directly lists. Jefferson argued that since the document never mentions a bank, Congress could not create one. How strictly to read the Constitution is a debate America has never stopped having."
+        },
+        {
+            "term": "Loose Construction",
+            "definition": "Reading the Constitution flexibly, using the necessary and proper clause to allow powers the document implies but does not spell out",
+            "simpleExplanation": "The Constitution as a framework, not a straitjacket. Hamilton argued that if Congress may collect taxes and borrow money, then a bank is a 'necessary and proper' tool for doing those jobs — even though the document never says the word.",
+            "example": "Washington accepted Hamilton's loose construction argument and signed the bank bill in 1791",
+            "category": "The First Parties",
+            "typingSnippet": "Loose construction means reading the Constitution flexibly, allowing powers it implies but does not spell out. Hamilton used the necessary and proper clause to defend the national bank. His argument won over Washington and expanded what the federal government could do."
+        },
+        {
+            "term": "Supply and Demand",
+            "definition": "The relationship between how much of something is available and how much people want it, which determines prices in a market",
+            "simpleExplanation": "The invisible tug-of-war behind every price. Lots of something nobody wants? Price drops. Little of something everyone wants? Price soars. Watch American wheat, cotton, and shipping prices in this era and you can see the young economy breathe.",
+            "example": "When the Embargo Act cut off trade in 1807, American farm goods piled up with no buyers and prices collapsed",
+            "category": "A Market Economy Grows",
+            "typingSnippet": "Supply and demand describes how the amount of a good available and the desire for it set its price. When European wars raised demand for American grain and shipping, prices and profits jumped. When the embargo cut off buyers, the same goods became nearly worthless."
+        },
+        {
+            "term": "Market Revolution",
+            "definition": "The early-1800s transformation in which Americans shifted from making goods at home to buying and selling in wider markets, powered by factories, canals, and improved roads",
+            "simpleExplanation": "The moment America's economy changed gears. Instead of families making most of what they used, people started working for wages, buying factory-made goods, and selling to strangers hundreds of miles away. New roads, canals, and mills stitched local economies into one big market.",
+            "example": "The Lowell mills in Massachusetts hired young women to run power looms, turning Southern cotton into cloth sold nationwide",
+            "category": "A Market Economy Grows",
+            "typingSnippet": "The Market Revolution was the early-1800s shift from making goods at home to buying and selling in wide markets. Factories, canals, and better roads connected farms and cities into one economy. It changed not just how Americans worked, but how they lived."
+        },
+        {
+            "term": "Free Enterprise",
+            "definition": "An economic system in which private individuals and businesses decide what to make, sell, and buy, with little government control",
+            "simpleExplanation": "An economy run by choices, not commands. Nobody ordered anyone to build mills or dig canals — people saw a chance to profit and took it. The big argument, then and now: how much should government guide the game versus stay out of it?",
+            "example": "Under free enterprise, merchants and inventors in the early republic launched businesses without needing government permission",
+            "category": "A Market Economy Grows",
+            "typingSnippet": "Free enterprise is an economic system where private people and businesses decide what to make, sell, and buy. The early United States embraced it, and the Market Revolution was largely driven by private choices and investments. Americans still debate how much government should steer that system."
+        },
+        {
+            "term": "Interchangeable Parts",
+            "definition": "Identical, machine-made parts that can replace one another, making mass production and easy repair possible",
+            "simpleExplanation": "Before this idea, every musket was handmade and one-of-a-kind — if a piece broke, a craftsman had to custom-fit a new one. Identical parts meant products could be assembled fast, fixed fast, and made by machines. It's the seed of every assembly line since.",
+            "example": "Eli Whitney promoted interchangeable parts for muskets, demonstrating that parts from different guns could be swapped",
+            "category": "A Market Economy Grows",
+            "typingSnippet": "Interchangeable parts are identical, machine-made components that can replace one another. The idea made mass production possible because products no longer had to be crafted one at a time. It became a foundation of the American factory system."
+        },
+        {
+            "term": "Profit Motive",
+            "definition": "The desire to make money that drives people to start businesses, invest, invent, and take risks",
+            "simpleExplanation": "The engine under the hood of a market economy. The hope of profit built mills, canals, and fortunes in the young republic — and, as we saw in Unit 1, the same drive could push people to trade away their values. This unit asks the question again: profit for whom, and at what cost?",
+            "example": "The profit motive led investors to fund the Lowell mills, betting that factory-made cloth would earn far more than it cost",
+            "category": "A Market Economy Grows",
+            "typingSnippet": "The profit motive is the desire to make money that drives people to invest, invent, and take risks. It powered the Market Revolution, funding factories and canals across the young nation. It also raised a question America keeps asking: what happens when profit and values collide?"
+        }
+    ],
+    "timelineEvents": [
+        {
+            "id": 1,
+            "title": "Washington Inaugurated",
+            "year": "1789",
+            "description": "The first president takes the oath in New York City — every choice he makes will set a precedent"
+        },
+        {
+            "id": 2,
+            "title": "Hamilton's Report on Public Credit",
+            "year": "1790",
+            "description": "Hamilton proposes paying the national debt in full and assuming the states' war debts"
+        },
+        {
+            "id": 3,
+            "title": "First Bank of the United States Chartered",
+            "year": "1791",
+            "description": "After a fierce constitutional debate in the cabinet, Washington signs the bank into law"
+        },
+        {
+            "id": 4,
+            "title": "Whiskey Rebellion",
+            "year": "1794",
+            "description": "Frontier farmers rise against the whiskey tax; Washington leads militia to prove federal law will be enforced"
+        },
+        {
+            "id": 5,
+            "title": "Washington's Farewell Address",
+            "year": "1796",
+            "description": "The departing president warns against political parties and permanent foreign alliances"
+        },
+        {
+            "id": 6,
+            "title": "Election of 1800 — Peaceful Transfer of Power",
+            "year": "1800–1801",
+            "description": "Power passes from Federalists to Jefferson's Democratic-Republicans without violence — a world first"
+        },
+        {
+            "id": 7,
+            "title": "Embargo Act",
+            "year": "1807",
+            "description": "Jefferson halts American overseas trade to avoid war; the economy pays a heavy price"
+        },
+        {
+            "id": 8,
+            "title": "War of 1812 Begins",
+            "year": "1812",
+            "description": "The United States declares war on Britain over trade restrictions and the seizure of American sailors"
+        },
+        {
+            "id": 9,
+            "title": "Battle of Fort McHenry",
+            "year": "1814",
+            "description": "The fort's defense of Baltimore inspires Francis Scott Key to write the Star-Spangled Banner"
+        },
+        {
+            "id": 10,
+            "title": "Lowell Mills Open",
+            "year": "1823",
+            "description": "Massachusetts textile mills hire young women as factory workers — the Market Revolution accelerates"
+        }
+    ],
+    "reflectionPrompts": [
+        "How did {term} help answer the question of what kind of nation — and economy — the young United States would become?",
+        "If you were advising President Washington, how would {term} change the decision you'd argue for in the cabinet?",
+        "Where can you still see {term} at work in the American economy today?"
+    ]
+}
