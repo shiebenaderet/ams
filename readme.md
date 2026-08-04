@@ -29,7 +29,7 @@ standards.html        Standards progression map (needs a pass — see above)
 standards-data.js     Data backing standards.html
 endofyear.html        End-of-year reflection page
 CNAME                 GitHub Pages custom domain config (mrbsocialstudies.org)
-planning/             Internal curriculum planning docs — NOT meant for public/student viewing (see below)
+planning/             Internal curriculum planning docs — gitignored here, lives in the private ams-planning repo (see below)
 _retired-units/       Old (pre-realignment) unit pages, kept for reference; gitignored
 docs/plans/            Historical implementation plans from earlier build passes
 ```
@@ -40,7 +40,11 @@ Each page in `units/` follows the same shape: a driving question, three supporti
 
 ## planning/
 
-The `planning/` folder is a curriculum planning hub (curriculum maps, standards alignment, classroom routines, Week 1 game files, unit content briefs) meant for the teacher's own use, not for students or families. It currently lives in this public repo but isn't linked from any public-facing page — it's reachable only if someone knows/guesses the URL. That's not real privacy, just obscurity.
+The curriculum planning hub (curriculum maps, standards alignment, classroom routines, Week 1 game files, unit content briefs) used to live in this public repo, reachable only if someone knew/guessed the URL — obscurity, not real privacy. It now lives in a separate **private** repo: [`ams-planning`](https://github.com/shiebenaderet/ams-planning). A local, gitignored copy is still kept at `planning/` in this working directory for convenience, but it is not tracked or pushed from here.
+
+Note: the planning docs were public in this repo's history before the split (commits before Aug 2026); that history was left as-is rather than rewritten, since nothing sensitive (credentials, student data) was in there — just curriculum material.
+
+The plan is to deploy `ams-planning` via Cloudflare Pages with Cloudflare Access (login-gated, allowlisted by email) so it's actually private rather than just unlinked. Not yet done as of Aug 2026.
 
 ## Contributing / editing
 

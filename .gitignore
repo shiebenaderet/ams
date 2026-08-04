@@ -4,3 +4,4 @@ node_modules/
 *.tmp
 .~lock*
 _retired-units/
+planning/
