@@ -9,8 +9,7 @@ var SEMESTER_2 = [
   { number: "5", title: "Expansion & Its Costs", slug: "expansion-costs" },
   { number: "6", title: "A Nation Divided", slug: "nation-divided" },
   { number: "7", title: "A Changing Nation", slug: "changing-nation" },
-  { number: "8", title: "Reform & Civic Action", slug: "reform-civic-action" },
-  { number: "", title: "End-of-Year Reflection", slug: "endofyear", root: true }
+  { number: "8", title: "Reform & Civic Action", slug: "reform-civic-action" }
 ];
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var unitBase = isUnitPage ? "" : "units/";
   var rootBase = isUnitPage ? "../" : "";
   var familiesHref = isUnitPage ? "../families.html" : "families.html";
-  var reflectionHref = rootBase + "endofyear.html";
   var standardsHref = rootBase + "standards.html";
 
   var currentSlug = "";
@@ -138,14 +136,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   linksContainer.appendChild(familiesLink);
 
-  var reflectionLink = document.createElement("a");
-  reflectionLink.className = "nav-link";
-  reflectionLink.href = reflectionHref;
-  reflectionLink.textContent = "Reflection";
-  if (currentPage === "endofyear.html") {
-    reflectionLink.classList.add("active");
-  }
-  linksContainer.appendChild(reflectionLink);
+  var studyLink = document.createElement("a");
+  studyLink.className = "nav-link";
+  studyLink.href = "https://study.mrbsocialstudies.org";
+  studyLink.target = "_blank";
+  studyLink.rel = "noopener";
+  studyLink.textContent = "Study Site";
+  linksContainer.appendChild(studyLink);
 
   var standardsLink = document.createElement("a");
   standardsLink.className = "nav-link";
