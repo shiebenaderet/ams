@@ -1,19 +1,15 @@
 var SEMESTER_1 = [
-  { number: "", title: "Who Are We?", slug: "introduction" },
-  { number: "1", title: "The 13 Colonies", slug: "13-colonies" },
-  { number: "2", title: "Road to Revolution", slug: "road-to-revolution" },
-  { number: "3", title: "Voices of the Revolution", slug: "voices-of-revolution" },
-  { number: "4", title: "The Constitution", slug: "constitution" },
-  { number: "5", title: "Checks & Balances", slug: "checks-and-balances" },
-  { number: "", title: "Semester 1 Capstone", slug: "capstone-1" }
+  { number: "1", title: "Foundations & Identity", slug: "foundations-identity" },
+  { number: "2", title: "Revolution: Ideas & Voices", slug: "revolution" },
+  { number: "3", title: "Building a Government", slug: "building-a-government" }
 ];
 
 var SEMESTER_2 = [
-  { number: "6", title: "SCOTUS", slug: "scotus" },
-  { number: "7", title: "The Early Republic", slug: "early-republic" },
-  { number: "8", title: "Westward Expansion", slug: "westward-expansion" },
-  { number: "9", title: "The Civil War", slug: "civil-war" },
-  { number: "", title: "Semester 2 Capstone", slug: "capstone-2" },
+  { number: "4", title: "A New Nation & Its Economy", slug: "new-nation-economy" },
+  { number: "5", title: "Expansion & Its Costs", slug: "expansion-costs" },
+  { number: "6", title: "A Nation Divided", slug: "nation-divided" },
+  { number: "7", title: "A Changing Nation", slug: "changing-nation" },
+  { number: "8", title: "Reform & Civic Action", slug: "reform-civic-action" },
   { number: "", title: "End-of-Year Reflection", slug: "endofyear", root: true }
 ];
 
