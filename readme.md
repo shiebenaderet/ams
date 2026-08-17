@@ -33,7 +33,7 @@ nav.js               Injects the shared nav bar into every page (unit list, acti
 style.css            Shared stylesheet (CSS custom properties, card grid, responsive breakpoints)
 units/               One HTML page per unit (8 total)
 families.html        Parent/guardian-facing page: contact info, expectations, how to support learning at home
-standards.html        Standards progression map (needs a pass — see above)
+standards.html        Standards reference — opens on grade 8; progression view behind a toggle
 standards-data.js     Data backing standards.html
 CNAME                 GitHub Pages custom domain config (mrbsocialstudies.org)
 planning/             Internal curriculum planning docs — gitignored here, lives in the private ams-planning repo (see below)
@@ -56,3 +56,5 @@ Note: the planning docs were public in this repo's history before the split (com
 ## Contributing / editing
 
 This is a single-teacher course site with no CI or build process. Edit HTML/CSS/JS directly, verify locally (e.g. `python3 -m http.server` and click through), then commit and push to `main` — GitHub Pages deploys on push automatically.
+
+- **Aug 2026 (17th)** — `standards.html` now **opens on grade 8** rather than all 84 components. The page's job for a family is "what does my student learn," and 84 codes across three grades buried the 36 that answer it; the progression is still one click away, since that context is the page's other argument. Two things surfaced while making the change. The starting view had been encoded **twice** — in the `state` object and again as hardcoded `active` classes in the markup — which agreed only by coincidence, so changing the default left the buttons pointing at a view that was not on screen; the controls are now painted from `state` on every render, including first paint. And the result count read "19 standards shown" above 36 visible codes, because standards and their components are different units; it now names both.

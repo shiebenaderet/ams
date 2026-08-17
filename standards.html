@@ -186,14 +186,15 @@
     <div class="container">
       <h1>Standards Progression Map</h1>
       <p class="hero-subtitle">WA Social Studies Learning Standards &bull; Grades 6&ndash;8</p>
-      <p>See how the same skills stack across middle school&mdash;from World History in 6th, to Washington State in 7th, to U.S. History in 8th.</p>
+      <p>The 36 standards your student works on in 8th grade U.S. History &mdash;
+      and how they build on 6th and 7th grade.</p>
     </div>
   </header>
 
   <main class="container">
     <div class="std-intro">
       <p>Washington&#8217;s 2019 standards are written as a single <strong>6&ndash;8 band</strong>, but each standard&#8217;s components are mapped to a grade and regional focus, so the skill <em>grows</em> across three years on the same throughline. For example, &#8220;analyze multiple perspectives&#8221; is practiced on <strong>world history</strong> in 6th grade, <strong>Washington State</strong> in 7th, and <strong>U.S. history</strong> in 8th.</p>
-      <p style="margin-top:1rem;">The four <strong>content strands</strong> (Civics, Economics, Geography, History) follow this World &rarr; WA &rarr; U.S. progression. The <strong>Social Studies Skills</strong> strand (inquiry, reasoning, deliberation, argument) is a continuous through-line practiced at all three grades. Use the filters to sort by grade or strand, or search any keyword or code.</p>
+      <p style="margin-top:1rem;">The four <strong>content strands</strong> (Civics, Economics, Geography, History) follow this World &rarr; WA &rarr; U.S. progression. The <strong>Social Studies Skills</strong> strand (inquiry, reasoning, deliberation, argument) is a continuous through-line practiced at all three grades. This page opens on <b>8th grade</b> &mdash; the standards this course teaches, each marked <i>Your course</i>. Switch to <b>Progression</b> to see how they grow across all three years.</p>
       <div class="grade-legend">
         <span class="grade-chip"><span class="dot dot-g6"></span> Grade 6 &middot; World</span>
         <span class="grade-chip"><span class="dot dot-g7"></span> Grade 7 &middot; WA State</span>
@@ -254,7 +255,7 @@
   <script>
   (function () {
     var root = document.getElementById('standards-root');
-    var state = { view: 'progression', grade: '6', strand: 'all', q: '' };
+    var state = { view: 'grade', grade: '8', strand: 'all', q: '' };
 
     var GRADE_META = {
       '6': { label: 'Grade 6 · World', cls: 'g6' },
@@ -343,6 +344,19 @@
     }
 
     function applyFilters() {
+      // Reconcile the controls with state on every render, including first paint.
+      // The active classes and the grade picker's visibility used to be set only inside
+      // the click handlers, which meant the page's starting view was encoded twice --
+      // once in `state` and once in hardcoded markup -- and changing one desynced them.
+      document.getElementById('grade-group').style.display = (state.view === 'grade') ? 'flex' : 'none';
+      [['view-toggle', 'view'], ['grade-filter', 'grade'], ['strand-filter', 'strand']].forEach(function (pair) {
+        var row = document.getElementById(pair[0]);
+        if (!row) return;
+        row.querySelectorAll('.filter-btn').forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-' + pair[1]) === state[pair[1]]);
+        });
+      });
+
       var list = STANDARDS.filter(function (s) {
         return state.strand === 'all' ? true : s.strand === state.strand;
       });
@@ -353,11 +367,16 @@
         html = renderSingleGrade(list);
       }
       root.innerHTML = html || '<p class="placeholder">No standards match your filters. Try clearing the search.</p>';
+      // Two different units are on screen: broad standards (C1, E2 ...) and the
+      // numbered components under them. Reporting only the former read as a
+      // miscount next to 36 visible codes, so name both.
       count = root.querySelectorAll('.prog-standard').length;
+      var compCount = root.querySelectorAll('.comp').length;
       var rc = document.getElementById('result-count');
-      rc.textContent = count + ' standard' + (count === 1 ? '' : 's') + ' shown' +
-        (state.strand !== 'all' ? ' · ' + state.strand : '') +
-        (state.q ? ' · matching “' + state.q + '”' : '');
+      rc.textContent = count + ' standard' + (count === 1 ? '' : 's') + ' \u00b7 ' +
+        compCount + ' component' + (compCount === 1 ? '' : 's') + ' shown' +
+        (state.strand !== 'all' ? ' \u00b7 ' + state.strand : '') +
+        (state.q ? ' \u00b7 matching \u201c' + state.q + '\u201d' : '');
     }
 
     function wireButtons(containerId, key, cb) {
