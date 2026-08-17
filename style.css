@@ -578,6 +578,18 @@ ul, ol {
   line-height: 1.6;
 }
 
+/* The unit's signature project -- the thing students actually build. Set apart from
+   the description so it reads as the answer to "what will my student make?" */
+.card-project {
+  display: block;
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--color-border, #e2ddd4);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--color-accent-warm, #C75B2A);
+}
+
 /* =============================================
    Card big idea + vocab chips
    ============================================= */
