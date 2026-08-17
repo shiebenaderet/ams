@@ -239,7 +239,7 @@
     <section id="standards-root" style="margin-top:1.5rem;"></section>
 
     <p class="footnote">
-      Source: OSPI K&ndash;12 Social Studies Learning Standards (2019), Grades 6&ndash;8 &mdash; Civics, Economics, Geography, History, and Social Studies Skills strands; and the OSPI Recommended Scope &amp; Sequence (2020). The <span class="your-course">Your course</span> tag marks Grade 8 / U.S. History standards that map to this site&#8217;s units.
+      Source: OSPI K&ndash;12 Social Studies Learning Standards (2019), Grades 6&ndash;8 &mdash; Civics, Economics, Geography, History, and Social Studies Skills strands; and the OSPI Recommended Scope &amp; Sequence (2020). The <span class="your-course">Your course</span> tag marks the standards this course actually teaches &mdash; the Grade 8 / U.S. History components, plus the Social Studies Skills strand, which runs across all three grades and is practised in every unit here.
     </p>
   </main>
 
@@ -278,7 +278,11 @@
       if (c.sub && c.sub.length) {
         sub = '<ul>' + c.sub.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>';
       }
-      var tag = (c.grade === '8') ? ' <span class="your-course">Your course</span>' : '';
+      // The Skills strand is tagged grade 'all' because it runs across all three years,
+      // but every one of its components is taught in this course -- badging only grade 8
+      // told families the skills standards were somebody else's, when they are the ones
+      // the podcast, the CBA, and every discussion structure are built on.
+      var tag = (c.grade === '8' || c.grade === 'all') ? ' <span class="your-course">Your course</span>' : '';
       return '<div class="comp"><span class="comp-code">' + c.code + '</span>' + tag +
              '<span class="comp-text">' + c.text + '</span>' + sub + '</div>';
     }
