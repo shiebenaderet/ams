@@ -176,8 +176,12 @@ function side(which, item){
   } else {
     $(which+'img').src = item.img;
   }
+  var MON = ['','January','February','March','April','May','June',
+             'July','August','September','October','November','December'];
   $(which+'lbl').textContent = item.label;
-  $(which+'yr').textContent = item.year;
+  $(which+'yr').textContent = item.month
+    ? MON[item.month] + ' ' + item.year
+    : item.year;
 }
 
 /* Credits are rendered once; the licences oblige us to name the photographers. */
@@ -193,7 +197,12 @@ function draw(){
   $('stage').style.display='flex'; $('fin').style.display='none';
   side('L', r.l); side('R', r.r);
   $('fact').textContent=r.fact;
-  const win = r.l.year < r.r.year ? 'L' : 'R';
+  /* Decided on (year, month), not year alone. A round where both sides share a
+     year -- Mr B in April 1979 against the Sonics in June -- is answerable only
+     if the months are there, and the Timeline Sort answer key got exactly this
+     wrong once by defaulting month to zero. */
+  const when = it => it.year * 12 + (it.month || 0);
+  const win = when(r.l) < when(r.r) ? 'L' : 'R';
   $('L').classList.toggle('win', win==='L'); $('R').classList.toggle('win', win==='R');
   $('banner').textContent=(win==='L'?'LEFT':'RIGHT')+' — sit down if you guessed wrong!';
   document.body.classList.toggle('revealed', revealed);
