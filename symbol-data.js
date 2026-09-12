@@ -22,6 +22,7 @@ var UNIT_QUESTION = "What does it mean to be “American”?";
 var SYMBOL_EXPLORATIONS = [
   {
     id: "e1",
+    hero: "american-flag",
     number: 1,
     title: "Traditional American Symbols",
     partner: 1,
@@ -100,6 +101,7 @@ var SYMBOL_EXPLORATIONS = [
 
   {
     id: "e2",
+    hero: "black-power-fist",
     number: 2,
     title: "Symbols from Different Communities",
     partner: 2,
@@ -113,7 +115,7 @@ var SYMBOL_EXPLORATIONS = [
         primer: "A raised fist stands for strength, and for refusing to accept unfair treatment. During the Civil Rights era of the 1960s it became a symbol of Black pride and Black power in the United States. People still raise a fist at marches and protests today, which is how a gesture from sixty years ago stays current.",
         deeper: "On 16 October 1968, at the Mexico City Olympics, Tommie Smith won the 200 metres in a world record and John Carlos took bronze. On the podium they raised black-gloved fists and bowed their heads, standing in black socks with no shoes to stand for poverty. Carlos had left his gloves behind, so the two men split one pair — which is why one fist is a right hand and the other a left. Both were expelled from the Games. Smith later wrote that it was never a Black Power salute at all, but “a human rights salute.”",
         images: [
-          { src: "fist-main.webp", label: "A", title: "Mexico City, 1968",
+          { src: "fist-main.webp", label: "A", title: "Mexico City, 1968", focus: "center 22%",
             alt: "Three athletes on an Olympic podium in 1968. The two American sprinters each raise one black-gloved fist and bow their heads; the Australian silver medallist stands in front of them.",
             caption: "Mexico City, 16 October 1968. Tommie Smith (centre, gold) and John Carlos (right, bronze) raise gloved fists while the American anthem plays. Look closely: Smith raises his right hand and Carlos his left, because Carlos had left his gloves behind and the two of them shared a single pair." },
           { src: "fist-rally.webp", label: "B", title: "Still raised today",
@@ -185,6 +187,7 @@ var SYMBOL_EXPLORATIONS = [
 
   {
     id: "e3",
+    hero: "hard-hat",
     number: 3,
     title: "Working America Symbols",
     partner: 1,
@@ -245,6 +248,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "lightbulb-rocket",
         title: "Light Bulb & Rocket",
+        preview: "rocket-main.webp",
         simple: "The light bulb and the rocket both stand for inventing. They say America is a place where somebody can build a new thing. One of them is small. It sits in a lamp in your house. The other one is huge. It leaves the planet completely. They are very different sizes. But they make the same claim.",
         primer: "The light bulb and the rocket both stand for inventing — the idea that America is a place where a new thing can be built. One is small and sits in a lamp in your house. The other is enormous and leaves the planet. Put together, they claim the same thing at two different sizes.",
         deeper: "Neither invention was one person working alone. Edison's laboratory at Menlo Park employed a whole team of researchers, and the bulb was built on top of earlier inventors' work. Rockets today are built by private companies paid under government contracts. The lone-genius story is simply easier to draw than the truth, which is exactly why the symbol is a single bulb and not a laboratory.",
@@ -265,6 +269,7 @@ var SYMBOL_EXPLORATIONS = [
 
   {
     id: "e4",
+    hero: "dog-tags",
     number: 4,
     title: "Objects & Clothing Symbols",
     partner: 2,
