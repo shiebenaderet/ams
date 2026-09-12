@@ -218,7 +218,8 @@
 }
 .sx-btn:hover { border-color: var(--color-primary); }
 .sx-btn--speak[aria-pressed="true"] { background: var(--color-accent-warm); border-color: var(--color-accent-warm); color: #fff; }
-.sx-seg { display: inline-flex; border: 1.5px solid var(--color-border); border-radius: var(--r-pill); overflow: hidden; background: var(--color-card-bg); }
+.sx-seg { display: inline-flex; flex-wrap: wrap; border: 1.5px solid var(--color-border);
+  border-radius: var(--r-pill); overflow: hidden; background: var(--color-card-bg); max-width: 100%; }
 .sx-seg button {
   min-height: 44px; padding: .5rem 1rem; border: 0; background: none; cursor: pointer;
   font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--color-muted);
@@ -231,9 +232,11 @@
   .sx-ecard, .sx-scard, .sx-thumb { transition: none; }
   .sx-ecard:hover, .sx-scard:hover { transform: none; }
 }
-@media (max-width: 420px) {
+@media (max-width: 560px) {
   .sx-bar { gap: var(--space-1); }
-  .sx-btn, .sx-seg button { padding-left: .8rem; padding-right: .8rem; font-size: .88rem; }
+  .sx-btn, .sx-seg button { padding-left: .7rem; padding-right: .7rem; font-size: .86rem; }
+  /* "Middle School" is the only label long enough to break the row */
+  .sx-seg button[data-level="ms"] { font-size: .82rem; }
 }
 .sx-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 </style>
@@ -269,7 +272,9 @@
     function lsGet(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
     function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-    var level = lsGet(LS_LEVEL, "ms") === "advanced" ? "advanced" : "ms";
+    var LEVELS = ["simple", "ms", "advanced"];
+    var level = lsGet(LS_LEVEL, "ms");
+    if (LEVELS.indexOf(level) === -1) { level = "ms"; }
     var seen = {};
     try { seen = JSON.parse(lsGet(LS_SEEN, "{}")) || {}; } catch (e) { seen = {}; }
 
@@ -351,6 +356,7 @@
       }
       html += '<span class="sx-spacer"></span>';
       html += '<div class="sx-seg" role="group" aria-label="Reading level">'
+           +  '<button type="button" data-level="simple" aria-pressed="' + (level === "simple") + '">Simpler</button>'
            +  '<button type="button" data-level="ms" aria-pressed="' + (level === "ms") + '">Middle School</button>'
            +  '<button type="button" data-level="advanced" aria-pressed="' + (level === "advanced") + '">Advanced</button>'
            +  "</div>";
@@ -358,7 +364,7 @@
         html += '<button type="button" class="sx-btn sx-btn--speak" id="sx-speak" aria-pressed="false">Read aloud</button>';
       }
       if (ctx.symbol) {
-        html += '<p class="sx-bar-note">Advanced <strong>adds</strong> more detail. It never takes anything away.</p>';
+        html += '<p class="sx-bar-note">All three say the same things. <strong>Simpler</strong> uses shorter sentences; <strong>Advanced</strong> adds extra detail on top.</p>';
       }
       bar.innerHTML = html;
       bar.hidden = !!ctx.hideBar;
@@ -413,6 +419,7 @@
 
     function renderSymbol(e, s) {
       markSeen(s.slug);
+      var body = level === "simple" ? s.simple : s.primer;
       var deeper = level === "advanced"
         ? '<div class="sx-deeper"><p class="sx-deeper-tag">Going deeper</p><p>' + glossify(s.deeper) + "</p></div>"
         : "";
@@ -435,7 +442,7 @@
         + '<div class="sx-text">'
         + '<p class="sx-eyebrow">Exploration #' + e.number + " &middot; " + esc(e.title) + "</p>"
         + '<h1 class="sx-name" tabindex="-1">' + esc(s.title) + "</h1>"
-        + "<p>" + glossify(s.primer) + "</p>"
+        + "<p>" + glossify(body) + "</p>"
         + deeper
         + "</div></div>";
 

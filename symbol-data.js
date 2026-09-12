@@ -3,7 +3,10 @@
    (Symbol-Exploration.docx) symbol-for-symbol and prompt-for-prompt.
 
    Each symbol carries two texts, and they are ADDITIVE, not alternatives:
-     primer  — always shown, to everybody. A complete explanation on its own.
+     simple  — for readers well below grade level. Same concepts and the same
+               terms as the primer, but short sentences and every causal link
+               spelled out. It is NOT the primer with words removed.
+     primer  — the standard version. A complete explanation on its own.
      deeper  — shown when "Advanced" is on. Adds to the primer; never repeats
                or replaces it.
    The primer is never the deeper text with words taken out. Shortening
@@ -28,6 +31,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "statue-of-liberty",
         title: "The Statue of Liberty",
+        simple: "France gave this statue to the United States. It was opened in 1886. It stands on an island in New York Harbor. Ships full of people sailed into that harbor. So this statue was the first thing millions of immigrants saw. Most people call it the Statue of Liberty. That is not its real name. Its real name is “Liberty Enlightening the World.”",
         primer: "France gave this statue to the United States, and it was dedicated in 1886 on an island in New York Harbor. Because it stands where ships came in, it was the first thing millions of immigrants saw when they arrived. Its real name is not the Statue of Liberty at all. It is “Liberty Enlightening the World.”",
         deeper: "Édouard de Laboulaye, a French opponent of slavery, first proposed the monument, and the sculptor Frédéric-Auguste Bartholdi designed it. The National Park Service writes that the statue stood for “American independence and the end of all types of servitude and oppression” — and then adds that in 1886 that meaning “was not yet a reality for African Americans.” The symbol arrived before the thing it promised did.",
         images: [
@@ -43,6 +47,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "great-seal",
         title: "The Seal of the United States",
+        simple: "The Great Seal is a stamp. The government presses it onto official papers. The stamp proves a paper is real and not a fake. Look at the eagle in the middle. It holds two things at the same time. In one claw it holds an olive branch. In the other claw it holds thirteen arrows. Now count the arrows, the stripes and the stars. You get thirteen every time. Thirteen stands for the first thirteen states.",
         primer: "The Great Seal is stamped on official government papers to prove they are genuine. In the middle, an eagle holds two things at once: an olive branch in one claw and thirteen arrows in the other. The thirteen arrows, thirteen stripes and thirteen stars all stand for the first thirteen states.",
         deeper: "Congress approved this design in 1782, after six years and three separate committees failed to agree on one. The eagle's head turns toward the olive branch and away from the arrows, which was read as a country that would rather have peace but keeps war within reach. You can check the design yourself — it is printed on the back of a one-dollar bill.",
         images: [
@@ -61,6 +66,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "american-flag",
         title: "The American Flag",
+        simple: "Count the stars on the flag. There are 50. There is one star for each state. Now count the stripes. There are 13. There is one stripe for each of the first 13 colonies. The stars have been redrawn 27 times. Here is why. Every time a new state joined, somebody had to fit another star into the blue. The last change happened in 1960. That is the year Hawaii became a state.",
         primer: "The flag carries 50 stars for the 50 states and 13 stripes for the 13 original colonies. The star pattern has been redrawn 27 times, because each new state meant another star had to fit into the blue. The most recent change came in 1960, after Hawaii became a state.",
         deeper: "People often say red means courage, white means purity and blue means justice. But Congress gave the flag's colours no meaning at all when it adopted the design in 1777. Those meanings belong to the Great Seal instead. In 1782, Charles Thomson explained the seal's colours: “White signifies purity and innocence, Red, hardiness & valour, and Blue… vigilance, perseverance & justice.” The meanings were invented for one symbol and later borrowed onto another.",
         images: [
@@ -76,6 +82,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "liberty-bell",
         title: "The Liberty Bell",
+        simple: "The Liberty Bell hangs in Philadelphia. Words are cast into the metal. They say: “Proclaim Liberty Throughout All the Land Unto All the Inhabitants thereof.” Those words come from the Bible. They describe a year called the Jubilee. In a Jubilee year, people got their property back. Enslaved people were set free. So the words on this bell are about freeing people.",
         primer: "The bell hangs in Philadelphia, and the words cast into it read “Proclaim Liberty Throughout All the Land Unto All the Inhabitants thereof.” That line comes from the Bible. It describes the Jubilee, a year when property was returned to its owners and enslaved people were set free.",
         deeper: "The famous crack has nothing to do with 1776. The National Park Service states there is “no evidence that the bell rang on July 4 or 8, 1776,” and that the split appeared in the early 1840s, after about ninety years of ringing. The name is not from 1776 either. Abolitionists gave it: an anti-slavery paper, the Anti-Slavery Record, called it the “Liberty Bell” in 1835, because an inscription about freeing people said exactly what they were arguing.",
         images: [
@@ -102,6 +109,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "black-power-fist",
         title: "The Black Power Fist",
+        simple: "A raised fist means strength. It also means you will not accept being treated unfairly. In the 1960s, Black Americans were fighting for their civil rights. During those years the raised fist became a symbol of Black pride and Black power in the United States. People still raise a fist today. You see it at marches and at protests. So a gesture from sixty years ago is still alive now.",
         primer: "A raised fist stands for strength, and for refusing to accept unfair treatment. During the Civil Rights era of the 1960s it became a symbol of Black pride and Black power in the United States. People still raise a fist at marches and protests today, which is how a gesture from sixty years ago stays current.",
         deeper: "On 16 October 1968, at the Mexico City Olympics, Tommie Smith won the 200 metres in a world record and John Carlos took bronze. On the podium they raised black-gloved fists and bowed their heads, standing in black socks with no shoes to stand for poverty. Carlos had left his gloves behind, so the two men split one pair — which is why one fist is a right hand and the other a left. Both were expelled from the Games. Smith later wrote that it was never a Black Power salute at all, but “a human rights salute.”",
         images: [
@@ -114,6 +122,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "mexican-flag",
         title: "The Mexican Flag",
+        simple: "Many Mexican Americans fly this flag. Some wear its colours. Some hang it up at home. They do this to show pride in where their family came from. Flying this flag does not make somebody less American. People often show this flag and the US flag side by side. They do that because both flags describe who they really are.",
         primer: "Many Mexican Americans fly this flag, wear its colours, or hang it at home to show pride in where their family came from. Flying it is not a way of being less American. People often display the Mexican flag and the US flag together, because both of them describe who they actually are.",
         deeper: "The eagle at the centre comes from an Aztec story. The Mexica people were told to build their city where they found an eagle perched on a cactus, and they founded Tenochtitlan on that spot around 1325. Mexico City stands there today. So the middle of this flag carries a history older than either modern country — which is part of why people treat it as heritage rather than politics.",
         images: [
@@ -129,6 +138,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "native-american-symbols",
         title: "Native American Symbols",
+        simple: "Native nations are many separate peoples. They are not one single group. So their art is not all the same. An artist here in Washington makes designs one way. A nation in the Southwest makes them a different way. Artists use these designs to carry stories. The designs carry family history too. They show who somebody belongs to. So a design is a record. It is not only a decoration.",
         primer: "Native nations are many separate peoples, not one group, and their art is not all alike. A design made by an artist here in Washington looks nothing like a design from a nation in the Southwest. Artists use these forms to carry stories, family history and belonging — so the design is a record, not only a decoration.",
         deeper: "The dreamcatcher began with the Ojibwe people of the Great Lakes, and spread to many other nations during the twentieth century. From there it spread again, into gift shops and airport displays. That second spread is the argument: some people see it as sharing something good, and others see a sacred object turned into merchandise by people with no connection to it.",
         images: [
@@ -152,6 +162,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "pride-flag",
         title: "The Pride American Flag",
+        simple: "This flag mixes two flags together. It takes the stars and stripes. Then it adds the rainbow of the Pride flag. People fly it to say one thing. Being LGBTQ+ and being American go together. They are not two things fighting each other. The Mexican American flags work the same way. Two identities are held in one image.",
         primer: "This flag puts the stars and stripes together with the rainbow of the Pride flag. People fly it to say that being LGBTQ+ and being American are one thing rather than two competing things. It works the same way the combined Mexican and American designs do: two identities held in a single image.",
         deeper: "The rainbow flag was designed in 1978 by Gilbert Baker, an artist and army veteran in San Francisco, and the first versions carried eight stripes rather than today's six. Combining it with the stars and stripes follows an old American habit — taking the national flag and altering it deliberately, in order to make a claim about who the country is supposed to belong to.",
         images: [
@@ -178,6 +189,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "hard-hat",
         title: "The Hard Hat",
+        simple: "A hard hat is safety equipment. Tools get dropped on building sites. The hat stops a falling tool from killing the person underneath. But the hat means more than that. It stands for physical work done properly. Sometimes people call a worker “a hard hat.” They usually mean somebody who is proud of building something real.",
         primer: "A hard hat is safety equipment, worn so that a falling tool does not kill the person underneath. But it also stands for physical work done properly. When people call someone “a hard hat,” they usually mean a worker who takes pride in building something real and visible.",
         deeper: "The hat exists because the work was dangerous: early versions were worn on big 1930s projects like the Hoover Dam and the Golden Gate Bridge. On a modern site the colour often signals the job — who is a visitor, who is an engineer, who is a supervisor. The hat also became political in 1970, when construction workers marched through New York City still wearing them, and the phrase started to mean a set of opinions as well as a job.",
         images: [
@@ -190,6 +202,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "farms-farmers",
         title: "Farms & Farmers",
+        simple: "Farms stand for feeding the whole country. Farm work does not follow an office clock. It follows the weather, the land and the seasons. For most of American history, most Americans were farmers. That has changed. Today fewer than two workers out of every hundred farm. Most of those jobs went away. But the symbol stayed strong anyway.",
         primer: "Farms stand for feeding the country, and for work that depends on weather, land and time rather than on an office clock. For most of American history, most Americans farmed. Today fewer than two workers in a hundred do — so the symbol stayed powerful even after most of the jobs went away.",
         deeper: "Who counts as “the farmer” in this picture is worth asking. The image is almost always a family working its own land, and yet a great deal of American food is picked by hired farmworkers, many of them immigrants, on land owned by companies. The symbol and the industry drifted apart from each other, and the symbol is the one that stayed still.",
         images: [
@@ -211,6 +224,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "factory-gears",
         title: "Factory & Gears",
+        simple: "Gears and factories stand for making things. A factory uses an assembly line. An assembly line breaks one big job into many small jobs. Each worker does a single step, over and over. The product moves past them on the line. Henry Ford built his factories this way. It became the American way of making things. Then other countries copied it.",
         primer: "Gears and factories stand for making things. An assembly line breaks one large job into many small ones, so each worker repeats a single step while the product moves past them. Henry Ford's factories made this the American way of building, and other countries copied it.",
         deeper: "This symbol carries pride and loss at the same time. American manufacturing employment peaked in 1979 and then fell steeply, and whole towns that had been built around a single plant were left behind when it closed. So when a politician stands in front of a factory, they are usually pointing at that loss rather than at the machinery itself.",
         images: [
@@ -226,6 +240,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "lightbulb-rocket",
         title: "Light Bulb & Rocket",
+        simple: "The light bulb and the rocket both stand for inventing. They say America is a place where somebody can build a new thing. One of them is small. It sits in a lamp in your house. The other one is huge. It leaves the planet completely. They are very different sizes. But they make the same claim.",
         primer: "The light bulb and the rocket both stand for inventing — the idea that America is a place where a new thing can be built. One is small and sits in a lamp in your house. The other is enormous and leaves the planet. Put together, they claim the same thing at two different sizes.",
         deeper: "Neither invention was one person working alone. Edison's laboratory at Menlo Park employed a whole team of researchers, and the bulb was built on top of earlier inventors' work. Rockets today are built by private companies paid under government contracts. The lone-genius story is simply easier to draw than the truth, which is exactly why the symbol is a single bulb and not a laboratory.",
         images: [
@@ -254,6 +269,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "dog-tags",
         title: "Dog Tags",
+        simple: "Dog tags are small metal tags. People in the military wear them. Each tag has a name and a few basic facts on it. The tags let the army work out who a soldier is. That includes a soldier who has been killed. So this symbol holds two things at once. It holds service. It also holds loss.",
         primer: "Dog tags are metal identification tags worn by members of the military. They carry a name and a few basic facts, so that a soldier can be identified — including if they are killed. That is the reason this symbol holds service and loss together instead of standing for just one of them.",
         deeper: "They come in a pair for a blunt reason: one tag stays with the body and the other goes to the people keeping records. Families often hold on to a relative's tags for generations, which turns a piece of army-issued equipment into something personal. Very few objects start as standard government supply and end up as an heirloom.",
         images: [
@@ -266,6 +282,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "religious-symbols",
         title: "Religious Symbols",
+        simple: "Americans practise many different religions. Many Americans practise no religion at all. The First Amendment protects both choices. It says the government cannot set up an official religion. It also says the government cannot stop you practising yours. Put these symbols together and they stand for that freedom. They do not stand for any single faith.",
         primer: "Americans practise many different religions, and many practise none at all. The First Amendment protects both: the government may not set up an official religion, and it may not stop you practising yours. Taken together, these symbols stand for that freedom rather than for any single faith.",
         deeper: "The protection was written by people who had watched religious persecution in Europe, and in the colonies themselves. It has been tested constantly ever since — over prayer in schools, over which holidays close an office, over what a courthouse is allowed to display. So the real question the symbol raises is not whether freedom of religion exists on paper, but who has actually received it in practice.",
         images: [
@@ -287,6 +304,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "baseball-hat",
         title: "The Baseball Hat",
+        simple: "A baseball cap started out as sports equipment. The brim sticks out at the front. It keeps the sun out of a fielder's eyes. Then the cap became ordinary American clothing. Almost anybody wears one now. A cap can tell people where you are from. It can show which team you follow, or what you believe. All of that comes from whatever is printed on the front.",
         primer: "A baseball cap began as sports equipment, because the brim keeps the sun out of a fielder's eyes. It turned into ordinary American clothing that almost anybody wears. A cap can say where you are from, which team you follow, or what you believe — entirely through whatever is printed on the front of it.",
         deeper: "The one shown here is a Seattle Mariners cap, which makes the point locally: around here, that logo tells other people something about you before you have said a word. The cap is cheap, plain, and has a flat panel right at eye level. That combination is why it became the standard American way to advertise a loyalty.",
         images: [
@@ -302,6 +320,7 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "smartphone",
         title: "The Smartphone",
+        simple: "Most Americans use a smartphone every day. They talk to each other on it. They read the news on it. They take photographs and find their way with it. So the phone stands for being connected to everybody at once. It stands for something else too. Almost every pocket in the country holds the same object.",
         primer: "A smartphone is how most Americans talk to each other, read the news, take photographs and find their way around. It stands for being connected to everybody at once. It also stands for a country where very nearly the same object is sitting in almost every single pocket.",
         deeper: "It cuts both ways at once. The same device that lets a movement organise thousands of people in a few hours also records where its owner goes all day, and it is assembled from materials and labour gathered across many countries. So choosing the phone as a symbol of America means choosing connection and dependence together — you cannot pick up only one of them.",
         images: [
