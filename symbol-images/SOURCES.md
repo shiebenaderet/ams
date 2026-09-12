@@ -18,7 +18,8 @@ written out in full here.
 | `religion-cross.webp` | Commons: *Christian cross.svg* | Boris23 | Public domain |
 | `religion-star.webp` | Commons: *Star of David.svg* | Zscout370 | Public domain |
 | `religion-crescent.webp` | Commons: *Star and Crescent.svg* | Kbolino | Public domain |
-| `fist-main.webp` | Commons: *Fists raised at San Francisco July 2016 rally against police violence.jpg* | Pax Ahimsa Gethen | CC BY-SA 4.0 |
+| `fist-main.webp` | Commons: *John Carlos, Tommie Smith, Peter Norman 1968cr.jpg* | Angelo Cozzi (Mondadori Publishers) | Public domain ({{PD-Italy}} + {{PD-1996}}) |
+| `fist-rally.webp` | Commons: *Fists raised at San Francisco July 2016 rally against police violence.jpg* | Pax Ahimsa Gethen | CC BY-SA 4.0 |
 | `fist-graphic.webp` | Commons: *Fist.svg* | KeithTyler | Public domain |
 
 | `native-totem.webp` | Commons: *Seattle - Pioneer Square totem pole 01.jpg* | Joe Mabel | CC BY-SA 3.0 |
@@ -70,16 +71,29 @@ version. Nothing below should be treated as cleared.
   classroom material, worth a second look on a public page.
 - `phone-iphone.webp`, `phone-samsung.webp` — product photographs
 
-## Deliberately not used
+## A note on the 1968 podium photograph
 
-The 1968 Olympic podium photograph. The widely reproduced version is by John
-Dominis for *Life* and is plainly still in copyright. Commons does host a
-different frame of the same moment, by Angelo Cozzi for Mondadori, tagged
-public domain — but that tag rests on non-US copyright rules, its own credit
-line points at a Getty licensing page, and being public domain in Italy does
-not make a work public domain in the United States. Swapping one uncertain
-press photo for another is not a fix, so the page shows present-day raised
-fists instead and tells the 1968 story in words, where no licence is needed.
+`fist-main.webp` is a genuine 1968 press photograph, and it is here on a
+two-part argument rather than a single licence tag, so the reasoning is worth
+writing down.
+
+The widely reproduced version of that moment is by John Dominis for *Life* and
+is still in copyright; that one is not used. This is a different frame, by
+Angelo Cozzi for Mondadori, and Wikimedia Commons carries it under both
+`{{PD-Italy}}` and `{{PD-1996|country=it}}`.
+
+Both tags are needed. `PD-Italy` only establishes that it is public domain in
+Italy: Italian law gives "simple photographs" twenty years from creation, so a
+1968 press photo entered the Italian public domain in 1989. `PD-1996` is the
+United States half. The URAA restored US copyright only for foreign works that
+were *still protected in their home country* on 1 January 1996 — and this one
+had already expired there seven years earlier, so no US copyright was ever
+restored. Commons requires a file to be free in both the source country and
+the US, which is why both templates sit on the page.
+
+One thing that looks alarming and is not: the file is categorised under "Media
+licensed by Getty Images." Getty sells licences to public domain images as a
+matter of routine, and that is not evidence of copyright.
 
 ## Rebuilding
 
