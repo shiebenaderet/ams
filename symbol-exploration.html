@@ -235,10 +235,52 @@
 @media (max-width: 560px) {
   .sx-bar { gap: var(--space-1); }
   .sx-btn, .sx-seg button { padding-left: .7rem; padding-right: .7rem; font-size: .86rem; }
-  /* "Middle School" is the only label long enough to break the row */
-  .sx-seg button[data-level="ms"] { font-size: .82rem; }
 }
+#sx-print { display: none; }
 .sx-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+
+<style media="print" id="sx-print-css">
+/* The printed handout. Kept in its own media="print" block so it can be
+   flipped to media="all" to inspect the layout in a normal window.
+
+   Deliberately toner-cheap: no background fills, no colour panels, hairline
+   rules. Class sets get photocopied in black and white, so nothing here is
+   allowed to depend on colour to make sense. */
+@page { size: letter; margin: 16mm 15mm; }
+html, body { background: #fff !important; background-image: none !important; }
+body > *:not(#sx-print) { display: none !important; }
+#sx-print { display: block !important; }
+#sx-print * { background: transparent !important; box-shadow: none !important; color: #000 !important; }
+#sx-print { font-family: var(--font-sans); color: #000; font-size: 10.5pt; line-height: 1.5; }
+#sx-print .p-head { border-bottom: 1.5pt solid #000; padding-bottom: 6pt; margin-bottom: 14pt; }
+#sx-print .p-head h1 { font-family: var(--font-serif); font-size: 20pt; font-weight: 600; margin: 0 0 3pt; letter-spacing: -0.01em; }
+#sx-print .p-head p { margin: 1pt 0; font-size: 9.5pt; }
+#sx-print .p-level { font-weight: 700; }
+#sx-print .p-exp { break-before: page; page-break-before: always; }
+#sx-print .p-exp:first-of-type { break-before: auto; page-break-before: auto; }
+#sx-print h2 { font-family: var(--font-serif); font-size: 14pt; font-weight: 600; margin: 0 0 4pt;
+  border-bottom: .75pt solid #000; padding-bottom: 3pt; }
+#sx-print .p-prompt { font-size: 10pt; margin: 0 0 2pt; font-weight: 600; }
+#sx-print .p-starter { font-size: 9.5pt; margin: 0 0 12pt; font-style: italic; }
+#sx-print .p-sym { break-inside: avoid; page-break-inside: avoid; margin: 0 0 14pt;
+  padding-bottom: 10pt; border-bottom: .5pt dotted #666; }
+#sx-print .p-sym:last-child { border-bottom: 0; }
+#sx-print h3 { font-family: var(--font-serif); font-size: 12.5pt; font-weight: 600; margin: 0 0 5pt; }
+#sx-print .p-body { display: flex; gap: 10pt; align-items: flex-start; }
+#sx-print .p-main { flex: 0 0 46mm; }
+#sx-print .p-main img { width: 46mm; max-height: 46mm; object-fit: contain; display: block; }
+#sx-print .p-text { flex: 1 1 auto; }
+#sx-print .p-text p { margin: 0 0 6pt; max-width: 62ch; }
+#sx-print .p-details { margin-top: 6pt; }
+#sx-print .p-detail { display: flex; gap: 7pt; align-items: flex-start; margin: 0 0 5pt; break-inside: avoid; }
+#sx-print .p-detail img { width: 18mm; max-height: 18mm; object-fit: contain; flex: none; }
+#sx-print .p-detail p { margin: 0; font-size: 9.5pt; }
+#sx-print .p-detail b { font-weight: 700; }
+#sx-print .p-foot { margin-top: 14pt; padding-top: 5pt; border-top: .5pt solid #000; font-size: 8.5pt; }
+#sx-print .p-gloss { margin-top: 10pt; font-size: 9pt; }
+#sx-print .p-gloss dt { font-weight: 700; float: left; clear: left; margin-right: 5pt; }
+#sx-print .p-gloss dd { margin: 0 0 2pt; }
 </style>
 </head>
 <body>
@@ -248,6 +290,8 @@
     <div class="sx-bar" id="sx-bar"></div>
     <div id="sx-view"></div>
   </main>
+
+  <div id="sx-print" aria-hidden="true"></div>
 
   <footer>
     <div class="container">
@@ -357,15 +401,16 @@
       html += '<span class="sx-spacer"></span>';
       html += '<div class="sx-seg" role="group" aria-label="Reading level">'
            +  '<button type="button" data-level="simple" aria-pressed="' + (level === "simple") + '">Simpler</button>'
-           +  '<button type="button" data-level="ms" aria-pressed="' + (level === "ms") + '">Middle School</button>'
+           +  '<button type="button" data-level="ms" aria-pressed="' + (level === "ms") + '">Standard</button>'
            +  '<button type="button" data-level="advanced" aria-pressed="' + (level === "advanced") + '">Advanced</button>'
            +  "</div>";
       if (ctx.symbol && canSpeak) {
         html += '<button type="button" class="sx-btn sx-btn--speak" id="sx-speak" aria-pressed="false">Read aloud</button>';
       }
-      if (ctx.symbol) {
-        html += '<p class="sx-bar-note">All three say the same things. <strong>Simpler</strong> uses shorter sentences; <strong>Advanced</strong> adds extra detail on top.</p>';
-      }
+      html += '<button type="button" class="sx-btn" id="sx-pdf">Download PDF</button>';
+      html += '<p class="sx-bar-note">All three say the same things. <strong>Simpler</strong> uses shorter sentences; '
+           +  '<strong>Advanced</strong> adds extra detail on top. <strong>Download PDF</strong> gives you all sixteen '
+           +  'symbols at the level you picked &mdash; choose &#8220;Save as PDF&#8221; in the box that opens.</p>';
       bar.innerHTML = html;
       bar.hidden = !!ctx.hideBar;
       bar.style.setProperty("--accent", ctx.accent || "var(--color-primary)");
@@ -391,7 +436,7 @@
         + 'One laptop between you &mdash; take turns writing on the paper.</p>'
         + '<div class="sx-explorations">' + cards + "</div>";
 
-      renderBar({ hideBar: true });
+      renderBar({});
       focusHeading();
     }
 
@@ -501,6 +546,112 @@
     });
     document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { closePop(); stopSpeech(); } });
 
+    /* ---------------- printable version ----------------
+       Built from the same data as the screen, at whichever level is selected,
+       and handed to the browser's own print pipeline. That keeps the text real
+       and selectable in the saved PDF, uses the page's actual fonts, and adds
+       no library to a site that otherwise ships no dependencies. */
+    var LEVEL_NAMES = { simple: "Simpler", ms: "Standard", advanced: "Advanced" };
+
+    function buildPrintDoc() {
+      var root = document.getElementById("sx-print");
+      var out = '<div class="p-head">'
+        + "<h1>Symbol Exploration</h1>"
+        + "<p>Unit 1 &middot; Foundations &amp; Identity &mdash; " + esc(UNIT_QUESTION) + "</p>"
+        + '<p class="p-level">Reading level: ' + esc(LEVEL_NAMES[level] || level) + "</p>"
+        + "</div>";
+
+      var usedTerms = {};
+      function collect(text) {
+        String(text).replace(GLOSS_RE, function (m) {
+          var key = GLOSS_TERMS.filter(function (t) { return t.toLowerCase() === m.toLowerCase(); })[0];
+          if (key) { usedTerms[key] = 1; }
+          return m;
+        });
+      }
+
+      SYMBOL_EXPLORATIONS.forEach(function (e) {
+        out += '<section class="p-exp">'
+            +  "<h2>Exploration #" + e.number + " &middot; " + esc(e.title) + "</h2>"
+            +  '<p class="p-prompt">Partner ' + e.partner + " writes: " + esc(e.prompt) + "</p>"
+            +  '<p class="p-starter">Stuck? ' + esc(e.starter) + "</p>";
+
+        e.symbols.forEach(function (sym) {
+          var body = level === "simple" ? sym.simple : sym.primer;
+          collect(body);
+          out += '<article class="p-sym"><h3>' + esc(sym.title) + "</h3>"
+              +  '<div class="p-body">'
+              +  '<div class="p-main"><img src="' + IMG + esc(sym.images[0].src) + '" alt=""></div>'
+              +  '<div class="p-text"><p>' + esc(body) + "</p>";
+          if (level === "advanced") {
+            collect(sym.deeper);
+            out += "<p>" + esc(sym.deeper) + "</p>";
+          }
+          /* Two symbols carry a caption on their FIRST image, which is also the
+             main picture. Show that caption under the main picture rather than
+             repeating the image in the detail list. */
+          if (sym.images[0].caption) {
+            collect(sym.images[0].caption);
+            out += '<div class="p-details"><div class="p-detail"><p><b>'
+                +  esc((sym.images[0].label ? sym.images[0].label + " \u00b7 " : "") + (sym.images[0].title || ""))
+                +  "</b> " + esc(sym.images[0].caption) + "</p></div></div>";
+          }
+          var details = sym.images.slice(1).filter(function (i) { return i.caption; });
+          if (details.length) {
+            out += '<div class="p-details">';
+            details.forEach(function (i) {
+              collect(i.caption);
+              out += '<div class="p-detail"><img src="' + IMG + esc(i.src) + '" alt="">'
+                  +  "<p><b>" + esc((i.label ? i.label + " \u00b7 " : "") + (i.title || "")) + "</b> "
+                  +  esc(i.caption) + "</p></div>";
+            });
+            out += "</div>";
+          }
+          out += "</div></div></article>";
+        });
+        out += "</section>";
+      });
+
+      var terms = Object.keys(usedTerms).sort(function (a, b) {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+      });
+      if (terms.length) {
+        out += '<div class="p-gloss"><h2>Words to know</h2><dl>';
+        terms.forEach(function (t) {
+          out += "<dt>" + esc(t) + "</dt><dd>" + esc(SYMBOL_GLOSSARY[t]) + "</dd>";
+        });
+        out += "</dl></div>";
+      }
+      out += '<p class="p-foot">mrbsocialstudies.org/symbol-exploration.html &middot; '
+          +  esc(LEVEL_NAMES[level] || level) + " version &middot; Mr. B&#8217;s Social Studies</p>";
+      root.innerHTML = out;
+      return root;
+    }
+
+    function imagesReady(root) {
+      var imgs = [].slice.call(root.querySelectorAll("img"));
+      var pending = imgs.filter(function (i) { return !i.complete || i.naturalWidth === 0; });
+      if (!pending.length) { return Promise.resolve(); }
+      return Promise.race([
+        Promise.all(pending.map(function (i) {
+          return new Promise(function (res) { i.addEventListener("load", res); i.addEventListener("error", res); });
+        })),
+        /* never let one slow image block the print dialog */
+        new Promise(function (res) { setTimeout(res, 6000); })
+      ]);
+    }
+
+    function downloadPdf() {
+      var btn = document.getElementById("sx-pdf");
+      if (btn) { btn.disabled = true; btn.textContent = "Preparing\u2026"; }
+      stopSpeech();
+      var root = buildPrintDoc();
+      imagesReady(root).then(function () {
+        if (btn) { btn.disabled = false; btn.textContent = "Download PDF"; }
+        window.print();
+      });
+    }
+
     /* ---------------- bar interactions ---------------- */
     bar.addEventListener("click", function (ev) {
       var lv = ev.target.closest ? ev.target.closest("[data-level]") : null;
@@ -513,7 +664,9 @@
       }
       if (ev.target.id === "sx-speak") {
         if (speaking) { stopSpeech(); } else { speak(currentSpeechText()); }
+        return;
       }
+      if (ev.target.id === "sx-pdf") { downloadPdf(); }
     });
 
     /* ---------------- routing ----------------
