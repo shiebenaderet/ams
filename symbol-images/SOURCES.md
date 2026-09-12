@@ -18,6 +18,8 @@ written out in full here.
 | `religion-cross.webp` | Commons: *Christian cross.svg* | Boris23 | Public domain |
 | `religion-star.webp` | Commons: *Star of David.svg* | Zscout370 | Public domain |
 | `religion-crescent.webp` | Commons: *Star and Crescent.svg* | Kbolino | Public domain |
+| `fist-main.webp` | Commons: *Fists raised at San Francisco July 2016 rally against police violence.jpg* | Pax Ahimsa Gethen | CC BY-SA 4.0 |
+| `fist-graphic.webp` | Commons: *Fist.svg* | KeithTyler | Public domain |
 
 | `native-totem.webp` | Commons: *Seattle - Pioneer Square totem pole 01.jpg* | Joe Mabel | CC BY-SA 3.0 |
 | `native-powwow.webp` | Commons: *Yellow shirt dancer closeup at Poplar Indian Days Celebration 2023.jpg* | Thayne Tuason, user name:Biscuitroot | CC BY-SA 4.0 |
@@ -52,11 +54,6 @@ version. Nothing below should be treated as cleared.
 
 - `bell-main.webp`, `bell-inscription.webp`, `bell-crack.webp` — Liberty Bell
 - `statue-crown.webp` — Statue of Liberty crown
-- `fist-main.webp` — 1968 Olympic podium photograph. **Highest priority.** This
-  is a well-known press photograph (the widely reproduced image of the medal
-  ceremony is by John Dominis for *Life*) and is very unlikely to be free to
-  use. Replace or license before relying on this page publicly.
-- `fist-graphic.webp` — raised-fist graphic
 - `mexflag-main.webp`, `mexflag-eagle.webp`, `mexflag-tattoo.webp` — Mexican flag; coat-of-arms crop; flag-and-tattoo photo
 - `native-art.webp` — Northwest Coast formline design. Also needs an *artist and
   nation* credit, not merely a licence — attributing Indigenous artwork to a
@@ -72,6 +69,17 @@ version. Nothing below should be treated as cleared.
 - `cap-main.webp` — Seattle Mariners cap. Team logos are trademarks; fine as
   classroom material, worth a second look on a public page.
 - `phone-iphone.webp`, `phone-samsung.webp` — product photographs
+
+## Deliberately not used
+
+The 1968 Olympic podium photograph. The widely reproduced version is by John
+Dominis for *Life* and is plainly still in copyright. Commons does host a
+different frame of the same moment, by Angelo Cozzi for Mondadori, tagged
+public domain — but that tag rests on non-US copyright rules, its own credit
+line points at a Getty licensing page, and being public domain in Italy does
+not make a work public domain in the United States. Swapping one uncertain
+press photo for another is not a fix, so the page shows present-day raised
+fists instead and tells the 1968 story in words, where no licence is needed.
 
 ## Rebuilding
 

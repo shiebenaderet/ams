@@ -113,9 +113,9 @@ var SYMBOL_EXPLORATIONS = [
         primer: "A raised fist stands for strength, and for refusing to accept unfair treatment. During the Civil Rights era of the 1960s it became a symbol of Black pride and Black power in the United States. People still raise a fist at marches and protests today, which is how a gesture from sixty years ago stays current.",
         deeper: "On 16 October 1968, at the Mexico City Olympics, Tommie Smith won the 200 metres in a world record and John Carlos took bronze. On the podium they raised black-gloved fists and bowed their heads, standing in black socks with no shoes to stand for poverty. Carlos had left his gloves behind, so the two men split one pair — which is why one fist is a right hand and the other a left. Both were expelled from the Games. Smith later wrote that it was never a Black Power salute at all, but “a human rights salute.”",
         images: [
-          { src: "fist-main.webp", alt: "Tommie Smith and John Carlos on the Olympic podium in 1968, heads bowed, each raising one black-gloved fist." },
+          { src: "fist-main.webp", alt: "A crowd at an outdoor rally with many arms raised, fists clenched." },
           { src: "fist-graphic.webp", label: "A", title: "The drawn symbol",
-            alt: "A graphic of a clenched black fist over a red star.",
+            alt: "A simple graphic of a clenched raised fist.",
             caption: "Drawn simply, the fist travels anywhere — onto posters, pins, murals and shirts. That portability is part of why it lasted." }
         ]
       },
