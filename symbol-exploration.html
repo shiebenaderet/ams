@@ -66,7 +66,8 @@
 .sx-lede { max-width: 60ch; line-height: 1.7; color: var(--color-text); margin: 0 0 var(--space-4); }
 
 /* --- hub: the four explorations ----------------------------------------- */
-.sx-explorations { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.sx-explorations { display: grid; gap: var(--space-3); grid-template-columns: 1fr; }
+@media (min-width: 680px) { .sx-explorations { grid-template-columns: repeat(2, 1fr); } }
 .sx-ecard {
   display: flex; flex-direction: column; gap: var(--space-2);
   padding: var(--space-4);
@@ -199,7 +200,7 @@
 
 /* --- controls ----------------------------------------------------------- */
 .sx-bar {
-  position: sticky; top: var(--sx-navh, 0px); z-index: 30;
+  position: sticky; top: 0; z-index: 30;
   display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2);
   padding: var(--space-2) var(--space-3);
   margin-bottom: var(--space-4);
@@ -290,6 +291,13 @@
 .sx-pager .pg-next { text-align: right; }
 @media (max-width: 560px) { .sx-pager a { flex: 1 1 100%; } .sx-pager .pg-next { text-align: left; } }
 
+.sx-foot { background: transparent; border-top: 1px solid var(--color-border);
+  margin-top: var(--space-6); padding: var(--space-5) var(--space-3) var(--space-6); }
+.sx-foot-inner { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+.sx-foot-note { margin: 0; font-size: .88rem; line-height: 1.6; color: var(--color-muted); max-width: 52ch; text-align: left; }
+.sx-foot-site { margin: var(--space-2) 0 0; font-size: .84rem; color: var(--color-muted); text-align: left; }
+.sx-foot-site a { color: var(--color-muted); }
+
 .sx-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 </style>
 
@@ -337,8 +345,6 @@ body > *:not(#sx-print) { display: none !important; }
 </style>
 </head>
 <body>
-  <nav id="main-nav"></nav>
-
   <main class="sx" id="sx-root">
     <div class="sx-bar" id="sx-bar"></div>
     <div id="sx-view"></div>
@@ -346,13 +352,14 @@ body > *:not(#sx-print) { display: none !important; }
 
   <div id="sx-print" aria-hidden="true"></div>
 
-  <footer>
-    <div class="container">
-      <p>Mr. B&#8217;s Social Studies - Alderwood Middle School</p>
+  <footer class="sx-foot">
+    <div class="sx-foot-inner">
+      <button type="button" class="sx-btn" id="sx-pdf">Download PDF</button>
+      <p class="sx-foot-note">All sixteen symbols at the level you picked. Choose &#8220;Save as PDF&#8221; in the box that opens.</p>
+      <p class="sx-foot-site"><a href="index.html">Mr. B&#8217;s Social Studies</a> &middot; Alderwood Middle School</p>
     </div>
   </footer>
 
-  <script src="nav.js"></script>
   <script src="symbol-data.js"></script>
   <script>
   (function () {
@@ -451,7 +458,7 @@ body > *:not(#sx-print) { display: none !important; }
       if (ctx.home) {
         html += '<a class="sx-btn" href="#">Home</a>';
       }
-      html += '<span class="sx-spacer"></span>';
+      if (ctx.back || ctx.home) { html += '<span class="sx-spacer"></span>'; }
       html += '<div class="sx-seg" role="group" aria-label="Reading level">'
            +  '<button type="button" data-level="simple" aria-pressed="' + (level === "simple") + '">Simpler</button>'
            +  '<button type="button" data-level="ms" aria-pressed="' + (level === "ms") + '">Standard</button>'
@@ -460,10 +467,10 @@ body > *:not(#sx-print) { display: none !important; }
       if (ctx.symbol && canSpeak) {
         html += '<button type="button" class="sx-btn sx-btn--speak" id="sx-speak" aria-pressed="false">Read aloud</button>';
       }
-      html += '<button type="button" class="sx-btn" id="sx-pdf">Download PDF</button>';
-      html += '<p class="sx-bar-note">All three say the same things. <strong>Simpler</strong> uses shorter sentences; '
-           +  '<strong>Advanced</strong> adds extra detail on top. <strong>Download PDF</strong> gives you all sixteen '
-           +  'symbols at the level you picked &mdash; choose &#8220;Save as PDF&#8221; in the box that opens.</p>';
+      if (ctx.hub) {
+        html += '<p class="sx-bar-note">All three levels say the same things &mdash; '
+             +  '<strong>Simpler</strong> uses shorter sentences, <strong>Advanced</strong> adds extra detail.</p>';
+      }
       bar.innerHTML = html;
       bar.hidden = !!ctx.hideBar;
       bar.style.setProperty("--accent", ctx.accent || "var(--color-primary)");
@@ -489,7 +496,7 @@ body > *:not(#sx-print) { display: none !important; }
         + 'One laptop between you &mdash; take turns writing on the paper.</p>'
         + '<div class="sx-explorations">' + cards + "</div>";
 
-      renderBar({});
+      renderBar({ hub: true });
       focusHeading();
     }
 
@@ -781,19 +788,10 @@ body > *:not(#sx-print) { display: none !important; }
       renderSymbol(e, s);
     }
 
-    function measureNav() {
-      var nav = document.getElementById("main-nav");
-      var h = nav ? nav.getBoundingClientRect().height : 0;
-      document.documentElement.style.setProperty("--sx-navh", Math.round(h) + "px");
-    }
+    document.getElementById("sx-pdf").addEventListener("click", downloadPdf);
 
     window.addEventListener("hashchange", route);
-    window.addEventListener("resize", measureNav);
     route();
-    measureNav();
-    /* nav.js renders on DOMContentLoaded, which may land after this script. */
-    document.addEventListener("DOMContentLoaded", measureNav);
-    window.addEventListener("load", measureNav);
   }());
   </script>
 </body>
