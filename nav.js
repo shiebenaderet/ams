@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
   homeLink.className = "nav-link";
   homeLink.href = homeHref;
   homeLink.textContent = "Home";
-  if (!isUnitPage && currentPage !== "families.html") {
+  if (!isUnitPage && (currentPage === "" || currentPage === "index.html")) {
     homeLink.classList.add("active");
   }
   linksContainer.appendChild(homeLink);

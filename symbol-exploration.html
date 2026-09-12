@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Symbol Exploration - Mr. B's Social Studies</title>
+<meta name="description" content="Explore sixteen symbols of America across four categories, and decide for yourselves which ones say what it means to be American. Unit 1: Foundations &amp; Identity.">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ---------------------------------------------------------------------------
+   Symbol Exploration. Page-specific components only; palette, fonts and the
+   nav/footer chrome all come from style.css.
+
+   Audience is a 13-year-old on a shared school laptop, mid-class, with a paper
+   handout next to the keyboard. That sets the rules: big targets, one obvious
+   action per screen, nothing important hidden behind hover, and no step that
+   has to be explained before they can start.
+
+   Radii run on a deliberate three-step scale rather than one value everywhere
+   (pill for buttons, card for panels, chip for small inline things) -- one
+   radius reused everywhere is the tell that nobody chose it.
+--------------------------------------------------------------------------- */
+:root {
+  --r-pill: 999px;
+  --r-card: 16px;
+  --r-chip: 8px;
+  --space-1: .35rem;
+  --space-2: .6rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.25rem;
+  --space-6: 3.5rem;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* One hue per exploration, drawn from the site palette. Colour is a
+     wayfinding aid here (which of the four am I in?), never the only carrier
+     of meaning -- every exploration is also numbered and named. */
+  --e1: #1B2D45;
+  --e2: #C75B2A;
+  --e3: #4A6741;
+  --e4: #7A5C9E;
+}
+
+.sx { max-width: 1080px; margin: 0 auto; padding: 0 var(--space-3) var(--space-6); }
+.sx :focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; border-radius: 4px; }
+.sx h1[tabindex]:focus, .sx h1[tabindex]:focus-visible { outline: none; }
+
+/* --- the question this whole activity hangs off ------------------------- */
+.sx-question {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 4.2vw, 2.3rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--color-primary);
+  margin: 0 0 var(--space-2);
+}
+.sx-eyebrow {
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 var(--space-2);
+}
+.sx-lede { max-width: 60ch; line-height: 1.7; color: var(--color-text); margin: 0 0 var(--space-4); }
+
+/* --- hub: the four explorations ----------------------------------------- */
+.sx-explorations { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.sx-ecard {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  padding: var(--space-4);
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-left: 6px solid var(--accent, var(--color-primary));
+  border-radius: var(--r-card);
+  text-decoration: none; color: inherit;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
+  min-height: 44px;
+}
+.sx-ecard:hover, .sx-ecard:focus-visible { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.sx-ecard-num {
+  font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+}
+.sx-ecard-title {
+  font-family: var(--font-serif); font-size: 1.32rem; font-weight: 600;
+  line-height: 1.25; color: var(--color-primary);
+}
+.sx-ecard-list { font-size: .93rem; line-height: 1.65; color: var(--color-muted); }
+.sx-partner {
+  align-self: flex-start;
+  font-family: var(--font-sans); font-size: .76rem; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: .3rem .7rem; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+.sx-done { font-size: .8rem; font-weight: 600; color: var(--color-accent-sage); font-family: var(--font-sans); }
+
+/* --- the prompt from the paper handout, shown on screen too ------------- */
+.sx-prompt {
+  background: color-mix(in srgb, var(--accent) 8%, var(--color-card-bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: var(--r-card);
+  padding: var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+.sx-prompt-q {
+  font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600;
+  line-height: 1.45; color: var(--color-primary); margin: 0 0 var(--space-2); max-width: 58ch;
+}
+.sx-prompt-starter { font-size: .95rem; line-height: 1.6; color: var(--color-muted); margin: 0; max-width: 58ch; }
+.sx-prompt-starter strong { color: var(--accent); font-weight: 600; }
+
+/* --- symbol cards inside an exploration --------------------------------- */
+.sx-symbols { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); }
+.sx-scard {
+  display: flex; flex-direction: column;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-card);
+  overflow: hidden; text-decoration: none; color: inherit;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.sx-scard:hover, .sx-scard:focus-visible { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.sx-scard-img { aspect-ratio: 4 / 3; background: #fff; display: grid; place-items: center; padding: var(--space-2); }
+.sx-scard-img img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.sx-scard-body { padding: var(--space-3); display: flex; align-items: center; gap: var(--space-2); min-height: 44px; }
+.sx-scard-title { font-family: var(--font-serif); font-size: 1.03rem; font-weight: 600; line-height: 1.3; color: var(--color-primary); }
+.sx-tick { margin-left: auto; color: var(--color-accent-sage); font-weight: 700; flex: none; }
+
+/* --- one symbol --------------------------------------------------------- */
+.sx-symbol { display: grid; gap: var(--space-5); grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: start; }
+@media (max-width: 800px) { .sx-symbol { grid-template-columns: 1fr; gap: var(--space-4); } }
+
+.sx-stage {
+  background: #fff; border: 1px solid var(--color-border); border-radius: var(--r-card);
+  padding: var(--space-3); display: grid; place-items: center;
+  aspect-ratio: 4 / 3; max-height: 62vh;
+}
+.sx-stage img {
+  width: 100%; height: 100%; min-height: 0; object-fit: contain;
+  border-radius: var(--r-chip);
+}
+.sx-caption {
+  margin: var(--space-3) 0 0; padding: var(--space-3);
+  background: color-mix(in srgb, var(--accent) 7%, var(--color-card-bg));
+  border-left: 4px solid var(--accent); border-radius: var(--r-chip);
+  font-size: .96rem; line-height: 1.7; max-width: 62ch;
+}
+.sx-caption b { display: block; font-family: var(--font-sans); font-size: .75rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: .3rem; }
+
+/* Detail strip. Each thumb swaps the main stage rather than opening a
+   lightbox: same "look closer" payoff, one less thing to dismiss, and it
+   still works when the window is 320px wide. */
+.sx-details { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-4); }
+.sx-thumb {
+  position: relative; width: 84px; height: 84px; padding: 5px;
+  background: #fff; border: 2px solid var(--color-border); border-radius: var(--r-chip);
+  cursor: pointer; display: grid; place-items: center;
+  transition: border-color .15s var(--ease);
+}
+.sx-thumb img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.sx-thumb[aria-pressed="true"] { border-color: var(--accent); }
+.sx-thumb-tag {
+  position: absolute; top: -8px; left: -8px; width: 24px; height: 24px; border-radius: var(--r-pill);
+  background: var(--accent); color: #fff; font-family: var(--font-sans); font-size: .76rem; font-weight: 700;
+  display: grid; place-items: center;
+}
+
+.sx-name { font-family: var(--font-serif); font-size: clamp(1.6rem, 4vw, 2.15rem); font-weight: 600;
+  letter-spacing: -0.02em; line-height: 1.2; color: var(--color-primary); margin: 0 0 var(--space-3); }
+.sx-text p { max-width: 62ch; line-height: 1.75; font-size: 1.03rem; margin: 0 0 var(--space-3); text-align: left; }
+.sx-deeper {
+  margin-top: var(--space-3); padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border);
+}
+.sx-deeper-tag {
+  font-family: var(--font-sans); font-size: .76rem; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--color-accent-warm); margin: 0 0 var(--space-2);
+}
+
+/* --- glossary word ------------------------------------------------------ */
+.sx-gloss {
+  border: 0; padding: 0 1px; background: none; font: inherit; color: inherit;
+  border-bottom: 2px dotted var(--color-accent-warm); cursor: help;
+}
+.sx-gloss-pop {
+  position: absolute; z-index: 40; max-width: 270px;
+  background: var(--color-primary); color: #FEFCF8;
+  padding: .7rem .85rem; border-radius: var(--r-chip);
+  font-size: .9rem; line-height: 1.5; box-shadow: var(--shadow-lg);
+}
+.sx-gloss-pop b { display: block; color: var(--color-accent); margin-bottom: .2rem; }
+
+/* --- controls ----------------------------------------------------------- */
+.sx-bar {
+  position: sticky; top: var(--sx-navh, 0px); z-index: 30;
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-4);
+  background: color-mix(in srgb, var(--color-bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-border);
+}
+.sx-btn {
+  display: inline-flex; align-items: center; gap: .45rem;
+  min-height: 44px; padding: .55rem 1.15rem;
+  font-family: var(--font-sans); font-size: .95rem; font-weight: 600;
+  border-radius: var(--r-pill); border: 1.5px solid var(--color-border);
+  background: var(--color-card-bg); color: var(--color-primary);
+  cursor: pointer; text-decoration: none;
+  transition: background .15s var(--ease), border-color .15s var(--ease);
+}
+.sx-btn:hover { border-color: var(--color-primary); }
+.sx-btn--speak[aria-pressed="true"] { background: var(--color-accent-warm); border-color: var(--color-accent-warm); color: #fff; }
+.sx-seg { display: inline-flex; border: 1.5px solid var(--color-border); border-radius: var(--r-pill); overflow: hidden; background: var(--color-card-bg); }
+.sx-seg button {
+  min-height: 44px; padding: .5rem 1rem; border: 0; background: none; cursor: pointer;
+  font-family: var(--font-sans); font-size: .9rem; font-weight: 600; color: var(--color-muted);
+}
+.sx-seg button[aria-pressed="true"] { background: var(--color-primary); color: #FEFCF8; }
+.sx-bar-note { font-size: .82rem; color: var(--color-muted); flex-basis: 100%; margin: 0; }
+.sx-spacer { flex: 1 1 auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sx-ecard, .sx-scard, .sx-thumb { transition: none; }
+  .sx-ecard:hover, .sx-scard:hover { transform: none; }
+}
+@media (max-width: 420px) {
+  .sx-bar { gap: var(--space-1); }
+  .sx-btn, .sx-seg button { padding-left: .8rem; padding-right: .8rem; font-size: .88rem; }
+}
+.sx-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+  <nav id="main-nav"></nav>
+
+  <main class="sx" id="sx-root">
+    <div class="sx-bar" id="sx-bar"></div>
+    <div id="sx-view"></div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Mr. B&#8217;s Social Studies - Alderwood Middle School</p>
+    </div>
+  </footer>
+
+  <script src="nav.js"></script>
+  <script src="symbol-data.js"></script>
+  <script>
+  (function () {
+    "use strict";
+
+    var IMG = "symbol-images/";
+    var LS_LEVEL = "symbolExploration.level";
+    var LS_SEEN = "symbolExploration.seen";
+    var view = document.getElementById("sx-view");
+    var bar = document.getElementById("sx-bar");
+
+    /* localStorage throws outright in some locked-down school profiles, so
+       every read and write is guarded and the page works fine without it. */
+    function lsGet(k, d) { try { var v = localStorage.getItem(k); return v === null ? d : v; } catch (e) { return d; } }
+    function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+    var level = lsGet(LS_LEVEL, "ms") === "advanced" ? "advanced" : "ms";
+    var seen = {};
+    try { seen = JSON.parse(lsGet(LS_SEEN, "{}")) || {}; } catch (e) { seen = {}; }
+
+    function markSeen(slug) { seen[slug] = 1; lsSet(LS_SEEN, JSON.stringify(seen)); }
+
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+                      .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    /* Longest terms first, so "assembly line" wins over "line" would-be
+       matches and a short word never eats a longer phrase. */
+    var GLOSS_TERMS = Object.keys(SYMBOL_GLOSSARY).sort(function (a, b) { return b.length - a.length; });
+    var GLOSS_RE = new RegExp("\\b(" + GLOSS_TERMS.map(function (t) {
+      return t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }).join("|") + ")\\b", "gi");
+
+    function glossify(text) {
+      return esc(text).replace(GLOSS_RE, function (match) {
+        var key = GLOSS_TERMS.filter(function (t) { return t.toLowerCase() === match.toLowerCase(); })[0];
+        if (!key) { return match; }
+        return '<button type="button" class="sx-gloss" data-term="' + esc(key) + '">' + match + "</button>";
+      });
+    }
+
+    function findExploration(id) {
+      return SYMBOL_EXPLORATIONS.filter(function (e) { return e.id === id; })[0];
+    }
+    function findSymbol(e, slug) {
+      return e.symbols.filter(function (s) { return s.slug === slug; })[0];
+    }
+    function accentFor(e) { return "var(--" + e.id + ")"; }
+
+    /* ---------------- speech ---------------- */
+    var speaking = false;
+    var canSpeak = typeof window.speechSynthesis !== "undefined"
+                && typeof window.SpeechSynthesisUtterance !== "undefined";
+
+    function stopSpeech() {
+      if (!canSpeak) { return; }
+      window.speechSynthesis.cancel();
+      speaking = false;
+      syncSpeakButton();
+    }
+    function speak(text) {
+      if (!canSpeak) { return; }
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.rate = 0.95;
+      u.lang = "en-US";
+      u.onend = function () { speaking = false; syncSpeakButton(); };
+      u.onerror = function () { speaking = false; syncSpeakButton(); };
+      speaking = true;
+      syncSpeakButton();
+      window.speechSynthesis.speak(u);
+    }
+    function syncSpeakButton() {
+      var b = document.getElementById("sx-speak");
+      if (!b) { return; }
+      b.setAttribute("aria-pressed", speaking ? "true" : "false");
+      b.textContent = speaking ? "Stop reading" : "Read aloud";
+    }
+    function currentSpeechText() {
+      var parts = [];
+      var name = view.querySelector(".sx-name");
+      if (name) { parts.push(name.textContent); }
+      view.querySelectorAll(".sx-text p, .sx-caption").forEach(function (n) { parts.push(n.textContent); });
+      return parts.join(". ");
+    }
+
+    /* ---------------- control bar ---------------- */
+    function renderBar(ctx) {
+      var html = "";
+      if (ctx.back) {
+        html += '<a class="sx-btn" href="' + ctx.back + '">&#8592; ' + esc(ctx.backLabel) + "</a>";
+      }
+      if (ctx.home) {
+        html += '<a class="sx-btn" href="#">Home</a>';
+      }
+      html += '<span class="sx-spacer"></span>';
+      html += '<div class="sx-seg" role="group" aria-label="Reading level">'
+           +  '<button type="button" data-level="ms" aria-pressed="' + (level === "ms") + '">Middle School</button>'
+           +  '<button type="button" data-level="advanced" aria-pressed="' + (level === "advanced") + '">Advanced</button>'
+           +  "</div>";
+      if (ctx.symbol && canSpeak) {
+        html += '<button type="button" class="sx-btn sx-btn--speak" id="sx-speak" aria-pressed="false">Read aloud</button>';
+      }
+      if (ctx.symbol) {
+        html += '<p class="sx-bar-note">Advanced <strong>adds</strong> more detail. It never takes anything away.</p>';
+      }
+      bar.innerHTML = html;
+      bar.hidden = !!ctx.hideBar;
+      bar.style.setProperty("--accent", ctx.accent || "var(--color-primary)");
+    }
+
+    /* ---------------- views ---------------- */
+    function renderHub() {
+      var cards = SYMBOL_EXPLORATIONS.map(function (e) {
+        var names = e.symbols.map(function (s) { return esc(s.title.replace(/^The /, "")); }).join(" &middot; ");
+        var doneCount = e.symbols.filter(function (s) { return seen[s.slug]; }).length;
+        return '<a class="sx-ecard" href="#' + e.id + '" style="--accent:' + accentFor(e) + '">'
+             + '<span class="sx-ecard-num">Exploration #' + e.number + "</span>"
+             + '<span class="sx-ecard-title">' + esc(e.title) + "</span>"
+             + '<span class="sx-partner">Partner ' + e.partner + " writes</span>"
+             + '<span class="sx-ecard-list">' + names + "</span>"
+             + (doneCount ? '<span class="sx-done">' + doneCount + " of " + e.symbols.length + " looked at</span>" : "")
+             + "</a>";
+      }).join("");
+
+      view.innerHTML = '<p class="sx-eyebrow">Unit 1 &middot; Foundations &amp; Identity</p>'
+        + '<h1 class="sx-question" tabindex="-1">' + esc(UNIT_QUESTION) + "</h1>"
+        + '<p class="sx-lede">Sixteen symbols, in four sets. Go in any order you like, and come back here to pick the next one. '
+        + 'One laptop between you &mdash; take turns writing on the paper.</p>'
+        + '<div class="sx-explorations">' + cards + "</div>";
+
+      renderBar({ hideBar: true });
+      focusHeading();
+    }
+
+    function renderExploration(e) {
+      var cards = e.symbols.map(function (s) {
+        return '<a class="sx-scard" href="#' + e.id + "/" + s.slug + '">'
+             + '<span class="sx-scard-img"><img src="' + IMG + esc(s.images[0].src) + '" alt="" loading="lazy"></span>'
+             + '<span class="sx-scard-body"><span class="sx-scard-title">' + esc(s.title) + "</span>"
+             + (seen[s.slug] ? '<span class="sx-tick" aria-label="already looked at">&#10003;</span>' : "")
+             + "</span></a>";
+      }).join("");
+
+      view.innerHTML = '<div style="--accent:' + accentFor(e) + '">'
+        + '<p class="sx-eyebrow">Exploration #' + e.number + "</p>"
+        + '<h1 class="sx-question" tabindex="-1">' + esc(e.title) + "</h1>"
+        + '<div class="sx-prompt">'
+        + '<p class="sx-prompt-q">' + esc(e.prompt) + "</p>"
+        + '<p class="sx-prompt-starter"><strong>Stuck?</strong> ' + esc(e.starter) + "</p>"
+        + "</div>"
+        + '<div class="sx-symbols">' + cards + "</div></div>";
+
+      renderBar({ home: true, accent: accentFor(e) });
+      focusHeading();
+    }
+
+    function renderSymbol(e, s) {
+      markSeen(s.slug);
+      var deeper = level === "advanced"
+        ? '<div class="sx-deeper"><p class="sx-deeper-tag">Going deeper</p><p>' + glossify(s.deeper) + "</p></div>"
+        : "";
+
+      var thumbs = s.images.length > 1
+        ? '<div class="sx-details">' + s.images.map(function (img, i) {
+            var tag = img.label ? '<span class="sx-thumb-tag">' + esc(img.label) + "</span>" : "";
+            return '<button type="button" class="sx-thumb" data-i="' + i + '" aria-pressed="' + (i === 0) + '" '
+                 + 'title="' + esc(img.title || "Main picture") + '">' + tag
+                 + '<img src="' + IMG + esc(img.src) + '" alt="' + esc(img.title || "Main picture") + '"></button>';
+          }).join("") + "</div>"
+        : "";
+
+      view.innerHTML = '<div class="sx-symbol" style="--accent:' + accentFor(e) + '">'
+        + "<div>"
+        + '<div class="sx-stage"><img id="sx-stage-img" src="' + IMG + esc(s.images[0].src) + '" alt="' + esc(s.images[0].alt) + '"></div>'
+        + thumbs
+        + '<div id="sx-cap"></div>'
+        + "</div>"
+        + '<div class="sx-text">'
+        + '<p class="sx-eyebrow">Exploration #' + e.number + " &middot; " + esc(e.title) + "</p>"
+        + '<h1 class="sx-name" tabindex="-1">' + esc(s.title) + "</h1>"
+        + "<p>" + glossify(s.primer) + "</p>"
+        + deeper
+        + "</div></div>";
+
+      showImage(s, 0);
+      renderBar({ home: true, back: "#" + e.id, backLabel: e.title, symbol: true, accent: accentFor(e) });
+
+      var stage = document.getElementById("sx-stage-img");
+      view.querySelectorAll(".sx-thumb").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var i = Number(btn.getAttribute("data-i"));
+          view.querySelectorAll(".sx-thumb").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
+          btn.setAttribute("aria-pressed", "true");
+          stage.src = IMG + s.images[i].src;
+          stage.alt = s.images[i].alt;
+          showImage(s, i);
+        });
+      });
+      focusHeading();
+    }
+
+    function showImage(s, i) {
+      var cap = document.getElementById("sx-cap");
+      if (!cap) { return; }
+      var img = s.images[i];
+      cap.innerHTML = img.caption
+        ? '<p class="sx-caption"><b>' + esc((img.label ? img.label + " · " : "") + (img.title || "")) + "</b>"
+          + glossify(img.caption) + "</p>"
+        : "";
+    }
+
+    function focusHeading() {
+      var h = view.querySelector("h1");
+      if (h) { h.focus({ preventScroll: true }); }
+      window.scrollTo(0, 0);
+    }
+
+    /* ---------------- glossary popover ---------------- */
+    var pop = null;
+    function closePop() { if (pop) { pop.remove(); pop = null; } }
+    document.addEventListener("click", function (ev) {
+      var g = ev.target.closest ? ev.target.closest(".sx-gloss") : null;
+      closePop();
+      if (!g) { return; }
+      ev.preventDefault();
+      var term = g.getAttribute("data-term");
+      pop = document.createElement("div");
+      pop.className = "sx-gloss-pop";
+      pop.setAttribute("role", "status");
+      pop.innerHTML = "<b>" + esc(term) + "</b>" + esc(SYMBOL_GLOSSARY[term] || "");
+      document.body.appendChild(pop);
+      var r = g.getBoundingClientRect();
+      var top = r.bottom + window.scrollY + 8;
+      var left = Math.min(r.left + window.scrollX, window.innerWidth - pop.offsetWidth - 12);
+      pop.style.top = top + "px";
+      pop.style.left = Math.max(8, left) + "px";
+    });
+    document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") { closePop(); stopSpeech(); } });
+
+    /* ---------------- bar interactions ---------------- */
+    bar.addEventListener("click", function (ev) {
+      var lv = ev.target.closest ? ev.target.closest("[data-level]") : null;
+      if (lv) {
+        level = lv.getAttribute("data-level");
+        lsSet(LS_LEVEL, level);
+        stopSpeech();
+        route();
+        return;
+      }
+      if (ev.target.id === "sx-speak") {
+        if (speaking) { stopSpeech(); } else { speak(currentSpeechText()); }
+      }
+    });
+
+    /* ---------------- routing ----------------
+       Hash routing keeps the browser Back button working and makes every
+       symbol linkable on its own, so a single symbol can be posted straight
+       into Canvas without landing students on the hub first. */
+    function route() {
+      stopSpeech();
+      closePop();
+      var hash = (location.hash || "").replace(/^#/, "");
+      if (!hash) { renderHub(); return; }
+      var parts = hash.split("/");
+      var e = findExploration(parts[0]);
+      if (!e) { renderHub(); return; }
+      if (parts.length === 1) { renderExploration(e); return; }
+      var s = findSymbol(e, parts[1]);
+      if (!s) { renderExploration(e); return; }
+      renderSymbol(e, s);
+    }
+
+    function measureNav() {
+      var nav = document.getElementById("main-nav");
+      var h = nav ? nav.getBoundingClientRect().height : 0;
+      document.documentElement.style.setProperty("--sx-navh", Math.round(h) + "px");
+    }
+
+    window.addEventListener("hashchange", route);
+    window.addEventListener("resize", measureNav);
+    route();
+    measureNav();
+    /* nav.js renders on DOMContentLoaded, which may land after this script. */
+    document.addEventListener("DOMContentLoaded", measureNav);
+    window.addEventListener("load", measureNav);
+  }());
+  </script>
+</body>
+</html>
