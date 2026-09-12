@@ -5,22 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Symbol Exploration - Mr. B's Social Studies</title>
 <meta name="description" content="Explore sixteen symbols of America across four categories, and decide for yourselves which ones say what it means to be American. Unit 1: Foundations &amp; Identity.">
-<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;family=Bricolage+Grotesque:opsz,wght@12..96,300..800&amp;display=swap">
 <style>
 /* ---------------------------------------------------------------------------
-   Symbol Exploration. Page-specific components only; palette, fonts and the
-   nav/footer chrome all come from style.css.
+   Symbol Exploration -- a standalone student activity.
+
+   This page deliberately does not load the site's style.css. It is not a page
+   of the website; it is the thing students spend a lesson inside, and it reads
+   better owning its own palette and type than wearing the site's chrome.
 
    Audience is a 13-year-old on a shared school laptop, mid-class, with a paper
    handout next to the keyboard. That sets the rules: big targets, one obvious
    action per screen, nothing important hidden behind hover, and no step that
    has to be explained before they can start.
 
+   Type: Atkinson Hyperlegible Next for everything that gets read -- it was
+   drawn by the Braille Institute to keep letterforms apart for low-vision
+   readers, which is the right default for a class with many students reading
+   well below grade level. Bricolage Grotesque carries the display sizes, where
+   character matters more than legibility at small sizes.
+
    Radii run on a deliberate three-step scale rather than one value everywhere
    (pill for buttons, card for panels, chip for small inline things) -- one
    radius reused everywhere is the tell that nobody chose it.
 --------------------------------------------------------------------------- */
 :root {
+  /* Warm paper, warmer and lighter than the main site's cream, so the two do
+     not read as the same surface. No grey anywhere: the muted tone is a warm
+     brown-grey, not a neutral one. */
+  --color-bg: #FDF6EC;
+  --color-card-bg: #FFFFFF;
+  --color-text: #2A2119;
+  --color-primary: #241C15;
+  --color-muted: #6B6058;
+  --color-border: #E7DAC7;
+  --color-accent: #E0A32E;
+  --color-accent-warm: #C6472F;
+  --color-accent-sage: #2E6B4F;
+  --font-serif: 'Bricolage Grotesque', Georgia, serif;
+  --font-sans: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --shadow-sm: 0 1px 2px rgba(64,44,20,.06), 0 1px 3px rgba(64,44,20,.05);
+  --shadow-md: 0 2px 6px rgba(64,44,20,.07), 0 6px 16px rgba(64,44,20,.07);
+  --shadow-lg: 0 4px 10px rgba(64,44,20,.08), 0 14px 34px rgba(64,44,20,.10);
+  --radius: 10px;
+  --transition: .25s ease;
   --r-pill: 999px;
   --r-card: 16px;
   --r-chip: 8px;
@@ -34,62 +63,110 @@
   /* One hue per exploration, drawn from the site palette. Colour is a
      wayfinding aid here (which of the four am I in?), never the only carrier
      of meaning -- every exploration is also numbered and named. */
-  --e1: #1B2D45;
-  --e2: #C75B2A;
-  --e3: #4A6741;
-  --e4: #7A5C9E;
+  --e1: #1D4E89;
+  --e2: #C6472F;
+  --e3: #2E6B4F;
+  --e4: #6A4C93;
 }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--color-bg); color: var(--color-text);
+  font-family: var(--font-sans); font-size: 1rem; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3 { margin: 0; font-weight: 600; }
+p, ul, ol, dl { margin: 0; }
+img { max-width: 100%; }
+a { color: inherit; }
 
 .sx { max-width: 1080px; margin: 0 auto; padding: 0 var(--space-3) var(--space-6); }
 .sx :focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; border-radius: 4px; }
 .sx h1[tabindex]:focus, .sx h1[tabindex]:focus-visible { outline: none; }
 
 /* --- the question this whole activity hangs off ------------------------- */
+.hub-head { margin: var(--space-3) 0 var(--space-5); display: grid; gap: var(--space-3); }
+.hub-head .sx-eyebrow { grid-column: 1 / -1; }
+.hub-said { max-width: 46ch; }
+@media (min-width: 860px) {
+  .hub-head { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); align-items: end; column-gap: var(--space-5); }
+}
 .sx-question {
   font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 4.2vw, 2.3rem);
+  font-size: clamp(2rem, 6.4vw, 3.4rem);
   font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
   color: var(--color-primary);
-  margin: 0 0 var(--space-2);
+  margin: 0 0 var(--space-3);
 }
+/* A highlighter on the one word the whole unit argues about. */
+.hl { background: color-mix(in srgb, var(--color-accent) 48%, transparent);
+  padding: 0 .1em; border-radius: 5px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .sx-eyebrow {
   font-family: var(--font-sans);
   font-size: .78rem;
-  font-weight: 600;
-  letter-spacing: .14em;
+  font-weight: 700;
+  letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--color-muted);
+  color: var(--color-accent-warm);
   margin: 0 0 var(--space-2);
 }
-.sx-lede { max-width: 60ch; line-height: 1.7; color: var(--color-text); margin: 0 0 var(--space-4); }
+.sx-lede { max-width: 48ch; line-height: 1.65; font-size: 1.06rem; color: var(--color-text); margin: 0 0 var(--space-2); }
+.hub-hint { max-width: 48ch; font-size: .94rem; color: var(--color-muted); margin: 0; }
 
-/* --- hub: the four explorations ----------------------------------------- */
-.sx-explorations { display: grid; gap: var(--space-3); grid-template-columns: 1fr; }
-@media (min-width: 680px) { .sx-explorations { grid-template-columns: repeat(2, 1fr); } }
+/* --- hub: the four explorations ----------------------------------------
+   The activity is made of pictures, so the landing page is made of pictures.
+   Each card previews its own four symbols, which does the work a paragraph of
+   description was doing before, and does it faster. */
+.sx-explorations { display: grid; gap: var(--space-4); grid-template-columns: 1fr; }
+@media (min-width: 720px) { .sx-explorations { grid-template-columns: repeat(2, 1fr); } }
 .sx-ecard {
-  display: flex; flex-direction: column; gap: var(--space-2);
-  padding: var(--space-4);
+  display: flex; flex-direction: column;
   background: var(--color-card-bg);
-  border: 1px solid var(--color-border);
-  border-left: 6px solid var(--accent, var(--color-primary));
+  border: 1.5px solid var(--color-border);
   border-radius: var(--r-card);
+  overflow: hidden;
   text-decoration: none; color: inherit;
   box-shadow: var(--shadow-sm);
-  transition: box-shadow .2s var(--ease), transform .2s var(--ease);
-  min-height: 44px;
+  transition: box-shadow .2s var(--ease), transform .2s var(--ease), border-color .2s var(--ease);
 }
-.sx-ecard:hover, .sx-ecard:focus-visible { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.sx-ecard:hover, .sx-ecard:focus-visible {
+  box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--accent);
+}
+/* The preview strip carries the set's colour, so each card is identifiable
+   from across the room before a word of it is read. */
+.ec-art {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+  padding: var(--space-2); background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-bottom: 1.5px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+.ec-tile {
+  aspect-ratio: 1; background: #fff; border-radius: var(--r-chip);
+  display: grid; place-items: center; padding: 7px; overflow: hidden;
+}
+.ec-tile img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.ec-body { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); flex: 1 1 auto; }
+.ec-top { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
 .sx-ecard-num {
-  font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+  font-family: var(--font-sans); font-size: .74rem; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
 }
 .sx-ecard-title {
-  font-family: var(--font-serif); font-size: 1.32rem; font-weight: 600;
-  line-height: 1.25; color: var(--color-primary);
+  font-family: var(--font-serif); font-size: clamp(1.3rem, 2.6vw, 1.6rem); font-weight: 600;
+  letter-spacing: -0.02em; line-height: 1.15; color: var(--color-primary);
 }
-.sx-ecard-list { font-size: .93rem; line-height: 1.65; color: var(--color-muted); }
+.sx-ecard-list { font-size: .92rem; line-height: 1.6; color: var(--color-muted); }
+
+/* Progress shows on every card, started or not, so "where were we?" is
+   answered by looking rather than by remembering. */
+.ec-progress { display: flex; align-items: center; gap: var(--space-2); margin-top: auto; padding-top: var(--space-2); }
+.ec-bar { flex: 1 1 auto; height: 7px; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--accent) 16%, transparent); overflow: hidden; }
+.ec-bar i { display: block; height: 100%; border-radius: var(--r-pill); background: var(--accent); }
+.ec-count { font-family: var(--font-sans); font-size: .8rem; font-weight: 700; color: var(--color-muted); flex: none; }
+.ec-count--done { color: var(--color-accent-sage); }
 .sx-partner {
   align-self: flex-start;
   font-family: var(--font-sans); font-size: .76rem; font-weight: 700;
@@ -480,20 +557,41 @@ body > *:not(#sx-print) { display: none !important; }
     function renderHub() {
       var cards = SYMBOL_EXPLORATIONS.map(function (e) {
         var names = e.symbols.map(function (s) { return esc(s.title.replace(/^The /, "")); }).join(" &middot; ");
-        var doneCount = e.symbols.filter(function (s) { return seen[s.slug]; }).length;
+        var done = e.symbols.filter(function (s) { return seen[s.slug]; }).length;
+        var total = e.symbols.length;
+        var pct = Math.round((done / total) * 100);
+        /* One tile per symbol, using that symbol's own main picture. */
+        var art = '<span class="ec-art">' + e.symbols.map(function (sym) {
+          return '<span class="ec-tile"><img src="' + IMG + esc(sym.images[0].src) + '" alt="" loading="lazy"></span>';
+        }).join("") + "</span>";
         return '<a class="sx-ecard" href="#' + e.id + '" style="--accent:' + accentFor(e) + '">'
-             + '<span class="sx-ecard-num">Exploration #' + e.number + "</span>"
+             + art
+             + '<span class="ec-body">'
+             + '<span class="ec-top">'
+             +   '<span class="sx-ecard-num">Exploration ' + e.number + "</span>"
+             +   '<span class="sx-partner">Partner ' + e.partner + " writes</span>"
+             + "</span>"
              + '<span class="sx-ecard-title">' + esc(e.title) + "</span>"
-             + '<span class="sx-partner">Partner ' + e.partner + " writes</span>"
              + '<span class="sx-ecard-list">' + names + "</span>"
-             + (doneCount ? '<span class="sx-done">' + doneCount + " of " + e.symbols.length + " looked at</span>" : "")
-             + "</a>";
+             + '<span class="ec-progress">'
+             +   '<span class="ec-bar"><i style="width:' + pct + '%"></i></span>'
+             +   '<span class="ec-count' + (done === total ? " ec-count--done" : "") + '">'
+             +     (done === total ? "All " + total + " done &#10003;" : done + " of " + total)
+             +   "</span>"
+             + "</span>"
+             + "</span></a>";
       }).join("");
 
-      view.innerHTML = '<p class="sx-eyebrow">Unit 1 &middot; Foundations &amp; Identity</p>'
-        + '<h1 class="sx-question" tabindex="-1">' + esc(UNIT_QUESTION) + "</h1>"
-        + '<p class="sx-lede">Sixteen symbols, in four sets. Go in any order you like, and come back here to pick the next one. '
-        + 'One laptop between you &mdash; take turns writing on the paper.</p>'
+      view.innerHTML = '<header class="hub-head">'
+        + '<p class="sx-eyebrow">Unit 1 &middot; Foundations &amp; Identity</p>'
+        + '<h1 class="sx-question" tabindex="-1">'
+        +   esc(UNIT_QUESTION).replace("American", '<span class="hl">American</span>')
+        + "</h1>"
+        + '<div class="hub-said">'
+        +   '<p class="sx-lede">Sixteen symbols, in four sets. Pick any set to start &mdash; they work in any order.</p>'
+        +   '<p class="hub-hint">One laptop between you. Take turns writing on the paper.</p>'
+        + "</div>"
+        + "</header>"
         + '<div class="sx-explorations">' + cards + "</div>";
 
       renderBar({ hub: true });
