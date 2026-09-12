@@ -137,7 +137,16 @@ var SYMBOL_EXPLORATIONS = [
             caption: "This is Northwest Coast formline — the ovoid and U-shapes used by nations along this coastline, including here in Washington." },
           { src: "native-dreamcatcher.webp", label: "B", title: "The dreamcatcher",
             alt: "A dreamcatcher with a woven web and hanging feathers, photographed outdoors among green leaves.",
-            caption: "A woven hoop hung where someone sleeps. Ojibwe in origin, and now sold almost everywhere — which is exactly the debate." }
+            caption: "A woven hoop hung where someone sleeps. Ojibwe in origin, and now sold almost everywhere — which is exactly the debate." },
+          { src: "native-totem.webp", label: "C", title: "A totem pole",
+            alt: "A tall carved and painted totem pole standing in Pioneer Square in Seattle, with trees and city buildings behind it.",
+            caption: "This pole stands in Pioneer Square in Seattle, and it did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, Alaska, to honour a woman called Chief-of-All-Women — one of very few poles raised for a woman. In 1899 a party of Seattle businessmen chopped it down, sawed it in two and shipped it home. Eight of them were charged with theft and the case was dropped. The Tlingit asked for $20,000 and were paid $500. The pole standing there today is a replica, carved by descendants of the families who made the first one." },
+          { src: "native-powwow.webp", label: "D", title: "Regalia",
+            alt: "A dancer at a powwow seen from behind, wearing bright yellow and red regalia with beaded cuffs.",
+            caption: "Worn at a powwow in Montana. The word is regalia, never “costume” — a costume is something you pretend in, and this is not pretending." },
+          { src: "native-beadwork.webp", label: "E", title: "Beadwork",
+            alt: "A Lakota beaded vest, fully covered in fine white, red and green glass beadwork in geometric patterns.",
+            caption: "Lakota beadwork. Every bead on this vest was sewn on separately, and the patterns carry family and nation — this is writing as much as decoration." }
         ]
       },
       {
@@ -146,7 +155,13 @@ var SYMBOL_EXPLORATIONS = [
         primer: "This flag puts the stars and stripes together with the rainbow of the Pride flag. People fly it to say that being LGBTQ+ and being American are one thing rather than two competing things. It works the same way the combined Mexican and American designs do: two identities held in a single image.",
         deeper: "The rainbow flag was designed in 1978 by Gilbert Baker, an artist and army veteran in San Francisco, and the first versions carried eight stripes rather than today's six. Combining it with the stars and stripes follows an old American habit — taking the national flag and altering it deliberately, in order to make a claim about who the country is supposed to belong to.",
         images: [
-          { src: "pride-main.webp", alt: "An American flag with the usual white stars on blue, but with rainbow-coloured stripes instead of red and white." }
+          { src: "pride-main.webp", alt: "An American flag with the usual white stars on blue, but with rainbow-coloured stripes instead of red and white." },
+          { src: "pride-rainbow.webp", label: "A", title: "The rainbow flag",
+            alt: "A small handheld rainbow Pride flag held up outdoors at a parade.",
+            caption: "The flag this borrows from. Gilbert Baker designed it in San Francisco in 1978, and the first ones he sewed had eight stripes rather than six." },
+          { src: "pride-progress.webp", label: "B", title: "The Progress flag",
+            alt: "The Progress Pride flag: rainbow stripes with a chevron of white, pink, pale blue, brown and black at the hoist.",
+            caption: "A newer version. The added chevron stands for transgender people and for Black and brown people — a symbol being argued with and rewritten, in public, right now." }
         ]
       }
     ]
@@ -184,7 +199,13 @@ var SYMBOL_EXPLORATIONS = [
             caption: "The person, not the acreage. Most of what Americans picture as farming is really a picture of a particular farmer." },
           { src: "farm-pitchfork.webp", label: "B", title: "The pitchfork",
             alt: "An old wooden-handled pitchfork with three metal tines.",
-            caption: "Older than the tractor, and still the shorthand for farm work — which is why the painting American Gothic is instantly readable." }
+            caption: "Older than the tractor, and still the shorthand for farm work — which is why the painting American Gothic is instantly readable." },
+          { src: "farm-tractor.webp", label: "C", title: "The combine",
+            alt: "A green combine harvester cutting a wide stripe through a field of ripe wheat.",
+            caption: "The pitchfork's replacement. One machine now does the cutting, threshing and cleaning that once took a whole crew a whole season — which is most of the reason the farming jobs went away." },
+          { src: "farm-barn.webp", label: "D", title: "The barn and silo",
+            alt: "A red barn with a white roof and a tall concrete silo beside it, on a wet farm track.",
+            caption: "Red barn, tall silo. Nobody has to be told this is a farm — which is what makes it a symbol rather than just a building." }
         ]
       },
       {
@@ -196,7 +217,10 @@ var SYMBOL_EXPLORATIONS = [
           { src: "factory-main.webp", alt: "A worker in a machine shop bending over a large industrial gear assembly." },
           { src: "factory-teeth.webp", label: "A", title: "The teeth",
             alt: "Extreme close-up of the cut metal teeth around the edge of a large industrial gear.",
-            caption: "Close up, a gear is only precisely cut teeth. Every one has to meet the next one exactly, or the whole machine jams — which is the same demand an assembly line makes of people." }
+            caption: "Close up, a gear is only precisely cut teeth. Every one has to meet the next one exactly, or the whole machine jams — which is the same demand an assembly line makes of people." },
+          { src: "factory-modelt.webp", label: "B", title: "What came off the line",
+            alt: "A restored red 1913 Ford Model T with black bodywork, a folding roof and red spoked wheels.",
+            caption: "A Ford Model T. The assembly line cut the time to build one from about twelve hours to about ninety minutes, and that is what put a car within reach of the people building it." }
         ]
       },
       {
@@ -233,7 +257,10 @@ var SYMBOL_EXPLORATIONS = [
         primer: "Dog tags are metal identification tags worn by members of the military. They carry a name and a few basic facts, so that a soldier can be identified — including if they are killed. That is the reason this symbol holds service and loss together instead of standing for just one of them.",
         deeper: "They come in a pair for a blunt reason: one tag stays with the body and the other goes to the people keeping records. Families often hold on to a relative's tags for generations, which turns a piece of army-issued equipment into something personal. Very few objects start as standard government supply and end up as an heirloom.",
         images: [
-          { src: "dogtags-main.webp", alt: "Two metal military dog tags on a beaded chain, resting in an open palm." }
+          { src: "dogtags-main.webp", alt: "Two metal military dog tags on a beaded chain, resting in an open palm." },
+          { src: "dogtags-worn.webp", label: "A", title: "The second tag",
+            alt: "A single dog tag laced into the side of a tan military combat boot.",
+            caption: "Here is where the second tag of the pair goes: laced into a boot. The pair is split on purpose, so that identification survives even if the two are separated." }
         ]
       },
       {
@@ -248,7 +275,13 @@ var SYMBOL_EXPLORATIONS = [
           { src: "religion-star.webp", label: "B", title: "The Star of David",
             alt: "A blue six-pointed Star of David.", caption: "Judaism — practised in America since the 1600s." },
           { src: "religion-crescent.webp", label: "C", title: "The star and crescent",
-            alt: "A white star and crescent moon.", caption: "Islam — carried to America in part by enslaved West African Muslims." }
+            alt: "A white star and crescent moon.", caption: "Islam — carried to America in part by enslaved West African Muslims." },
+          { src: "religion-dharma.webp", label: "D", title: "The dharma wheel",
+            alt: "A golden eight-spoked dharma wheel.",
+            caption: "Buddhism. The eight spokes stand for the eightfold path — the wheel is a diagram of a teaching, not only a badge." },
+          { src: "religion-om.webp", label: "E", title: "Om",
+            alt: "The Om symbol, a curved Sanskrit character with a dot and crescent above it.",
+            caption: "Hinduism. Om is a sound before it is a shape — this is a drawing of something you are meant to hear." }
         ]
       },
       {
@@ -257,7 +290,13 @@ var SYMBOL_EXPLORATIONS = [
         primer: "A baseball cap began as sports equipment, because the brim keeps the sun out of a fielder's eyes. It turned into ordinary American clothing that almost anybody wears. A cap can say where you are from, which team you follow, or what you believe — entirely through whatever is printed on the front of it.",
         deeper: "The one shown here is a Seattle Mariners cap, which makes the point locally: around here, that logo tells other people something about you before you have said a word. The cap is cheap, plain, and has a flat panel right at eye level. That combination is why it became the standard American way to advertise a loyalty.",
         images: [
-          { src: "cap-main.webp", alt: "A teal and navy Seattle Mariners baseball cap with the stylised S logo on the front." }
+          { src: "cap-main.webp", alt: "A teal and navy Seattle Mariners baseball cap with the stylised S logo on the front." },
+          { src: "cap-team.webp", label: "A", title: "Where it started",
+            alt: "A black and white photograph of the 1914 West Point baseball team, most of the players wearing caps.",
+            caption: "The 1914 West Point team. The cap was equipment first — the brim exists to keep the sun out of a fielder's eyes, and everything else came later." },
+          { src: "cap-display.webp", label: "B", title: "A wall of them",
+            alt: "A market stall stacked with dozens of baseball caps in many colours and logos.",
+            caption: "Dozens of them, all the same shape, all saying different things. The object is identical; the front panel is the message." }
         ]
       },
       {
@@ -269,7 +308,10 @@ var SYMBOL_EXPLORATIONS = [
           { src: "phone-iphone.webp", alt: "An iPhone seen from the front, showing its home screen of app icons." },
           { src: "phone-samsung.webp", label: "A", title: "A different make",
             alt: "A Samsung Galaxy phone seen from the front, showing its home screen.",
-            caption: "Different company, near-identical object. That sameness is part of what makes it work as a symbol." }
+            caption: "Different company, near-identical object. That sameness is part of what makes it work as a symbol." },
+          { src: "phone-teen.webp", label: "B", title: "In use",
+            alt: "A teenager sitting on the floor against a wall, looking down at a phone held in both hands.",
+            caption: "The posture is the symbol as much as the device is. A stranger across a room can tell what you are doing without seeing the screen." }
         ]
       }
     ]

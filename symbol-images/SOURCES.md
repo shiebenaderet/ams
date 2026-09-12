@@ -19,11 +19,29 @@ written out in full here.
 | `religion-star.webp` | Commons: *Star of David.svg* | Zscout370 | Public domain |
 | `religion-crescent.webp` | Commons: *Star and Crescent.svg* | Kbolino | Public domain |
 
+| `native-totem.webp` | Commons: *Seattle - Pioneer Square totem pole 01.jpg* | Joe Mabel | CC BY-SA 3.0 |
+| `native-powwow.webp` | Commons: *Yellow shirt dancer closeup at Poplar Indian Days Celebration 2023.jpg* | Thayne Tuason, user name:Biscuitroot | CC BY-SA 4.0 |
+| `native-beadwork.webp` | Commons: *Lakota Beadwork (27654261892).jpg* | Tony Hisgett from Birmingham, UK | CC BY 2.0 |
+| `pride-rainbow.webp` | Commons: *Rainbow flag - DC Capital Pride parade - 2013-06-08 (8992857356).jpg* | Tim Evanson from Washington, D.C., United States of America | CC BY-SA 2.0 |
+| `pride-progress.webp` | Commons: *Brilliant Progress Pride Flag.svg* | PersikFlor | CC BY-SA 4.0 |
+| `farm-tractor.webp` | Commons: *Harvest (20200724-NRCS-LSC-0098).jpg* | USDAgov | Public domain |
+| `farm-barn.webp` | Commons: *Red Barn and Silos in Upstate New York.jpg* | Albeit simple | CC BY-SA 4.0 |
+| `factory-modelt.webp` | Commons: *1913 Ford Model T T1 Roadster (12702957045).jpg* | Sicnag | CC BY 2.0 |
+| `dogtags-worn.webp` | Commons: *US Navy 080123-F-1644L-225 Hospital Corpsman 3rd Class Taylor Simpkins, identified by his dog tags provides medical support if needed to the marines assigned to the 3rd Low Altitude Air Defense Battalion.jpg* | U.S. Navy photo | Public domain |
+| `religion-dharma.webp` | Commons: *Dharma Wheel (2).svg* | Shazz, Esteban.barahona | Public domain |
+| `religion-om.webp` | Commons: *Om symbol.svg* | The Unicode Consortium | Public domain |
+| `cap-display.webp` | Commons: *DFC 4145 A colorful display of baseball caps and sun hats lined up for sale at an outdoor market.jpg* | PattayaPatrol | CC BY-SA 4.0 |
+| `cap-team.webp` | Commons: *Group photo of the 1914 West Point baseball team.png* | Unknown | Public domain |
+| `phone-teen.webp` | Commons: *Teenager using mobile phone.jpg* | TheEgdeLord | CC BY-SA 4.0 |
+
 The `seal-*`, `flag-*` and `bell-*` detail files are crops taken from the main
 image listed on the same row, so they carry that row's licence. The same applies
 to the crops in the second group: `hardhat-colours`, `factory-teeth`,
 `mexflag-eagle` and `bulb-filament` inherit the (unknown) status of the images
 they were cut from.
+
+`farm-tractor.webp` and `factory-modelt.webp` are crops of the images on their
+own rows, so they carry those licences.
 
 ## Needs attribution
 
