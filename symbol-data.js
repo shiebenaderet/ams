@@ -39,10 +39,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "statue-main.webp", alt: "The Statue of Liberty seen from the water, green with age, torch raised." },
           { src: "statue-crown.webp", label: "A", title: "The crown",
             alt: "Close-up of the statue's head and the seven spikes of her crown against a blue sky.",
-            caption: "Seven rays spike out of her crown. They are usually explained as reaching the seven seas and seven continents — a welcome pointed everywhere at once." },
+            caption: "Seven rays spike out of her crown. They are usually explained as reaching the seven seas and seven continents — a welcome pointed everywhere at once.",
+            captionSimple: "Seven spikes stick out of her crown. People usually say the spikes stand for the seven seas and the seven continents. That means she is welcoming the whole world at once." },
           { src: "statue-chains.webp", label: "B", title: "The broken chains",
             alt: "A broken shackle and length of chain lying at the statue's feet, mostly hidden under her robe.",
-            caption: "A broken shackle and chain lie at her feet, the last link snapped open. Almost nobody sees them. From the ground, her robe hides them completely." }
+            caption: "A broken shackle and chain lie at her feet, the last link snapped open. Almost nobody sees them. From the ground, her robe hides them completely.",
+            captionSimple: "A broken shackle and a chain lie at her feet. The last link is snapped open. Almost nobody ever sees them. Standing on the ground you cannot, because her robe covers them completely." }
         ]
       },
       {
@@ -55,13 +57,16 @@ var SYMBOL_EXPLORATIONS = [
           { src: "seal-main.webp", alt: "The Great Seal of the United States: a bald eagle with a striped shield, holding an olive branch and arrows." },
           { src: "seal-motto.webp", label: "A", title: "E Pluribus Unum",
             alt: "Close-up of the ribbon in the eagle's beak reading E PLURIBUS UNUM.",
-            caption: "“E Pluribus Unum” is Latin for “Out of many, one.” It described thirteen separate states agreeing to count as a single country." },
+            caption: "“E Pluribus Unum” is Latin for “Out of many, one.” It described thirteen separate states agreeing to count as a single country.",
+            captionSimple: "“E Pluribus Unum” is Latin. It means “Out of many, one.” Thirteen separate states had agreed to count as one country, and this is how they said so." },
           { src: "seal-olive.webp", label: "B", title: "The olive branch",
             alt: "Close-up of the eagle's right claw gripping an olive branch with leaves and berries.",
-            caption: "The olive branch means peace. The eagle's head is turned toward this side." },
+            caption: "The olive branch means peace. The eagle's head is turned toward this side.",
+            captionSimple: "The olive branch means peace. Look at the eagle’s head. It is turned toward this side." },
           { src: "seal-arrows.webp", label: "C", title: "The arrows",
             alt: "Close-up of the eagle's left claw gripping a bundle of thirteen arrows.",
-            caption: "Thirteen arrows mean war. The eagle holds them tightly, but looks away from them." }
+            caption: "Thirteen arrows mean war. The eagle holds them tightly, but looks away from them.",
+            captionSimple: "The thirteen arrows mean war. The eagle holds them tightly. But it looks away from them." }
         ]
       },
       {
@@ -74,10 +79,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "flag-main.webp", alt: "The flag of the United States: fifty white stars on blue, with thirteen red and white stripes." },
           { src: "flag-stars.webp", label: "A", title: "Fifty stars",
             alt: "Close-up of the blue canton showing all fifty white stars in alternating rows.",
-            caption: "Fifty stars, in alternating rows of six and five. Count them — this arrangement is only as old as 1960." },
+            caption: "Fifty stars, in alternating rows of six and five. Count them — this arrangement is only as old as 1960.",
+            captionSimple: "Fifty stars. They sit in rows that switch between six stars and five. Count them if you like. This pattern only goes back to 1960." },
           { src: "flag-stripes.webp", label: "B", title: "Thirteen stripes",
             alt: "Close-up of the red and white stripes of the flag.",
-            caption: "Thirteen stripes, seven red and six white — one for each colony that broke from Britain." }
+            caption: "Thirteen stripes, seven red and six white — one for each colony that broke from Britain.",
+            captionSimple: "Thirteen stripes. Seven are red and six are white. There is one stripe for each colony that broke away from Britain." }
         ]
       },
       {
@@ -90,10 +97,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "bell-main.webp", alt: "The Liberty Bell hanging from its wooden yoke, with Independence Hall visible behind it." },
           { src: "bell-inscription.webp", label: "A", title: "The inscription",
             alt: "Close-up of the raised lettering around the bell reading PROCLAIM LIBERTY and PASS AND STOW.",
-            caption: "The words run right around the top of the bell. “Pass and Stow” are the two men who recast it in Philadelphia in 1753." },
+            caption: "The words run right around the top of the bell. “Pass and Stow” are the two men who recast it in Philadelphia in 1753.",
+            captionSimple: "The words run all the way around the top of the bell. “Pass and Stow” are the names of two men. They melted the bell down and made it again in Philadelphia in 1753." },
           { src: "bell-crack.webp", label: "B", title: "The crack",
             alt: "Close-up of the wide dark crack running down the side of the Liberty Bell.",
-            caption: "This wide crack is not the original damage. Workers cut it deliberately in 1846, trying to repair a thin split — and the bell fell silent for good." }
+            caption: "This wide crack is not the original damage. Workers cut it deliberately in 1846, trying to repair a thin split — and the bell fell silent for good.",
+            captionSimple: "This wide crack is not the first damage. A thin split came first. In 1846 workers cut it wider on purpose, trying to fix it. Instead the bell went silent for good." }
         ]
       }
     ]
@@ -117,13 +126,16 @@ var SYMBOL_EXPLORATIONS = [
         images: [
           { src: "fist-main.webp", label: "A", title: "Mexico City, 1968", focus: "center 22%",
             alt: "Three athletes on an Olympic podium in 1968. The two American sprinters each raise one black-gloved fist and bow their heads; the Australian silver medallist stands in front of them.",
-            caption: "Mexico City, 16 October 1968. Tommie Smith (centre, gold) and John Carlos (right, bronze) raise gloved fists while the American anthem plays. Look closely: Smith raises his right hand and Carlos his left, because Carlos had left his gloves behind and the two of them shared a single pair." },
+            caption: "Mexico City, 16 October 1968. Tommie Smith (centre, gold) and John Carlos (right, bronze) raise gloved fists while the American anthem plays. Look closely: Smith raises his right hand and Carlos his left, because Carlos had left his gloves behind and the two of them shared a single pair.",
+            captionSimple: "Mexico City, 16 October 1968. Tommie Smith won gold and stands in the centre. John Carlos won bronze and stands on the right. They raise gloved fists while the American anthem plays. Look closely. Smith raises his right hand and Carlos raises his left. That is because Carlos left his gloves behind, so the two men shared one pair." },
           { src: "fist-rally.webp", label: "B", title: "Still raised today",
             alt: "A crowd at an outdoor rally with many arms raised, fists clenched.",
-            caption: "San Francisco, 2016. Almost fifty years later, the same gesture does the same work at a protest — which is what keeps it a living symbol rather than a historical one." },
+            caption: "San Francisco, 2016. Almost fifty years later, the same gesture does the same work at a protest — which is what keeps it a living symbol rather than a historical one.",
+            captionSimple: "San Francisco, 2016. That is almost fifty years later. The same gesture — the same raised fist — is doing the same job at a protest. So it is still a living symbol, not a piece of history." },
           { src: "fist-graphic.webp", label: "C", title: "The drawn symbol",
             alt: "A simple graphic of a clenched raised fist.",
-            caption: "Drawn simply, the fist travels anywhere — onto posters, pins, murals and shirts. That portability is part of why it lasted." }
+            caption: "Drawn simply, the fist travels anywhere — onto posters, pins, murals and shirts. That portability is part of why it lasted.",
+            captionSimple: "The fist is simple to draw. That means it travels anywhere — onto posters, pins, murals and shirts. Being easy to copy is part of why it lasted." }
         ]
       },
       {
@@ -136,10 +148,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "mexflag-main.webp", alt: "The flag of Mexico: green, white and red vertical bands with an eagle on a cactus at the centre." },
           { src: "mexflag-eagle.webp", label: "A", title: "The eagle",
             alt: "Close-up of the Mexican coat of arms: a golden eagle standing on a cactus, gripping a snake in its beak and claw.",
-            caption: "An eagle on a cactus, holding a snake. This is the exact sign the Mexica were told to look for, and they built their city where they found it." },
+            caption: "An eagle on a cactus, holding a snake. This is the exact sign the Mexica were told to look for, and they built their city where they found it.",
+            captionSimple: "An eagle stands on a cactus and holds a snake. This is the exact sign the Mexica people were told to look for. They built their city on the spot where they found it." },
           { src: "mexflag-tattoo.webp", label: "B", title: "Both at once",
             alt: "A forearm tattoo blending the stripes of the American flag with the green, white and red of the Mexican flag.",
-            caption: "Some people merge the two flags into one design — a tattoo, a jersey, a sticker — so that neither half has to be given up." }
+            caption: "Some people merge the two flags into one design — a tattoo, a jersey, a sticker — so that neither half has to be given up.",
+            captionSimple: "Some people put the two flags together in one design. It might be a tattoo, a jersey or a sticker. That way neither half has to be given up." }
         ]
       },
       {
@@ -151,19 +165,24 @@ var SYMBOL_EXPLORATIONS = [
         images: [
           { src: "native-art.webp", label: "A", title: "Formline design",
             alt: "A Northwest Coast formline design in red and black, curved ovoid and U shapes forming an animal.",
-            caption: "This is Northwest Coast formline — the ovoid and U-shapes used by nations along this coastline, including here in Washington." },
+            caption: "This is Northwest Coast formline — the ovoid and U-shapes used by nations along this coastline, including here in Washington.",
+            captionSimple: "This style is called Northwest Coast formline. It is built from curved shapes: ovals, which are called ovoids, and U-shapes. Nations along this coastline use it, including here in Washington." },
           { src: "native-dreamcatcher.webp", label: "B", title: "The dreamcatcher",
             alt: "A dreamcatcher with a woven web and hanging feathers, photographed outdoors among green leaves.",
-            caption: "A woven hoop hung where someone sleeps. Ojibwe in origin, and now sold almost everywhere — which is exactly the debate." },
+            caption: "A woven hoop hung where someone sleeps. Ojibwe in origin, and now sold almost everywhere — which is exactly the debate.",
+            captionSimple: "A woven hoop, hung where somebody sleeps. It began with the Ojibwe people. Now it is sold almost everywhere, and that is exactly what people argue about." },
           { src: "native-totem.webp", label: "C", title: "A totem pole",
             alt: "A tall carved and painted totem pole standing in Pioneer Square in Seattle, with trees and city buildings behind it.",
-            caption: "This pole stands in Pioneer Square in Seattle, and it did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, Alaska, to honour a woman called Chief-of-All-Women — one of very few poles raised for a woman. In 1899 a party of Seattle businessmen chopped it down, sawed it in two and shipped it home. Eight of them were charged with theft and the case was dropped. The Tlingit asked for $20,000 and were paid $500. The pole standing there today is a replica, carved by descendants of the families who made the first one." },
+            caption: "This pole stands in Pioneer Square in Seattle, and it did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, Alaska, to honour a woman called Chief-of-All-Women — one of very few poles raised for a woman. In 1899 a party of Seattle businessmen chopped it down, sawed it in two and shipped it home. Eight of them were charged with theft and the case was dropped. The Tlingit asked for $20,000 and were paid $500. The pole standing there today is a replica, carved by descendants of the families who made the first one.",
+            captionSimple: "This pole stands in Pioneer Square in Seattle. It did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, in Alaska. It honoured a woman called Chief-of-All-Women, and very few poles were raised for a woman. In 1899 a group of Seattle businessmen chopped it down. They sawed it in two and shipped it home. Eight of them were charged with theft, and the case was dropped. The Tlingit asked for $20,000. They were paid $500. The pole standing there today is a copy. It was carved by descendants of the families who made the first one." },
           { src: "native-powwow.webp", label: "D", title: "Regalia",
             alt: "A dancer at a powwow seen from behind, wearing bright yellow and red regalia with beaded cuffs.",
-            caption: "Worn at a powwow in Montana. The word is regalia, never “costume” — a costume is something you pretend in, and this is not pretending." },
+            caption: "Worn at a powwow in Montana. The word is regalia, never “costume” — a costume is something you pretend in, and this is not pretending.",
+            captionSimple: "Worn at a powwow in Montana. The right word is regalia. Do not call it a costume. A costume is something you pretend in, and this is not pretending." },
           { src: "native-beadwork.webp", label: "E", title: "Beadwork",
             alt: "A Lakota beaded vest, fully covered in fine white, red and green glass beadwork in geometric patterns.",
-            caption: "Lakota beadwork. Every bead on this vest was sewn on separately, and the patterns carry family and nation — this is writing as much as decoration." }
+            caption: "Lakota beadwork. Every bead on this vest was sewn on separately, and the patterns carry family and nation — this is writing as much as decoration.",
+            captionSimple: "Lakota beadwork. Every single bead on this vest was sewn on by hand, one at a time. The patterns carry family and nation. So this is a kind of writing, not just decoration." }
         ]
       },
       {
@@ -176,10 +195,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "pride-main.webp", alt: "An American flag with the usual white stars on blue, but with rainbow-coloured stripes instead of red and white." },
           { src: "pride-rainbow.webp", label: "A", title: "The rainbow flag",
             alt: "A small handheld rainbow Pride flag held up outdoors at a parade.",
-            caption: "The flag this borrows from. Gilbert Baker designed it in San Francisco in 1978, and the first ones he sewed had eight stripes rather than six." },
+            caption: "The flag this borrows from. Gilbert Baker designed it in San Francisco in 1978, and the first ones he sewed had eight stripes rather than six.",
+            captionSimple: "This is the flag the other one borrows from. Gilbert Baker designed it in San Francisco in 1978. The first ones he sewed had eight stripes, not six." },
           { src: "pride-progress.webp", label: "B", title: "The Progress flag",
             alt: "The Progress Pride flag: rainbow stripes with a chevron of white, pink, pale blue, brown and black at the hoist.",
-            caption: "A newer version. The added chevron stands for transgender people and for Black and brown people — a symbol being argued with and rewritten, in public, right now." }
+            caption: "A newer version. The added chevron stands for transgender people and for Black and brown people — a symbol being argued with and rewritten, in public, right now.",
+            captionSimple: "This is a newer version. The extra arrow shape stands for transgender people, and for Black and brown people. People are still arguing about this symbol and changing it, in public, right now." }
         ]
       }
     ]
@@ -204,7 +225,8 @@ var SYMBOL_EXPLORATIONS = [
           { src: "hardhat-main.webp", alt: "A group of construction workers in hard hats and orange high-visibility vests standing together on a site." },
           { src: "hardhat-colours.webp", label: "A", title: "Look at the colours",
             alt: "Close-up along a row of workers, showing hard hats in white, brown and dark red.",
-            caption: "Look along the row: the colours are not decoration. On many sites the colour of the hat tells you who somebody is before they speak — a visitor, a supervisor, an engineer." }
+            caption: "Look along the row: the colours are not decoration. On many sites the colour of the hat tells you who somebody is before they speak — a visitor, a supervisor, an engineer.",
+            captionSimple: "Look along the row of workers. The colours are not just decoration. On many building sites the colour of the hat tells you who somebody is before they say a word. It can mean a visitor, a supervisor or an engineer." }
         ]
       },
       {
@@ -217,16 +239,20 @@ var SYMBOL_EXPLORATIONS = [
           { src: "farm-main.webp", alt: "A field of ripe golden wheat filling the frame." },
           { src: "farm-farmer.webp", label: "A", title: "The farmer",
             alt: "A smiling older farmer in a plaid shirt and apron holding a tray of freshly harvested greens.",
-            caption: "The person, not the acreage. Most of what Americans picture as farming is really a picture of a particular farmer." },
+            caption: "The person, not the acreage. Most of what Americans picture as farming is really a picture of a particular farmer.",
+            captionSimple: "This is a person, not a piece of land. When Americans picture farming, they usually picture a particular farmer." },
           { src: "farm-pitchfork.webp", label: "B", title: "The pitchfork",
             alt: "An old wooden-handled pitchfork with three metal tines.",
-            caption: "Older than the tractor, and still the shorthand for farm work — which is why the painting American Gothic is instantly readable." },
+            caption: "Older than the tractor, and still the shorthand for farm work — which is why the painting American Gothic is instantly readable.",
+            captionSimple: "The pitchfork is older than the tractor. It is still the quickest way to say “farm work” in a picture. That is why people recognise the painting American Gothic straight away." },
           { src: "farm-tractor.webp", label: "C", title: "The combine",
             alt: "A green combine harvester cutting a wide stripe through a field of ripe wheat.",
-            caption: "The pitchfork's replacement. One machine now does the cutting, threshing and cleaning that once took a whole crew a whole season — which is most of the reason the farming jobs went away." },
+            caption: "The pitchfork's replacement. One machine now does the cutting, threshing and cleaning that once took a whole crew a whole season — which is most of the reason the farming jobs went away.",
+            captionSimple: "This machine replaced the pitchfork. It cuts the crop, separates the grain and cleans it, all at once. That work used to take a whole crew a whole season. So this machine is most of the reason the farming jobs went away." },
           { src: "farm-barn.webp", label: "D", title: "The barn and silo",
             alt: "A red barn with a white roof and a tall concrete silo beside it, on a wet farm track.",
-            caption: "Red barn, tall silo. Nobody has to be told this is a farm — which is what makes it a symbol rather than just a building." }
+            caption: "Red barn, tall silo. Nobody has to be told this is a farm — which is what makes it a symbol rather than just a building.",
+            captionSimple: "A red barn and a tall silo. Nobody has to tell you this is a farm. That is what makes it a symbol, and not just a building." }
         ]
       },
       {
@@ -239,10 +265,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "factory-main.webp", alt: "A worker in a machine shop bending over a large industrial gear assembly." },
           { src: "factory-teeth.webp", label: "A", title: "The teeth",
             alt: "Extreme close-up of the cut metal teeth around the edge of a large industrial gear.",
-            caption: "Close up, a gear is only precisely cut teeth. Every one has to meet the next one exactly, or the whole machine jams — which is the same demand an assembly line makes of people." },
+            caption: "Close up, a gear is only precisely cut teeth. Every one has to meet the next one exactly, or the whole machine jams — which is the same demand an assembly line makes of people.",
+            captionSimple: "Up close, a gear is just teeth cut very precisely. Each tooth has to meet the next one exactly. If one is wrong, the whole machine jams. An assembly line asks the same thing of people." },
           { src: "factory-modelt.webp", label: "B", title: "What came off the line",
             alt: "A restored red 1913 Ford Model T with black bodywork, a folding roof and red spoked wheels.",
-            caption: "A Ford Model T. The assembly line cut the time to build one from about twelve hours to about ninety minutes, and that is what put a car within reach of the people building it." }
+            caption: "A Ford Model T. The assembly line cut the time to build one from about twelve hours to about ninety minutes, and that is what put a car within reach of the people building it.",
+            captionSimple: "A Ford Model T. The assembly line cut the time to build one car from about twelve hours down to about ninety minutes. That is what made a car cheap enough for the people building it." }
         ]
       },
       {
@@ -255,13 +283,16 @@ var SYMBOL_EXPLORATIONS = [
         images: [
           { src: "bulb-main.webp", label: "A", title: "The light bulb",
             alt: "A clear incandescent light bulb showing its filament.",
-            caption: "Small, cheap, and in every room — the everyday end of invention." },
+            caption: "Small, cheap, and in every room — the everyday end of invention.",
+            captionSimple: "Small, cheap, and in every room of the house. This is the everyday end of inventing." },
           { src: "bulb-filament.webp", label: "B", title: "Inside the bulb",
             alt: "Close-up of the coiled wire filament suspended inside a clear glass light bulb.",
-            caption: "The whole invention is this: a thin coiled wire that glows without burning up. Edison's team tested thousands of materials to find one that lasted." },
+            caption: "The whole invention is this: a thin coiled wire that glows without burning up. Edison's team tested thousands of materials to find one that lasted.",
+            captionSimple: "The whole invention is this: a thin coiled wire that glows without burning up. Edison’s team tested thousands of materials before they found one that lasted." },
           { src: "rocket-main.webp", label: "C", title: "The rocket",
             alt: "A tall silver rocket standing on the surface of the Moon with Earth visible in the black sky.",
-            caption: "The other end of the same idea: invention as something that leaves the planet entirely." }
+            caption: "The other end of the same idea: invention as something that leaves the planet entirely.",
+            captionSimple: "The other end of the same idea. Here, inventing means building something that leaves the planet completely." }
         ]
       }
     ]
@@ -286,7 +317,8 @@ var SYMBOL_EXPLORATIONS = [
           { src: "dogtags-main.webp", alt: "Two metal military dog tags on a beaded chain, resting in an open palm." },
           { src: "dogtags-worn.webp", label: "A", title: "The second tag",
             alt: "A single dog tag laced into the side of a tan military combat boot.",
-            caption: "Here is where the second tag of the pair goes: laced into a boot. The pair is split on purpose, so that identification survives even if the two are separated." }
+            caption: "Here is where the second tag of the pair goes: laced into a boot. The pair is split on purpose, so that identification survives even if the two are separated.",
+            captionSimple: "This is where the second tag goes: laced into a boot. The pair is split on purpose. That way a soldier can still be identified even if the two tags end up apart." }
         ]
       },
       {
@@ -298,17 +330,22 @@ var SYMBOL_EXPLORATIONS = [
         images: [
           { src: "religion-chart.webp", alt: "A chart of many religious symbols from faiths around the world, each labelled." },
           { src: "religion-cross.webp", label: "A", title: "The cross",
-            alt: "A plain Christian cross.", caption: "Christianity — the most widely practised faith in the United States." },
+            alt: "A plain Christian cross.", caption: "Christianity — the most widely practised faith in the United States.",
+            captionSimple: "Christianity. It is the most widely practised faith in the United States." },
           { src: "religion-star.webp", label: "B", title: "The Star of David",
-            alt: "A blue six-pointed Star of David.", caption: "Judaism — practised in America since the 1600s." },
+            alt: "A blue six-pointed Star of David.", caption: "Judaism — practised in America since the 1600s.",
+            captionSimple: "Judaism. It has been practised in America since the 1600s." },
           { src: "religion-crescent.webp", label: "C", title: "The star and crescent",
-            alt: "A white star and crescent moon.", caption: "Islam — carried to America in part by enslaved West African Muslims." },
+            alt: "A white star and crescent moon.", caption: "Islam — carried to America in part by enslaved West African Muslims.",
+            captionSimple: "Islam. It was carried to America partly by enslaved West Africans who were Muslims." },
           { src: "religion-dharma.webp", label: "D", title: "The dharma wheel",
             alt: "A golden eight-spoked dharma wheel.",
-            caption: "Buddhism. The eight spokes stand for the eightfold path — the wheel is a diagram of a teaching, not only a badge." },
+            caption: "Buddhism. The eight spokes stand for the eightfold path — the wheel is a diagram of a teaching, not only a badge.",
+            captionSimple: "Buddhism. The eight spokes stand for the eightfold path. So the wheel is a diagram of a teaching, not only a badge." },
           { src: "religion-om.webp", label: "E", title: "Om",
             alt: "The Om symbol, a curved Sanskrit character with a dot and crescent above it.",
-            caption: "Hinduism. Om is a sound before it is a shape — this is a drawing of something you are meant to hear." }
+            caption: "Hinduism. Om is a sound before it is a shape — this is a drawing of something you are meant to hear.",
+            captionSimple: "Hinduism. Om is a sound first, and a shape second. This is a drawing of something you are meant to hear." }
         ]
       },
       {
@@ -321,10 +358,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "cap-main.webp", alt: "A teal and navy Seattle Mariners baseball cap with the stylised S logo on the front." },
           { src: "cap-team.webp", label: "A", title: "Where it started",
             alt: "A black and white photograph of the 1914 West Point baseball team, most of the players wearing caps.",
-            caption: "The 1914 West Point team. The cap was equipment first — the brim exists to keep the sun out of a fielder's eyes, and everything else came later." },
+            caption: "The 1914 West Point team. The cap was equipment first — the brim exists to keep the sun out of a fielder's eyes, and everything else came later.",
+            captionSimple: "The 1914 West Point team. The cap was equipment first. The brim sticks out to keep the sun out of a fielder’s eyes. Everything else came later." },
           { src: "cap-display.webp", label: "B", title: "A wall of them",
             alt: "A market stall stacked with dozens of baseball caps in many colours and logos.",
-            caption: "Dozens of them, all the same shape, all saying different things. The object is identical; the front panel is the message." }
+            caption: "Dozens of them, all the same shape, all saying different things. The object is identical; the front panel is the message.",
+            captionSimple: "Dozens of caps, all the same shape, all saying different things. The object is identical. The front panel is the message." }
         ]
       },
       {
@@ -337,10 +376,12 @@ var SYMBOL_EXPLORATIONS = [
           { src: "phone-iphone.webp", alt: "An iPhone seen from the front, showing its home screen of app icons." },
           { src: "phone-samsung.webp", label: "A", title: "A different make",
             alt: "A Samsung Galaxy phone seen from the front, showing its home screen.",
-            caption: "Different company, near-identical object. That sameness is part of what makes it work as a symbol." },
+            caption: "Different company, near-identical object. That sameness is part of what makes it work as a symbol.",
+            captionSimple: "A different company made this one, but it is almost the same object. That sameness is part of what makes it work as a symbol." },
           { src: "phone-teen.webp", label: "B", title: "In use",
             alt: "A teenager sitting on the floor against a wall, looking down at a phone held in both hands.",
-            caption: "The posture is the symbol as much as the device is. A stranger across a room can tell what you are doing without seeing the screen." }
+            caption: "The posture is the symbol as much as the device is. A stranger across a room can tell what you are doing without seeing the screen.",
+            captionSimple: "The posture is as much the symbol as the phone is. A stranger across the room can tell what you are doing without seeing your screen." }
         ]
       }
     ]
@@ -352,21 +393,23 @@ var SYMBOL_EXPLORATIONS = [
    — the concept has to survive. Matched case-insensitively on word boundaries
    in both the primer and the deeper text. */
 var SYMBOL_GLOSSARY = {
-  "immigrants": "People who move to a new country to live there permanently.",
-  "immigrant": "A person who moves to a new country to live there permanently.",
+  "immigrants": "People who move to a new country to make it their home.",
+  "immigrant": "A person who moves to a new country to make it their home.",
   "dedicated": "Officially opened, with a ceremony.",
   "monument": "Something built to make people remember a person, event, or idea.",
   "servitude": "Being forced to work for someone else and not being free to leave.",
   "inscription": "Words carved or cast into something solid, like metal or stone.",
   "abolitionists": "People who fought to end slavery in the United States.",
-  "Jubilee": "In the Bible, a year when debts were cancelled, land was given back, and enslaved people were freed.",
+  "Jubilee": "In the Bible, a year when money people owed was wiped out, land was given back, and enslaved people were set free.",
   "genuine": "Real, and not a fake.",
   "persecution": "Being treated cruelly, often because of your religion, race, or beliefs.",
   "assembly line": "A way of building things where the product moves past workers and each one does a single step.",
   "manufacturing": "Making goods in factories, usually in large numbers.",
-  "formline": "The Northwest Coast art style built from curved ovoid and U shapes.",
-  "sacred": "Treated as holy, and set apart for religious use.",
+  "formline": "A Northwest Coast art style. It is built from curved shapes: rounded ovals and U shapes.",
+  "sacred": "Treated as very special because it belongs to a religion, so it has to be respected.",
   "heirloom": "A valued object passed down through a family for generations.",
   "expelled": "Officially forced to leave.",
-  "canton": "The rectangle in the top corner of a flag — on the US flag, the blue part with the stars."
+  "canton": "The rectangle in the top corner of a flag — on the US flag, the blue part with the stars.",
+  "regalia": "The clothing and objects worn for dancing at a Native gathering or ceremony. It is not a costume.",
+  "powwow": "A gathering where Native people dance, sing, and meet. Many are open to visitors."
 };

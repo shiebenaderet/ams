@@ -786,13 +786,20 @@ body > *:not(#sx-print) { display: none !important; }
       focusHeading();
     }
 
+    /* Captions carry nearly as many words as the body text, so they follow the
+       reading level too. Without this a student on Simpler read a short-sentence
+       explanation and then a caption written for somebody three grades above. */
+    function captionFor(img) {
+      return level === "simple" && img.captionSimple ? img.captionSimple : img.caption;
+    }
+
     function showImage(s, i) {
       var cap = document.getElementById("sx-cap");
       if (!cap) { return; }
       var img = s.images[i];
       cap.innerHTML = img.caption
         ? '<p class="sx-caption"><b>' + esc((img.label ? img.label + " · " : "") + (img.title || "")) + "</b>"
-          + glossify(img.caption) + "</p>"
+          + glossify(captionFor(img)) + "</p>"
         : "";
     }
 
@@ -869,19 +876,19 @@ body > *:not(#sx-print) { display: none !important; }
              main picture. Show that caption under the main picture rather than
              repeating the image in the detail list. */
           if (sym.images[0].caption) {
-            collect(sym.images[0].caption);
+            collect(captionFor(sym.images[0]));
             out += '<div class="p-details"><div class="p-detail"><p><b>'
                 +  esc((sym.images[0].label ? sym.images[0].label + " \u00b7 " : "") + (sym.images[0].title || ""))
-                +  "</b> " + esc(sym.images[0].caption) + "</p></div></div>";
+                +  "</b> " + esc(captionFor(sym.images[0])) + "</p></div></div>";
           }
           var details = sym.images.slice(1).filter(function (i) { return i.caption; });
           if (details.length) {
             out += '<div class="p-details">';
             details.forEach(function (i) {
-              collect(i.caption);
+              collect(captionFor(i));
               out += '<div class="p-detail"><img src="' + IMG + esc(i.src) + '" alt="">'
                   +  "<p><b>" + esc((i.label ? i.label + " \u00b7 " : "") + (i.title || "")) + "</b> "
-                  +  esc(i.caption) + "</p></div>";
+                  +  esc(captionFor(i)) + "</p></div>";
             });
             out += "</div>";
           }
