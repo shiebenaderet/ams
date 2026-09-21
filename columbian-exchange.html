@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Columbian Exchange &mdash; choose your reading &mdash; Mr. B&rsquo;s Social Studies</title>
+<meta name="description" content="What crossed the Atlantic after 1492, which way it went, and why the directions did not match. Four levels, same ideas.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;display=swap">
+<style>
+:root{--ink:#1a1a1a;--muted:#5a5a5a;--rule:#d8d4cc;--bg:#fbfaf7;--card:#fff;
+  --accent:#1F4D3A;--band:#E9F1EC;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;--card:#1e1e22;
+  --accent:#8fc3a8;--band:#23302a;}}
+:root[data-theme="dark"]{--ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;
+  --card:#1e1e22;--accent:#8fc3a8;--band:#23302a;}
+*{box-sizing:border-box;}
+html{font-size:18px;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Atkinson Hyperlegible Next','Atkinson Hyperlegible',Georgia,serif;
+  font-size:1rem;line-height:1.7;text-align:left;}
+.wrap{max-width:34rem;margin:0 auto;padding:1.5rem 1rem 4rem;}
+/* Measure: WCAG 2.2 SC 1.4.8 caps a line at 80 characters and Dyson & Haselgrove
+   2001 measured the optimum nearer 55. 38rem at 18px lands inside that. */
+header.top{border-bottom:2px solid var(--accent);padding-bottom:.75rem;margin-bottom:1.5rem;}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
+.lvl{font-size:.95rem;color:var(--muted);margin:0 0 .75rem;}
+/* Sticky at the top rather than the bottom: the level switcher is most wanted in
+   the first seconds ("is this the right one for me?"), a bottom bar covers the
+   line you are reading on a short Chromebook window, and iOS Safari's own chrome
+   already owns the bottom edge. */
+.snav{position:sticky;top:0;z-index:20;background:var(--bg);
+  border-bottom:1px solid var(--rule);width:100%;}
+.snavin{max-width:46rem;margin:0 auto;padding:.4rem 1rem;display:flex;gap:.75rem;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.snav a,.snav span[aria-current]{font-size:.85rem;padding:.3rem .6rem;border:1px solid var(--rule);
+  border-radius:.4rem;text-decoration:none;color:var(--ink);background:var(--card);display:inline-block;}
+.snav span[aria-current]{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.sgroup,.sjump{display:flex;gap:.3rem;flex-wrap:wrap;}
+.sjump a{background:transparent;border-color:transparent;color:var(--muted);padding:.3rem .4rem;}
+.sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
+/* Anchors clear the bar by measuring it. The bar wraps on a narrow screen, so a
+   fixed offset is wrong on some width or other; JS keeps --navh honest. */
+h2,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+
+/* Reading progress. aria-hidden on purpose: a screen-reader user already knows
+   where they are, and a percentage announcing itself on every scroll is noise. */
+.progress{position:fixed;right:.6rem;top:50%;transform:translateY(-50%);z-index:15;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.ptrack{width:4px;height:38vh;background:var(--rule);border-radius:2px;overflow:hidden;}
+.pfill{width:100%;height:0%;background:var(--accent);border-radius:2px;}
+.ppct{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+@media (max-width:640px){.progress{display:none;}
+  .snavin{padding:.35rem .6rem;gap:.4rem;}
+  .snav a,.snav span[aria-current]{font-size:.8rem;padding:.25rem .45rem;}}
+.reading{margin:0 0 3rem;}
+h2{font-size:1.3rem;line-height:1.3;margin:2.5rem 0 .15rem;color:var(--accent);}
+.colonies{font-size:.92rem;color:var(--muted);margin:0 0 1rem;}
+h3{font-size:1.05rem;margin:1.75rem 0 .4rem;line-height:1.35;}
+p{margin:0 0 1rem;}
+b{font-weight:700;}
+.vbox{background:var(--band);border-radius:.5rem;padding:.9rem 1.1rem;margin:0 0 2rem;}
+.vbox .vh{font-size:1rem;margin:0 0 .2rem;text-transform:uppercase;letter-spacing:.05em;}
+.vbox .vsub{font-size:.9rem;color:var(--muted);margin:0 0 .7rem;}
+.vbox .rtag{font-size:.75rem;font-weight:400;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.04em;margin-left:.3rem;}
+.vbox dl{margin:0;}
+.vbox dt{font-weight:700;margin-top:.6rem;}
+.vbox dt:first-of-type{margin-top:0;}
+.vbox dd{margin:.1rem 0 0;font-size:1rem;}
+.help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+  padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
+.help p{margin:0 0 .5rem;}
+.help p:last-child{margin:0;}
+footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
+  font-size:.9rem;color:var(--muted);}
+.sources{border-top:2px solid var(--accent);margin-top:3rem;padding-top:1.25rem;}
+.sources h2{margin-top:0;}
+.sources h3{font-size:1rem;margin:1.5rem 0 .4rem;}
+.sources p{font-size:.95rem;}
+.sources ul{margin:0;padding-left:1.1rem;}
+.sources li{margin-bottom:.7rem;}
+.sources a{color:var(--accent);}
+.sources .sd{display:block;font-size:.9rem;color:var(--muted);line-height:1.5;}
+.sources .sn{font-size:.85rem;color:var(--muted);}
+.sources .sn2{font-size:.9rem;color:var(--muted);margin:0 0 .6rem;}
+.sources ul.links li{margin-bottom:.35rem;}
+.pick{display:block;border:1px solid var(--rule);background:var(--card);border-radius:.6rem;
+  padding:.9rem 1.1rem;margin:0 0 .7rem;text-decoration:none;color:var(--ink);}
+.pick:hover,.pick:focus{border-color:var(--accent);}
+.pick b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
+.pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+/* Screen hides the paper-only note; print re-shows it. Declared BEFORE the print
+   block, because equal-specificity rules are resolved by order, media query or not. */
+.weblink{display:none;}
+
+/* ---------------------------------------------------------------------------
+   PRINT. The paper version is this same page printed, not a second layout --
+   that is what keeps the text, the glosses and the sources identical to the web
+   version rather than nearly identical.
+
+   Three things it has to undo. Dark mode must not reach paper, so the whole
+   palette is redefined here rather than trusted to the renderer's colour
+   scheme. Colour carries no meaning on these handouts because they are
+   photocopied in black and white, so accents become black and the vocabulary
+   box becomes a rule instead of a filled panel -- a tinted box behind every
+   region, three to a reading, is a lot of toner for decoration. And a link is
+   useless on paper, so the sources keep their names (which are descriptive
+   enough to search) and the page says once where to go to click them.
+   --------------------------------------------------------------------------- */
+@media print{
+  :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
+    --card:#fff;--accent:#000;--band:#fff;}
+  @page{size:letter portrait;margin:.7in .75in;}
+  /* 11pt, not 11.5. Each region starts its own sheet, so a region that runs four
+     lines past the bottom leaves a near-empty page behind it -- at 11.5pt that was
+     happening to New England at every level. Still well inside the 10-12pt range a
+     handout wants. */
+  html{font-size:11pt;}
+  body{background:#fff;color:#000;line-height:1.45;}
+  .wrap{max-width:none;padding:0;}
+  .snav,.progress,.sjump,.help{display:none;}
+  header.top{border-bottom:1.5pt solid #000;}
+  h1{font-size:1.5rem;}
+  /* A heading stranded at the foot of a page costs a sheet in a class set. */
+  h2,h3{break-after:avoid;page-break-after:avoid;}
+  h2{font-size:1.25rem;margin-top:1.4rem;}
+  h3{font-size:1.02rem;margin-top:1rem;}
+  p{orphans:3;widows:3;margin-bottom:.5rem;}
+  .reading{break-inside:auto;}
+  /* The seven words are the thing a student flips back to, so never split it. */
+  /* Every section starts at the top of a sheet. A region heading halfway down a
+     page, under the tail of the previous region, is the thing that makes a printed
+     packet hard to navigate -- you cannot flip to a section that does not begin
+     anywhere. It costs sheets and buys a findable handout. */
+  .vbox{background:#fff;border:none;border-radius:0;padding:0;
+    break-after:page;page-break-after:always;}
+  .vbox .vh{font-size:1.15rem;border-bottom:1.5pt solid #000;padding-bottom:.2rem;
+    margin-bottom:.3rem;}
+  .vbox dt{margin-top:.55rem;font-size:1rem;}
+  .vbox dd{margin-left:0;}
+  .vbox .rtag{font-size:.8rem;}
+  .reading{break-before:page;page-break-before:always;margin-bottom:0;}
+  .sources{break-before:page;page-break-before:always;}
+
+  /* Hierarchy has to survive losing colour. h2 is the region and rules off; h3 is
+     the question inside it and sits in small caps with air above, so the two never
+     read as the same level on a photocopy. */
+  h2{font-size:1.35rem;border-bottom:1pt solid #000;padding-bottom:.15rem;
+    margin:0 0 .15rem;}
+  h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;
+    margin:.8rem 0 .22rem;}
+  .colonies{font-style:italic;margin-bottom:.65rem;}
+  /* The seven words are bolded on first use. On paper that has to be visible at a
+     glance, since there is no colour to carry it. */
+  .reading b{font-weight:700;letter-spacing:.01em;}
+
+  /* Sources, condensed: who holds each one stays, the sentence explaining why it
+     is here goes, and "read more" collapses to a run-on list. */
+  .sources .sexp,.sources .sn,.sources .sn2,.sources p:first-of-type{display:none;}
+  .sources ul.links{padding-left:0;}
+  .sources ul.links li{display:inline;margin:0;}
+  .sources ul.links li::after{content:" · ";}
+  .sources ul.links li:last-child::after{content:"";}
+  .sources ul.links a{font-weight:400;}
+  .sources li{margin-bottom:.35rem;}
+  .sources .sd{display:inline;color:#333;}
+  .sources .sd::before{content:" — ";}
+  .vbox dd{font-size:.95rem;}
+  /* Let the sources flow onto whatever page they reach. Forcing them to a fresh
+     sheet cost a page per level, on a handout printed as a class set. */
+  .sources{border-top:1.5pt solid #000;}
+  .sources a{color:#000;text-decoration:none;font-weight:700;}
+  .sources li{break-inside:avoid;}
+  .weblink{display:block;margin-bottom:.5rem;}
+  footer{border-top:1pt solid var(--rule);}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>The Columbian Exchange</h1>
+  <p class="lvl">Choose the reading you want. You can switch at any time.</p>
+</header>
+<div class="help">
+  <p><b>They all teach the same thing.</b> Every level covers what went out of the Americas,
+  what came in, and the two things that only travelled one way. The longer ones say more about
+  <i>why</i> &mdash; they are not about being smarter.</p>
+  <p><b>Pick the one you can read comfortably.</b> If it feels too hard or too easy, switch.
+  There is a level switcher at the top of every reading.</p>
+</div>
+<a class="pick" href="columbian-exchange-level-1.html"><b>Level 1</b>The shortest version. Same words, same ideas as every other level.<span class="wc">About 509 words</span></a><a class="pick" href="columbian-exchange-level-2.html"><b>Level 2</b>A bit longer, with more of the story filled in.<span class="wc">About 702 words</span></a><a class="pick" href="columbian-exchange-level-3.html"><b>Level 3</b>The full version, with the reasons behind what happened.<span class="wc">About 1,120 words</span></a><a class="pick" href="columbian-exchange-level-4.html"><b>Level 4</b>Everything in Level 3, plus what the tidy version of the story leaves out.<span class="wc">About 1,499 words</span></a>
+<footer><p>Unit 1: Foundations &amp; Identity &middot; Day 15 &middot; Mr. B&rsquo;s Social Studies.</p></footer>
+</div>
+</body>
+</html>

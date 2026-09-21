@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Columbian Exchange &mdash; Level 1 &mdash; Mr. B&rsquo;s Social Studies</title>
+<meta name="description" content="What moved between the Americas and the rest of the world after 1492, which way each thing went, and why the directions did not match. Written at Level 1, built to be read aloud or translated.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;display=swap">
+<style>
+:root{--ink:#1a1a1a;--muted:#5a5a5a;--rule:#d8d4cc;--bg:#fbfaf7;--card:#fff;
+  --accent:#1F4D3A;--band:#E9F1EC;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;--card:#1e1e22;
+  --accent:#8fc3a8;--band:#23302a;}}
+:root[data-theme="dark"]{--ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;
+  --card:#1e1e22;--accent:#8fc3a8;--band:#23302a;}
+*{box-sizing:border-box;}
+html{font-size:18px;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Atkinson Hyperlegible Next','Atkinson Hyperlegible',Georgia,serif;
+  font-size:1rem;line-height:1.7;text-align:left;}
+.wrap{max-width:34rem;margin:0 auto;padding:1.5rem 1rem 4rem;}
+/* Measure: WCAG 2.2 SC 1.4.8 caps a line at 80 characters and Dyson & Haselgrove
+   2001 measured the optimum nearer 55. 38rem at 18px lands inside that. */
+header.top{border-bottom:2px solid var(--accent);padding-bottom:.75rem;margin-bottom:1.5rem;}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
+.lvl{font-size:.95rem;color:var(--muted);margin:0 0 .75rem;}
+/* Sticky at the top rather than the bottom: the level switcher is most wanted in
+   the first seconds ("is this the right one for me?"), a bottom bar covers the
+   line you are reading on a short Chromebook window, and iOS Safari's own chrome
+   already owns the bottom edge. */
+.snav{position:sticky;top:0;z-index:20;background:var(--bg);
+  border-bottom:1px solid var(--rule);width:100%;}
+.snavin{max-width:46rem;margin:0 auto;padding:.4rem 1rem;display:flex;gap:.75rem;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.snav a,.snav span[aria-current]{font-size:.85rem;padding:.3rem .6rem;border:1px solid var(--rule);
+  border-radius:.4rem;text-decoration:none;color:var(--ink);background:var(--card);display:inline-block;}
+.snav span[aria-current]{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.sgroup,.sjump{display:flex;gap:.3rem;flex-wrap:wrap;}
+.sjump a{background:transparent;border-color:transparent;color:var(--muted);padding:.3rem .4rem;}
+.sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
+/* Anchors clear the bar by measuring it. The bar wraps on a narrow screen, so a
+   fixed offset is wrong on some width or other; JS keeps --navh honest. */
+h2,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+
+/* Reading progress. aria-hidden on purpose: a screen-reader user already knows
+   where they are, and a percentage announcing itself on every scroll is noise. */
+.progress{position:fixed;right:.6rem;top:50%;transform:translateY(-50%);z-index:15;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.ptrack{width:4px;height:38vh;background:var(--rule);border-radius:2px;overflow:hidden;}
+.pfill{width:100%;height:0%;background:var(--accent);border-radius:2px;}
+.ppct{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+@media (max-width:640px){.progress{display:none;}
+  .snavin{padding:.35rem .6rem;gap:.4rem;}
+  .snav a,.snav span[aria-current]{font-size:.8rem;padding:.25rem .45rem;}}
+.reading{margin:0 0 3rem;}
+h2{font-size:1.3rem;line-height:1.3;margin:2.5rem 0 .15rem;color:var(--accent);}
+.colonies{font-size:.92rem;color:var(--muted);margin:0 0 1rem;}
+h3{font-size:1.05rem;margin:1.75rem 0 .4rem;line-height:1.35;}
+p{margin:0 0 1rem;}
+b{font-weight:700;}
+.vbox{background:var(--band);border-radius:.5rem;padding:.9rem 1.1rem;margin:0 0 2rem;}
+.vbox .vh{font-size:1rem;margin:0 0 .2rem;text-transform:uppercase;letter-spacing:.05em;}
+.vbox .vsub{font-size:.9rem;color:var(--muted);margin:0 0 .7rem;}
+.vbox .rtag{font-size:.75rem;font-weight:400;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.04em;margin-left:.3rem;}
+.vbox dl{margin:0;}
+.vbox dt{font-weight:700;margin-top:.6rem;}
+.vbox dt:first-of-type{margin-top:0;}
+.vbox dd{margin:.1rem 0 0;font-size:1rem;}
+.help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+  padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
+.help p{margin:0 0 .5rem;}
+.help p:last-child{margin:0;}
+footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
+  font-size:.9rem;color:var(--muted);}
+.sources{border-top:2px solid var(--accent);margin-top:3rem;padding-top:1.25rem;}
+.sources h2{margin-top:0;}
+.sources h3{font-size:1rem;margin:1.5rem 0 .4rem;}
+.sources p{font-size:.95rem;}
+.sources ul{margin:0;padding-left:1.1rem;}
+.sources li{margin-bottom:.7rem;}
+.sources a{color:var(--accent);}
+.sources .sd{display:block;font-size:.9rem;color:var(--muted);line-height:1.5;}
+.sources .sn{font-size:.85rem;color:var(--muted);}
+.sources .sn2{font-size:.9rem;color:var(--muted);margin:0 0 .6rem;}
+.sources ul.links li{margin-bottom:.35rem;}
+.pick{display:block;border:1px solid var(--rule);background:var(--card);border-radius:.6rem;
+  padding:.9rem 1.1rem;margin:0 0 .7rem;text-decoration:none;color:var(--ink);}
+.pick:hover,.pick:focus{border-color:var(--accent);}
+.pick b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
+.pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+/* Screen hides the paper-only note; print re-shows it. Declared BEFORE the print
+   block, because equal-specificity rules are resolved by order, media query or not. */
+.weblink{display:none;}
+
+/* ---------------------------------------------------------------------------
+   PRINT. The paper version is this same page printed, not a second layout --
+   that is what keeps the text, the glosses and the sources identical to the web
+   version rather than nearly identical.
+
+   Three things it has to undo. Dark mode must not reach paper, so the whole
+   palette is redefined here rather than trusted to the renderer's colour
+   scheme. Colour carries no meaning on these handouts because they are
+   photocopied in black and white, so accents become black and the vocabulary
+   box becomes a rule instead of a filled panel -- a tinted box behind every
+   region, three to a reading, is a lot of toner for decoration. And a link is
+   useless on paper, so the sources keep their names (which are descriptive
+   enough to search) and the page says once where to go to click them.
+   --------------------------------------------------------------------------- */
+@media print{
+  :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
+    --card:#fff;--accent:#000;--band:#fff;}
+  @page{size:letter portrait;margin:.7in .75in;}
+  /* 11pt, not 11.5. Each region starts its own sheet, so a region that runs four
+     lines past the bottom leaves a near-empty page behind it -- at 11.5pt that was
+     happening to New England at every level. Still well inside the 10-12pt range a
+     handout wants. */
+  html{font-size:11pt;}
+  body{background:#fff;color:#000;line-height:1.45;}
+  .wrap{max-width:none;padding:0;}
+  .snav,.progress,.sjump,.help{display:none;}
+  header.top{border-bottom:1.5pt solid #000;}
+  h1{font-size:1.5rem;}
+  /* A heading stranded at the foot of a page costs a sheet in a class set. */
+  h2,h3{break-after:avoid;page-break-after:avoid;}
+  h2{font-size:1.25rem;margin-top:1.4rem;}
+  h3{font-size:1.02rem;margin-top:1rem;}
+  p{orphans:3;widows:3;margin-bottom:.5rem;}
+  .reading{break-inside:auto;}
+  /* The seven words are the thing a student flips back to, so never split it. */
+  /* Every section starts at the top of a sheet. A region heading halfway down a
+     page, under the tail of the previous region, is the thing that makes a printed
+     packet hard to navigate -- you cannot flip to a section that does not begin
+     anywhere. It costs sheets and buys a findable handout. */
+  .vbox{background:#fff;border:none;border-radius:0;padding:0;
+    break-after:page;page-break-after:always;}
+  .vbox .vh{font-size:1.15rem;border-bottom:1.5pt solid #000;padding-bottom:.2rem;
+    margin-bottom:.3rem;}
+  .vbox dt{margin-top:.55rem;font-size:1rem;}
+  .vbox dd{margin-left:0;}
+  .vbox .rtag{font-size:.8rem;}
+  .reading{break-before:page;page-break-before:always;margin-bottom:0;}
+  .sources{break-before:page;page-break-before:always;}
+
+  /* Hierarchy has to survive losing colour. h2 is the region and rules off; h3 is
+     the question inside it and sits in small caps with air above, so the two never
+     read as the same level on a photocopy. */
+  h2{font-size:1.35rem;border-bottom:1pt solid #000;padding-bottom:.15rem;
+    margin:0 0 .15rem;}
+  h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;
+    margin:.8rem 0 .22rem;}
+  .colonies{font-style:italic;margin-bottom:.65rem;}
+  /* The seven words are bolded on first use. On paper that has to be visible at a
+     glance, since there is no colour to carry it. */
+  .reading b{font-weight:700;letter-spacing:.01em;}
+
+  /* Sources, condensed: who holds each one stays, the sentence explaining why it
+     is here goes, and "read more" collapses to a run-on list. */
+  .sources .sexp,.sources .sn,.sources .sn2,.sources p:first-of-type{display:none;}
+  .sources ul.links{padding-left:0;}
+  .sources ul.links li{display:inline;margin:0;}
+  .sources ul.links li::after{content:" · ";}
+  .sources ul.links li:last-child::after{content:"";}
+  .sources ul.links a{font-weight:400;}
+  .sources li{margin-bottom:.35rem;}
+  .sources .sd{display:inline;color:#333;}
+  .sources .sd::before{content:" — ";}
+  .vbox dd{font-size:.95rem;}
+  /* Let the sources flow onto whatever page they reach. Forcing them to a fresh
+     sheet cost a page per level, on a handout printed as a class set. */
+  .sources{border-top:1.5pt solid #000;}
+  .sources a{color:#000;text-decoration:none;font-weight:700;}
+  .sources li{break-inside:avoid;}
+  .weblink{display:block;margin-bottom:.5rem;}
+  footer{border-top:1pt solid var(--rule);}
+}
+</style>
+</head>
+<body>
+<nav class="snav" aria-label="Reading navigation">
+  <div class="snavin">
+    <span class="sgroup"><span aria-current="page">Level 1</span><a href="columbian-exchange-level-2.html">Level 2</a><a href="columbian-exchange-level-3.html">Level 3</a><a href="columbian-exchange-level-4.html">Level 4</a></span>
+    <span class="sjump"><a href="#words">Words</a><a href="#read">Reading</a></span>
+  </div>
+</nav>
+<div class="progress" aria-hidden="true"><div class="ptrack"><div class="pfill" id="pfill"></div></div><span class="ppct" id="ppct">0%</span></div>
+<div class="wrap">
+<header class="top">
+  <h1>The Columbian Exchange</h1>
+  <p class="lvl">Level 1 &mdash; The shortest version. Same words, same ideas as every other level.</p>
+</header>
+<div class="help">
+  <p><b>Reading this out loud.</b> On a Chromebook, right-click the page and choose
+  <b>Read aloud</b>. This page holds your level only, so it reads yours and stops.</p>
+  <p><b>Reading this in another language.</b> Right-click and choose <b>Translate to&hellip;</b>
+  Everything here is real text, so the whole reading translates.</p>
+</div>
+<section class="vbox" id="words" aria-labelledby="words-h">
+  <h2 id="words-h" class="vh">Words you need</h2>
+  <p class="vsub">The first four are this unit&rsquo;s words, and they are the same at every level. The last three are plainer words the reading leans on.</p>
+  <dl><dt>Columbian Exchange</dt><dd>The transfer of plants, animals, people, and diseases between the Americas and the rest of the world after 1492</dd><dt>Indigenous Peoples</dt><dd>The original inhabitants of a land and their descendants, such as the many Native nations of North America</dd><dt>Colonization</dt><dd>The act of one country taking control of another land and settling people on it</dd><dt>Epidemic</dt><dd>A disease outbreak that spreads rapidly through a population</dd><dt>Continent <span class="rtag">plain word</span></dt><dd>One of the world&rsquo;s big landmasses &mdash; Africa, Asia, Europe, North America, South America, Australia, Antarctica.</dd><dt>Import <span class="rtag">plain word</span></dt><dd>To bring something in from another country to use or sell.</dd><dt>Native to <span class="rtag">plain word</span></dt><dd>Naturally from that place, having grown or lived there before anyone brought it.</dd></dl>
+</section>
+<section class="reading" id="read">
+<h3>What the <b>Columbian Exchange</b> was</h3>
+<p>In 1492, ships from Europe reached the Americas. Before that, the two halves of the world had been apart for thousands of years. After 1492, things began moving between them: plants, animals, people, and diseases. Historians call this the Columbian Exchange.</p>
+<p>It was not an even trade. Some things went both ways. Some things went only one way, and that is the part that matters most.</p>
+<h3>What went out from the Americas</h3>
+<p>Plants from the Americas went out to the rest of the world. Corn and potatoes were the big ones. They grew in places where older crops failed, so more people could be fed, and the population of Europe climbed.</p>
+<p>Tomatoes went to Italy. Cacao, which chocolate is made from, went to Europe. Chili peppers reached India, China and West Africa and changed how people cooked there. None of those foods existed in those places before 1492.</p>
+<h3>What came in to the Americas</h3>
+<p>Plants and animals came in to the Americas too. Wheat came for bread. Coffee came from Africa. Bananas came from Asia. Sugar cane came, and it would matter more than any other plant.</p>
+<p>Animals arrived that nobody in the Americas had ever seen: horses, cattle, pigs, chickens. Horses changed life for <b>Native</b> nations on the Plains. Cattle and pigs grazed on land <b>Indigenous</b> people had been farming.</p>
+<h3>The part that only went one way</h3>
+<p>Now the part that only went one way.</p>
+<p>The ships also carried diseases. Smallpox. Measles. Influenza. People in Europe, Africa and Asia had lived alongside these diseases for centuries. Many had caught them as children and survived, so their bodies knew how to fight them.</p>
+<p>Nobody in the Americas had ever met them. Nobody had any protection at all. When smallpox arrived it did not simply make people ill. It killed them, community after community.</p>
+<p>Historians argue about the exact numbers. They do not argue about the scale: most Indigenous people in the Americas died in these <b>epidemics</b>. Many died before they ever saw a European face.</p>
+<p>That is why this is not a list of foods. The food went both ways. The disease went one way, and it is what made <b>colonization</b> possible.</p>
+<h3>People were moved too</h3>
+<p>People crossed the ocean too, and not all of them chose to.</p>
+<p>Some Europeans came looking for land or money or a new start. Millions of Africans were taken by force and shipped across the Atlantic to be sold and held as enslaved people. They did not choose to travel, they were not paid, and they could not go home.</p>
+<p>So when a book says people were &ldquo;part of the exchange,&rdquo; stop on that word. An exchange is a trade, and a trade means both sides agreed. For most of the people who crossed that ocean, nobody asked.</p>
+<h3>So what?</h3>
+<p>The Columbian Exchange usually gets taught as a food story. Tomatoes to Italy, chocolate to Europe, horses to the Plains. All of that is true.</p>
+<p>But if the food is all you learn, you cannot answer the real question: how did a small number of Europeans end up controlling two <b>continents</b> where millions of people already lived?</p>
+<p>The answer is in the things that only went one way.</p>
+</section>
+<section class="sources" aria-labelledby="src-h">
+  <h2 id="src-h">Where this comes from</h2>
+  <p>This reading was written for this class. These are the places the information
+  came from, and where you can read more.</p>
+  <h3>The lesson this goes with</h3>
+  <ul class="srcs"><li><a href="https://lsintspl3.wgbh.org/en-us/lesson/midlit11-soc-splcol/1">PBS LearningMedia &mdash; <i>The Columbian Exchange</i></a><span class="sd"><span class="sarch">WGBH.</span>
+  <span class="sexp"> The lesson this handout was built to sit alongside. Its videos and interactives stay there; what you are reading was written for this class.</span></span></li></ul>
+  <h3>Read more about these topics</h3>
+  <ul class="links">
+    <li><a href="https://en.wikipedia.org/wiki/Columbian_exchange">The Columbian Exchange</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Population_history_of_Indigenous_peoples_of_the_Americas">Population history of Indigenous peoples of the Americas</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Atlantic_slave_trade">The Atlantic slave trade</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/Patuxet">Patuxet</a></li>
+  </ul>
+  <h3>Also worth knowing about</h3>
+  <ul class="srcs"><li><a href="https://ospi.k12.wa.us/student-success/resources-subject-area/time-immemorial-tribal-sovereignty-washington-state">Since Time Immemorial: Tribal Sovereignty in Washington State</a><span class="sd"><span class="sarch">OSPI, Washington State.</span><span class="sexp"> The state&rsquo;s own curriculum, developed with its federally recognized tribes.</span></span></li></ul>
+</section>
+
+<script>
+/* Percentage of the reading scrolled. rAF-throttled and passive, so it never
+   competes with the scroll itself on a Chromebook. */
+(function () {
+  var fill = document.getElementById('pfill'), out = document.getElementById('ppct'), t = 0;
+  if (!fill) return;
+  function paint() {
+    t = 0;
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    var p = max > 8 ? Math.round(Math.min(1, Math.max(0, d.scrollTop / max)) * 100) : 0;
+    fill.style.height = p + '%';
+    out.textContent = p + '%';
+  }
+  function onScroll() { if (!t) t = requestAnimationFrame(paint); }
+  /* Publish the sticky bar's real height so #words and the region jumps land
+     below it rather than underneath it. */
+  var bar = document.querySelector('.snav');
+  function measure() {
+    if (bar) document.documentElement.style.setProperty('--navh', bar.offsetHeight + 'px');
+  }
+  addEventListener('resize', measure, { passive: true });
+  measure();
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  paint();
+})();
+</script>
+<footer>
+  <p class="weblink"><b>Reading this on paper?</b> Everything above is clickable on the
+  web version at <b>mrbsocialstudies.org/columbian-exchange.html</b>, where you can also have it read
+  aloud or translated into another language.</p>
+  <p>Unit 1: Foundations &amp; Identity &middot; Day 15 &middot; Mr. B&rsquo;s Social Studies.</p>
+</footer>
+</div>
+</body>
+</html>
