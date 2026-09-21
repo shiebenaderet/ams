@@ -65,7 +65,52 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
 .pick:hover,.pick:focus{border-color:var(--accent);}
 .pick b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
 .pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
-@media print{body{background:#fff;font-size:11pt;}nav.levels,.help{display:none;}}
+/* Screen hides the paper-only note; print re-shows it. Declared BEFORE the print
+   block, because equal-specificity rules are resolved by order, media query or not. */
+.weblink{display:none;}
+
+/* ---------------------------------------------------------------------------
+   PRINT. The paper version is this same page printed, not a second layout --
+   that is what keeps the text, the glosses and the sources identical to the web
+   version rather than nearly identical.
+
+   Three things it has to undo. Dark mode must not reach paper, so the whole
+   palette is redefined here rather than trusted to the renderer's colour
+   scheme. Colour carries no meaning on these handouts because they are
+   photocopied in black and white, so accents become black and the vocabulary
+   box becomes a rule instead of a filled panel -- a tinted box behind every
+   region, three to a reading, is a lot of toner for decoration. And a link is
+   useless on paper, so the sources keep their names (which are descriptive
+   enough to search) and the page says once where to go to click them.
+   --------------------------------------------------------------------------- */
+@media print{
+  :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
+    --card:#fff;--accent:#000;--band:#fff;}
+  @page{size:letter portrait;margin:.7in .75in;}
+  html{font-size:11.5pt;}
+  body{background:#fff;color:#000;line-height:1.5;}
+  .wrap{max-width:none;padding:0;}
+  nav.levels,.help{display:none;}
+  header.top{border-bottom:1.5pt solid #000;}
+  h1{font-size:1.5rem;}
+  /* A heading stranded at the foot of a page costs a sheet in a class set. */
+  h2,h3{break-after:avoid;page-break-after:avoid;}
+  h2{font-size:1.25rem;margin-top:1.4rem;}
+  h3{font-size:1.02rem;margin-top:1rem;}
+  p{orphans:3;widows:3;margin-bottom:.6rem;}
+  .reading{break-inside:auto;}
+  /* The seven words are the thing a student flips back to, so never split it. */
+  .vbox{background:#fff;border:1pt solid #000;border-radius:0;padding:.6rem .8rem;
+    break-inside:avoid;page-break-inside:avoid;}
+  .vbox dd{font-size:.95rem;}
+  /* Let the sources flow onto whatever page they reach. Forcing them to a fresh
+     sheet cost a page per level, on a handout printed as a class set. */
+  .sources{border-top:1.5pt solid #000;}
+  .sources a{color:#000;text-decoration:none;font-weight:700;}
+  .sources li{break-inside:avoid;}
+  .weblink{display:block;margin-bottom:.5rem;}
+  footer{border-top:1pt solid var(--rule);}
+}
 </style>
 </head>
 <body>
@@ -171,6 +216,9 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   <ul class="srcs"><li><a href="https://ospi.k12.wa.us/student-success/resources-subject-area/time-immemorial-tribal-sovereignty-washington-state">Since Time Immemorial: Tribal Sovereignty in Washington State</a><span class="sd">Washington State&rsquo;s own curriculum on the Native nations whose land these colonies were built on, developed with the state&rsquo;s federally recognized tribes.</span></li><li><a href="https://www.archives.gov/education">National Archives &mdash; educator resources</a><span class="sd">Scans of real documents from American history, free to read.</span></li></ul>
 </section>
 <footer>
+  <p class="weblink"><b>Reading this on paper?</b> Everything above is clickable on the
+  web version at <b>mrbsocialstudies.org/colonial-regions.html</b>, where you can also
+  have it read aloud or translated into another language.</p>
   <p>Unit 1: Foundations &amp; Identity &middot; Mr. B&rsquo;s Social Studies.
   Every level teaches the same seven words, so your table can talk across levels.</p>
 </footer>
