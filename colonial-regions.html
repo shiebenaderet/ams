@@ -114,8 +114,12 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
     --card:#fff;--accent:#000;--band:#fff;}
   @page{size:letter portrait;margin:.7in .75in;}
-  html{font-size:11.5pt;}
-  body{background:#fff;color:#000;line-height:1.5;}
+  /* 11pt, not 11.5. Each region starts its own sheet, so a region that runs four
+     lines past the bottom leaves a near-empty page behind it -- at 11.5pt that was
+     happening to New England at every level. Still well inside the 10-12pt range a
+     handout wants. */
+  html{font-size:11pt;}
+  body{background:#fff;color:#000;line-height:1.45;}
   .wrap{max-width:none;padding:0;}
   .snav,.progress,.sjump,.help{display:none;}
   header.top{border-bottom:1.5pt solid #000;}
@@ -124,14 +128,46 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   h2,h3{break-after:avoid;page-break-after:avoid;}
   h2{font-size:1.25rem;margin-top:1.4rem;}
   h3{font-size:1.02rem;margin-top:1rem;}
-  p{orphans:3;widows:3;margin-bottom:.6rem;}
+  p{orphans:3;widows:3;margin-bottom:.5rem;}
   .reading{break-inside:auto;}
   /* The seven words are the thing a student flips back to, so never split it. */
-  /* One box now, and it opens the handout -- so keeping it whole costs nothing
-     and a student flipping back for a word always finds it on page 1. */
-  .vbox{background:#fff;border:1pt solid #000;border-radius:0;padding:.6rem .8rem;
-    margin-bottom:1rem;break-inside:avoid;page-break-inside:avoid;}
-  .vbox .vh{font-size:1rem;}
+  /* Every section starts at the top of a sheet. A region heading halfway down a
+     page, under the tail of the previous region, is the thing that makes a printed
+     packet hard to navigate -- you cannot flip to a section that does not begin
+     anywhere. It costs sheets and buys a findable handout. */
+  .vbox{background:#fff;border:none;border-radius:0;padding:0;
+    break-after:page;page-break-after:always;}
+  .vbox .vh{font-size:1.15rem;border-bottom:1.5pt solid #000;padding-bottom:.2rem;
+    margin-bottom:.3rem;}
+  .vbox dt{margin-top:.55rem;font-size:1rem;}
+  .vbox dd{margin-left:0;}
+  .vbox .rtag{font-size:.8rem;}
+  .reading{break-before:page;page-break-before:always;margin-bottom:0;}
+  .sources{break-before:page;page-break-before:always;}
+
+  /* Hierarchy has to survive losing colour. h2 is the region and rules off; h3 is
+     the question inside it and sits in small caps with air above, so the two never
+     read as the same level on a photocopy. */
+  h2{font-size:1.35rem;border-bottom:1pt solid #000;padding-bottom:.15rem;
+    margin:0 0 .15rem;}
+  h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;
+    margin:.8rem 0 .22rem;}
+  .colonies{font-style:italic;margin-bottom:.65rem;}
+  /* The seven words are bolded on first use. On paper that has to be visible at a
+     glance, since there is no colour to carry it. */
+  .reading b{font-weight:700;letter-spacing:.01em;}
+
+  /* Sources, condensed: who holds each one stays, the sentence explaining why it
+     is here goes, and "read more" collapses to a run-on list. */
+  .sources .sexp,.sources .sn,.sources .sn2,.sources p:first-of-type{display:none;}
+  .sources ul.links{padding-left:0;}
+  .sources ul.links li{display:inline;margin:0;}
+  .sources ul.links li::after{content:" · ";}
+  .sources ul.links li:last-child::after{content:"";}
+  .sources ul.links a{font-weight:400;}
+  .sources li{margin-bottom:.35rem;}
+  .sources .sd{display:inline;color:#333;}
+  .sources .sd::before{content:" — ";}
   .vbox dd{font-size:.95rem;}
   /* Let the sources flow onto whatever page they reach. Forcing them to a fresh
      sheet cost a page per level, on a handout printed as a class set. */
