@@ -177,20 +177,59 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   .weblink{display:block;margin-bottom:.5rem;}
   footer{border-top:1pt solid var(--rule);}
 }
+
+.videos{border-top:2px solid var(--accent);margin-top:3rem;padding-top:1.25rem;}
+.videos h2{margin-top:0;}
+.vintro p{font-size:.95rem;}
+.vid{margin:2.25rem 0 0;}
+.vid h3{margin:0 0 .5rem;}
+.vlen{font-weight:400;color:var(--muted);font-size:.85rem;margin-left:.4rem;
+  font-variant-numeric:tabular-nums;}
+.vid video{width:100%;height:auto;display:block;background:#000;border-radius:.4rem;}
+.vnote,.vask{border-radius:.5rem;padding:.75rem .9rem;margin:.9rem 0 0;font-size:.95rem;}
+.vnote{background:var(--card);border:1px solid var(--rule);}
+.vask{background:var(--band);}
+.vnote p:last-child,.vask p:last-child{margin:0;}
+.vrow{list-style:none;margin:.7rem 0 .9rem;padding:0;}
+.vrow li{display:flex;align-items:flex-start;gap:.6rem;margin:0 0 .5rem;}
+.vrow li::before{content:"";flex:0 0 auto;width:1.1rem;height:1.1rem;
+  border:2px solid var(--muted);border-radius:.2rem;margin-top:.25rem;}
+.vback{font-size:.9rem;color:var(--muted);}
+.vback a{color:var(--accent);}
+.vtx{margin:.75rem 0 0;}
+.vtx summary{cursor:pointer;color:var(--accent);font-size:.9rem;}
+.vtx p{margin:.6rem 0 0;font-size:.95rem;}
+.nov{font-size:.9rem;padding:.6rem;}
+.reading h3,.videos h3{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+.vidweb{display:none;}
+@media print{
+  /* No video and no transcript on paper: the questions are what a student writes
+     on, and three transcripts is a page and a half of toner per copy in a class
+     set. The web address is printed once instead, the same trick the reading
+     already uses for its links. */
+  .videos video,.videos .vtx,.videos .vintro{display:none;}
+  .videos{break-before:page;page-break-before:always;border-top:1.5pt solid #000;}
+  .vnote,.vask{break-inside:avoid;background:#fff;border:none;padding:0;}
+  .vnote{border-left:2pt solid #000;padding-left:.6rem;}
+  .vask{margin-top:.7rem;}
+  .vrow li::before{border-color:#000;width:1rem;height:1rem;}
+  .vid h3{text-transform:none;letter-spacing:0;font-size:1.02rem;}
+  .vidweb{display:block;margin:0 0 .9rem;}
+}
 </style>
 </head>
 <body>
 <nav class="snav" aria-label="Reading navigation">
   <div class="snavin">
-    <span class="sgroup"><span aria-current="page">Level 1</span><a href="columbian-exchange-level-2.html">Level 2</a><a href="columbian-exchange-level-3.html">Level 3</a><a href="columbian-exchange-level-4.html">Level 4</a></span>
-    <span class="sjump"><a href="#words">Words</a><a href="#read">Reading</a></span>
+    <span class="sgroup"><span aria-current="page">Level 1</span><a href="columbian-exchange-level-2.html">Level 2</a><a href="columbian-exchange-level-3.html">Level 3</a></span>
+    <span class="sjump"><a href="#words">Words</a><a href="#read">Reading</a><a href="#watch">Watch</a></span>
   </div>
 </nav>
 <div class="progress" aria-hidden="true"><div class="ptrack"><div class="pfill" id="pfill"></div></div><span class="ppct" id="ppct">0%</span></div>
 <div class="wrap">
 <header class="top">
   <h1>The Columbian Exchange</h1>
-  <p class="lvl">Level 1 &mdash; The shortest version. Same words, same ideas as every other level.</p>
+  <p class="lvl">Level 1 &mdash; The shortest way through. Every idea the other two have, in plainer words.</p>
 </header>
 <div class="help">
   <p><b>Reading this out loud.</b> On a Chromebook, right-click the page and choose
@@ -204,30 +243,80 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   <dl><dt>Columbian Exchange</dt><dd>The transfer of plants, animals, people, and diseases between the Americas and the rest of the world after 1492</dd><dt>Indigenous Peoples</dt><dd>The original inhabitants of a land and their descendants, such as the many Native nations of North America</dd><dt>Colonization</dt><dd>The act of one country taking control of another land and settling people on it</dd><dt>Epidemic</dt><dd>A disease outbreak that spreads rapidly through a population</dd><dt>Continent <span class="rtag">plain word</span></dt><dd>One of the world&rsquo;s big landmasses &mdash; Africa, Asia, Europe, North America, South America, Australia, Antarctica.</dd><dt>Import <span class="rtag">plain word</span></dt><dd>To bring something in from another country to use or sell.</dd><dt>Native to <span class="rtag">plain word</span></dt><dd>Naturally from that place, having grown or lived there before anyone brought it.</dd></dl>
 </section>
 <section class="reading" id="read">
-<h3>What the <b>Columbian Exchange</b> was</h3>
+<h3 id="s-what">What the <b>Columbian Exchange</b> was</h3>
 <p>In 1492, ships from Europe reached the Americas. Before that, the two halves of the world had been apart for thousands of years. After 1492, things began moving between them: plants, animals, people, and diseases. Historians call this the Columbian Exchange.</p>
 <p>It was not an even trade. Some things went both ways. Some things went only one way, and that is the part that matters most.</p>
-<h3>What went out from the Americas</h3>
+<h3 id="s-east">What went out from the Americas</h3>
 <p>Plants from the Americas went out to the rest of the world. Corn and potatoes were the big ones. They grew in places where older crops failed, so more people could be fed, and the population of Europe climbed.</p>
 <p>Tomatoes went to Italy. Cacao, which chocolate is made from, went to Europe. Chili peppers reached India, China and West Africa and changed how people cooked there. None of those foods existed in those places before 1492.</p>
-<h3>What came in to the Americas</h3>
-<p>Plants and animals came in to the Americas too. Wheat came for bread. Coffee came from Africa. Bananas came from Asia. Sugar cane came, and it would matter more than any other plant.</p>
+<p>Turkeys went out too. They are the one American animal that people all over the world now keep for food. Tobacco went out as well. Tobacco is not food. It became the crop that colonists in the South grew to sell.</p>
+<h3 id="s-west">What came in to the Americas</h3>
+<p>Plants and animals came in to the Americas too. Wheat came for bread. Rice came too, and it was grown in the Carolinas using farming knowledge that enslaved West Africans already had. Coffee came from Africa. Bananas came from Asia. Sugar cane came, and it would matter more than any other plant.</p>
 <p>Animals arrived that nobody in the Americas had ever seen: horses, cattle, pigs, chickens. Horses changed life for <b>Native</b> nations on the Plains. Cattle and pigs grazed on land <b>Indigenous</b> people had been farming.</p>
-<h3>The part that did not balance</h3>
+<h3 id="s-disease">The part that did not balance</h3>
 <p>Now the part that did not balance.</p>
 <p>The ships also carried diseases. Smallpox. Measles. Influenza. People in Europe, Africa and Asia had lived alongside these diseases for centuries. Many had caught them as children and survived, so their bodies knew how to fight them.</p>
 <p>Nobody in the Americas had ever met them. Nobody had any protection at all. When smallpox arrived it did not simply make people ill. It killed them, community after community.</p>
 <p>Disease did travel the other way as well. Most historians now think syphilis came out of the Americas to Europe after 1492. It spread fast there and it killed people.</p>
 <p>But the two sides do not match. Historians argue about the exact numbers. They do not argue about the scale: most Indigenous people in the Americas died in these <b>epidemics</b>. Many died before they ever saw a European face. Nothing that travelled east did harm on anything close to that scale.</p>
 <p>So this is not a list of foods. Food moved both ways and both sides gained. Disease moved both ways and only one side was destroyed. That is what made <b>colonization</b> possible.</p>
-<h3>People were moved too</h3>
+<h3 id="s-people">People were moved too</h3>
 <p>People crossed the ocean too, and not all of them chose to.</p>
 <p>Some Europeans came looking for land or money or a new start. Millions of Africans were taken by force and shipped across the Atlantic to be sold and held as enslaved people. They did not choose to travel, they were not paid, and they could not go home.</p>
 <p>So when a book says people were &ldquo;part of the exchange,&rdquo; stop on that word. An exchange is a trade, and a trade means both sides agreed. For most of the people who crossed that ocean, nobody asked.</p>
-<h3>So what?</h3>
+<h3 id="s-sowhat">So what?</h3>
 <p>The Columbian Exchange usually gets taught as a food story. Tomatoes to Italy, chocolate to Europe, horses to the Plains. All of that is true.</p>
 <p>But if the food is all you learn, you cannot answer the real question: how did a small number of Europeans end up controlling two <b>continents</b> where millions of people already lived?</p>
 <p>The answer is in how unevenly everything else moved.</p>
+</section>
+<section class="videos" id="watch" aria-labelledby="videos-h">
+  <h2 id="videos-h">Watch the three videos</h2>
+  <div class="vintro"><p>Three short videos from the lesson this reading was built to sit beside. None of them is longer than a minute and a half. Watch them after you have read, not before.</p><p>Under each video there are two boxes. The first box is something the video does not tell you, and you read that one before you watch. The second box is what to do while you watch, and you do that one on paper.</p><p>Turn the captions on with the CC button. Every video also has &ldquo;What the narrator says&rdquo; underneath it &mdash; open that and the words are ordinary text, so they can be read aloud or translated like the rest of the page.</p></div>
+  <p class="vidweb"><b>These are videos, so they are not on this sheet.</b> All three
+  are on the web version at <b>mrbsocialstudies.org/columbian-exchange.html</b>, captioned and with
+  the words written out. The questions below are the ones to answer as you watch.</p>
+<article class="vid">
+  <h3 id="video-1">1. The exchange begins<span class="vlen">0:56</span></h3>
+  <video controls playsinline preload="none" poster="media/columbian-exchange/exchange-begins.jpg">
+    <source src="media/columbian-exchange/exchange-begins.mp4" type="video/mp4">
+    <track kind="captions" src="media/columbian-exchange/exchange-begins.vtt" srclang="en" label="English" default>
+    <p class="nov">This browser will not play the video. The words are underneath it,
+    and the file itself is <a href="media/columbian-exchange/exchange-begins.mp4">here</a>.</p>
+  </video>
+  <div class="vnote"><p>A name to notice. The video says &ldquo;the Arawaks.&rdquo; Arawak is the name of a group of languages, and many different peoples across the Caribbean and South America spoke them. The people of Hispaniola have a more exact name of their own: the Ta&iacute;no. That is the name to use.</p></div>
+  <div class="vask"><p><b>While you watch.</b></p><p>Tick a box every time the video says that thing crossed the ocean. Tick them as you hear them.</p>
+    <ul class="vrow"><li>Horses</li><li>Wheat</li><li>Corn</li><li>Chickens</li><li>Tomatoes</li><li>Coffee</li><li>Smallpox and measles</li><li>People taken from Africa by force</li></ul><p>Two boxes should still be empty. Write those two down. Then write one sentence: why do you think a one-minute video left those two out?</p>
+    <p class="vback">If you get stuck, look at <a href="#s-disease">The part that did not balance</a> and <a href="#s-people">People were moved too</a> in the reading.</p></div>
+  <details class="vtx"><summary>What the narrator says</summary><p>NARRATOR: In 1493, Columbus led a small band of men and 24 horses ashore on the Caribbean island of Hispaniola. The island people, the Arawaks, had seen white-skinned men on Columbus&rsquo;s first voyage, but they had never before laid eyes on the towering beasts that splashed through the surf that day.</p><p>As soon as Columbus arrived in the Americas, worlds that had been separated by vast oceans for millions of years began to merge. This process would transform life on both sides of the Atlantic forever. Sheep, cattle and chickens were all imported into the Americas, as were bananas, coffee and wheat.</p><p>And the Americas introduced the world to tomatoes, cocoa, as well as corn and peanuts &mdash; foods that now literally feed the world.</p></details>
+</article>
+<article class="vid">
+  <h3 id="video-2">2. Horses<span class="vlen">0:55</span></h3>
+  <video controls playsinline preload="none" poster="media/columbian-exchange/horses.jpg">
+    <source src="media/columbian-exchange/horses.mp4" type="video/mp4">
+    <track kind="captions" src="media/columbian-exchange/horses.vtt" srclang="en" label="English" default>
+    <p class="nov">This browser will not play the video. The words are underneath it,
+    and the file itself is <a href="media/columbian-exchange/horses.mp4">here</a>.</p>
+  </video>
+  <div class="vnote"><p>Two things the video does not tell you.</p><p>Horses were not new to the Americas. They first evolved here. They crossed into Asia and Europe over land that is now under the sea, and then they died out on this side of the world about ten thousand years ago. So the ships in the first video were not bringing the horse to the Americas for the first time. They were bringing it back.</p><p>And the buffalo were not &ldquo;replaced.&rdquo; Fifteen million of them were still grazing the grasslands in the 1860s. By the 1890s about a thousand were left. Hunters shot them for their hides, mostly in the 1870s and 1880s. It was not only a business, either. Some officials in the government and the army saw a use in it: they believed that if the herds were gone, the army could force Native nations onto reservations. Congress passed a law in 1874 to protect the buffalo. President Grant refused to sign it, so it never took effect.</p></div>
+  <div class="vask"><p><b>While you watch.</b></p><p>The video says the buffalo of the plains &ldquo;were replaced by European cattle.&rdquo; That sentence never says who did it. Tick the one below that does say who.</p>
+    <ul class="vrow"><li>The buffalo went away, and cattle took their place.</li><li>Hunters shot the buffalo, and ranchers put cattle on the land.</li></ul><p>Now write one sentence: why does it matter which of those two sentences a person uses?</p>
+    <p class="vback">If you get stuck, look at <a href="#s-west">What came in to the Americas</a> in the reading.</p></div>
+  <details class="vtx"><summary>What the narrator says</summary><p>NARRATOR: Horses frightened the Arawaks when they first saw them, for they believed them to be giant dogs that fed on human flesh. But over time, Native Americans came to use the horse for their own purposes. These dancers of the North American plains lived by hunting buffalo.</p><p>But stalking the buffalo on foot was a slow and dangerous affair. Horses revolutionized the hunt. What once took days now took moments. But in time, the buffalo of the plains were replaced by European cattle. With them, a new culture evolved, that of the cowboy.</p><p>The all-American rodeo is actually anything but. The bucking bronco, the branded cattle, even the word &ldquo;rodeo&rdquo; are foreigners, all Spanish imports.</p></details>
+</article>
+<article class="vid">
+  <h3 id="video-3">3. The potato, and what followed it<span class="vlen">1:23</span></h3>
+  <video controls playsinline preload="none" poster="media/columbian-exchange/the-potato.jpg">
+    <source src="media/columbian-exchange/the-potato.mp4" type="video/mp4">
+    <track kind="captions" src="media/columbian-exchange/the-potato.vtt" srclang="en" label="English" default>
+    <p class="nov">This browser will not play the video. The words are underneath it,
+    and the file itself is <a href="media/columbian-exchange/the-potato.mp4">here</a>.</p>
+  </video>
+  <div class="vnote"><p>One word to watch. The video calls the potato blight a fungus. It is not a fungus. It is a water mould, which is a different kind of living thing altogether &mdash; closer to algae than to a mushroom. Nobody in 1845 knew that, and the wrong name stuck.</p></div>
+  <div class="vask"><p><b>While you watch.</b></p><p>At the very end the video says people crossed the ocean &ldquo;to start a new life in the Americas.&rdquo; Two groups of people crossed it. Write yes or no in each box: did that group choose to come?</p>
+    <ul class="vrow"><li>The Irish families in this video</li><li>The Africans in the reading, who were taken by force</li></ul><p>Now write one sentence: is &ldquo;to start a new life&rdquo; a fair way to describe both groups?</p>
+    <p class="vback">If you get stuck, look at <a href="#s-people">People were moved too</a> in the reading.</p></div>
+  <details class="vtx"><summary>What the narrator says</summary><p>NARRATOR: If European imports like horses and cattle forever changed the Americas, American exports to Europe would forever change life there. The humble potato is one important example. It was grown by peoples of the Andes for hundreds of years before the Spaniards arrived.</p><p>Once in Europe, this nutritious vegetable became the food of the poor, and it supported a sharp increase in the European population beginning in the 1600s. Ireland&rsquo;s population grew more than eightfold. For many, meals consisted of potatoes and nothing else. But then another import from the Americas arrived: a deadly fungus.</p><p>By the summer of 1845, potato fields stricken by this fungus blackened overnight. The Irish potato famine had begun. Those who had lived by the potato now died without it. Perhaps a million Irish starved to death. A million others took to ships headed westward across the Atlantic.</p><p>They became part of perhaps the most significant cargo to move between the continents: the massive wave of people who would cross the oceans to start a new life in the Americas.</p></details>
+</article>
 </section>
 <section class="sources" aria-labelledby="src-h">
   <h2 id="src-h">Where this comes from</h2>
@@ -235,7 +324,7 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   came from, and where you can read more.</p>
   <h3>The lesson this goes with</h3>
   <ul class="srcs"><li><a href="https://lsintspl3.wgbh.org/en-us/lesson/midlit11-soc-splcol/1">PBS LearningMedia &mdash; <i>The Columbian Exchange</i></a><span class="sd"><span class="sarch">WGBH.</span>
-  <span class="sexp"> The lesson this handout was built to sit alongside. Its videos and interactives stay there; what you are reading was written for this class.</span></span></li></ul>
+  <span class="sexp"> The lesson this handout was built to sit alongside. Its three videos are on this page; the rest of it stays there, and what you are reading was written for this class. One thing to check if you go and read it: its own text says that rats off the European ships brought the diseases. Rats do carry disease, but the two that did the most damage here, smallpox and measles, passed straight from person to person.</span></span></li></ul>
   <h3>Read more about these topics</h3>
   <ul class="links">
     <li><a href="https://en.wikipedia.org/wiki/Columbian_exchange">The Columbian Exchange</a></li>

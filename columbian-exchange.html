@@ -177,6 +177,45 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   .weblink{display:block;margin-bottom:.5rem;}
   footer{border-top:1pt solid var(--rule);}
 }
+
+.videos{border-top:2px solid var(--accent);margin-top:3rem;padding-top:1.25rem;}
+.videos h2{margin-top:0;}
+.vintro p{font-size:.95rem;}
+.vid{margin:2.25rem 0 0;}
+.vid h3{margin:0 0 .5rem;}
+.vlen{font-weight:400;color:var(--muted);font-size:.85rem;margin-left:.4rem;
+  font-variant-numeric:tabular-nums;}
+.vid video{width:100%;height:auto;display:block;background:#000;border-radius:.4rem;}
+.vnote,.vask{border-radius:.5rem;padding:.75rem .9rem;margin:.9rem 0 0;font-size:.95rem;}
+.vnote{background:var(--card);border:1px solid var(--rule);}
+.vask{background:var(--band);}
+.vnote p:last-child,.vask p:last-child{margin:0;}
+.vrow{list-style:none;margin:.7rem 0 .9rem;padding:0;}
+.vrow li{display:flex;align-items:flex-start;gap:.6rem;margin:0 0 .5rem;}
+.vrow li::before{content:"";flex:0 0 auto;width:1.1rem;height:1.1rem;
+  border:2px solid var(--muted);border-radius:.2rem;margin-top:.25rem;}
+.vback{font-size:.9rem;color:var(--muted);}
+.vback a{color:var(--accent);}
+.vtx{margin:.75rem 0 0;}
+.vtx summary{cursor:pointer;color:var(--accent);font-size:.9rem;}
+.vtx p{margin:.6rem 0 0;font-size:.95rem;}
+.nov{font-size:.9rem;padding:.6rem;}
+.reading h3,.videos h3{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+.vidweb{display:none;}
+@media print{
+  /* No video and no transcript on paper: the questions are what a student writes
+     on, and three transcripts is a page and a half of toner per copy in a class
+     set. The web address is printed once instead, the same trick the reading
+     already uses for its links. */
+  .videos video,.videos .vtx,.videos .vintro{display:none;}
+  .videos{break-before:page;page-break-before:always;border-top:1.5pt solid #000;}
+  .vnote,.vask{break-inside:avoid;background:#fff;border:none;padding:0;}
+  .vnote{border-left:2pt solid #000;padding-left:.6rem;}
+  .vask{margin-top:.7rem;}
+  .vrow li::before{border-color:#000;width:1rem;height:1rem;}
+  .vid h3{text-transform:none;letter-spacing:0;font-size:1.02rem;}
+  .vidweb{display:block;margin:0 0 .9rem;}
+}
 </style>
 </head>
 <body>
@@ -191,8 +230,11 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   <i>why</i> &mdash; they are not about being smarter.</p>
   <p><b>Pick the one you can read comfortably.</b> If it feels too hard or too easy, switch.
   There is a level switcher at the top of every reading.</p>
+  <p><b>Every level ends with the same three short videos</b> and the same three questions
+  about them. The videos are captioned, and what the narrator says is written out underneath
+  each one.</p>
 </div>
-<a class="pick" href="columbian-exchange-level-1.html"><b>Level 1</b>The shortest version. Same words, same ideas as every other level.<span class="wc">About 560 words</span></a><a class="pick" href="columbian-exchange-level-2.html"><b>Level 2</b>A bit longer, with more of the story filled in.<span class="wc">About 775 words</span></a><a class="pick" href="columbian-exchange-level-3.html"><b>Level 3</b>The full version, with the reasons behind what happened.<span class="wc">About 1,252 words</span></a><a class="pick" href="columbian-exchange-level-4.html"><b>Level 4</b>Everything in Level 3, plus what the tidy version of the story leaves out.<span class="wc">About 1,639 words</span></a>
+<a class="pick" href="columbian-exchange-level-1.html"><b>Level 1</b>The shortest way through. Every idea the other two have, in plainer words.<span class="wc">About 620 words</span></a><a class="pick" href="columbian-exchange-level-2.html"><b>Level 2</b>The standard version, with more of the story filled in.<span class="wc">About 816 words</span></a><a class="pick" href="columbian-exchange-level-3.html"><b>Level 3</b>The long way round, with the reasons behind it and what the tidy version leaves out.<span class="wc">About 1,661 words</span></a>
 <footer><p>Unit 1: Foundations &amp; Identity &middot; Day 15 &middot; Mr. B&rsquo;s Social Studies.</p></footer>
 </div>
 </body>
