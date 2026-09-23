@@ -177,13 +177,97 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   .weblink{display:block;margin-bottom:.5rem;}
   footer{border-top:1pt solid var(--rule);}
 }
+
+/* Two extra tokens, declared the same three ways the page declares its own, so
+   the activity follows the reading into dark mode instead of being a white card
+   with pale text on it. That was the first version's bug: literal backgrounds
+   with text left inheriting --ink, which dark mode flips to near-white. */
+:root{--ract-row:#f4f1ea;--ract-on-accent:#fff;--ract-warn:#7a4f24;--ract-muted:#4f4a42;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ract-row:#26262b;--ract-on-accent:#16161a;--ract-warn:#e0b57c;--ract-muted:#c4c0b8;}}
+:root[data-theme="dark"]{--ract-row:#26262b;--ract-on-accent:#16161a;
+  --ract-warn:#e0b57c;--ract-muted:#c4c0b8;}
+#activities{margin:2.5rem 0 0;color:var(--ink);scroll-margin-top:5rem;}
+/* The two calls to action: one in the sticky menu, one under the words box --
+   the two moments a student has just met the definitions and might want to use
+   them. Both are real links to #activities, so they work with the page's own
+   smooth scrolling and need no script. */
+.snav .sgo{background:var(--accent);color:var(--ract-on-accent);font-weight:700;
+  border-radius:999px;padding:.2rem .7rem;text-decoration:none;}
+.vcta{display:block;margin:1.1rem 0 0;padding:.75rem .9rem;border-radius:.55rem;
+  border:2px solid var(--accent);background:var(--band);color:var(--ink);
+  text-decoration:none;min-height:44px;}
+.vcta b{display:block;color:var(--accent);font-size:1.05rem;}
+/* --band is the darkest surface on the page, so even the activity's own muted
+   only reaches 3.56:1 on it. The CTA subline uses full --ink instead. */
+.vcta span{display:block;font-size:.92rem;color:var(--ink);margin-top:.15rem;}
+@media print{.vcta,.snav .sgo{display:none;}}
+.ract-h{font-size:1.5rem;margin:0 0 .3rem;color:var(--ink);}
+.ract-lead{margin:0 0 1.1rem;color:var(--ract-muted);}
+.ract-round{border:2px solid var(--rule);border-radius:.7rem;padding:1rem 1.1rem;
+  margin:0 0 1.1rem;background:var(--card);}
+.ract-rlab{margin:0 0 .2rem;font-size:1.15rem;color:var(--accent);}
+.ract-stage{margin:1.2rem 0 0;padding-top:.9rem;border-top:1px solid var(--rule);}
+.ract-stage:first-of-type{border-top:0;padding-top:0;margin-top:0;}
+.ract-stage h4{margin:0 0 .25rem;font-size:1.05rem;color:var(--ink);}
+.ract-help{margin:0 0 .6rem;font-size:.95rem;color:var(--ract-muted);}
+.ract-row{padding:.6rem .7rem;margin:0 0 .45rem;border-radius:.45rem;
+  background:var(--ract-row);color:var(--ink);display:flex;flex-wrap:wrap;
+  gap:.5rem;align-items:baseline;}
+.ract-row.ract-ok{background:var(--band);}
+.ract-def{flex:1 1 15rem;}
+.ract-sent{flex:1 1 100%;line-height:2.1;}
+.ract-ans{color:var(--accent);font-weight:700;}
+/* color and background are set explicitly: a bare <select> or <input> keeps the
+   browser's own black-on-white and disappears against a dark card. */
+.ract-sel,.ract-in{font:inherit;font-size:1rem;padding:.35rem .4rem;
+  border:2px solid var(--rule);border-radius:.3rem;background:var(--card);
+  color:var(--ink);min-height:44px;}
+.ract-in{min-width:10rem;}
+.ract-again{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--ract-warn);font-weight:700;}
+.ract-pair{display:block;}
+.ract-scen{margin:0 0 .55rem;color:var(--ink);}
+.ract-opts{display:flex;flex-wrap:wrap;gap:.6rem;}
+/* 44px minimum touch target: these get used on Chromebooks and phones. */
+.ract-opt{font:inherit;font-size:1rem;padding:.6rem 1.1rem;cursor:pointer;
+  min-height:44px;border:2px solid var(--rule);border-radius:.45rem;
+  background:var(--card);color:var(--ink);}
+.ract-opt.ract-picked{border-color:var(--accent);background:var(--band);
+  font-weight:700;}
+.ract-why{margin:.4rem 0 0;color:var(--ink);}
+.ract-bar{display:flex;align-items:center;gap:.8rem;margin-top:.6rem;flex-wrap:wrap;}
+/* --accent is a deep green in light mode and a pale one in dark, so the label on
+   top of it has to flip too, or it is white-on-mint. */
+.ract-check{font:inherit;font-size:1rem;font-weight:700;padding:.6rem 1.3rem;
+  cursor:pointer;min-height:44px;color:var(--ract-on-accent);
+  background:var(--accent);border:0;border-radius:.45rem;}
+.ract-score{color:var(--ract-muted);}
+.ract-score.ract-won{color:var(--accent);font-weight:700;}
+.ract-ta{font:inherit;width:100%;padding:.5rem;border:2px solid var(--rule);
+  border-radius:.3rem;background:var(--card);color:var(--ink);}
+.ract-saved{font-size:.85rem;color:var(--accent);}
+.ract-opt-tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--ract-warn);font-weight:700;margin-left:.4rem;}
+.ract-sum{border:3px solid var(--accent);border-radius:.7rem;padding:1rem 1.1rem;
+  background:var(--card);}
+.ract-sum h4{margin:0 0 .6rem;font-size:1.25rem;color:var(--ink);}
+/* Deliberately large: this table gets read by an adult standing up. */
+.ract-tbl{border-collapse:collapse;width:100%;max-width:30rem;font-size:1.15rem;
+  color:var(--ink);}
+.ract-tbl th{text-align:left;font-size:.8rem;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--ract-muted);border-bottom:2px solid var(--rule);
+  padding:.3rem .35rem;}
+.ract-tbl td{padding:.35rem;border-bottom:1px solid var(--rule);}
+.ract-tbl td.ract-won{color:var(--accent);font-weight:700;}
+@media print{#activities{display:none;}}
 </style>
 </head>
 <body>
 <nav class="snav" aria-label="Reading navigation">
   <div class="snavin">
     <span class="sgroup"><a href="colonial-regions-level-1.html">Level 1</a><a href="colonial-regions-level-2.html">Level 2</a><span aria-current="page">Level 3</span></span>
-    <span class="sjump"><a href="#words">Words</a><a href="#NE-h">New England</a><a href="#MC-h">Middle</a><a href="#SC-h">Southern</a></span>
+    <span class="sjump"><a href="#words">Words</a><a href="#NE-h">New England</a><a href="#MC-h">Middle</a><a href="#SC-h">Southern</a><a href="#activities" class="sgo">Practice &rarr;</a></span>
   </div>
 </nav>
 <div class="progress" aria-hidden="true"><div class="ptrack"><div class="pfill" id="pfill"></div></div><span class="ppct" id="ppct">0%</span></div>
@@ -204,6 +288,10 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   <h2 id="words-h" class="vh">Words you need</h2>
   <p class="vsub">The same words at every level. The last three belong to one region each.</p>
   <dl><dt>Cash crop</dt><dd>A crop grown to be sold for profit rather than eaten by the family that grew it. Tobacco, rice and indigo were cash crops.</dd><dt>Subsistence farming</dt><dd>Farming that produces enough to feed the household, with little or nothing left to sell. The opposite of growing a cash crop.</dd><dt>Indentured servant</dt><dd>A person who signed a contract to work without wages for a set number of years, usually four to seven, in exchange for passage to America. At the end of the term they were free, and the contract had an end date.</dd><dt>Enslaved</dt><dd>Held as property and forced to work without pay, for life, with that status passed to one’s children. Unlike indenture, it had no end date and no contract, and by law it was inherited.</dd><dt>Export</dt><dd>A good sent out of a colony to be sold somewhere else. What a region exports tells you what its land and labor could produce.</dd><dt>Self-government</dt><dd>A community making its own laws rather than receiving them from a distant authority. Every colony had some of it, and every colony also had a governor answering to Britain.</dd><dt>Puritan <span class="rtag">New England</span></dt><dd>An English Protestant who wanted to &ldquo;purify&rdquo; the Church of England. Puritans founded Massachusetts as a community run on their own religious rules.</dd><dt>Tolerance <span class="rtag">Middle</span></dt><dd>Allowing beliefs and practices you disagree with. In the Middle Colonies it was written into law, which is not the same as everyone getting along.</dd><dt>Plantation <span class="rtag">Southern</span></dt><dd>A large agricultural estate producing a single cash crop for export, worked by a concentrated labor force — by the 1700s, almost entirely enslaved Africans and their descendants.</dd></dl>
+  <a class="vcta" href="#activities">
+    <b>Practice these words &rarr;</b>
+    <span>Four short activities. You get a score, and you can retry the ones you miss.</span>
+  </a>
 </section>
 <section class="reading" aria-labelledby="NE-h">
   <h2 id="NE-h">New England Colonies</h2>
@@ -284,6 +372,9 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
 <h3>So what?</h3>
 <p>The Southern colonies demonstrate environmental opportunity and human decision operating together, and the unit&rsquo;s central argument lives here. Climate, soil and navigable rivers made high-value export agriculture possible. The particular crops that flourished demanded labor across nearly the whole year, which made a permanent workforce profitable in a way it was not further north. But profitability is not compulsion. Planters and the assemblies they controlled built a hereditary, racial slavery step by step in statute, reversed a colony&rsquo;s ban to extend it, and tightened it further each time enslaved people resisted. Geography set the terms of the problem. People wrote the answer, and then wrote it into law.</p>
 </section>
+<div id="activities"></div>
+<script src="reading-activities.js"></script>
+<script>READING_ACTIVITIES({"level": 3, "lead": "Four short activities on the words from the box above. You get a score, and you can try again &mdash; only the ones you missed come back.", "rounds": [{"round": 1, "label": "Round 1 &mdash; after the first two regions", "note": "You can do this as soon as you have read New England and the Middle Colonies.", "match": [{"term": "Cash crop", "def": "A crop grown to be sold for profit rather than eaten by the family that grew it. Tobacco, rice and indigo were cash crops."}, {"term": "Subsistence farming", "def": "Farming that produces enough to feed the household, with little or nothing left to sell. The opposite of growing a cash crop."}, {"term": "Indentured servant", "def": "A person who signed a contract to work without wages for a set number of years, usually four to seven, in exchange for passage to America. At the end of the term they were free, and the contract had an end date."}, {"term": "Enslaved", "def": "Held as property and forced to work without pay, for life, with that status passed to one’s children. Unlike indenture, it had no end date and no contract, and by law it was inherited."}, {"term": "Export", "def": "A good sent out of a colony to be sold somewhere else. What a region exports tells you what its land and labor could produce."}, {"term": "Self-government", "def": "A community making its own laws rather than receiving them from a distant authority. Every colony had some of it, and every colony also had a governor answering to Britain."}, {"term": "Puritan", "def": "An English Protestant who wanted to &ldquo;purify&rdquo; the Church of England. Puritans founded Massachusetts as a community run on their own religious rules."}, {"term": "Tolerance", "def": "Allowing beliefs and practices you disagree with. In the Middle Colonies it was written into law, which is not the same as everyone getting along."}, {"term": "Plantation", "def": "A large agricultural estate producing a single cash crop for export, worked by a concentrated labor force — by the 1700s, almost entirely enslaved Africans and their descendants."}], "cloze": [{"text": "Tobacco, rice and indigo were grown to be sold, not eaten. A crop like that is a ____.", "answer": "cash crop"}, {"text": "A family that grows just enough corn and beans to feed itself is doing ____.", "answer": "subsistence farming"}, {"text": "Someone who worked four to seven years without wages to pay for the trip across the ocean was an ____.", "answer": "indentured servant"}, {"text": "Being ____ had no end date, and by law the status passed to your children.", "answer": "enslaved"}, {"text": "New England sent dried cod out to Europe and the Caribbean to be sold. Cod was an ____.", "answer": "export"}, {"text": "When a town meeting made its own rules about roads and schools instead of waiting for Britain, that is ____.", "answer": "self-government"}, {"text": "Massachusetts was founded by ____ who wanted to live by their own religious rules.", "answer": "Puritans"}, {"text": "Pennsylvania wrote ____ into law in 1701, so people from different churches could worship freely.", "answer": "tolerance"}, {"text": "A very large farm that grew one crop to sell, worked by enslaved people, is a ____.", "answer": "plantation"}], "pair": [{"scenario": "In 1650 a young man in London signs a paper: seven years of work in Virginia, no wages, in exchange for his passage across the ocean. At the end of the seven years, he is free.", "options": ["indentured servant", "enslaved"], "answer": "indentured servant", "why": "The contract had an <b>end date</b>. That is the whole difference &mdash; and it is why the two words are not interchangeable."}, {"scenario": "A New England family grows corn, beans and rye &mdash; just enough to feed themselves through the winter, with nothing left over to sell.", "options": ["cash crop", "subsistence farming"], "answer": "subsistence farming", "why": "Nothing leaves the farm. The moment a crop is grown <i>to sell</i>, it is a cash crop instead."}]}, {"round": 2, "label": "Round 2 &mdash; after all three", "note": "These words wait for the Southern Colonies reading. Do this one once you have read all three regions.", "match": [], "cloze": [], "pair": [{"scenario": "A child is born in Virginia in 1670. Her mother is enslaved. Under a 1662 Virginia law, a child&rsquo;s status follows the mother&rsquo;s.", "options": ["indentured servant", "enslaved"], "answer": "enslaved", "why": "No contract, no end date, and by law it was <b>inherited</b>. That 1662 law is the moment slavery became something you were born into."}, {"scenario": "Virginia planters grow tobacco in such quantity that it is used as money in local deals. Nobody in Virginia is eating it.", "options": ["cash crop", "subsistence farming"], "answer": "cash crop", "why": "Grown to sell, not to eat. Tobacco was so profitable that a Virginia law ordered people to plant it."}]}], "sentence": [{"prompt": "Write one sentence about New England that uses the word <b>export</b>.", "check": "Does your sentence say something about New England, or does it just repeat what export means?"}, {"prompt": "Write one sentence that uses both <b>cash crop</b> and <b>enslaved</b>, and shows how the two were connected.", "check": "Does your sentence show a connection &mdash; one thing leading to the other &mdash; or does it just mention both words?"}]});</script>
 <section class="sources" aria-labelledby="src-h">
   <h2 id="src-h">Where this comes from</h2>
   <p>This reading was written for this class. These are the places the information
