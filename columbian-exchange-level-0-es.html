@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Columbian Exchange &mdash; choose your reading &mdash; Mr. B&rsquo;s Social Studies</title>
-<meta name="description" content="What crossed the Atlantic after 1492, which way it went, and why the directions did not match. Four levels, same ideas.">
+<title>El intercambio colombino &mdash; Nivel 0 en espa&ntilde;ol &mdash; Mr. B&rsquo;s Social Studies</title>
 <meta name="robots" content="noindex, nofollow">
+<link rel="alternate" hreflang="en" href="columbian-exchange-level-0.html">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;display=swap">
 <style>
@@ -185,65 +185,109 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   footer{border-top:1pt solid var(--rule);}
 }
 
-.videos{border-top:2px solid var(--accent);margin-top:3rem;padding-top:1.25rem;}
-.videos h2{margin-top:0;}
-.vintro p{font-size:.95rem;}
-.vid{margin:2.25rem 0 0;}
-.vid h3{margin:0 0 .5rem;}
-.vlen{font-weight:400;color:var(--muted);font-size:.85rem;margin-left:.4rem;
-  font-variant-numeric:tabular-nums;}
-.vid video{width:100%;height:auto;display:block;background:#000;border-radius:.4rem;}
-.vnote,.vask{border-radius:.5rem;padding:.75rem .9rem;margin:.9rem 0 0;font-size:.95rem;}
-.vnote{background:var(--card);border:1px solid var(--rule);}
-.vask{background:var(--band);}
-.vnote p:last-child,.vask p:last-child{margin:0;}
-.vrow{list-style:none;margin:.7rem 0 .9rem;padding:0;}
-.vrow li{display:flex;align-items:flex-start;gap:.6rem;margin:0 0 .5rem;}
-.vrow li::before{content:"";flex:0 0 auto;width:1.1rem;height:1.1rem;
-  border:2px solid var(--muted);border-radius:.2rem;margin-top:.25rem;}
-.vback{font-size:.9rem;color:var(--muted);}
-.vback a{color:var(--accent);}
-.vtx{margin:.75rem 0 0;}
-.vtx summary{cursor:pointer;color:var(--accent);font-size:.9rem;}
-.vtx p{margin:.6rem 0 0;font-size:.95rem;}
-.nov{font-size:.9rem;padding:.6rem;}
-.reading h3,.videos h3{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
-.vidweb{display:none;}
-@media print{
-  /* No video and no transcript on paper: the questions are what a student writes
-     on, and three transcripts is a page and a half of toner per copy in a class
-     set. The web address is printed once instead, the same trick the reading
-     already uses for its links. */
-  .videos video,.videos .vtx,.videos .vintro{display:none;}
-  .videos{break-before:page;page-break-before:always;border-top:1.5pt solid #000;}
-  .vnote,.vask{break-inside:avoid;background:#fff;border:none;padding:0;}
-  .vnote{border-left:2pt solid #000;padding-left:.6rem;}
-  .vask{margin-top:.7rem;}
-  .vrow li::before{border-color:#000;width:1rem;height:1rem;}
-  .vid h3{text-transform:none;letter-spacing:0;font-size:1.02rem;}
-  .vidweb{display:block;margin:0 0 .9rem;}
-}
+.en{font-weight:400;color:var(--muted);font-size:.8em;margin-left:.35rem;}
+h2 .en{display:block;margin:0;font-size:.62em;}
+.eslink{display:inline-block;margin:0 0 1.25rem;color:var(--accent);font-weight:700;}
+@media print{.eslink{display:none;}}
 </style>
 </head>
 <body>
+<nav class="snav" aria-label="Navegaci&oacute;n">
+  <div class="snavin">
+    <span class="sgroup"><span aria-current="page">Nivel 0 &middot; Espa&ntilde;ol</span><a href="columbian-exchange-level-0.html" lang="en" hreflang="en">English</a></span>
+    <span class="sjump"><a href="#words">Palabras</a><a href="columbian-exchange-practice.html" class="sgo" lang="en">Check &rarr;</a></span>
+  </div>
+</nav>
+<div class="progress" aria-hidden="true"><div class="ptrack"><div class="pfill" id="pfill"></div></div><span class="ppct" id="ppct">0%</span></div>
 <div class="wrap">
 <header class="top">
-  <h1>The Columbian Exchange</h1>
-  <p class="lvl">Choose the reading you want. You can switch at any time.</p>
+  <h1>El intercambio colombino</h1>
+  <p class="lvl"><span lang="en">The Columbian Exchange</span> &mdash; Nivel 0 en espa&ntilde;ol. Las ideas clave, en oraciones cortas. Las palabras de la clase van en ingl&eacute;s entre par&eacute;ntesis.</p>
 </header>
+<div id="rtools"></div>
 <div class="help">
-  <p><b>They all teach the same thing.</b> Every level covers what went out of the Americas,
-  what came in, and the two things that only travelled one way. The longer ones say more about
-  <i>why</i> &mdash; they are not about being smarter.</p>
-  <p><b>Pick the one you can read comfortably.</b> If it feels too hard or too easy, switch.
-  There is a level switcher at the top of every reading.</p>
-  <p><b>Every level ends with the same three short videos</b> and the same three questions
-  about them. The videos are captioned, and what the narrator says is written out underneath
-  each one.</p>
+  <p><b>Escucha la lectura.</b> Presiona <b>Escuchar</b> y la computadora lee en voz
+  alta, una oraci&oacute;n a la vez. Toca cualquier p&aacute;rrafo para saltar all&iacute;.
+  <b>Letra</b> cambia el tipo de letra, el tama&ntilde;o y el espacio.</p>
+  <p><b>Las palabras de la clase est&aacute;n en ingl&eacute;s</b>, entre par&eacute;ntesis:
+  <i>cultivo comercial (cash crop)</i>. Son las palabras de la hoja de la clase y de la
+  prueba de vocabulario.</p>
 </div>
-<a class="pick" href="columbian-exchange-level-0.html"><b>Level 0</b>The key ideas, in short sentences, and every item on the note sheet. Each part matches a part of Level 1, so you can move up one part at a time.<span class="wc">About 522 words</span></a><a class="pick" href="columbian-exchange-level-1.html"><b>Level 1</b>Every idea Levels 2 and 3 have, in plainer words.<span class="wc">About 620 words</span></a><a class="pick" href="columbian-exchange-level-2.html"><b>Level 2</b>The standard version, with more of the story filled in.<span class="wc">About 816 words</span></a><a class="pick" href="columbian-exchange-level-3.html"><b>Level 3</b>The long way round, with the reasons behind it and what the tidy version leaves out.<span class="wc">About 1,661 words</span></a>
-<a class="pick" lang="es" href="columbian-exchange-level-0-es.html"><b>Nivel 0 en espa&ntilde;ol</b>Las ideas clave del Nivel 0, en espa&ntilde;ol. Las palabras de la clase van en ingl&eacute;s entre par&eacute;ntesis.</a>
-<footer><p>Unit 1: Foundations &amp; Identity &middot; Mr. B&rsquo;s Social Studies.</p></footer>
+<section class="vbox" id="words" aria-labelledby="words-h">
+  <h2 id="words-h" class="vh">Palabras que necesitas</h2>
+  <p class="vsub">Las mismas palabras que en todos los niveles. En clase las usamos en ingl&eacute;s.</p>
+  <dl><dt>Columbian Exchange <span class="en">intercambio colombino</span></dt><dd>Después de 1492, dos mitades del mundo que habían estado separadas empezaron a intercambiarlo todo.</dd><dt>Indigenous Peoples <span class="en">pueblos indígenas</span></dt><dd>Las primeras personas que vivieron en un lugar.</dd><dt>Colonization <span class="en">colonización</span></dt><dd>Tomar el control de un lugar.</dd><dt>Epidemic <span class="en">epidemia</span></dt><dd>Una enfermedad que se extiende por una comunidad más rápido de lo que nadie la puede parar.</dd><dt>Continent <span class="en">continente</span></dt><dd>Una de las grandes masas de tierra del mundo: África, Asia, Europa, América del Norte, América del Sur, Australia, la Antártida.</dd><dt>Native to <span class="en">originario de</span></dt><dd>Que viene naturalmente de ese lugar; crecía o vivía allí antes de que alguien lo llevara.</dd></dl>
+</section>
+<section class="reading" id="read" data-listen>
+<h2 id="read-h">La lectura <span class="en" lang="en">The reading</span></h2>
+<h3 id="s-what">¿Qué fue el intercambio colombino? <span class="en" lang="en">(What the <b>Columbian Exchange</b> was)</span></h3>
+<p>En 1492, barcos de Europa llegaron a las Américas. Antes de eso, los dos lados del mundo habían estado separados por miles de años. Después de 1492, las cosas empezaron a cruzar el océano. Se movieron plantas y animales. También se movieron personas y enfermedades. A esto se le llama el intercambio colombino (Columbian Exchange).</p>
+<p>No fue un intercambio parejo. Algunas cosas fueron en las dos direcciones. Algunas cosas fueron solo en una dirección, y esa es la parte que más importa.</p>
+<p class="up"><a href="columbian-exchange-level-0.html#s-what" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="s-east">Lo que salió de las Américas <span class="en" lang="en">(What went out from the Americas)</span></h3>
+<p>Plantas de las Américas salieron al resto del mundo. El maíz (corn) y las papas (potatoes) fueron las más importantes. Crecían bien en lugares nuevos, así que más gente tuvo comida.</p>
+<p>Los tomates (tomatoes) llegaron a Italia. El cacao llegó a Europa. El chocolate se hace con cacao. Los chiles (chili peppers) llegaron a la India, a China y a África occidental. Ninguna de estas comidas crecía allí antes de 1492.</p>
+<p>Los pavos (turkeys) también salieron. El tabaco (tobacco) salió. La gente no comía tabaco. Se convirtió en el cultivo que los colonos del Sur cultivaban para vender.</p>
+<p class="up"><a href="columbian-exchange-level-0.html#s-east" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="s-west">Lo que llegó a las Américas <span class="en" lang="en">(What came in to the Americas)</span></h3>
+<p>También llegaron plantas a las Américas. Llegó el trigo (wheat), para hacer pan. Llegó el café (coffee). El café es originario de África (<b>native to</b> Africa). Llegaron los plátanos (bananas). Son originarios de Asia.</p>
+<p>Llegó el arroz (rice), y se cultivó en las Carolinas. Los africanos occidentales esclavizados ya sabían cultivar arroz, y su conocimiento hizo que creciera allí. También llegó la caña de azúcar (sugar cane). Cultivar azúcar era un trabajo muy duro, y los dueños de plantaciones obligaron a personas esclavizadas a hacerlo.</p>
+<p>Llegaron animales nuevos: caballos (horses), vacas (cattle), cerdos (pigs) y gallinas (chickens). La gente de las Américas nunca los había visto. Los caballos cambiaron la vida de las naciones nativas de las Grandes Llanuras (the Plains). Las vacas y los cerdos comían en tierras donde los pueblos indígenas habían cultivado.</p>
+<p class="up"><a href="columbian-exchange-level-0.html#s-west" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="s-disease">La parte que no fue pareja <span class="en" lang="en">(The part that did not balance)</span></h3>
+<p>Ahora, la parte que no fue pareja.</p>
+<p>Los barcos también traían enfermedades: viruela (smallpox), sarampión (measles) e influenza. La gente de Europa, África y Asia había vivido con estas enfermedades por mucho tiempo. Muchos se enfermaron de niños y sobrevivieron, así que su cuerpo sabía cómo defenderse.</p>
+<p>La gente de las Américas nunca había tenido estas enfermedades. Su cuerpo no tenía protección. Por eso, cuando llegó la viruela, se extendió como una epidemia (<b>epidemic</b>). Mató a comunidades enteras. Mucha gente murió antes de ver a un europeo.</p>
+<p>Una enfermedad probablemente fue en la otra dirección. La mayoría de los historiadores piensa que la sífilis (syphilis) pasó de las Américas a Europa. Enfermó a mucha gente, y mató a personas. Pero los dos lados no son iguales. La mayoría de los pueblos indígenas (<b>Indigenous</b> peoples) de las Américas murió por las enfermedades nuevas. Nada de lo que llegó a Europa hizo un daño tan grande.</p>
+<p class="up"><a href="columbian-exchange-level-0.html#s-disease" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="s-people">También movieron a personas <span class="en" lang="en">(People were moved too)</span></h3>
+<p>También cruzaron el océano personas. No todas eligieron hacerlo.</p>
+<p>Algunos europeos vinieron a buscar tierra o dinero. Pero a millones de africanos se los llevaron a la fuerza. Los pusieron en barcos y los vendieron como personas esclavizadas (enslaved). No les pagaban, y no podían volver a casa.</p>
+<p>Un intercambio es un trato, y en un trato los dos lados están de acuerdo. Nadie les preguntó a estas personas. Así que esta parte no fue un intercambio.</p>
+<p class="up"><a href="columbian-exchange-level-0.html#s-people" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="s-sowhat">¿Por qué importa? <span class="en" lang="en">(So what?)</span></h3>
+<p>Muchas veces se cuenta el intercambio colombino como una historia sobre comida. La parte de la comida es verdad. Pero hay una pregunta más grande. ¿Cómo un número pequeño de europeos tomó el control de dos <b>continentes</b> (continents) donde ya vivían millones de personas? Eso es la colonización (<b>colonization</b>).</p>
+<p>La respuesta está en lo que se movió en una sola dirección: las enfermedades y las personas.</p>
+<p class="up"><a href="columbian-exchange-level-0.html#s-sowhat" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+</section>
+<a class="vcta vcta-end" href="columbian-exchange-practice.html">
+  <b>Prueba de vocabulario (en ingl&eacute;s) &rarr;</b>
+  <span>Las mismas palabras, en ingl&eacute;s, como en clase.</span>
+</a>
+<script src="reader-tools.js"></script>
+
+<script>
+/* Percentage of the reading scrolled. rAF-throttled and passive, so it never
+   competes with the scroll itself on a Chromebook. */
+(function () {
+  var fill = document.getElementById('pfill'), out = document.getElementById('ppct'), t = 0;
+  if (!fill) return;
+  function paint() {
+    t = 0;
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    var p = max > 8 ? Math.round(Math.min(1, Math.max(0, d.scrollTop / max)) * 100) : 0;
+    fill.style.height = p + '%';
+    out.textContent = p + '%';
+  }
+  function onScroll() { if (!t) t = requestAnimationFrame(paint); }
+  /* Publish the sticky bar's real height so #words and the region jumps land
+     below it rather than underneath it. */
+  var bar = document.querySelector('.snav');
+  function measure() {
+    if (bar) document.documentElement.style.setProperty('--navh', bar.offsetHeight + 'px');
+  }
+  addEventListener('resize', measure, { passive: true });
+  measure();
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  paint();
+})();
+</script>
+<footer>
+  <p>Unidad 1 &middot; Mr. B&rsquo;s Social Studies. Una traducci&oacute;n del Nivel 0 en
+  ingl&eacute;s. Cada parte tiene un enlace a la misma parte en ingl&eacute;s.</p>
+</footer>
 </div>
 </body>
 </html>

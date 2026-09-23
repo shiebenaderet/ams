@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Las tres regiones coloniales &mdash; Nivel 0 en espa&ntilde;ol &mdash; Mr. B&rsquo;s Social Studies</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="alternate" hreflang="en" href="colonial-regions-level-0.html">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;display=swap">
+<style>
+:root{--ink:#1a1a1a;--muted:#5a5a5a;--rule:#d8d4cc;--bg:#fbfaf7;--card:#fff;
+  --accent:#1F4D3A;--band:#E9F1EC;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;--card:#1e1e22;
+  --accent:#8fc3a8;--band:#23302a;}}
+:root[data-theme="dark"]{--ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;
+  --card:#1e1e22;--accent:#8fc3a8;--band:#23302a;}
+*{box-sizing:border-box;}
+html{font-size:18px;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Atkinson Hyperlegible Next','Atkinson Hyperlegible',Georgia,serif;
+  font-size:1rem;line-height:1.7;text-align:left;}
+.wrap{max-width:34rem;margin:0 auto;padding:1.5rem 1rem 4rem;}
+/* Measure: WCAG 2.2 SC 1.4.8 caps a line at 80 characters and Dyson & Haselgrove
+   2001 measured the optimum nearer 55. 38rem at 18px lands inside that. */
+header.top{border-bottom:2px solid var(--accent);padding-bottom:.75rem;margin-bottom:1.5rem;}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
+.lvl{font-size:.95rem;color:var(--muted);margin:0 0 .75rem;}
+/* Sticky at the top rather than the bottom: the level switcher is most wanted in
+   the first seconds ("is this the right one for me?"), a bottom bar covers the
+   line you are reading on a short Chromebook window, and iOS Safari's own chrome
+   already owns the bottom edge. */
+.snav{position:sticky;top:0;z-index:20;background:var(--bg);
+  border-bottom:1px solid var(--rule);width:100%;}
+.snavin{max-width:46rem;margin:0 auto;padding:.4rem 1rem;display:flex;gap:.75rem;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.snav a,.snav span[aria-current]{font-size:.85rem;padding:.3rem .6rem;border:1px solid var(--rule);
+  border-radius:.4rem;text-decoration:none;color:var(--ink);background:var(--card);display:inline-block;}
+.snav span[aria-current]{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+.sgroup,.sjump{display:flex;gap:.3rem;flex-wrap:wrap;}
+.sjump a{background:transparent;border-color:transparent;color:var(--muted);padding:.3rem .4rem;}
+.sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
+/* Anchors clear the bar by measuring it. The bar wraps on a narrow screen, so a
+   fixed offset is wrong on some width or other; JS keeps --navh honest. */
+h2,h3,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+
+/* Reading progress. aria-hidden on purpose: a screen-reader user already knows
+   where they are, and a percentage announcing itself on every scroll is noise. */
+.progress{position:fixed;right:.6rem;top:50%;transform:translateY(-50%);z-index:15;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.ptrack{width:4px;height:38vh;background:var(--rule);border-radius:2px;overflow:hidden;}
+.pfill{width:100%;height:0%;background:var(--accent);border-radius:2px;}
+.ppct{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+@media (max-width:640px){.progress{display:none;}
+  .snavin{padding:.35rem .6rem;gap:.4rem;}
+  .snav a,.snav span[aria-current]{font-size:.8rem;padding:.25rem .45rem;}}
+.reading{margin:0 0 3rem;}
+h2{font-size:1.3rem;line-height:1.3;margin:2.5rem 0 .15rem;color:var(--accent);}
+.colonies{font-size:.92rem;color:var(--muted);margin:0 0 1rem;}
+h3{font-size:1.05rem;margin:1.75rem 0 .4rem;line-height:1.35;}
+p{margin:0 0 1rem;}
+b{font-weight:700;}
+.vbox{background:var(--band);border-radius:.5rem;padding:.9rem 1.1rem;margin:0 0 2rem;}
+.vbox .vh{font-size:1rem;margin:0 0 .2rem;text-transform:uppercase;letter-spacing:.05em;}
+.vbox .vsub{font-size:.9rem;color:var(--muted);margin:0 0 .7rem;}
+.vbox .rtag{font-size:.75rem;font-weight:400;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.04em;margin-left:.3rem;}
+.vbox dl{margin:0;}
+.vbox dt{font-weight:700;margin-top:.6rem;}
+.vbox dt:first-of-type{margin-top:0;}
+.vbox dd{margin:.1rem 0 0;font-size:1rem;}
+.vbox .va{display:block;font-size:.92rem;color:var(--muted);margin-top:.1rem;}
+.vbox .va b{font-weight:600;}
+.help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+  padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
+.help p{margin:0 0 .5rem;}
+.help p:last-child{margin:0;}
+footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
+  font-size:.9rem;color:var(--muted);}
+.sources{border-top:2px solid var(--accent);margin-top:3rem;padding-top:1.25rem;}
+.sources h2{margin-top:0;}
+.sources h3{font-size:1rem;margin:1.5rem 0 .4rem;}
+.sources p{font-size:.95rem;}
+.sources ul{margin:0;padding-left:1.1rem;}
+.sources li{margin-bottom:.7rem;}
+.sources a{color:var(--accent);}
+.sources .sd{display:block;font-size:.9rem;color:var(--muted);line-height:1.5;}
+.sources .sn{font-size:.85rem;color:var(--muted);}
+.sources .sn2{font-size:.9rem;color:var(--muted);margin:0 0 .6rem;}
+.sources ul.links li{margin-bottom:.35rem;}
+.pick{display:block;border:1px solid var(--rule);background:var(--card);border-radius:.6rem;
+  padding:.9rem 1.1rem;margin:0 0 .7rem;text-decoration:none;color:var(--ink);}
+.pick:hover,.pick:focus{border-color:var(--accent);}
+.pick b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
+.pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+/* Level 0's door to Level 1, one per section. Quiet on purpose: it is an offer,
+   not an instruction, and it must not read as "you should be on Level 1". */
+.up{font-size:.9rem;margin:-.35rem 0 1.1rem;}
+.up a{color:var(--accent);}
+@media print{.up{display:none;}}
+/* Screen hides the paper-only note; print re-shows it. Declared BEFORE the print
+   block, because equal-specificity rules are resolved by order, media query or not. */
+.weblink{display:none;}
+
+/* ---------------------------------------------------------------------------
+   PRINT. The paper version is this same page printed, not a second layout --
+   that is what keeps the text, the glosses and the sources identical to the web
+   version rather than nearly identical.
+
+   Three things it has to undo. Dark mode must not reach paper, so the whole
+   palette is redefined here rather than trusted to the renderer's colour
+   scheme. Colour carries no meaning on these handouts because they are
+   photocopied in black and white, so accents become black and the vocabulary
+   box becomes a rule instead of a filled panel -- a tinted box behind every
+   region, three to a reading, is a lot of toner for decoration. And a link is
+   useless on paper, so the sources keep their names (which are descriptive
+   enough to search) and the page says once where to go to click them.
+   --------------------------------------------------------------------------- */
+@media print{
+  :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
+    --card:#fff;--accent:#000;--band:#fff;}
+  @page{size:letter portrait;margin:.7in .75in;}
+  /* 11pt, not 11.5. Each region starts its own sheet, so a region that runs four
+     lines past the bottom leaves a near-empty page behind it -- at 11.5pt that was
+     happening to New England at every level. Still well inside the 10-12pt range a
+     handout wants. */
+  html{font-size:11pt;}
+  body{background:#fff;color:#000;line-height:1.45;}
+  .wrap{max-width:none;padding:0;}
+  .snav,.progress,.sjump,.help{display:none;}
+  header.top{border-bottom:1.5pt solid #000;}
+  h1{font-size:1.5rem;}
+  /* A heading stranded at the foot of a page costs a sheet in a class set. */
+  h2,h3{break-after:avoid;page-break-after:avoid;}
+  h2{font-size:1.25rem;margin-top:1.4rem;}
+  h3{font-size:1.02rem;margin-top:1rem;}
+  p{orphans:3;widows:3;margin-bottom:.5rem;}
+  .reading{break-inside:auto;}
+  /* The seven words are the thing a student flips back to, so never split it. */
+  /* Every section starts at the top of a sheet. A region heading halfway down a
+     page, under the tail of the previous region, is the thing that makes a printed
+     packet hard to navigate -- you cannot flip to a section that does not begin
+     anywhere. It costs sheets and buys a findable handout. */
+  .vbox{background:#fff;border:none;border-radius:0;padding:0;
+    break-after:page;page-break-after:always;}
+  .vbox .vh{font-size:1.15rem;border-bottom:1.5pt solid #000;padding-bottom:.2rem;
+    margin-bottom:.3rem;}
+  .vbox dt{margin-top:.55rem;font-size:1rem;}
+  .vbox dd{margin-left:0;}
+  .vbox .rtag{font-size:.8rem;}
+  .reading{break-before:page;page-break-before:always;margin-bottom:0;}
+  .sources{break-before:page;page-break-before:always;}
+
+  /* Hierarchy has to survive losing colour. h2 is the region and rules off; h3 is
+     the question inside it and sits in small caps with air above, so the two never
+     read as the same level on a photocopy. */
+  h2{font-size:1.35rem;border-bottom:1pt solid #000;padding-bottom:.15rem;
+    margin:0 0 .15rem;}
+  h3{font-size:.95rem;text-transform:uppercase;letter-spacing:.06em;
+    margin:.8rem 0 .22rem;}
+  .colonies{font-style:italic;margin-bottom:.65rem;}
+  /* The seven words are bolded on first use. On paper that has to be visible at a
+     glance, since there is no colour to carry it. */
+  .reading b{font-weight:700;letter-spacing:.01em;}
+
+  /* Sources, condensed: who holds each one stays, the sentence explaining why it
+     is here goes, and "read more" collapses to a run-on list. */
+  .sources .sexp,.sources .sn,.sources .sn2,.sources p:first-of-type{display:none;}
+  .sources ul.links{padding-left:0;}
+  .sources ul.links li{display:inline;margin:0;}
+  .sources ul.links li::after{content:" · ";}
+  .sources ul.links li:last-child::after{content:"";}
+  .sources ul.links a{font-weight:400;}
+  .sources li{margin-bottom:.35rem;}
+  .sources .sd{display:inline;color:#333;}
+  .sources .sd::before{content:" — ";}
+  .vbox dd{font-size:.95rem;}
+  /* Let the sources flow onto whatever page they reach. Forcing them to a fresh
+     sheet cost a page per level, on a handout printed as a class set. */
+  .sources{border-top:1.5pt solid #000;}
+  .sources a{color:#000;text-decoration:none;font-weight:700;}
+  .sources li{break-inside:avoid;}
+  .weblink{display:block;margin-bottom:.5rem;}
+  footer{border-top:1pt solid var(--rule);}
+}
+
+.en{font-weight:400;color:var(--muted);font-size:.8em;margin-left:.35rem;}
+h2 .en{display:block;margin:0;font-size:.62em;}
+.eslink{display:inline-block;margin:0 0 1.25rem;color:var(--accent);font-weight:700;}
+@media print{.eslink{display:none;}}
+</style>
+</head>
+<body>
+<nav class="snav" aria-label="Navegaci&oacute;n">
+  <div class="snavin">
+    <span class="sgroup"><span aria-current="page">Nivel 0 &middot; Espa&ntilde;ol</span><a href="colonial-regions-level-0.html" lang="en" hreflang="en">English</a></span>
+    <span class="sjump"><a href="#words">Palabras</a><a href="colonial-regions-practice.html" class="sgo" lang="en">Check &rarr;</a></span>
+  </div>
+</nav>
+<div class="progress" aria-hidden="true"><div class="ptrack"><div class="pfill" id="pfill"></div></div><span class="ppct" id="ppct">0%</span></div>
+<div class="wrap">
+<header class="top">
+  <h1>Las tres regiones coloniales</h1>
+  <p class="lvl"><span lang="en">The Three Colonial Regions</span> &mdash; Nivel 0 en espa&ntilde;ol. Las ideas clave, en oraciones cortas. Las palabras de la clase van en ingl&eacute;s entre par&eacute;ntesis.</p>
+</header>
+<div id="rtools"></div>
+<div class="help">
+  <p><b>Escucha la lectura.</b> Presiona <b>Escuchar</b> y la computadora lee en voz
+  alta, una oraci&oacute;n a la vez. Toca cualquier p&aacute;rrafo para saltar all&iacute;.
+  <b>Letra</b> cambia el tipo de letra, el tama&ntilde;o y el espacio.</p>
+  <p><b>Las palabras de la clase est&aacute;n en ingl&eacute;s</b>, entre par&eacute;ntesis:
+  <i>cultivo comercial (cash crop)</i>. Son las palabras de la hoja de la clase y de la
+  prueba de vocabulario.</p>
+</div>
+<section class="vbox" id="words" aria-labelledby="words-h">
+  <h2 id="words-h" class="vh">Palabras que necesitas</h2>
+  <p class="vsub">Las mismas palabras que en todos los niveles. En clase las usamos en ingl&eacute;s.</p>
+  <dl><dt>Cash crop <span class="en">cultivo comercial</span></dt><dd>Una planta que se cultiva para venderla, no para comerla.</dd><dt>Subsistence farming <span class="en">agricultura de subsistencia</span></dt><dd>Cultivar solo la comida que necesita tu propia familia.</dd><dt>Indentured servant <span class="en">sirviente por contrato</span></dt><dd>Alguien que trabajaba unos 4 a 7 años para pagar el viaje por el océano. Después quedaba libre.</dd><dt>Enslaved <span class="en">esclavizado</span></dt><dd>Obligado a trabajar sin pago y sin derecho a irse. A las personas esclavizadas las trataban como propiedad que se podía comprar y vender.</dd><dt>Export <span class="en">exportación</span></dt><dd>Algo que un lugar vende a otro país.</dd><dt>Self-government <span class="en">autogobierno</span></dt><dd>Personas que hacen sus propias reglas locales en vez de recibir órdenes desde lejos.</dd><dt>Puritan <span class="en">puritano</span></dt><dd>Miembro de un grupo religioso que quería vivir exactamente según la Biblia.</dd><dt>Tolerance <span class="en">tolerancia</span></dt><dd>Dejar que otras personas crean y practiquen su religión de forma distinta a la tuya.</dd><dt>Plantation <span class="en">plantación</span></dt><dd>Una granja muy grande que cultivaba un solo producto para vender, trabajada por personas esclavizadas.</dd></dl>
+</section>
+<section class="reading" data-listen aria-labelledby="NE-h">
+  <h2 id="NE-h">Las colonias de Nueva Inglaterra <span class="en" lang="en">New England Colonies</span></h2>
+  <p class="colonies">Massachusetts, Connecticut, Rhode Island, New Hampshire</p>
+  <h3 id="NE-land">La tierra y el clima <span class="en" lang="en">(The land and the weather)</span></h3>
+<p>Nueva Inglaterra (New England) tenía cuatro colonias: Massachusetts, Connecticut, Rhode Island y New Hampshire. El suelo era delgado y estaba lleno de piedras. Hace mucho tiempo, los glaciares (enormes capas de hielo que se mueven muy despacio) dejaron esas piedras allí. Los inviernos eran largos y fríos, así que la temporada de cultivo era corta.</p>
+<p>Los cultivos que necesitan mucho calor no podían crecer allí. Por eso Nueva Inglaterra no tenía un cultivo comercial (<b>cash crop</b>).</p>
+<p>Pero Nueva Inglaterra tenía dos cosas buenas. Tenía puertos profundos (deep harbors), donde los barcos estaban seguros. Y tenía grandes bosques llenos de árboles altos.</p>
+<p class="up"><a href="colonial-regions-level-0.html#NE-land" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="NE-money">Cómo ganaba dinero la gente <span class="en" lang="en">(How people made money)</span></h3>
+<p>La agricultura no podía hacer ricos a los habitantes de Nueva Inglaterra. Por eso ganaban dinero con el mar. Pescaban bacalao (cod), un tipo de pez. Lo secaban y le ponían sal, y lo vendían a otros países. El bacalao era la exportación (<b>export</b>) más grande de Nueva Inglaterra.</p>
+<p>Cortaban los árboles altos y construían barcos. Boston se convirtió en un puerto muy activo, donde los barcos entraban y salían.</p>
+<p>Nueva Inglaterra también hacía ron. Los barcos traían melaza (un jarabe espeso y oscuro que sale de la caña de azúcar) desde el Caribe, y en Nueva Inglaterra la convertían en ron. Los comerciantes llevaban el ron a África y lo cambiaban por personas capturadas. Así que el dinero de Nueva Inglaterra también estaba unido a la esclavitud.</p>
+<p>La mayoría de las familias cultivaba solo para alimentarse. Eso es agricultura de subsistencia (<b>subsistence farming</b>). Daba de comer a una familia, pero no daba dinero.</p>
+<p class="up"><a href="colonial-regions-level-0.html#NE-money" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="NE-work">Quién hacía el trabajo <span class="en" lang="en">(Who did the work)</span></h3>
+<p>La mayoría de las familias hacía su propio trabajo. Los niños también trabajaban. Los vecinos se ayudaban con los trabajos grandes. Algunos trabajadores eran sirvientes por contrato (<b>indentured servants</b>). Trabajaban unos años para pagar el viaje por el océano.</p>
+<p>Algunas personas en Nueva Inglaterra estaban esclavizadas (<b>enslaved</b>). Había personas esclavizadas en todas las colonias de Nueva Inglaterra. Pero Nueva Inglaterra no tenía plantaciones (<b>plantations</b>), porque ningún cultivo de allí necesitaba cientos de trabajadores. Las granjas eran más pequeñas. Los dueños no eran más amables.</p>
+<p class="up"><a href="colonial-regions-level-0.html#NE-work" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="NE-who">Quién llegó aquí, y por qué <span class="en" lang="en">(Who settled here, and why)</span></h3>
+<p>La mayoría de la gente llegó a Nueva Inglaterra por la religión. Eran puritanos (<b>Puritans</b>). Los puritanos querían vivir según las reglas de su propia iglesia. Llegaron en familias completas, así que los pueblos crecieron rápido.</p>
+<p>Pero en un pueblo puritano era difícil no estar de acuerdo. Roger Williams no estaba de acuerdo. Él dijo que el gobierno no debía decirle a la gente qué creer. Massachusetts lo obligó a irse en 1636, así que él fundó una nueva colonia: Rhode Island. A Anne Hutchinson también la obligaron a irse, en 1638.</p>
+<p class="up"><a href="colonial-regions-level-0.html#NE-who" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="NE-rules">Quién hacía las reglas <span class="en" lang="en">(Who made the rules)</span></h3>
+<p>Gran Bretaña enviaba un gobernador. Pero los pueblos hacían muchas de sus propias reglas en las reuniones del pueblo (town meetings). Los hombres que tenían tierras votaban sobre los caminos y las escuelas. Cuando la gente hace sus propias reglas, eso es autogobierno (<b>self-government</b>).</p>
+<p>En 1620, los peregrinos (Pilgrims) firmaron el Pacto del Mayflower (Mayflower Compact). Prometieron hacer juntos leyes justas e iguales. En inglés, el pacto dice &ldquo;just and equal laws&rdquo;. Las mujeres, los sirvientes y el pueblo wampanoag no tuvieron voz. Pero la idea importó más tarde: un gobierno debe tener el acuerdo del pueblo.</p>
+<p class="up"><a href="colonial-regions-level-0.html#NE-rules" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="NE-sowhat">¿Por qué importa? <span class="en" lang="en">(So what?)</span></h3>
+<p>La tierra de Nueva Inglaterra era mala para cultivar, así que la gente usó el océano para ganar dinero. La religión dio forma a sus pueblos, y decidió quién tenía que irse. Las reuniones del pueblo empezaron una idea que importó más tarde: la gente haciendo sus propias reglas.</p>
+<p class="up"><a href="colonial-regions-level-0.html#NE-sowhat" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+</section>
+<section class="reading" data-listen aria-labelledby="MC-h">
+  <h2 id="MC-h">Las colonias del centro <span class="en" lang="en">Middle Colonies</span></h2>
+  <p class="colonies">New York, Pennsylvania, New Jersey, Delaware</p>
+  <h3 id="MC-land">La tierra y el clima <span class="en" lang="en">(The land and the weather)</span></h3>
+<p>Las colonias del centro (Middle Colonies) eran Nueva York, Pensilvania, Nueva Jersey y Delaware. Estaban en el medio, entre Nueva Inglaterra y el Sur. El clima también estaba en el medio. Los veranos eran cálidos y los inviernos eran fríos. La temporada de cultivo era lo bastante larga para cultivar mucha comida, y el suelo era profundo y bueno.</p>
+<p>Dos ríos grandes, el Hudson y el Delaware, llegaban hasta el océano. Los agricultores ponían su grano en botes, y los ríos lo llevaban hasta los barcos.</p>
+<p class="up"><a href="colonial-regions-level-0.html#MC-land" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="MC-money">Cómo ganaba dinero la gente <span class="en" lang="en">(How people made money)</span></h3>
+<p>Las colonias del centro cultivaban tanto trigo que la gente las llamaba el granero (breadbasket): la región que cultiva el grano que comen los demás. Los agricultores comían parte de su grano, y vendían el resto. Así que el trigo era su comida y también su cultivo comercial (<b>cash crop</b>).</p>
+<p>La gente también fabricaba cosas. Construían barcos y hacían herramientas de hierro. En los aserraderos cortaban árboles para hacer tablas de madera. Trabajadores con mucha habilidad hacían zapatos y muebles a mano. Nueva York y Filadelfia se convirtieron en puertos grandes.</p>
+<p class="up"><a href="colonial-regions-level-0.html#MC-money" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="MC-work">Quién hacía el trabajo <span class="en" lang="en">(Who did the work)</span></h3>
+<p>La mayoría de las granjas eran granjas familiares, y la familia hacía el trabajo. En la cosecha, los agricultores pagaban a trabajadores para que ayudaran. Mucha gente llegó como sirvientes por contrato (<b>indentured servants</b>), muchas veces de Alemania y de Irlanda. Cuando terminaban sus años de trabajo, quedaban libres. Todavía era fácil conseguir tierra, así que muchos de ellos tuvieron su propia granja.</p>
+<p>Algunas personas estaban esclavizadas (<b>enslaved</b>), sobre todo en la ciudad de Nueva York. Pero no había plantaciones grandes, porque el trigo no necesita cientos de trabajadores.</p>
+<p class="up"><a href="colonial-regions-level-0.html#MC-work" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="MC-who">Quién llegó aquí, y por qué <span class="en" lang="en">(Who settled here, and why)</span></h3>
+<p>La gente llegó de muchos países: Inglaterra, Alemania, los Países Bajos, Suecia, Escocia e Irlanda. Hablaban idiomas diferentes, e iban a iglesias diferentes.</p>
+<p>William Penn fundó Pensilvania. Él era cuáquero (Quaker). Los cuáqueros creían en la paz y en el trato justo. En 1701, una ley de Pensilvania dijo que cualquier persona que creyera en Dios podía practicar su religión a su manera. Eso es tolerancia (<b>tolerance</b>). Gracias a la tolerancia, mucha gente diferente se mudó allí.</p>
+<p>Pero la tolerancia tenía límites. La ley protegía sobre todo a los cristianos. Penn le pagó al pueblo lenape por su tierra, pero sus hijos no cumplieron su promesa. En 1737 engañaron a los lenape y se quedaron con mucha más tierra de la que decía el trato.</p>
+<p class="up"><a href="colonial-regions-level-0.html#MC-who" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="MC-rules">Quién hacía las reglas <span class="en" lang="en">(Who made the rules)</span></h3>
+<p>Cada colonia tenía un gobernador de Gran Bretaña. Cada colonia también tenía una asamblea (assembly). Los colonos votaban por las personas de la asamblea, y la asamblea hacía las leyes locales. Eso es autogobierno (<b>self-government</b>).</p>
+<p class="up"><a href="colonial-regions-level-0.html#MC-rules" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="MC-sowhat">¿Por qué importa? <span class="en" lang="en">(So what?)</span></h3>
+<p>Las colonias del centro tenían buena tierra para cultivar y buenos puertos. Así que la gente cultivaba, y también fabricaba y vendía cosas en las ciudades. Recibían a gente de muchos lugares, y eso las hizo la región más mezclada. Pero esa bienvenida no llegó a todos.</p>
+<p class="up"><a href="colonial-regions-level-0.html#MC-sowhat" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+</section>
+<section class="reading" data-listen aria-labelledby="SC-h">
+  <h2 id="SC-h">Las colonias del sur <span class="en" lang="en">Southern Colonies</span></h2>
+  <p class="colonies">Maryland, Virginia, North Carolina, South Carolina, Georgia</p>
+  <h3 id="SC-land">La tierra y el clima <span class="en" lang="en">(The land and the weather)</span></h3>
+<p>Las colonias del sur (Southern Colonies) eran Maryland, Virginia, Carolina del Norte, Carolina del Sur y Georgia. Los veranos eran calurosos y los inviernos eran suaves, así que los cultivos podían crecer casi todo el año. La tierra era plana, y el suelo era rico.</p>
+<p>Ríos anchos llegaban hasta el océano. Los barcos subían por los ríos hasta las mismas granjas. Por eso el Sur no necesitaba muchas ciudades grandes con puerto.</p>
+<p class="up"><a href="colonial-regions-level-0.html#SC-land" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="SC-money">Cómo ganaba dinero la gente <span class="en" lang="en">(How people made money)</span></h3>
+<p>En el Sur, la gente ganaba dinero cultivando. Las granjas más grandes eran las plantaciones (<b>plantations</b>). Una plantación era una granja muy grande que cultivaba un solo producto para vender.</p>
+<p>Virginia y Maryland cultivaban tabaco. Carolina del Sur y Georgia cultivaban arroz e índigo (una planta que se usa para hacer tinte azul). Estos eran cultivos comerciales (<b>cash crops</b>). Se cultivaban para vender, no para comer. La mayoría se exportaba a Europa (they were <b>exported</b>).</p>
+<p class="up"><a href="colonial-regions-level-0.html#SC-money" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="SC-work">Quién hacía el trabajo <span class="en" lang="en">(Who did the work)</span></h3>
+<p>El tabaco y el arroz necesitan trabajo casi todo el año. Por eso las plantaciones necesitaban muchos trabajadores.</p>
+<p>Al principio, muchos de los trabajadores eran sirvientes por contrato (<b>indentured servants</b>) de Inglaterra. Trabajaban unos cuatro a siete años, y después quedaban libres.</p>
+<p>Más tarde, los dueños de las plantaciones usaron africanos esclavizados (<b>enslaved</b>) en su lugar. Las personas esclavizadas no recibían pago, y no se podían ir. La esclavitud no tenía fecha de fin. Por ley, el hijo de una madre esclavizada también era esclavizado. Para los años 1700, las personas esclavizadas hacían la mayor parte del trabajo en las plantaciones. En Carolina del Sur, más de la mitad de toda la gente estaba esclavizada.</p>
+<p class="up"><a href="colonial-regions-level-0.html#SC-work" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="SC-who">Quién llegó aquí, y por qué <span class="en" lang="en">(Who settled here, and why)</span></h3>
+<p>La mayoría de la gente no llegó al Sur por la religión. Llegaron por tierra y por dinero.</p>
+<p>Georgia empezó en 1732. Al principio, Georgia no permitía la esclavitud. Luego los dueños de plantaciones pidieron cambiar esa regla, y en 1751 se permitió la esclavitud. Esto muestra que la esclavitud fue una decisión de las personas. El clima no la decidió.</p>
+<p>Los africanos esclavizados no eligieron venir. Los capturaron, los vendieron y los trajeron aquí a la fuerza.</p>
+<p class="up"><a href="colonial-regions-level-0.html#SC-who" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="SC-rules">Quién hacía las reglas <span class="en" lang="en">(Who made the rules)</span></h3>
+<p>Cada colonia tenía un gobernador y una asamblea elegida. Los dueños ricos de plantaciones controlaban las asambleas, e hicieron leyes que ayudaban a los dueños ricos de plantaciones. Eso era autogobierno (<b>self-government</b>), pero solo para algunas personas.</p>
+<p class="up"><a href="colonial-regions-level-0.html#SC-rules" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+<h3 id="SC-sowhat">¿Por qué importa? <span class="en" lang="en">(So what?)</span></h3>
+<p>El clima cálido y el suelo rico del Sur eran buenos para los cultivos comerciales. Los cultivos comerciales daban dinero, pero necesitaban mucho trabajo todo el año. Los dueños de plantaciones obligaron a personas esclavizadas a hacer ese trabajo. La tierra influyó en cómo ganaba dinero la gente. Pero la gente eligió la esclavitud.</p>
+<p class="up"><a href="colonial-regions-level-0.html#SC-sowhat" lang="es">Leer esta parte en ingl&eacute;s &rarr;</a></p>
+</section>
+<a class="vcta vcta-end" href="colonial-regions-practice.html">
+  <b>Prueba de vocabulario (en ingl&eacute;s) &rarr;</b>
+  <span>Las mismas palabras, en ingl&eacute;s, como en clase.</span>
+</a>
+<script src="reader-tools.js"></script>
+
+<script>
+/* Percentage of the reading scrolled. rAF-throttled and passive, so it never
+   competes with the scroll itself on a Chromebook. */
+(function () {
+  var fill = document.getElementById('pfill'), out = document.getElementById('ppct'), t = 0;
+  if (!fill) return;
+  function paint() {
+    t = 0;
+    var d = document.documentElement;
+    var max = d.scrollHeight - d.clientHeight;
+    var p = max > 8 ? Math.round(Math.min(1, Math.max(0, d.scrollTop / max)) * 100) : 0;
+    fill.style.height = p + '%';
+    out.textContent = p + '%';
+  }
+  function onScroll() { if (!t) t = requestAnimationFrame(paint); }
+  /* Publish the sticky bar's real height so #words and the region jumps land
+     below it rather than underneath it. */
+  var bar = document.querySelector('.snav');
+  function measure() {
+    if (bar) document.documentElement.style.setProperty('--navh', bar.offsetHeight + 'px');
+  }
+  addEventListener('resize', measure, { passive: true });
+  measure();
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  paint();
+})();
+</script>
+<footer>
+  <p>Unidad 1 &middot; Mr. B&rsquo;s Social Studies. Una traducci&oacute;n del Nivel 0 en
+  ingl&eacute;s. Cada parte tiene un enlace a la misma parte en ingl&eacute;s.</p>
+</footer>
+</div>
+</body>
+</html>

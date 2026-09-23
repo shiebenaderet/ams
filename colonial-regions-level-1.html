@@ -43,7 +43,7 @@ h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
 .sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
 /* Anchors clear the bar by measuring it. The bar wraps on a narrow screen, so a
    fixed offset is wrong on some width or other; JS keeps --navh honest. */
-h2,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+h2,h3,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
 
 /* Reading progress. aria-hidden on purpose: a screen-reader user already knows
    where they are, and a percentage announcing itself on every scroll is noise. */
@@ -94,6 +94,11 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
 .pick:hover,.pick:focus{border-color:var(--accent);}
 .pick b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
 .pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+/* Level 0's door to Level 1, one per section. Quiet on purpose: it is an offer,
+   not an instruction, and it must not read as "you should be on Level 1". */
+.up{font-size:.9rem;margin:-.35rem 0 1.1rem;}
+.up a{color:var(--accent);}
+@media print{.up{display:none;}}
 /* Screen hides the paper-only note; print re-shows it. Declared BEFORE the print
    block, because equal-specificity rules are resolved by order, media query or not. */
 .weblink{display:none;}
@@ -323,7 +328,7 @@ b .vpop{font-weight:inherit;}
 <body>
 <nav class="snav" aria-label="Reading navigation">
   <div class="snavin">
-    <span class="sgroup"><span aria-current="page">Level 1</span><a href="colonial-regions-level-2.html">Level 2</a><a href="colonial-regions-level-3.html">Level 3</a></span>
+    <span class="sgroup"><a href="colonial-regions-level-0.html">Level 0</a><span aria-current="page">Level 1</span><a href="colonial-regions-level-2.html">Level 2</a><a href="colonial-regions-level-3.html">Level 3</a></span>
     <span class="sjump"><a href="#words">Words</a><a href="#NE-h">New England</a><a href="#MC-h">Middle</a><a href="#SC-h">Southern</a><a href="colonial-regions-practice.html" class="sgo">Check &rarr;</a></span>
   </div>
 </nav>
@@ -331,12 +336,14 @@ b .vpop{font-weight:inherit;}
 <div class="wrap">
 <header class="top">
   <h1>The Three Colonial Regions</h1>
-  <p class="lvl">Level 1 &mdash; The shortest way through. Every fact the other two have, in plainer words.</p>
+  <p class="lvl">Level 1 &mdash; Every fact Levels 2 and 3 have, in plainer words.</p>
 </header>
+
+<div id="rtools"></div>
 <div class="help">
-  <p><b>Reading this out loud.</b> On a Chromebook, right-click the page and choose
-  <b>Read aloud</b> (or use your reading extension). It will read this page only,
-  so you hear your own level and nothing else.</p>
+  <p><b>Listen to it.</b> Press <b>Listen</b> above and the reading is read out loud,
+  one sentence at a time, with the sentence lit up as it goes. Tap any paragraph to
+  jump there. <b>Font</b> changes the letters, their size and the spacing.</p>
   <p><b>Reading this in another language.</b> Right-click and choose
   <b>Translate to&hellip;</b> Everything here is real text, so the whole reading
   translates, including the meanings in brackets.</p>
@@ -350,68 +357,86 @@ b .vpop{font-weight:inherit;}
     <span>Meet the words, then four short activities on their own page, with no reading to look at. You get a score, and you can retry the ones you miss.</span>
   </a>
 </section>
-<section class="reading" aria-labelledby="NE-h">
+<section class="reading" data-listen aria-labelledby="NE-h">
   <h2 id="NE-h">New England Colonies</h2>
   <p class="colonies">Massachusetts, Connecticut, Rhode Island, New Hampshire</p>
-  <h3>The land and the weather</h3>
+  <h3 id="NE-land">The land and the weather</h3>
 <p>The New England colonies were Massachusetts, Connecticut, Rhode Island, and New Hampshire. The soil there is thin and full of rocks, because glaciers (huge sheets of slow-moving ice) dragged those rocks across the land during the ice age and dropped them when the ice melted. Winters are long and cold, so the growing season is short. That is why no <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-cash-crop">cash crop</button></b> would grow here: the crops that made other colonies rich needed more heat than New England could give them.</p>
 <p>But New England had two other things, and in the end both mattered more than good soil would have. Its coast was full of deep, safe harbors (sheltered water deep enough for ships to anchor safely), and its forests were full of tall trees.</p>
-<h3>How people made money</h3>
+
+<h3 id="NE-money">How people made money</h3>
 <p>Since farming could not make them rich, New Englanders made money from the sea instead. They caught cod, dried it, salted it, and sold it to other countries. They cut down trees and built ships, and New England ships became some of the best in the world. Boston became a busy port where goods came in and went out.</p>
 <p>New England also made rum. Ships carried molasses (thick dark syrup left over when sugar cane is boiled down) up from the Caribbean, and New England distilleries (places where molasses was boiled and turned into rum) boiled it into rum. Traders then carried that rum to the coast of Africa and exchanged it for captured people. So New England money and slavery were tied together, even though the <button type="button" class="vpop" tabindex="0" aria-describedby="def-plantation">plantations</button> were somewhere else.</p>
 <p>Most families still farmed, but only to feed themselves. They grew corn, beans, and squash. That is <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-subsistence-farming">subsistence farming</button></b>. It fed you, but it did not make you rich.</p>
-<h3>Who did the work</h3>
+
+<h3 id="NE-work">Who did the work</h3>
 <p>Most of the work was done by the family that owned the farm. Children worked as soon as they were old enough. Neighbors helped each other with big jobs like raising a barn. Some workers were <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-indentured-servant">indentured servants</button></b> who had traded a few years of work for the trip across the ocean.</p>
 <p>People often say New England did not have slavery. That is not true. <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-enslaved">Enslaved</button></b> people lived in every New England colony. What New England did not have was <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantations</button>, because no crop here needed hundreds of workers at once. The difference was the size of the farms, not the goodness of the owners.</p>
-<h3>Who settled here, and why</h3>
+
+<h3 id="NE-who">Who settled here, and why</h3>
 <p>Most people came to New England for religion. The <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-puritan">Puritans</button></b> wanted to worship in their own way and build towns that followed their rules. They came in families, not alone, and that is one reason New England towns grew fast.</p>
 <p>But a town built on one set of religious rules does not leave much room to disagree. Roger Williams said the government had no business telling people what to believe, and he said the land really belonged to the Narragansett. Massachusetts forced him out in 1636, so he started Rhode Island. Anne Hutchinson was put on trial and forced out in 1638. Rhode Island exists because Massachusetts pushed people out.</p>
-<h3>Who made the rules</h3>
+
+<h3 id="NE-rules">Who made the rules</h3>
 <p>Britain sent a governor. But New England towns ran most things themselves in town meetings, where men who owned land voted on roads, schools and the minister&rsquo;s pay.</p>
 <p>Before the Pilgrims even left their ship in 1620, they signed the Mayflower Compact and promised to make &ldquo;just and equal laws&rdquo; together. It was not a democracy. Women, servants, and the Wampanoag whose land they settled on had no part in it. But it wrote down an idea that mattered later: a government is only fair if the people agree to it.</p>
-<h3>So what?</h3>
+
+<h3 id="NE-sowhat">So what?</h3>
 <p>New England&rsquo;s land was bad for farming, so its people turned to the ocean instead. Fish, ships, trade and rum made the money that the soil could not. Their religion shaped how they lived, and it also decided who had to leave. Their town meetings started an idea that would matter later: people making their own rules.</p>
+
 </section>
-<section class="reading" aria-labelledby="MC-h">
+<section class="reading" data-listen aria-labelledby="MC-h">
   <h2 id="MC-h">Middle Colonies</h2>
   <p class="colonies">New York, Pennsylvania, New Jersey, Delaware</p>
-  <h3>The land and the weather</h3>
+  <h3 id="MC-land">The land and the weather</h3>
 <p>The Middle Colonies were New York, Pennsylvania, New Jersey and Delaware. They sat between cold New England and the hot South, and their weather sat in between too: warm summers, cold winters, and a growing season long enough to grow a lot. The soil was deep and good.</p>
 <p>Two big rivers, the Hudson and the Delaware, ran from the farmland out to the ocean. That mattered, because a farmer could load grain on a boat and it would reach a ship without ever going near a road.</p>
-<h3>How people made money</h3>
+
+<h3 id="MC-money">How people made money</h3>
 <p>The Middle Colonies grew so much wheat that people called them the breadbasket (a region that grows most of the grain everyone else eats) of America. Farmers grew wheat, rye, oats and barley. They ate some of it and sold the rest, so grain was both their food and their <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crop</button></b>.</p>
 <p>They also made things. People built ships, made iron tools, and cut timber into lumber at sawmills. Skilled workers made shoes, furniture and barrels by hand. New York City and Philadelphia grew into big ports where goods came in and went out.</p>
-<h3>Who did the work</h3>
+
+<h3 id="MC-work">Who did the work</h3>
 <p>Most farms here were family farms, and the family did the work. Farmers also hired workers and paid them wages at harvest. Many people came as <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-indentured-servant">indentured servants</button></b>, especially from Germany and Ireland. They worked a few years to pay for the trip, then they were free, and because land was still available they could often get a farm of their own.</p>
 <p>Some people in the Middle Colonies were <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button></b>, especially in New York City. But there were no huge <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantations</button> here, because wheat does not need hundreds of workers the way rice does.</p>
-<h3>Who settled here, and why</h3>
+
+<h3 id="MC-who">Who settled here, and why</h3>
 <p>People came here from many countries: England, Germany, the Netherlands, Sweden, Scotland and Ireland. They spoke different languages and belonged to different churches. Pennsylvania was started by William Penn, a Quaker. Quakers believed in peace and fairness. A Pennsylvania law in 1701 said anyone who believed in God could worship their own way. That <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-tolerance">tolerance</button></b> is why so many different people moved there.</p>
 <p>But <button type="button" class="vpop" tabindex="-1" aria-describedby="def-tolerance">tolerance</button> had limits. The law protected Christians, and mostly Protestants. Penn bought land from the Lenape instead of taking it, but his sons did not keep that promise. In 1737 they ran the Walking Purchase, a land deal they rigged to take far more Lenape land than the agreement actually described.</p>
-<h3>Who made the rules</h3>
+
+<h3 id="MC-rules">Who made the rules</h3>
 <p>Each colony had a governor sent from Britain and an elected assembly of colonists who made local laws. Colonists here had a real say in their own rules, and that is self- government. It was harder work here than in other regions, because the people in one assembly did not all speak the same language or go to the same church.</p>
-<h3>So what?</h3>
+
+<h3 id="MC-sowhat">So what?</h3>
 <p>The Middle Colonies had good farmland and good ports, so they got both a farming economy and a city economy. Because they welcomed people from many places and many religions, they became the most mixed region in the colonies &mdash; though that welcome never reached everyone.</p>
+
 </section>
-<section class="reading" aria-labelledby="SC-h">
+<section class="reading" data-listen aria-labelledby="SC-h">
   <h2 id="SC-h">Southern Colonies</h2>
   <p class="colonies">Maryland, Virginia, North Carolina, South Carolina, Georgia</p>
-  <h3>The land and the weather</h3>
+  <h3 id="SC-land">The land and the weather</h3>
 <p>The Southern Colonies were Maryland, Virginia, North Carolina, South Carolina and Georgia. The weather there was hot in summer and mild in winter, so the growing season was long and crops could grow for most of the year. The land was flat and the soil was rich.</p>
 <p>Wide, slow rivers ran through it out to the ocean. A ship could sail up one of those rivers and load a crop right at the farm, so the South never needed to build big port cities the way New England did.</p>
-<h3>How people made money</h3>
+
+<h3 id="SC-money">How people made money</h3>
 <p>Farming was how people made money in the South. Some farms were small. But the big money came from <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantations</button></b>, which were very large farms that grew one crop to sell.</p>
 <p>Tobacco was the main crop in Virginia and Maryland. It was worth so much that people sometimes paid with tobacco instead of coins. Rice grew in South Carolina and Georgia, and indigo (a plant used to make deep blue dye) grew there too. All of these were <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crops</button></b>. They were grown to be sold, not eaten, and most of them were <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-export">exported</button></b> to Europe.</p>
-<h3>Who did the work</h3>
+
+<h3 id="SC-work">Who did the work</h3>
 <p><button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">Cash crops</button> like tobacco and rice need people working almost every month of the year. That is why the South&rsquo;s labor system looks the way it does. At first, much of the work was done by <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-indentured-servant">indentured servants</button></b> from England. They worked about four to seven years and then went free.</p>
 <p>Over the 1600s, landowners moved to <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button></b> African workers instead. <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">Enslaved</button> people were not paid, could not leave, and were treated as property. Slavery had no end date, and by law a child born to an <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> mother was <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> too. By the 1700s, <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> people did most of the work on Southern <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantations</button>, and in South Carolina more than half of all the people were <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button>.</p>
-<h3>Who settled here, and why</h3>
+
+<h3 id="SC-who">Who settled here, and why</h3>
 <p>Most people did not come to the South for religion. They came for land and money. Some came to escape debts they owed in England, and Georgia was started in 1732 partly as a place for them.</p>
 <p>Georgia also banned slavery when it began. Then planters there asked for the ban to be removed, and in 1751 it was. That matters, because it shows slavery was something people chose, not something the weather decided.</p>
 <p><button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">Enslaved</button> Africans did not come by choice at all. They were captured, sold and carried here by force. That is the difference that matters most on this page.</p>
-<h3>Who made the rules</h3>
+
+<h3 id="SC-rules">Who made the rules</h3>
 <p>Each colony had a governor connected to Britain and an elected assembly of colonists. The assemblies (groups of elected men who made laws for a colony) were controlled by rich <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantation</button> owners, and the laws they wrote protected rich <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantation</button> owners. That is still <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-self-government">self-government</button></b> &mdash; but only for some people.</p>
-<h3>So what?</h3>
+
+<h3 id="SC-sowhat">So what?</h3>
 <p>The warm weather and rich soil of the South made <button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crops</button> possible, and <button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crops</button> made money. Growing them the way planters wanted meant a huge amount of year-round work, and planters took that work from <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> people. The land shaped the economy, but people chose how to get the labor.</p>
+
 </section>
 <section class="sources" aria-labelledby="src-h">
   <h2 id="src-h">Where this comes from</h2>
@@ -434,6 +459,7 @@ b .vpop{font-weight:inherit;}
   anything you miss.</span>
 </a>
 <script src="vocab-pops.js"></script>
+<script src="reader-tools.js"></script>
 
 <script>
 /* Percentage of the reading scrolled. rAF-throttled and passive, so it never

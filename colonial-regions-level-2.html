@@ -43,7 +43,7 @@ h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
 .sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
 /* Anchors clear the bar by measuring it. The bar wraps on a narrow screen, so a
    fixed offset is wrong on some width or other; JS keeps --navh honest. */
-h2,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+h2,h3,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
 
 /* Reading progress. aria-hidden on purpose: a screen-reader user already knows
    where they are, and a percentage announcing itself on every scroll is noise. */
@@ -94,6 +94,11 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
 .pick:hover,.pick:focus{border-color:var(--accent);}
 .pick b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
 .pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+/* Level 0's door to Level 1, one per section. Quiet on purpose: it is an offer,
+   not an instruction, and it must not read as "you should be on Level 1". */
+.up{font-size:.9rem;margin:-.35rem 0 1.1rem;}
+.up a{color:var(--accent);}
+@media print{.up{display:none;}}
 /* Screen hides the paper-only note; print re-shows it. Declared BEFORE the print
    block, because equal-specificity rules are resolved by order, media query or not. */
 .weblink{display:none;}
@@ -323,7 +328,7 @@ b .vpop{font-weight:inherit;}
 <body>
 <nav class="snav" aria-label="Reading navigation">
   <div class="snavin">
-    <span class="sgroup"><a href="colonial-regions-level-1.html">Level 1</a><span aria-current="page">Level 2</span><a href="colonial-regions-level-3.html">Level 3</a></span>
+    <span class="sgroup"><a href="colonial-regions-level-0.html">Level 0</a><a href="colonial-regions-level-1.html">Level 1</a><span aria-current="page">Level 2</span><a href="colonial-regions-level-3.html">Level 3</a></span>
     <span class="sjump"><a href="#words">Words</a><a href="#NE-h">New England</a><a href="#MC-h">Middle</a><a href="#SC-h">Southern</a><a href="colonial-regions-practice.html" class="sgo">Check &rarr;</a></span>
   </div>
 </nav>
@@ -333,10 +338,12 @@ b .vpop{font-weight:inherit;}
   <h1>The Three Colonial Regions</h1>
   <p class="lvl">Level 2 &mdash; The standard version, with the dates, laws and quotations.</p>
 </header>
+
+<div id="rtools"></div>
 <div class="help">
-  <p><b>Reading this out loud.</b> On a Chromebook, right-click the page and choose
-  <b>Read aloud</b> (or use your reading extension). It will read this page only,
-  so you hear your own level and nothing else.</p>
+  <p><b>Listen to it.</b> Press <b>Listen</b> above and the reading is read out loud,
+  one sentence at a time, with the sentence lit up as it goes. Tap any paragraph to
+  jump there. <b>Font</b> changes the letters, their size and the spacing.</p>
   <p><b>Reading this in another language.</b> Right-click and choose
   <b>Translate to&hellip;</b> Everything here is real text, so the whole reading
   translates, including the meanings in brackets.</p>
@@ -350,81 +357,99 @@ b .vpop{font-weight:inherit;}
     <span>Meet the words, then four short activities on their own page, with no reading to look at. You get a score, and you can retry the ones you miss.</span>
   </a>
 </section>
-<section class="reading" aria-labelledby="NE-h">
+<section class="reading" data-listen aria-labelledby="NE-h">
   <h2 id="NE-h">New England Colonies</h2>
   <p class="colonies">Massachusetts, Connecticut, Rhode Island, New Hampshire</p>
-  <h3>The land and the weather</h3>
+  <h3 id="NE-land">The land and the weather</h3>
 <p>The New England colonies &mdash; Massachusetts, Connecticut, Rhode Island and New Hampshire &mdash; were built on land that fought back. The soil is thin, acidic (sour, and hard for most crops to grow in) and packed with stones. Glaciers (huge sheets of slow-moving ice) dragged those stones across the region and dropped them when the ice melted at the end of the last ice age. New England&rsquo;s famous stone walls are not decoration. They are the rocks farmers had to drag out of their fields before they could plant, piled at the edges because there was nowhere else to put them.</p>
 <p>The weather made the problem worse. Winters were long and severe, and the growing season ran only about five months. The crops that made other colonies wealthy &mdash; tobacco, rice, sugar &mdash; needed far more heat than New England could offer.</p>
 <p>What the region did have was a deeply indented (cut in and out, so the shore is full of bays and inlets) coastline (the edge of the land where it meets the sea) with natural deep-water harbors (sheltered water deep enough for ships to anchor safely), and forests of white pine and oak standing within reach of them. Geography did not make New England poor. Geography made New England maritime (making its living from the sea instead of from the land).</p>
-<h3>How people made money</h3>
+
+<h3 id="NE-money">How people made money</h3>
 <p>Unable to farm for profit, New Englanders built an economy that faced the water. Cod fishing came first and stayed central. The offshore banks (shallow places far out at sea where fish gather &mdash; not banks for money) were extraordinarily rich, and salted, dried cod kept well enough to ship to Europe and to the Caribbean sugar islands. Planters there bought the cheapest grades to feed <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-enslaved">enslaved</button></b> workers.</p>
 <p>Shipbuilding followed the timber. By the mid-1700s something like a third of all British-flagged ships had been built in New England yards. The reason is simple: the raw material stood next to the water, and the workers who shaped it lived there too.</p>
 <p>Trade tied the rest together. Boston, Salem, Newport and Providence became ports where merchants imported manufactured goods from Britain and <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-export">exported</button></b> fish, timber, barrel staves (the curved wooden strips that make up the sides of a barrel) and rum. Households meanwhile practiced <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-subsistence-farming">subsistence farming</button></b>, growing corn, beans, squash and rye to feed themselves. The distinction matters. A subsistence farm makes a family self-sufficient. A <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-cash-crop">cash crop</button></b> makes a region wealthy and ties it to distant markets. New England&rsquo;s wealth came from the harbor, not the field.</p>
-<h3>Who did the work</h3>
+
+<h3 id="NE-work">Who did the work</h3>
 <p>New England&rsquo;s labor system looked different from the South&rsquo;s, and the reason is economic rather than moral: no crop here required a large permanent workforce. Family farms were worked by the family. Children labored from a young age. Communities pooled effort for harvests and barn-raisings. Skilled trades &mdash; coopers (barrel makers), shipwrights (shipbuilders), blacksmiths (workers who shaped iron with fire and a hammer) &mdash; were filled by apprentices (young people learning a trade by working for someone who had it) and by <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-indentured-servant">indentured servants</button></b> working off the cost of their passage under a contract with an end date.</p>
 <p>New England is often taught as the region that did not have slavery. It is more accurate to say it did not have <button type="button" class="vpop" tabindex="0" aria-describedby="def-plantation">plantations</button>. <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">Enslaved</button> people lived in every New England colony, working in households, on the docks and aboard ships. In Newport, Rhode Island, they were a substantial share of the population.</p>
 <p>More importantly, New England&rsquo;s merchant wealth was tied to slavery at a distance. Rhode Island merchants financed and outfitted slaving voyages. New England distilleries (places where molasses was boiled and turned into rum) turned molasses (thick dark syrup left over when sugar cane is boiled down) &mdash; made by <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> workers on Caribbean sugar <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantations</button> &mdash; into rum, and that rum was traded on the African coast for more captives (people taken and held against their will). Slavery did not have to be visible in a New England field to be holding up a New England fortune.</p>
-<h3>Who settled here, and why</h3>
+
+<h3 id="NE-who">Who settled here, and why</h3>
 <p>Most New England colonists arrived for religious reasons. The <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-puritan">Puritans</button></b> who founded Massachusetts Bay intended to build what John Winthrop called a &ldquo;city upon a hill,&rdquo; a model Christian community visible to the whole world. They migrated as families and as congregations (the people who worshipped together at one church), not as individual young men chasing profit. That gave New England something the Chesapeake lacked for decades: a balanced population that grew by birth rather than by replacement.</p>
 <p>Religious purpose also produced religious pressure. Church attendance was expected. Ministers carried political weight. Dissent (openly disagreeing with the official church or government) was not tolerated for long. Roger Williams was banished (forced to leave and never come back) in 1636 for arguing that the state had no business governing conscience (your own sense of right and wrong), and that the land belonged to the Narragansett; he founded Providence. Anne Hutchinson was tried and expelled in 1638. Rhode Island exists because Massachusetts would not bend.</p>
-<h3>Who made the rules</h3>
+
+<h3 id="NE-rules">Who made the rules</h3>
 <p>Each colony had a governor connected to British authority, but New England developed unusually strong habits of local <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-self-government">self-government</button></b>. The town meeting gave ordinary colonists direct practice in running their own affairs. Adult male property holders debated and voted on roads, schools, taxes and ministers&rsquo; salaries.</p>
 <p>The Mayflower Compact, signed aboard ship in 1620 before the Pilgrims landed, committed its signers to &ldquo;just and equal laws&rdquo; made for the general good. It bound only one small group, and it did not create a democracy &mdash; women, servants and the Wampanoag whose land they settled on had no part in it. The Compact matters for the principle it recorded: that legitimate government rests on the consent of the governed.</p>
-<h3>So what?</h3>
+
+<h3 id="NE-sowhat">So what?</h3>
 <p>New England&rsquo;s development is a clear case of environment shaping economy, and economy shaping society. Land that could not produce a <button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crop</button> pushed its colonists toward fish, timber, ships and trade. That concentrated people in port towns and built a merchant class. Religion supplied the reason most of them came and the structure of the towns they built, and the town meeting turned ordinary settlers into people with experience governing themselves. The same merchant economy also tied New England to Atlantic slavery, which is the part of the story the stone walls do not tell you.</p>
+
 </section>
-<section class="reading" aria-labelledby="MC-h">
+<section class="reading" data-listen aria-labelledby="MC-h">
   <h2 id="MC-h">Middle Colonies</h2>
   <p class="colonies">New York, Pennsylvania, New Jersey, Delaware</p>
-  <h3>The land and the weather</h3>
+  <h3 id="MC-land">The land and the weather</h3>
 <p>The Middle Colonies &mdash; New York, Pennsylvania, New Jersey and Delaware &mdash; sat on the ground between New England&rsquo;s rock and the South&rsquo;s tidewater (the low, flat land where ocean tides push up the rivers), and their climate split the difference. Summers were warm, winters were cold, and the growing season ran long enough to support serious farming without the year-round heat the Southern <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crops</button></b> needed.</p>
 <p>Their real advantage was soil and rivers together. The valleys of the Hudson, the Delaware and the Susquehanna held deep, fertile ground, and those same rivers ran out to protected Atlantic harbors. Fertile soil on its own produces comfortable farmers. Fertile soil plus navigable (deep and wide enough for ships to sail along) water produces an <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-export">export</button></b> economy, because a farmer fifty miles inland can float a harvest down to a ship.</p>
-<h3>How people made money</h3>
+
+<h3 id="MC-money">How people made money</h3>
 <p>Grain made the Middle Colonies wealthy. Wheat above all, with rye, oats and barley alongside it, in such quantity that the region earned the nickname &ldquo;the breadbasket of America.&rdquo; Flour and bread moved out of Philadelphia and New York to New England, to the Caribbean sugar islands and to southern Europe.</p>
 <p>Grain sits in an interesting place in the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crop</button> and <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-subsistence-farming">subsistence farming</button></b> distinction. A family ate part of the harvest and sold the rest, so the same field did both jobs.</p>
 <p>Farming was not the whole economy. Pennsylvania ironworks made tools and hardware. Shipyards built and repaired vessels. Sawmills cut the timber of the inland forests into lumber, and gristmills (water-powered mills that ground grain into flour) lined the creeks. Artisans (skilled workers who made things by hand) supplied a growing city population with shoes, furniture, barrels and cloth. Philadelphia passed Boston to become the largest city in British North America, and New York was close behind. No other region balanced farm and city this evenly.</p>
-<h3>Who did the work</h3>
+
+<h3 id="MC-work">Who did the work</h3>
 <p>The Middle Colonies used more kinds of labor than either neighbor, and the mix tells you what the crops demanded. Family farms predominated, helped at harvest by wage laborers hired for the season.</p>
 <p><b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-indentured-servant">Indentured servants</button></b> arrived in very large numbers, especially German and Scots-Irish migrants, trading four to seven years of unpaid work for the passage over. Land was still obtainable here, so a servant who survived the term had a realistic path to owning a farm. That path is a materially different prospect from the one an <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button></b> person faced.</p>
 <p>Slavery existed throughout the region. It was concentrated in New York City, which held one of the largest urban <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> populations in the colonies, and on Hudson Valley estates. What did not develop was the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantation</button>. The explanation is agronomic &mdash; it comes down to the crop itself. Wheat needs a short, intense burst of labor at harvest and relatively little in between, so buying a permanent workforce is a poor investment. Tobacco and rice need attention across most of the year, which is what makes a large permanent labor force profitable. The crop chooses the labor system.</p>
-<h3>Who settled here, and why</h3>
+
+<h3 id="MC-who">Who settled here, and why</h3>
 <p>The defining feature of Middle Colony society was its diversity, and it was deliberate rather than accidental. Immigrants came from England, the Netherlands, Germany, Sweden, Scotland and Ireland, bringing their languages and their denominations (separate churches, each with its own beliefs) with them: Quakers, Lutherans, Mennonites, Dutch Reformed, Presbyterians, Catholics and Jews.</p>
 <p>Pennsylvania made <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-tolerance">tolerance</button></b> policy. William Penn, a Quaker, received the colony from Charles II in 1681. He organized it around the Quaker belief that every person carries an inner light, which made forcing anyone&rsquo;s religion pointless. A 1701 Pennsylvania law guaranteed that no one who acknowledged God &ldquo;shall in any case be molested or prejudiced&rdquo; for their beliefs. Penn promised equal treatment to settlers whatever their church or language, and he insisted on buying land from the Lenape by treaty rather than taking it.</p>
 <p>The policy worked. People and money flowed to Philadelphia. The limits still matter. Toleration reached Christians and, in practice, mostly Protestants. Officeholding was restricted. And the peace Penn made with the Lenape did not outlive him: his sons ran the 1737 Walking Purchase, a rigged land deal that took far more Lenape land than the treaty described.</p>
-<h3>Who made the rules</h3>
+
+<h3 id="MC-rules">Who made the rules</h3>
 <p>Every Middle colony had a governor representing outside authority and an elected assembly of colonists. The assembly controlled local law and, crucially, local taxes. Pennsylvania&rsquo;s assembly grew strong enough to dominate its proprietary (owned by one man the king had handed the land to) governors for long stretches.</p>
 <p><b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-self-government">Self-government</button></b> here had a distinctive quality. An assembly representing Germans, Dutch, Scots-Irish, Quakers and Anglicans could not govern by assuming everyone agreed. It had to build the habit of accommodating people it did not like.</p>
-<h3>So what?</h3>
+
+<h3 id="MC-sowhat">So what?</h3>
 <p>The Middle Colonies are the clearest demonstration that geography sets options rather than outcomes. Soil and climate permitted profitable farming. Rivers and harbors permitted trade and cities. The colonies took both, and produced the most balanced economy on the coast.</p>
 <p>Their staple crop (the one crop a region grows more of than anything else) did not reward a large permanent workforce, so they built a society around family farms, wage work and indenture rather than around slavery &mdash; not because their values were purer, but because wheat is not rice. And because they opened the door to people other colonies shut out, they assembled the most diverse population in British North America.</p>
+
 </section>
-<section class="reading" aria-labelledby="SC-h">
+<section class="reading" data-listen aria-labelledby="SC-h">
   <h2 id="SC-h">Southern Colonies</h2>
   <p class="colonies">Maryland, Virginia, North Carolina, South Carolina, Georgia</p>
-  <h3>The land and the weather</h3>
+  <h3 id="SC-land">The land and the weather</h3>
 <p>The Southern Colonies &mdash; Maryland, Virginia, North Carolina, South Carolina and Georgia &mdash; had the geography most favorable to farming for profit on the whole coast. A humid subtropical (almost tropical: long hot wet summers, mild winters) climate gave them long, hot summers, mild winters, reliable rainfall and a growing season that ran for most of the year, roughly twice New England&rsquo;s.</p>
 <p>The land reinforced the climate. A broad, flat coastal plain carried deep and fertile soil. Slow tidal (rising and falling twice a day with the ocean) rivers &mdash; the James, the York, the Potomac, the Cooper &mdash; ran far inland while staying navigable for ocean-going ships. The low country near the coast, where those rivers reach the sea, is called the tidewater.</p>
 <p>That combination had a consequence worth naming. The South did not need to build port cities the way New England did, because a ship could anchor at an individual <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantation</button></b>&rsquo;s own wharf (a platform built out over the water where ships tie up and load). The region&rsquo;s wealth was spread across estates instead of concentrated in towns.</p>
-<h3>How people made money</h3>
+
+<h3 id="SC-money">How people made money</h3>
 <p>The Southern economy rested on <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crops</button></b> grown for <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-export">export</button></b>, and the distinction from <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-subsistence-farming">subsistence farming</button></b> is the one to keep in view. Most white Southerners were in fact small farmers growing food for their own households. The region&rsquo;s wealth and political power, however, sat with the planters who ran <button type="button" class="vpop" tabindex="-1" aria-describedby="def-plantation">plantations</button>: large estates committed to a single crop grown to sell.</p>
 <p>Tobacco dominated the Chesapeake. Virginia and Maryland <button type="button" class="vpop" tabindex="-1" aria-describedby="def-export">exported</button> it in such volume that it worked as money in local deals, and a 17th-century Virginia statute (a written law) directed that &ldquo;all persons shall plant and tend sufficient quantity of tobacco.&rdquo; That is a law telling you exactly how tightly government and crop were bound together.</p>
 <p>Rice transformed the South Carolina and Georgia low country from the 1690s, and the expertise was not European. West Africans from the rice-growing regions of Senegambia and Sierra Leone knew how to build and flood rice fields. Planters sought out captives from those regions and paid premiums for them.</p>
 <p>Indigo (a plant used to make deep blue dye), whose blue dye the British textile industry wanted, became a profitable companion crop after Britain paid a bounty (a cash reward a government paid to get people to grow something) for it.</p>
-<h3>Who did the work</h3>
+
+<h3 id="SC-work">Who did the work</h3>
 <p>This section explains the others. Tobacco and rice need labor across nearly the entire year. Tobacco takes seedbeds, transplanting, weeding, topping, worming, cutting, curing (drying tobacco leaves slowly in a barn so they keep), sorting and packing. Rice takes the brutal work of building and maintaining banks, ditches and floodgates in standing water. A crop that needs labor for ten months makes a large permanent workforce economically rational in a way that wheat never does. Southern planters therefore had a labor problem that New England and the Middle Colonies did not.</p>
 <p>Their first solution was indentured servitude. Through most of the 1600s the Chesapeake imported tens of thousands of young English servants, who exchanged four to seven years of unpaid labor for the passage over. Indenture was harsh and often deadly, but it was a contract. It ended, it was not racial, and a survivor could claim freedom dues and sometimes land.</p>
 <p>Their second solution was chattel (treated as property that could be bought, sold and inherited) slavery, and the shift is visible in the law. <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">Enslaved</button></b> Africans arrived in Virginia from 1619, but for decades their status was unsettled. Then the statutes hardened. A 1662 Virginia law made a child&rsquo;s status follow the mother&rsquo;s, so slavery became inheritable. A 1667 law ruled that baptism did not grant freedom, closing the religious escape route. The 1705 Virginia slave codes finished the job: <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> people were property, permanently and by race. By the 1740s <button type="button" class="vpop" tabindex="-1" aria-describedby="def-enslaved">enslaved</button> people were a majority in South Carolina.</p>
-<h3>Who settled here, and why</h3>
+
+<h3 id="SC-who">Who settled here, and why</h3>
 <p>Unlike New England, the Southern colonies were not founded to build religious communities. Settlers came seeking land, profit and advancement, or to escape debt. Georgia was chartered (given official permission by the king to exist) in 1732 partly as a haven for debtors (people who owed money they could not pay back), and it banned slavery at the start &mdash; then its settlers lobbied to legalize it, and the ban was repealed in 1751. That one is worth holding on to: the system was chosen, against a rule that already forbade it.</p>
 <p>Maryland was founded in 1634 as a refuge for English Catholics, and its 1649 Act Concerning Religion extended toleration to Trinitarian Christians. Protestant settlers soon outnumbered Catholics and the act was repealed. The Church of England was established in most Southern colonies, but practice was less rigorous and less central to daily governance than in <button type="button" class="vpop" tabindex="-1" aria-describedby="def-puritan">Puritan</button> New England.</p>
 <p>The largest single group of arrivals did not arrive by choice. Africans were captured, sold and transported by force. By the mid-1700s people of African descent made up roughly forty percent of Virginia&rsquo;s population and more than half of South Carolina&rsquo;s. A description of who settled the South that mentions only the English is not a summary. It is an omission.</p>
-<h3>Who made the rules</h3>
+
+<h3 id="SC-rules">Who made the rules</h3>
 <p>The Southern colonies had governors appointed under royal or proprietary authority and elected assemblies (groups of elected men who made laws for a colony) that made local law. Virginia&rsquo;s House of Burgesses, which first met in 1619, was the earliest representative assembly in English America, and the region&rsquo;s tradition of <b><button type="button" class="vpop" tabindex="-1" aria-describedby="def-self-government">self-government</button></b> was genuine and old.</p>
 <p>Its membership is the point. Property requirements for voting and officeholding meant assemblies were controlled by the planter class, and planter assemblies wrote the law that served planters &mdash; including the slave codes. The same institutions that produced Jefferson&rsquo;s language about consent of the governed also produced the statutes defining human beings as inheritable property. Both came out of the same room.</p>
-<h3>So what?</h3>
+
+<h3 id="SC-sowhat">So what?</h3>
 <p>The Southern colonies are the unit&rsquo;s sharpest case of environment and choice working together. Climate and soil made high-value <button type="button" class="vpop" tabindex="-1" aria-describedby="def-cash-crop">cash crops</button> possible. Navigable rivers made <button type="button" class="vpop" tabindex="-1" aria-describedby="def-export">exporting</button> them easy. The specific crops that thrived demanded labor across almost the whole year. Those are the environmental facts.</p>
 <p>What followed was not automatic. Planters could have farmed smaller holdings, or paid wages, or continued with indenture. They chose instead to build a permanent, hereditary (passed down from parent to child, permanently), racial slavery and to write it into law, because it was the most profitable option available to them. Geography opened the door. People decided what to do on the other side of it.</p>
+
 </section>
 <section class="sources" aria-labelledby="src-h">
   <h2 id="src-h">Where this comes from</h2>
@@ -447,6 +472,7 @@ b .vpop{font-weight:inherit;}
   anything you miss.</span>
 </a>
 <script src="vocab-pops.js"></script>
+<script src="reader-tools.js"></script>
 
 <script>
 /* Percentage of the reading scrolled. rAF-throttled and passive, so it never

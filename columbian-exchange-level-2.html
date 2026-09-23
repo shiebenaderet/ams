@@ -43,7 +43,7 @@ h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
 .sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
 /* Anchors clear the bar by measuring it. The bar wraps on a narrow screen, so a
    fixed offset is wrong on some width or other; JS keeps --navh honest. */
-h2,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+h2,h3,.vbox{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
 
 /* Reading progress. aria-hidden on purpose: a screen-reader user already knows
    where they are, and a percentage announcing itself on every scroll is noise. */
@@ -94,6 +94,11 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
 .pick:hover,.pick:focus{border-color:var(--accent);}
 .pick b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
 .pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+/* Level 0's door to Level 1, one per section. Quiet on purpose: it is an offer,
+   not an instruction, and it must not read as "you should be on Level 1". */
+.up{font-size:.9rem;margin:-.35rem 0 1.1rem;}
+.up a{color:var(--accent);}
+@media print{.up{display:none;}}
 /* Screen hides the paper-only note; print re-shows it. Declared BEFORE the print
    block, because equal-specificity rules are resolved by order, media query or not. */
 .weblink{display:none;}
@@ -362,7 +367,7 @@ b .vpop{font-weight:inherit;}
 <body>
 <nav class="snav" aria-label="Reading navigation">
   <div class="snavin">
-    <span class="sgroup"><a href="columbian-exchange-level-1.html">Level 1</a><span aria-current="page">Level 2</span><a href="columbian-exchange-level-3.html">Level 3</a></span>
+    <span class="sgroup"><a href="columbian-exchange-level-0.html">Level 0</a><a href="columbian-exchange-level-1.html">Level 1</a><span aria-current="page">Level 2</span><a href="columbian-exchange-level-3.html">Level 3</a></span>
     <span class="sjump"><a href="#words">Words</a><a href="#read">Reading</a><a href="#watch">Watch</a></span>
   </div>
 </nav>
@@ -372,9 +377,12 @@ b .vpop{font-weight:inherit;}
   <h1>The Columbian Exchange</h1>
   <p class="lvl">Level 2 &mdash; The standard version, with more of the story filled in.</p>
 </header>
+
+<div id="rtools"></div>
 <div class="help">
-  <p><b>Reading this out loud.</b> On a Chromebook, right-click the page and choose
-  <b>Read aloud</b>. This page holds your level only, so it reads yours and stops.</p>
+  <p><b>Listen to it.</b> Press <b>Listen</b> above and the reading is read out loud,
+  one sentence at a time, with the sentence lit up as it goes. Tap any paragraph to
+  jump there. <b>Font</b> changes the letters, their size and the spacing.</p>
   <p><b>Reading this in another language.</b> Right-click and choose <b>Translate to&hellip;</b>
   Everything here is real text, so the whole reading translates.</p>
 </div>
@@ -387,18 +395,21 @@ b .vpop{font-weight:inherit;}
     <span>Meet the words, then four short activities on their own page, with no reading to look at. You get a score, and you can retry the ones you miss.</span>
   </a>
 </section>
-<section class="reading" id="read">
+<section class="reading" id="read" data-listen>
 <h3 id="s-what">What the <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-columbian-exchange">Columbian Exchange</button></b> was</h3>
 <p>In 1492, ships under Christopher Columbus reached islands in the Caribbean. For thousands of years before that, the Americas had developed separately from Europe, Africa and Asia. Different crops grew there. Different animals lived there. Different diseases existed there.</p>
 <p>After 1492 that separation ended, and things began crossing the Atlantic in both directions: plants, animals, people and diseases. Historians call the whole movement the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-columbian-exchange">Columbian Exchange</button>.</p>
 <p>The word &ldquo;exchange&rdquo; makes it sound even. It was not. Crops travelled both ways. Disease travelled overwhelmingly one way. So did most of the people.</p>
+
 <h3 id="s-east">What went out from the Americas</h3>
 <p>American plants changed what the rest of the world ate, and how many people it could feed.</p>
 <p>Corn and potatoes mattered most, and not because they tasted good. They produced more food per acre than the crops Europe already had, and potatoes grew in cold, poor soil where wheat failed. Northern Europe could suddenly feed more people on the same land, and its population rose.</p>
 <p>Other American plants changed cooking rather than survival. Tomatoes reached Italy. Cacao reached Europe, which had never tasted chocolate. Chili peppers spread to India, China and West Africa and became central to food there within a couple of generations. Tobacco went to Europe and came back as the cash crop that built Virginia. Turkeys crossed as well, one of the few American animals that people on other <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-continent">continents</button></b> came to keep for food.</p>
+
 <h3 id="s-west">What came in to the Americas</h3>
 <p>Traffic ran the other way as well. Wheat arrived for bread, and so did rice, grown in the Carolinas on the knowledge of enslaved West Africans who had farmed it at home. Coffee came from Africa, bananas from Asia &mdash; both so common in the Americas now that people assume they were always here. Sugar cane arrived, and of all the plants that crossed, it changed the most lives for the worse.</p>
 <p>Livestock arrived too: horses, cattle, pigs, sheep, chickens, none of them <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-native-to">native to</button></b> the Americas. Horses reached the Great Plains and transformed how nations there hunted, travelled and fought. Cattle and pigs were harder to live beside. Herds grazed and rooted through land <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-indigenous-peoples">Indigenous</button></b> nations had cleared and farmed, and escaped pigs bred so fast they often reached a region before the colonists did.</p>
+
 <h3 id="s-disease">The part that did not balance</h3>
 <p>Then there is the traffic that did not run evenly.</p>
 <p>The ships carried smallpox, measles, influenza and typhus. Europe, Africa and Asia had lived with these diseases for centuries, trading and travelling alongside them. Many people caught them young and survived, and survivors carry protection.</p>
@@ -406,15 +417,18 @@ b .vpop{font-weight:inherit;}
 <p>Traffic did run the other way. The best current evidence, including DNA recovered from ancient remains, points to syphilis having come out of the Americas; Europe&rsquo;s first recorded <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-epidemic">epidemic</button></b> of it begins in the 1490s, immediately after contact. It was a serious disease and it killed Europeans for centuries.</p>
 <p>What it was not was equivalent. Historians disagree about totals, and the disagreement is real. They agree on the scale: the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-epidemic">epidemics</button> that travelled west killed most of the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-indigenous-peoples">Indigenous</button> population of the Americas. Many nations lost people before meeting a single European, because disease moved along trade routes faster than colonists walked. Nothing moving the other way came near that.</p>
 <p>The exchange of disease was two-way. Its consequences were not, and the gap between those two sentences is what made <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-colonization">colonization</button></b> possible.</p>
+
 <h3 id="s-people">People were moved too</h3>
 <p>People crossed too. Some chose it; most did not.</p>
 <p>Europeans came for land, money or religious freedom. Far more Africans arrived as enslaved people: across the whole Atlantic slave trade, millions were captured, sold and shipped to the Americas, mostly to grow sugar and tobacco &mdash; two crops the Exchange itself had put in motion.</p>
 <p>Notice how that loops. Sugar cane crosses to the Americas. Sugar makes enormous money. Making it needs labour on a scale nobody would volunteer for. So the same exchange that moved a plant moved millions of people who had no say in it.</p>
 <p>An exchange is supposed to be a trade between two willing sides. Keep that word honest when you use it here.</p>
+
 <h3 id="s-sowhat">So what?</h3>
 <p>Taught as a food story, the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-columbian-exchange">Columbian Exchange</button> is a pleasant lesson: tomatoes to Italy, chocolate to Europe, horses to the Plains. Every bit of that is accurate.</p>
 <p>But it cannot explain the thing that actually happened. Two <button type="button" class="vpop" tabindex="-1" aria-describedby="def-continent">continents</button> where millions of people lived came under the control of a much smaller number of newcomers. Food does not explain that.</p>
 <p>The asymmetry does. Crops moved both ways. Disease moved one way and emptied the land. People moved one way in chains and worked it. That is the answer to &ldquo;how,&rdquo; and it is why this unit does not stop at the tomatoes.</p>
+
 </section>
 <section class="videos" id="watch" aria-labelledby="videos-h">
   <h2 id="videos-h">Watch the three videos</h2>
@@ -512,6 +526,7 @@ b .vpop{font-weight:inherit;}
 })();
 </script>
 <script src="vocab-pops.js"></script>
+<script src="reader-tools.js"></script>
 <footer>
   <p class="weblink"><b>Reading this on paper?</b> Everything above is clickable on the
   web version at <b>mrbsocialstudies.org/columbian-exchange.html</b>, where you can also have it read
