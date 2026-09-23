@@ -22,7 +22,11 @@
    The sentence stage is never marked. A sentence cannot be auto-scored, and
    pretending otherwise would teach that the checkmark is the point. */
 function READING_ACTIVITIES(CFG) {
-  var LSK = 'ract:' + CFG.level;
+  /* CFG.key names a second activity's storage. The Columbian Exchange check runs
+     on the same browsers as the regions one, and under 'ract:2' each would load
+     the other's saved answers. The regions pages pass no key and keep 'ract:<level>',
+     so scores already saved there survive. */
+  var LSK = CFG.key || 'ract:' + CFG.level;
   var root = document.getElementById('activities');
   if (!root) return;
   /* Cleared on entry so the practice page can switch level in place by calling
@@ -52,8 +56,12 @@ function READING_ACTIVITIES(CFG) {
   function same(a, b) {
     a = norm(a); b = norm(b);
     if (a === b) return true;
+    /* Both strips, because neither alone is enough: 'es' is right for "taxes"
+       and wrong for "peoples", where it leaves "peopl" and marks "Indigenous
+       people" wrong. */
     var stem = function (x) { return x.replace(/(?:es|s)$/, ''); };
-    return !!a && stem(a) === stem(b);
+    var s1 = function (x) { return x.replace(/s$/, ''); };
+    return !!a && (stem(a) === stem(b) || s1(a) === s1(b));
   }
   function el(tag, cls, html) {
     var n = document.createElement(tag);
@@ -418,11 +426,14 @@ function READING_ACTIVITIES(CFG) {
   function results() {
     var box = el('section', 'ract-sum');
     var rows = '', got = 0, poss = 0, tries = 0;
+    /* One round means the Round column would say the same thing on every row. */
+    var multi = CFG.rounds.length > 1;
     STEPS.forEach(function (sp) {
       if (sp.kind === 'sentence' || sp.kind === 'meet') return;
       var s = st(sp.id), n = s.done.length;
       got += n; poss += sp.items.length; tries += s.tries;
-      rows += '<tr><td>' + ROUND_SHORT[sp.round] + '</td><td>' + LABEL[sp.kind] +
+      rows += '<tr>' + (multi ? '<td>' + ROUND_SHORT[sp.round] + '</td>' : '') +
+        '<td>' + LABEL[sp.kind] +
         '</td><td class="' + (n === sp.items.length ? 'ract-won' : '') + '">' +
         n + '/' + sp.items.length + '</td><td>' +
         (s.tries ? s.tries + (s.tries === 1 ? ' try' : ' tries') : '&ndash;') +
@@ -430,9 +441,10 @@ function READING_ACTIVITIES(CFG) {
     });
     box.innerHTML =
       '<h4>Show your teacher</h4>' +
-      '<table class="ract-tbl"><thead><tr><th>Round</th><th>Activity</th>' +
+      '<table class="ract-tbl"><thead><tr>' + (multi ? '<th>Round</th>' : '') +
+      '<th>Activity</th>' +
       '<th>Score</th><th>Tries</th></tr></thead><tbody>' + rows +
-      '<tr class="ract-tot"><td colspan="2">Altogether</td><td class="' +
+      '<tr class="ract-tot"><td colspan="' + (multi ? 2 : 1) + '">Altogether</td><td class="' +
       (got === poss ? 'ract-won' : '') + '">' + got + '/' + poss + '</td><td>' +
       tries + (tries === 1 ? ' try' : ' tries') + '</td></tr></tbody></table>' +
       '<p class="ract-help">Writing is not scored &mdash; it is saved on this computer.</p>';

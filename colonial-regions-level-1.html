@@ -303,6 +303,9 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
    typography by default, so every one of these resets is load-bearing: without
    them the reading reflows around forty little grey boxes. */
 .vpop{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;
+  /* A button does not inherit text-transform, so inside an uppercase heading the
+     word printed in mixed case: "WHAT THE Columbian Exchange WAS". */
+  text-transform:inherit;letter-spacing:inherit;
   cursor:help;display:inline;text-align:inherit;line-height:inherit;
   border-bottom:2px dotted var(--accent);}
 .vpop:hover,.vpop:focus{background:var(--band);border-bottom-style:solid;}

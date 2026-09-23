@@ -70,6 +70,8 @@ b{font-weight:700;}
 .vbox dt{font-weight:700;margin-top:.6rem;}
 .vbox dt:first-of-type{margin-top:0;}
 .vbox dd{margin:.1rem 0 0;font-size:1rem;}
+.vbox .va{display:block;font-size:.92rem;color:var(--muted);margin-top:.1rem;}
+.vbox .va b{font-weight:600;}
 .help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
   padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
 .help p{margin:0 0 .5rem;}
@@ -178,6 +180,145 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   footer{border-top:1pt solid var(--rule);}
 }
 
+/* Two extra tokens, declared the same three ways the page declares its own, so
+   the activity follows the reading into dark mode instead of being a white card
+   with pale text on it. That was the first version's bug: literal backgrounds
+   with text left inheriting --ink, which dark mode flips to near-white. */
+:root{--ract-row:#f4f1ea;--ract-on-accent:#fff;--ract-warn:#7a4f24;--ract-muted:#4f4a42;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ract-row:#26262b;--ract-on-accent:#16161a;--ract-warn:#e0b57c;--ract-muted:#c4c0b8;}}
+:root[data-theme="dark"]{--ract-row:#26262b;--ract-on-accent:#16161a;
+  --ract-warn:#e0b57c;--ract-muted:#c4c0b8;}
+#activities{margin:2.5rem 0 0;color:var(--ink);scroll-margin-top:5rem;}
+/* The two calls to action: one in the sticky menu, one under the words box --
+   the two moments a student has just met the definitions and might want to use
+   them. Both are real links to #activities, so they work with the page's own
+   smooth scrolling and need no script. */
+.snav .sgo{background:var(--accent);color:var(--ract-on-accent);font-weight:700;
+  border-radius:999px;padding:.2rem .7rem;text-decoration:none;}
+.vcta-end{margin-top:2rem;}
+.vcta{display:block;margin:1.1rem 0 0;padding:.75rem .9rem;border-radius:.55rem;
+  border:2px solid var(--accent);background:var(--band);color:var(--ink);
+  text-decoration:none;min-height:44px;}
+.vcta b{display:block;color:var(--accent);font-size:1.05rem;}
+/* --band is the darkest surface on the page, so even the activity's own muted
+   only reaches 3.56:1 on it. The CTA subline uses full --ink instead. */
+.vcta span{display:block;font-size:.92rem;color:var(--ink);margin-top:.15rem;}
+@media print{.vcta,.snav .sgo{display:none;}}
+.ract-h{font-size:1.5rem;margin:0 0 .3rem;color:var(--ink);}
+.ract-lead{margin:0 0 1.1rem;color:var(--ract-muted);}
+.ract-round{border:2px solid var(--rule);border-radius:.7rem;padding:1rem 1.1rem;
+  margin:0 0 1.1rem;background:var(--card);}
+.ract-rlab{margin:0 0 .2rem;font-size:1.15rem;color:var(--accent);}
+.ract-stage{margin:1.2rem 0 0;padding-top:.9rem;border-top:1px solid var(--rule);}
+.ract-stage:first-of-type{border-top:0;padding-top:0;margin-top:0;}
+.ract-stage h4{margin:0 0 .25rem;font-size:1.05rem;color:var(--ink);}
+.ract-help{margin:0 0 .6rem;font-size:.95rem;color:var(--ract-muted);}
+.ract-row{padding:.6rem .7rem;margin:0 0 .45rem;border-radius:.45rem;
+  background:var(--ract-row);color:var(--ink);display:flex;flex-wrap:wrap;
+  gap:.5rem;align-items:baseline;}
+.ract-row.ract-ok{background:var(--band);}
+.ract-def{flex:1 1 15rem;}
+.ract-sent{flex:1 1 100%;line-height:2.1;}
+.ract-ans{color:var(--accent);font-weight:700;}
+/* color and background are set explicitly: a bare <select> or <input> keeps the
+   browser's own black-on-white and disappears against a dark card. */
+.ract-sel,.ract-in{font:inherit;font-size:1rem;padding:.35rem .4rem;
+  border:2px solid var(--rule);border-radius:.3rem;background:var(--card);
+  color:var(--ink);min-height:44px;}
+.ract-in{min-width:10rem;}
+.ract-again{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--ract-warn);font-weight:700;}
+.ract-pair{display:block;}
+.ract-scen{margin:0 0 .55rem;color:var(--ink);}
+.ract-opts{display:flex;flex-wrap:wrap;gap:.6rem;}
+/* 44px minimum touch target: these get used on Chromebooks and phones. */
+.ract-opt{font:inherit;font-size:1rem;padding:.6rem 1.1rem;cursor:pointer;
+  min-height:44px;border:2px solid var(--rule);border-radius:.45rem;
+  background:var(--card);color:var(--ink);}
+.ract-opt.ract-picked{border-color:var(--accent);background:var(--band);
+  font-weight:700;}
+.ract-why{margin:.4rem 0 0;color:var(--ink);}
+.ract-bar{display:flex;align-items:center;gap:.8rem;margin-top:.6rem;flex-wrap:wrap;}
+/* --accent is a deep green in light mode and a pale one in dark, so the label on
+   top of it has to flip too, or it is white-on-mint. */
+.ract-check{font:inherit;font-size:1rem;font-weight:700;padding:.6rem 1.3rem;
+  cursor:pointer;min-height:44px;color:var(--ract-on-accent);
+  background:var(--accent);border:0;border-radius:.45rem;}
+.ract-score{color:var(--ract-muted);}
+.ract-score.ract-won{color:var(--accent);font-weight:700;}
+.ract-ta{font:inherit;width:100%;padding:.5rem;border:2px solid var(--rule);
+  border-radius:.3rem;background:var(--card);color:var(--ink);}
+.ract-saved{font-size:.85rem;color:var(--accent);}
+.ract-opt-tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--ract-warn);font-weight:700;margin-left:.4rem;}
+.ract-sum{border:3px solid var(--accent);border-radius:.7rem;padding:1rem 1.1rem;
+  background:var(--card);}
+.ract-sum h4{margin:0 0 .6rem;font-size:1.25rem;color:var(--ink);}
+/* Deliberately large: this table gets read by an adult standing up. */
+.ract-tbl{border-collapse:collapse;width:100%;max-width:30rem;font-size:1.15rem;
+  color:var(--ink);}
+.ract-tbl th{text-align:left;font-size:.8rem;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--ract-muted);border-bottom:2px solid var(--rule);
+  padding:.3rem .35rem;}
+.ract-tbl td{padding:.35rem;border-bottom:1px solid var(--rule);}
+.ract-tbl td.ract-won{color:var(--accent);font-weight:700;}
+.ract-stagewrap{min-height:12rem;}
+/* Meet the words. Cards, not a list: each is its own tap target, and a closed
+   card is a question ("what does this mean?") where an open list is a thing to
+   scroll past. */
+.ract-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));
+  gap:.6rem;margin:0 0 .4rem;align-items:start;}
+.ract-card{border:2px solid var(--rule);border-radius:.55rem;background:var(--card);
+  color:var(--ink);overflow:hidden;}
+.ract-card.ract-open{border-color:var(--accent);}
+.ract-cardbtn{font:inherit;display:block;width:100%;text-align:left;cursor:pointer;
+  padding:.65rem .8rem;min-height:44px;border:0;background:var(--ract-row);
+  color:var(--ink);}
+.ract-cardbtn b{display:block;font-size:1.1rem;}
+.ract-tap{display:block;font-size:.85rem;color:var(--ract-muted);}
+.ract-open .ract-tap{display:none;}
+.ract-cardbody{display:none;padding:.55rem .8rem .7rem;}
+.ract-open .ract-cardbody{display:block;}
+.ract-simple{margin:0;font-size:1rem;}
+/* The step bar is the only always-visible control, so it carries the position.
+   "Step 3 of 6" is doing real work here: one stage on screen with no count is a
+   corridor with no end, which is worse than the scroll it replaced. */
+.ract-nav{display:flex;align-items:center;gap:.8rem;margin-top:1.1rem;
+  padding-top:.8rem;border-top:1px solid var(--rule);flex-wrap:wrap;}
+.ract-prog{color:var(--ract-muted);font-size:.92rem;margin:0 auto;}
+.ract-step{font:inherit;font-size:1rem;font-weight:700;padding:.55rem 1.1rem;
+  cursor:pointer;min-height:44px;border:2px solid var(--rule);border-radius:.45rem;
+  background:var(--card);color:var(--ink);}
+/* A finished stage makes Next the obvious thing to press, without disabling it
+   beforehand -- a student who wants to skip ahead and come back may. */
+.ract-step.ract-ready{background:var(--accent);color:var(--ract-on-accent);
+  border-color:var(--accent);}
+.ract-tot td{border-top:2px solid var(--rule);font-weight:700;}
+.ract-restart{font:inherit;font-size:.95rem;margin-top:.9rem;padding:.5rem 1rem;
+  cursor:pointer;min-height:44px;border:2px solid var(--rule);border-radius:.45rem;
+  background:var(--card);color:var(--ract-muted);}
+@media print{.ract-nav{display:none;}}
+/* The marked words. A <button> inside a paragraph inherits none of the prose's
+   typography by default, so every one of these resets is load-bearing: without
+   them the reading reflows around forty little grey boxes. */
+.vpop{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;
+  /* A button does not inherit text-transform, so inside an uppercase heading the
+     word printed in mixed case: "WHAT THE Columbian Exchange WAS". */
+  text-transform:inherit;letter-spacing:inherit;
+  cursor:help;display:inline;text-align:inherit;line-height:inherit;
+  border-bottom:2px dotted var(--accent);}
+.vpop:hover,.vpop:focus{background:var(--band);border-bottom-style:solid;}
+.vpop:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+b .vpop{font-weight:inherit;}
+.vpop-bubble{position:absolute;z-index:60;max-width:22rem;padding:.6rem .75rem;
+  border:2px solid var(--accent);border-radius:.45rem;background:var(--card);
+  color:var(--ink);font-size:.95rem;line-height:1.5;
+  box-shadow:0 6px 24px rgba(0,0,0,.28);}
+/* On paper a dotted underline is just noise -- there is nothing to hover. */
+@media print{.vpop{border-bottom:0;}.vpop-bubble{display:none;}}
+@media print{#activities{display:none;}}
+
 .videos{border-top:2px solid var(--accent);margin-top:3rem;padding-top:1.25rem;}
 .videos h2{margin-top:0;}
 .vintro p{font-size:.95rem;}
@@ -239,36 +380,40 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
 </div>
 <section class="vbox" id="words" aria-labelledby="words-h">
   <h2 id="words-h" class="vh">Words you need</h2>
-  <p class="vsub">The first four are this unit&rsquo;s words, and they are the same at every level. The last three are plainer words the reading leans on.</p>
-  <dl><dt>Columbian Exchange</dt><dd>The transfer of plants, animals, people, and diseases between the Americas and the rest of the world after 1492</dd><dt>Indigenous Peoples</dt><dd>The original inhabitants of a land and their descendants, such as the many Native nations of North America</dd><dt>Colonization</dt><dd>The act of one country taking control of another land and settling people on it</dd><dt>Epidemic</dt><dd>A disease outbreak that spreads rapidly through a population</dd><dt>Continent <span class="rtag">plain word</span></dt><dd>One of the world&rsquo;s big landmasses &mdash; Africa, Asia, Europe, North America, South America, Australia, Antarctica.</dd><dt>Import <span class="rtag">plain word</span></dt><dd>To bring something in from another country to use or sell.</dd><dt>Native to <span class="rtag">plain word</span></dt><dd>Naturally from that place, having grown or lived there before anyone brought it.</dd></dl>
+  <p class="vsub">The same words at every level. The first four are this unit&rsquo;s words; the last two are plainer words the reading leans on.</p>
+  <dl><dt>Columbian Exchange</dt><dd id="def-columbian-exchange"><span class="vs">After 1492, two halves of the world that had been separate started swapping everything.</span> <span class="va"><b>Academic:</b> The transfer of plants, animals, people, and diseases between the Americas and the rest of the world after 1492.</span></dd><dt>Indigenous Peoples</dt><dd id="def-indigenous-peoples"><span class="vs">The first people to live in a place.</span> <span class="va"><b>Academic:</b> The original inhabitants of a land and their descendants, such as the many Native nations of North America.</span></dd><dt>Colonization</dt><dd id="def-colonization"><span class="vs">Taking control of a place.</span> <span class="va"><b>Academic:</b> The act of one country taking control of another land and settling people on it.</span></dd><dt>Epidemic</dt><dd id="def-epidemic"><span class="vs">A sickness that tears through a community faster than anyone can stop it.</span> <span class="va"><b>Academic:</b> A disease outbreak that spreads rapidly through a population.</span></dd><dt>Continent <span class="rtag">plain word</span></dt><dd id="def-continent"><span class="vs">One of the world&rsquo;s big landmasses &mdash; Africa, Asia, Europe, North America, South America, Australia, Antarctica.</span></dd><dt>Native to <span class="rtag">plain word</span></dt><dd id="def-native-to"><span class="vs">Naturally from that place, having grown or lived there before anyone brought it.</span></dd></dl>
+  <a class="vcta" href="columbian-exchange-practice.html">
+    <b>Check yourself on these words &rarr;</b>
+    <span>Meet the words, then four short activities on their own page, with no reading to look at. You get a score, and you can retry the ones you miss.</span>
+  </a>
 </section>
 <section class="reading" id="read">
-<h3 id="s-what">What the <b>Columbian Exchange</b> was</h3>
+<h3 id="s-what">What the <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-columbian-exchange">Columbian Exchange</button></b> was</h3>
 <p>In 1492, ships under Christopher Columbus reached islands in the Caribbean. For thousands of years before that, the Americas had developed separately from Europe, Africa and Asia. Different crops grew there. Different animals lived there. Different diseases existed there.</p>
-<p>After 1492 that separation ended, and things began crossing the Atlantic in both directions: plants, animals, people and diseases. Historians call the whole movement the Columbian Exchange.</p>
+<p>After 1492 that separation ended, and things began crossing the Atlantic in both directions: plants, animals, people and diseases. Historians call the whole movement the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-columbian-exchange">Columbian Exchange</button>.</p>
 <p>The word &ldquo;exchange&rdquo; makes it sound even. It was not. Crops travelled both ways. Disease travelled overwhelmingly one way. So did most of the people.</p>
 <h3 id="s-east">What went out from the Americas</h3>
 <p>American plants changed what the rest of the world ate, and how many people it could feed.</p>
 <p>Corn and potatoes mattered most, and not because they tasted good. They produced more food per acre than the crops Europe already had, and potatoes grew in cold, poor soil where wheat failed. Northern Europe could suddenly feed more people on the same land, and its population rose.</p>
-<p>Other American plants changed cooking rather than survival. Tomatoes reached Italy. Cacao reached Europe, which had never tasted chocolate. Chili peppers spread to India, China and West Africa and became central to food there within a couple of generations. Tobacco went to Europe and came back as the cash crop that built Virginia. Turkeys crossed as well, one of the few American animals that people on other <b>continents</b> came to keep for food.</p>
+<p>Other American plants changed cooking rather than survival. Tomatoes reached Italy. Cacao reached Europe, which had never tasted chocolate. Chili peppers spread to India, China and West Africa and became central to food there within a couple of generations. Tobacco went to Europe and came back as the cash crop that built Virginia. Turkeys crossed as well, one of the few American animals that people on other <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-continent">continents</button></b> came to keep for food.</p>
 <h3 id="s-west">What came in to the Americas</h3>
 <p>Traffic ran the other way as well. Wheat arrived for bread, and so did rice, grown in the Carolinas on the knowledge of enslaved West Africans who had farmed it at home. Coffee came from Africa, bananas from Asia &mdash; both so common in the Americas now that people assume they were always here. Sugar cane arrived, and of all the plants that crossed, it changed the most lives for the worse.</p>
-<p>Livestock arrived too: horses, cattle, pigs, sheep, chickens, none of them <b>native</b> to the Americas. Horses reached the Great Plains and transformed how nations there hunted, travelled and fought. Cattle and pigs were harder to live beside. Herds grazed and rooted through land <b>Indigenous</b> nations had cleared and farmed, and escaped pigs bred so fast they often reached a region before the colonists did.</p>
+<p>Livestock arrived too: horses, cattle, pigs, sheep, chickens, none of them <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-native-to">native to</button></b> the Americas. Horses reached the Great Plains and transformed how nations there hunted, travelled and fought. Cattle and pigs were harder to live beside. Herds grazed and rooted through land <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-indigenous-peoples">Indigenous</button></b> nations had cleared and farmed, and escaped pigs bred so fast they often reached a region before the colonists did.</p>
 <h3 id="s-disease">The part that did not balance</h3>
 <p>Then there is the traffic that did not run evenly.</p>
 <p>The ships carried smallpox, measles, influenza and typhus. Europe, Africa and Asia had lived with these diseases for centuries, trading and travelling alongside them. Many people caught them young and survived, and survivors carry protection.</p>
 <p>The Americas had never encountered any of them. There was no protection to inherit, nowhere for it to come from. When smallpox reached a community it did not spread the way an illness spreads through a school. It went through nearly everyone at once, including the adults who farmed, hunted, healed and governed.</p>
-<p>Traffic did run the other way. The best current evidence, including DNA recovered from ancient remains, points to syphilis having come out of the Americas; Europe&rsquo;s first recorded <b>epidemic</b> of it begins in the 1490s, immediately after contact. It was a serious disease and it killed Europeans for centuries.</p>
-<p>What it was not was equivalent. Historians disagree about totals, and the disagreement is real. They agree on the scale: the epidemics that travelled west killed most of the Indigenous population of the Americas. Many nations lost people before meeting a single European, because disease moved along trade routes faster than colonists walked. Nothing moving the other way came near that.</p>
-<p>The exchange of disease was two-way. Its consequences were not, and the gap between those two sentences is what made <b>colonization</b> possible.</p>
+<p>Traffic did run the other way. The best current evidence, including DNA recovered from ancient remains, points to syphilis having come out of the Americas; Europe&rsquo;s first recorded <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-epidemic">epidemic</button></b> of it begins in the 1490s, immediately after contact. It was a serious disease and it killed Europeans for centuries.</p>
+<p>What it was not was equivalent. Historians disagree about totals, and the disagreement is real. They agree on the scale: the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-epidemic">epidemics</button> that travelled west killed most of the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-indigenous-peoples">Indigenous</button> population of the Americas. Many nations lost people before meeting a single European, because disease moved along trade routes faster than colonists walked. Nothing moving the other way came near that.</p>
+<p>The exchange of disease was two-way. Its consequences were not, and the gap between those two sentences is what made <b><button type="button" class="vpop" tabindex="0" aria-describedby="def-colonization">colonization</button></b> possible.</p>
 <h3 id="s-people">People were moved too</h3>
 <p>People crossed too. Some chose it; most did not.</p>
 <p>Europeans came for land, money or religious freedom. Far more Africans arrived as enslaved people: across the whole Atlantic slave trade, millions were captured, sold and shipped to the Americas, mostly to grow sugar and tobacco &mdash; two crops the Exchange itself had put in motion.</p>
 <p>Notice how that loops. Sugar cane crosses to the Americas. Sugar makes enormous money. Making it needs labour on a scale nobody would volunteer for. So the same exchange that moved a plant moved millions of people who had no say in it.</p>
 <p>An exchange is supposed to be a trade between two willing sides. Keep that word honest when you use it here.</p>
 <h3 id="s-sowhat">So what?</h3>
-<p>Taught as a food story, the Columbian Exchange is a pleasant lesson: tomatoes to Italy, chocolate to Europe, horses to the Plains. Every bit of that is accurate.</p>
-<p>But it cannot explain the thing that actually happened. Two continents where millions of people lived came under the control of a much smaller number of newcomers. Food does not explain that.</p>
+<p>Taught as a food story, the <button type="button" class="vpop" tabindex="-1" aria-describedby="def-columbian-exchange">Columbian Exchange</button> is a pleasant lesson: tomatoes to Italy, chocolate to Europe, horses to the Plains. Every bit of that is accurate.</p>
+<p>But it cannot explain the thing that actually happened. Two <button type="button" class="vpop" tabindex="-1" aria-describedby="def-continent">continents</button> where millions of people lived came under the control of a much smaller number of newcomers. Food does not explain that.</p>
 <p>The asymmetry does. Crops moved both ways. Disease moved one way and emptied the land. People moved one way in chains and worked it. That is the answer to &ldquo;how,&rdquo; and it is why this unit does not stop at the tomatoes.</p>
 </section>
 <section class="videos" id="watch" aria-labelledby="videos-h">
@@ -366,11 +511,12 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   paint();
 })();
 </script>
+<script src="vocab-pops.js"></script>
 <footer>
   <p class="weblink"><b>Reading this on paper?</b> Everything above is clickable on the
   web version at <b>mrbsocialstudies.org/columbian-exchange.html</b>, where you can also have it read
   aloud or translated into another language.</p>
-  <p>Unit 1: Foundations &amp; Identity &middot; Day 15 &middot; Mr. B&rsquo;s Social Studies.</p>
+  <p>Unit 1: Foundations &amp; Identity &middot; Mr. B&rsquo;s Social Studies.</p>
 </footer>
 </div>
 </body>

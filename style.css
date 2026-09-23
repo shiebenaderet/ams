@@ -740,6 +740,22 @@ ul, ol {
   transition: text-decoration-color var(--transition), color var(--transition);
 }
 
+/* Our own readings: every level and its vocabulary check behind one link each,
+   listed in teaching order, across both columns above the textbook links. */
+.readings-group--wide {
+  grid-column: 1 / -1;
+}
+
+.readings-sub {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.readings-group .readings-sub a {
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
 .readings-group a:hover {
   text-decoration-color: var(--color-accent);
   color: var(--color-accent);
