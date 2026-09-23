@@ -108,12 +108,16 @@ function READING_ACTIVITIES(CFG) {
       s.done = s.done.concat(gained);
       save(state);
       paint();
-      summary();
+      if (typeof onStageChange === 'function') onStageChange();
     });
 
     paint();
     return box;
   }
+
+  /* Set once the stepper exists. panel() calls it after every Check so the nav can
+     react -- a finished stage turns "Next" into the obvious thing to press. */
+  var onStageChange = null;
 
   /* ---------------------------------------------------------------- matching */
   function matchStage(round, items) {
@@ -258,46 +262,132 @@ function READING_ACTIVITIES(CFG) {
     return box;
   }
 
-  /* ----------------------------------------------------------- teacher summary */
-  var sumBox = el('section', 'ract-sum');
-  function summary() {
-    var rows = '', anyTries = 0;
-    CFG.rounds.forEach(function (r) {
-      ['match', 'cloze', 'pair'].forEach(function (kind) {
-        var items = r[kind];
-        if (!items || !items.length) return;
-        var s = st(kind + r.round), n = s.done.length;
-        anyTries += s.tries;
-        rows += '<tr><td>' + ROUND_SHORT[r.round] + '</td><td>' + LABEL[kind] +
-          '</td><td class="' + (n === items.length ? 'ract-won' : '') + '">' +
-          n + '/' + items.length + '</td><td>' +
-          (s.tries ? s.tries + (s.tries === 1 ? ' try' : ' tries') : '&ndash;') +
-          '</td></tr>';
-      });
-    });
-    sumBox.innerHTML =
-      '<h4>Show your teacher</h4>' +
-      '<table class="ract-tbl"><thead><tr><th>Round</th><th>Activity</th>' +
-      '<th>Score</th><th>Tries</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-      '<p class="ract-help">Writing is not scored &mdash; it is saved on this computer.</p>';
-  }
   var ROUND_SHORT = { 1: 'First two', 2: 'All three' };
   var LABEL = { match: 'Matching', cloze: 'Fill the blank', pair: 'Which one is it?' };
+
+  /* ------------------------------------------------------------------- stepper */
+  /* One stage on screen at a time. Stacked, Level 2 opens on nine matching rows
+     followed by nine cloze sentences followed by the pairs -- a scroll that reads
+     as a worksheet, which is the shape the twelve-word reference sheet exists to
+     avoid. One stage at a time is the same idea applied here: a sequence of small
+     asks with the end in sight.
+
+     Every stage builder already returns a detached node and already owns its own
+     slice of `state`, so the stepper only decides which node is in the document.
+     Grading, retries and persistence are untouched by it. */
+  var STEPS = [];
+  CFG.rounds.forEach(function (r) {
+    ['match', 'cloze', 'pair'].forEach(function (kind) {
+      if (r[kind] && r[kind].length) {
+        STEPS.push({ kind: kind, round: r.round, items: r[kind],
+                     rlabel: r.label, rnote: r.note, id: kind + r.round });
+      }
+    });
+  });
+  if (CFG.sentence && CFG.sentence.length) {
+    STEPS.push({ kind: 'sentence', items: CFG.sentence, id: 'sentence' });
+  }
+  var LAST = STEPS.length;              // the results screen sits one past the end
+  var stage = el('div', 'ract-stagewrap');
+  var bar = el('div', 'ract-nav');
+  var back = el('button', 'ract-step ract-back', '&larr; Back');
+  var fwd = el('button', 'ract-step ract-fwd', 'Next &rarr;');
+  var prog = el('span', 'ract-prog');
+  back.type = fwd.type = 'button';
+  bar.appendChild(back); bar.appendChild(prog); bar.appendChild(fwd);
+
+  function complete(sp) {
+    if (sp.kind === 'sentence') return true;   // never scored, never blocking
+    return st(sp.id).done.length === sp.items.length;
+  }
+  function firstUnfinished() {
+    for (var i = 0; i < STEPS.length; i++) if (!complete(STEPS[i])) return i;
+    return LAST;
+  }
+
+  var at = typeof state.__step === 'number' ? state.__step : firstUnfinished();
+  if (at > LAST) at = LAST;
+
+  function show(i, scroll) {
+    at = i; state.__step = i; save(state);
+    stage.innerHTML = '';
+    if (i === LAST) {
+      stage.appendChild(results());
+      prog.innerHTML = 'Done';
+      fwd.style.display = 'none';
+    } else {
+      var sp = STEPS[i];
+      /* The round caption rides with the step rather than wrapping a group of
+         them, because a student now sees one stage and needs to know which round
+         it belongs to without scrolling back to a heading. */
+      if (sp.rlabel) {
+        stage.appendChild(el('h4', 'ract-rlab', sp.rlabel));
+        stage.appendChild(el('p', 'ract-help', sp.rnote));
+      }
+      stage.appendChild(
+        sp.kind === 'match' ? matchStage(sp.round, sp.items) :
+        sp.kind === 'cloze' ? clozeStage(sp.round, sp.items) :
+        sp.kind === 'pair' ? pairStage(sp.round, sp.items) :
+                             sentenceStage(sp.items));
+      prog.innerHTML = 'Step ' + (i + 1) + ' of ' + (LAST + 1);
+      fwd.style.display = '';
+      fwd.innerHTML = (i === LAST - 1) ? 'See your score &rarr;' : 'Next &rarr;';
+    }
+    back.style.visibility = i === 0 ? 'hidden' : '';
+    if (onStageChange) onStageChange();
+    if (scroll) root.scrollIntoView({ block: 'start' });
+  }
+  back.addEventListener('click', function () { show(Math.max(0, at - 1), true); });
+  fwd.addEventListener('click', function () { show(Math.min(LAST, at + 1), true); });
+
+  /* ------------------------------------------------------------------- results */
+  function results() {
+    var box = el('section', 'ract-sum');
+    var rows = '', got = 0, poss = 0, tries = 0;
+    STEPS.forEach(function (sp) {
+      if (sp.kind === 'sentence') return;
+      var s = st(sp.id), n = s.done.length;
+      got += n; poss += sp.items.length; tries += s.tries;
+      rows += '<tr><td>' + ROUND_SHORT[sp.round] + '</td><td>' + LABEL[sp.kind] +
+        '</td><td class="' + (n === sp.items.length ? 'ract-won' : '') + '">' +
+        n + '/' + sp.items.length + '</td><td>' +
+        (s.tries ? s.tries + (s.tries === 1 ? ' try' : ' tries') : '&ndash;') +
+        '</td></tr>';
+    });
+    box.innerHTML =
+      '<h4>Show your teacher</h4>' +
+      '<table class="ract-tbl"><thead><tr><th>Round</th><th>Activity</th>' +
+      '<th>Score</th><th>Tries</th></tr></thead><tbody>' + rows +
+      '<tr class="ract-tot"><td colspan="2">Altogether</td><td class="' +
+      (got === poss ? 'ract-won' : '') + '">' + got + '/' + poss + '</td><td>' +
+      tries + (tries === 1 ? ' try' : ' tries') + '</td></tr></tbody></table>' +
+      '<p class="ract-help">Writing is not scored &mdash; it is saved on this computer.</p>';
+    var again = el('button', 'ract-restart', 'Start over');
+    again.type = 'button';
+    again.addEventListener('click', function () {
+      /* Confirmed, because this is the one control that destroys work -- and a
+         student reaching for "start over" before the map quiz should not lose a
+         score they meant to show someone. */
+      if (!window.confirm('Clear your answers and start these activities again?')) return;
+      try { localStorage.removeItem(LSK); } catch (e) {}
+      state = {};
+      location.reload();
+    });
+    box.appendChild(again);
+    return box;
+  }
 
   /* --------------------------------------------------------------------- build */
   root.appendChild(el('h3', 'ract-h', 'Practice the words'));
   root.appendChild(el('p', 'ract-lead', CFG.lead));
-
-  CFG.rounds.forEach(function (r) {
-    var sec = el('section', 'ract-round');
-    sec.appendChild(el('h4', 'ract-rlab', r.label));
-    sec.appendChild(el('p', 'ract-help', r.note));
-    if (r.match.length) sec.appendChild(matchStage(r.round, r.match));
-    if (r.cloze.length) sec.appendChild(clozeStage(r.round, r.cloze));
-    if (r.pair.length) sec.appendChild(pairStage(r.round, r.pair));
-    root.appendChild(sec);
-  });
-  if (CFG.sentence && CFG.sentence.length) root.appendChild(sentenceStage(CFG.sentence));
-  root.appendChild(sumBox);
-  summary();
+  var panelBox = el('section', 'ract-round');
+  panelBox.appendChild(stage);
+  panelBox.appendChild(bar);
+  root.appendChild(panelBox);
+  onStageChange = function () {
+    var sp = STEPS[at];
+    if (sp && complete(sp)) fwd.classList.add('ract-ready');
+    else fwd.classList.remove('ract-ready');
+  };
+  show(at, false);
 }

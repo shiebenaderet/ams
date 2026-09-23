@@ -260,6 +260,25 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
   padding:.3rem .35rem;}
 .ract-tbl td{padding:.35rem;border-bottom:1px solid var(--rule);}
 .ract-tbl td.ract-won{color:var(--accent);font-weight:700;}
+.ract-stagewrap{min-height:12rem;}
+/* The step bar is the only always-visible control, so it carries the position.
+   "Step 3 of 6" is doing real work here: one stage on screen with no count is a
+   corridor with no end, which is worse than the scroll it replaced. */
+.ract-nav{display:flex;align-items:center;gap:.8rem;margin-top:1.1rem;
+  padding-top:.8rem;border-top:1px solid var(--rule);flex-wrap:wrap;}
+.ract-prog{color:var(--ract-muted);font-size:.92rem;margin:0 auto;}
+.ract-step{font:inherit;font-size:1rem;font-weight:700;padding:.55rem 1.1rem;
+  cursor:pointer;min-height:44px;border:2px solid var(--rule);border-radius:.45rem;
+  background:var(--card);color:var(--ink);}
+/* A finished stage makes Next the obvious thing to press, without disabling it
+   beforehand -- a student who wants to skip ahead and come back may. */
+.ract-step.ract-ready{background:var(--accent);color:var(--ract-on-accent);
+  border-color:var(--accent);}
+.ract-tot td{border-top:2px solid var(--rule);font-weight:700;}
+.ract-restart{font:inherit;font-size:.95rem;margin-top:.9rem;padding:.5rem 1rem;
+  cursor:pointer;min-height:44px;border:2px solid var(--rule);border-radius:.45rem;
+  background:var(--card);color:var(--ract-muted);}
+@media print{.ract-nav{display:none;}}
 @media print{#activities{display:none;}}
 </style>
 </head>
