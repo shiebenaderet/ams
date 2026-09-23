@@ -25,6 +25,9 @@ function READING_ACTIVITIES(CFG) {
   var LSK = 'ract:' + CFG.level;
   var root = document.getElementById('activities');
   if (!root) return;
+  /* Cleared on entry so the practice page can switch level in place by calling
+     this again. On the reading pages it runs once and clears nothing. */
+  root.innerHTML = '';
 
   function load() {
     try { return JSON.parse(localStorage.getItem(LSK)) || {}; }
@@ -151,7 +154,8 @@ function READING_ACTIVITIES(CFG) {
       });
       return ok;
     }
-    return panel(id, 'Matching', 'Every word is in the box at the top of this reading.',
+    return panel(id, 'Matching',
+                 CFG.matchHelp || 'Every word is in the box at the top of this reading.',
                  items, render, grade);
   }
 
