@@ -122,6 +122,71 @@ function READING_ACTIVITIES(CFG) {
      react -- a finished stage turns "Next" into the obvious thing to press. */
   var onStageChange = null;
 
+  /* ------------------------------------------------------------ meet the words */
+  /* A first look before anything is asked. Each card shows the word and hides its
+     meaning behind a tap, so the student commits to a guess -- even a silent one --
+     before reading the answer; a wall of nine open definitions invites the scroll
+     straight past it. Nothing is scored, and "Show all" is there for the student
+     who has already met the words on the reading and just wants to review them.
+     The stage counts as finished once every card has been opened, which is what
+     turns Next into the obvious button. */
+  function meetStage(items) {
+    var s = st('meet');
+    if (!s.seen) s.seen = [];
+    var box = el('section', 'ract-stage ract-meet');
+    box.appendChild(el('h4', null, 'Meet the words'));
+    if (CFG.meetHelp) box.appendChild(el('p', 'ract-help', CFG.meetHelp));
+    var grid = el('div', 'ract-cards');
+    box.appendChild(grid);
+    var count = el('span', 'ract-score');
+    var all = el('button', 'ract-step', 'Show all');
+    all.type = 'button';
+
+    function paintCount() {
+      var n = s.seen.length;
+      count.className = 'ract-score' + (n === items.length ? ' ract-won' : '');
+      count.textContent = n === items.length
+        ? 'All ' + n + ' seen. Next is the matching.'
+        : n + ' of ' + items.length + ' opened';
+      all.style.display = n === items.length ? 'none' : '';
+      if (typeof onStageChange === 'function') onStageChange();
+    }
+    function open(i, card, btn) {
+      card.classList.add('ract-open');
+      btn.setAttribute('aria-expanded', 'true');
+      if (s.seen.indexOf(i) < 0) { s.seen.push(i); save(state); }
+    }
+
+    var opens = [];
+    items.forEach(function (it, i) {
+      var card = el('div', 'ract-card');
+      var btn = el('button', 'ract-cardbtn',
+        '<b>' + it.term + '</b><span class="ract-tap">Tap to see what it means</span>');
+      btn.type = 'button';
+      btn.setAttribute('aria-expanded', 'false');
+      var body = el('div', 'ract-cardbody', '<p class="ract-simple">' + it.def + '</p>');
+      body.id = 'ract-meet-' + i;
+      btn.setAttribute('aria-controls', body.id);
+      card.appendChild(btn);
+      card.appendChild(body);
+      grid.appendChild(card);
+      btn.addEventListener('click', function () { open(i, card, btn); paintCount(); });
+      opens.push(function () { open(i, card, btn); });
+      if (s.seen.indexOf(i) >= 0) open(i, card, btn);
+    });
+    all.addEventListener('click', function () {
+      opens.forEach(function (f) { f(); });
+      paintCount();
+    });
+
+    var bar = el('div', 'ract-bar');
+    bar.appendChild(all);
+    bar.appendChild(count);
+    box.appendChild(bar);
+    paintCount();
+    return box;
+  }
+
   /* ---------------------------------------------------------------- matching */
   function matchStage(round, items) {
     var id = 'match' + round;
@@ -280,6 +345,9 @@ function READING_ACTIVITIES(CFG) {
      slice of `state`, so the stepper only decides which node is in the document.
      Grading, retries and persistence are untouched by it. */
   var STEPS = [];
+  if (CFG.words && CFG.words.length) {
+    STEPS.push({ kind: 'meet', items: CFG.words, id: 'meet' });
+  }
   CFG.rounds.forEach(function (r) {
     ['match', 'cloze', 'pair'].forEach(function (kind) {
       if (r[kind] && r[kind].length) {
@@ -302,6 +370,7 @@ function READING_ACTIVITIES(CFG) {
 
   function complete(sp) {
     if (sp.kind === 'sentence') return true;   // never scored, never blocking
+    if (sp.kind === 'meet') return (st('meet').seen || []).length === sp.items.length;
     return st(sp.id).done.length === sp.items.length;
   }
   function firstUnfinished() {
@@ -329,6 +398,7 @@ function READING_ACTIVITIES(CFG) {
         stage.appendChild(el('p', 'ract-help', sp.rnote));
       }
       stage.appendChild(
+        sp.kind === 'meet' ? meetStage(sp.items) :
         sp.kind === 'match' ? matchStage(sp.round, sp.items) :
         sp.kind === 'cloze' ? clozeStage(sp.round, sp.items) :
         sp.kind === 'pair' ? pairStage(sp.round, sp.items) :
@@ -349,7 +419,7 @@ function READING_ACTIVITIES(CFG) {
     var box = el('section', 'ract-sum');
     var rows = '', got = 0, poss = 0, tries = 0;
     STEPS.forEach(function (sp) {
-      if (sp.kind === 'sentence') return;
+      if (sp.kind === 'sentence' || sp.kind === 'meet') return;
       var s = st(sp.id), n = s.done.length;
       got += n; poss += sp.items.length; tries += s.tries;
       rows += '<tr><td>' + ROUND_SHORT[sp.round] + '</td><td>' + LABEL[sp.kind] +

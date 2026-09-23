@@ -70,6 +70,8 @@ b{font-weight:700;}
 .vbox dt{font-weight:700;margin-top:.6rem;}
 .vbox dt:first-of-type{margin-top:0;}
 .vbox dd{margin:.1rem 0 0;font-size:1rem;}
+.vbox .va{display:block;font-size:.92rem;color:var(--muted);margin-top:.1rem;}
+.vbox .va b{font-weight:600;}
 .help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
   padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
 .help p{margin:0 0 .5rem;}
@@ -262,6 +264,23 @@ footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
 .ract-tbl td{padding:.35rem;border-bottom:1px solid var(--rule);}
 .ract-tbl td.ract-won{color:var(--accent);font-weight:700;}
 .ract-stagewrap{min-height:12rem;}
+/* Meet the words. Cards, not a list: each is its own tap target, and a closed
+   card is a question ("what does this mean?") where an open list is a thing to
+   scroll past. */
+.ract-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(14rem,1fr));
+  gap:.6rem;margin:0 0 .4rem;align-items:start;}
+.ract-card{border:2px solid var(--rule);border-radius:.55rem;background:var(--card);
+  color:var(--ink);overflow:hidden;}
+.ract-card.ract-open{border-color:var(--accent);}
+.ract-cardbtn{font:inherit;display:block;width:100%;text-align:left;cursor:pointer;
+  padding:.65rem .8rem;min-height:44px;border:0;background:var(--ract-row);
+  color:var(--ink);}
+.ract-cardbtn b{display:block;font-size:1.1rem;}
+.ract-tap{display:block;font-size:.85rem;color:var(--ract-muted);}
+.ract-open .ract-tap{display:none;}
+.ract-cardbody{display:none;padding:.55rem .8rem .7rem;}
+.ract-open .ract-cardbody{display:block;}
+.ract-simple{margin:0;font-size:1rem;}
 /* The step bar is the only always-visible control, so it carries the position.
    "Step 3 of 6" is doing real work here: one stage on screen with no count is a
    corridor with no end, which is worse than the scroll it replaced. */
@@ -322,10 +341,10 @@ b .vpop{font-weight:inherit;}
 <section class="vbox" id="words" aria-labelledby="words-h">
   <h2 id="words-h" class="vh">Words you need</h2>
   <p class="vsub">The same words at every level. The last three belong to one region each.</p>
-  <dl><dt>Cash crop</dt><dd id="def-cash-crop">A crop grown to be sold for profit rather than eaten by the family that grew it. Tobacco, rice and indigo were cash crops.</dd><dt>Subsistence farming</dt><dd id="def-subsistence-farming">Farming that produces enough to feed the household, with little or nothing left to sell. The opposite of growing a cash crop.</dd><dt>Indentured servant</dt><dd id="def-indentured-servant">A person who signed a contract to work without wages for a set number of years, usually four to seven, in exchange for passage to America. At the end of the term they were free, and the contract had an end date.</dd><dt>Enslaved</dt><dd id="def-enslaved">Held as property and forced to work without pay, for life, with that status passed to one’s children. Unlike indenture, it had no end date and no contract, and by law it was inherited.</dd><dt>Export</dt><dd id="def-export">A good sent out of a colony to be sold somewhere else. What a region exports tells you what its land and labor could produce.</dd><dt>Self-government</dt><dd id="def-self-government">A community making its own laws rather than receiving them from a distant authority. Every colony had some of it, and every colony also had a governor answering to Britain.</dd><dt>Puritan <span class="rtag">New England</span></dt><dd id="def-puritan">An English Protestant who wanted to &ldquo;purify&rdquo; the Church of England. Puritans founded Massachusetts as a community run on their own religious rules.</dd><dt>Tolerance <span class="rtag">Middle</span></dt><dd id="def-tolerance">Allowing beliefs and practices you disagree with. In the Middle Colonies it was written into law, which is not the same as everyone getting along.</dd><dt>Plantation <span class="rtag">Southern</span></dt><dd id="def-plantation">A large agricultural estate producing a single cash crop for export, worked by a concentrated labor force — by the 1700s, almost entirely enslaved Africans and their descendants.</dd></dl>
+  <dl><dt>Cash crop</dt><dd id="def-cash-crop"><span class="vs">A plant grown to sell for money, not to eat.</span> <span class="va"><b>Academic:</b> A crop grown to be sold for profit rather than eaten by the family that grew it. Tobacco, rice and indigo were cash crops.</span></dd><dt>Subsistence farming</dt><dd id="def-subsistence-farming"><span class="vs">Growing just enough food to feed your own family.</span> <span class="va"><b>Academic:</b> Farming that produces enough to feed the household, with little or nothing left to sell. The opposite of growing a cash crop.</span></dd><dt>Indentured servant</dt><dd id="def-indentured-servant"><span class="vs">Someone who worked for about 4 to 7 years to pay for the trip across the ocean. Then they were free.</span> <span class="va"><b>Academic:</b> A person who signed a contract to work without wages for a set number of years, usually four to seven, in exchange for passage to America. At the end of the term they were free, and the contract had an end date.</span></dd><dt>Enslaved</dt><dd id="def-enslaved"><span class="vs">Forced to work for no pay, with no right to leave. Enslaved people were treated as property that could be bought and sold.</span> <span class="va"><b>Academic:</b> Held as property and forced to work without pay, for life, with that status passed to one’s children. Unlike indenture, it had no end date and no contract, and by law it was inherited.</span></dd><dt>Export</dt><dd id="def-export"><span class="vs">Something a place sells to another country.</span> <span class="va"><b>Academic:</b> A good sent out of a colony to be sold somewhere else. What a region exports tells you what its land and labor could produce.</span></dd><dt>Self-government</dt><dd id="def-self-government"><span class="vs">People making their own local rules instead of taking orders from far away.</span> <span class="va"><b>Academic:</b> A community making its own laws rather than receiving them from a distant authority. Every colony had some of it, and every colony also had a governor answering to Britain.</span></dd><dt>Puritan <span class="rtag">New England</span></dt><dd id="def-puritan"><span class="vs">A member of a religious group that wanted to live exactly by the Bible.</span> <span class="va"><b>Academic:</b> An English Protestant who wanted to &ldquo;purify&rdquo; the Church of England. Puritans founded Massachusetts as a community run on their own religious rules.</span></dd><dt>Tolerance <span class="rtag">Middle</span></dt><dd id="def-tolerance"><span class="vs">Letting people believe and worship differently from you.</span> <span class="va"><b>Academic:</b> Allowing beliefs and practices you disagree with. In the Middle Colonies it was written into law, which is not the same as everyone getting along.</span></dd><dt>Plantation <span class="rtag">Southern</span></dt><dd id="def-plantation"><span class="vs">A very large farm that grew one crop to sell, worked by enslaved people.</span> <span class="va"><b>Academic:</b> A large agricultural estate producing a single cash crop for export, worked by a concentrated labor force — by the 1700s, almost entirely enslaved Africans and their descendants.</span></dd></dl>
   <a class="vcta" href="colonial-regions-practice.html">
     <b>Check yourself on these words &rarr;</b>
-    <span>Four short activities on its own page, with no reading to look at. You get a score, and you can retry the ones you miss.</span>
+    <span>Meet the words, then four short activities on their own page, with no reading to look at. You get a score, and you can retry the ones you miss.</span>
   </a>
 </section>
 <section class="reading" aria-labelledby="NE-h">

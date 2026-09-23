@@ -29,9 +29,15 @@
     document.body.appendChild(bubble);
     var open = null;
 
+    /* The bubble shows the plain line only. The <dd> holds plain and academic,
+       and both run together read as one long sentence in a small box mid-reading;
+       the academic line is a scroll away in the word box. Screen readers still get
+       the whole <dd>, through aria-describedby. */
     function defFor(btn) {
       var d = document.getElementById(btn.getAttribute('aria-describedby'));
-      return d ? d.textContent.trim() : '';
+      if (!d) return '';
+      var s = d.querySelector('.vs');
+      return (s || d).textContent.trim();
     }
 
     function show(btn) {
