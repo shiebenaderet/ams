@@ -15,7 +15,7 @@
    primer is written whole.
 
    Images live in symbol-images/. The first image of a symbol is the main
-   one; any after it are labelled details (A, B, C) shown in the strip. */
+   one; any after it are labeled details (A, B, C) shown in the strip. */
 
 var UNIT_QUESTION = "What does it mean to be “American”?";
 
@@ -74,7 +74,7 @@ var SYMBOL_EXPLORATIONS = [
         title: "The American Flag",
         simple: "Count the stars on the flag. There are 50. There is one star for each state. Now count the stripes. There are 13. There is one stripe for each of the first 13 colonies. The stars have been redrawn 27 times. Here is why. Every time a new state joined, somebody had to fit another star into the blue. The last change happened in 1960. That is the year Hawaii became a state.",
         primer: "The flag carries 50 stars for the 50 states and 13 stripes for the 13 original colonies. The star pattern has been redrawn 27 times, because each new state meant another star had to fit into the blue. The most recent change came in 1960, after Hawaii became a state.",
-        deeper: "People often say red means courage, white means purity and blue means justice. But Congress gave the flag's colours no meaning at all when it adopted the design in 1777. Those meanings belong to the Great Seal instead. In 1782, Charles Thomson explained the seal's colours: “White signifies purity and innocence, Red, hardiness & valour, and Blue… vigilance, perseverance & justice.” The meanings were invented for one symbol and later borrowed onto another.",
+        deeper: "People often say red means courage, white means purity and blue means justice. But Congress gave the flag's colors no meaning at all when it adopted the design in 1777. Those meanings belong to the Great Seal instead. In 1782, Charles Thomson explained the seal's colors: “White signifies purity and innocence, Red, hardiness & valour, and Blue… vigilance, perseverance & justice.” The meanings were invented for one symbol and later borrowed onto another.",
         images: [
           { src: "flag-main.webp", alt: "The flag of the United States: fifty white stars on blue, with thirteen red and white stripes." },
           { src: "flag-stars.webp", label: "A", title: "Fifty stars",
@@ -122,12 +122,12 @@ var SYMBOL_EXPLORATIONS = [
         title: "The Black Power Fist",
         simple: "A raised fist means strength. It also means you will not accept being treated unfairly. In the 1960s, Black Americans were fighting for their civil rights. During those years the raised fist became a symbol of Black pride and Black power in the United States. People still raise a fist today. You see it at marches and at protests. So a gesture from sixty years ago is still alive now.",
         primer: "A raised fist stands for strength, and for refusing to accept unfair treatment. During the Civil Rights era of the 1960s it became a symbol of Black pride and Black power in the United States. People still raise a fist at marches and protests today, which is how a gesture from sixty years ago stays current.",
-        deeper: "On 16 October 1968, at the Mexico City Olympics, Tommie Smith won the 200 metres in a world record and John Carlos took bronze. On the podium they raised black-gloved fists and bowed their heads, standing in black socks with no shoes to stand for poverty. Carlos had left his gloves behind, so the two men split one pair — which is why one fist is a right hand and the other a left. Both were expelled from the Games. Smith later wrote that it was never a Black Power salute at all, but “a human rights salute.”",
+        deeper: "On October 16, 1968, at the Mexico City Olympics, Tommie Smith won the 200 meters in a world record and John Carlos took bronze. On the podium they raised black-gloved fists and bowed their heads, standing in black socks with no shoes to stand for poverty. Carlos had left his gloves behind, so the two men split one pair — which is why one fist is a right hand and the other a left. Both were expelled from the Games. Smith later wrote that it was never a Black Power salute at all, but “a human rights salute.”",
         images: [
           { src: "fist-main.webp", label: "A", title: "Mexico City, 1968", focus: "center 22%",
             alt: "Three athletes on an Olympic podium in 1968. The two American sprinters each raise one black-gloved fist and bow their heads; the Australian silver medallist stands in front of them.",
-            caption: "Mexico City, 16 October 1968. Tommie Smith (centre, gold) and John Carlos (right, bronze) raise gloved fists while the American anthem plays. Look closely: Smith raises his right hand and Carlos his left, because Carlos had left his gloves behind and the two of them shared a single pair.",
-            captionSimple: "Mexico City, 16 October 1968. Tommie Smith won gold and stands in the centre. John Carlos won bronze and stands on the right. They raise gloved fists while the American anthem plays. Look closely. Smith raises his right hand and Carlos raises his left. That is because Carlos left his gloves behind, so the two men shared one pair." },
+            caption: "Mexico City, October 16, 1968. Tommie Smith (center, gold) and John Carlos (right, bronze) raise gloved fists while the American anthem plays. Look closely: Smith raises his right hand and Carlos his left, because Carlos had left his gloves behind and the two of them shared a single pair.",
+            captionSimple: "Mexico City, October 16, 1968. Tommie Smith won gold and stands in the center. John Carlos won bronze and stands on the right. They raise gloved fists while the American anthem plays. Look closely. Smith raises his right hand and Carlos raises his left. That is because Carlos left his gloves behind, so the two men shared one pair." },
           { src: "fist-rally.webp", label: "B", title: "Still raised today",
             alt: "A crowd at an outdoor rally with many arms raised, fists clenched.",
             caption: "San Francisco, 2016. Almost fifty years later, the same gesture does the same work at a protest — which is what keeps it a living symbol rather than a historical one.",
@@ -141,11 +141,11 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "mexican-flag",
         title: "The Mexican Flag",
-        simple: "Many Mexican Americans fly this flag. Some wear its colours. Some hang it up at home. They do this to show pride in where their family came from. Flying this flag does not make somebody less American. People often show this flag and the US flag side by side. They do that because both flags describe who they really are.",
-        primer: "Many Mexican Americans fly this flag, wear its colours, or hang it at home to show pride in where their family came from. Flying it is not a way of being less American. People often display the Mexican flag and the US flag together, because both of them describe who they actually are.",
-        deeper: "The eagle at the centre comes from an Aztec story. The Mexica people were told to build their city where they found an eagle perched on a cactus, and they founded Tenochtitlan on that spot around 1325. Mexico City stands there today. So the middle of this flag carries a history older than either modern country — which is part of why people treat it as heritage rather than politics.",
+        simple: "Many Mexican Americans fly this flag. Some wear its colors. Some hang it up at home. They do this to show pride in where their family came from. Flying this flag does not make somebody less American. People often show this flag and the US flag side by side. They do that because both flags describe who they really are.",
+        primer: "Many Mexican Americans fly this flag, wear its colors, or hang it at home to show pride in where their family came from. Flying it is not a way of being less American. People often display the Mexican flag and the US flag together, because both of them describe who they actually are.",
+        deeper: "The eagle at the center comes from an Aztec story. The Mexica people were told to build their city where they found an eagle perched on a cactus, and they founded Tenochtitlan on that spot around 1325. Mexico City stands there today. So the middle of this flag carries a history older than either modern country — which is part of why people treat it as heritage rather than politics.",
         images: [
-          { src: "mexflag-main.webp", alt: "The flag of Mexico: green, white and red vertical bands with an eagle on a cactus at the centre." },
+          { src: "mexflag-main.webp", alt: "The flag of Mexico: green, white and red vertical bands with an eagle on a cactus at the center." },
           { src: "mexflag-eagle.webp", label: "A", title: "The eagle",
             alt: "Close-up of the Mexican coat of arms: a golden eagle standing on a cactus, gripping a snake in its beak and claw.",
             caption: "An eagle on a cactus, holding a snake. This is the exact sign the Mexica were told to look for, and they built their city where they found it.",
@@ -173,8 +173,8 @@ var SYMBOL_EXPLORATIONS = [
             captionSimple: "A woven hoop, hung where somebody sleeps. It began with the Ojibwe people. Now it is sold almost everywhere, and that is exactly what people argue about." },
           { src: "native-totem.webp", label: "C", title: "A totem pole",
             alt: "A tall carved and painted totem pole standing in Pioneer Square in Seattle, with trees and city buildings behind it.",
-            caption: "This pole stands in Pioneer Square in Seattle, and it did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, Alaska, to honour a woman called Chief-of-All-Women — one of very few poles raised for a woman. In 1899 a party of Seattle businessmen chopped it down, sawed it in two and shipped it home. Eight of them were charged with theft and the case was dropped. The Tlingit asked for $20,000 and were paid $500. The pole standing there today is a replica, carved by descendants of the families who made the first one.",
-            captionSimple: "This pole stands in Pioneer Square in Seattle. It did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, in Alaska. It honoured a woman called Chief-of-All-Women, and very few poles were raised for a woman. In 1899 a group of Seattle businessmen chopped it down. They sawed it in two and shipped it home. Eight of them were charged with theft, and the case was dropped. The Tlingit asked for $20,000. They were paid $500. The pole standing there today is a copy. It was carved by descendants of the families who made the first one." },
+            caption: "This pole stands in Pioneer Square in Seattle, and it did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, Alaska, to honor a woman called Chief-of-All-Women — one of very few poles raised for a woman. In 1899 a party of Seattle businessmen chopped it down, sawed it in two and shipped it home. Eight of them were charged with theft and the case was dropped. The Tlingit asked for $20,000 and were paid $500. The pole standing there today is a replica, carved by descendants of the families who made the first one.",
+            captionSimple: "This pole stands in Pioneer Square in Seattle. It did not start there. It was carved about 1790 in a Tlingit village on Tongass Island, in Alaska. It honored a woman called Chief-of-All-Women, and very few poles were raised for a woman. In 1899 a group of Seattle businessmen chopped it down. They sawed it in two and shipped it home. Eight of them were charged with theft, and the case was dropped. The Tlingit asked for $20,000. They were paid $500. The pole standing there today is a copy. It was carved by descendants of the families who made the first one." },
           { src: "native-powwow.webp", label: "D", title: "Regalia",
             alt: "A dancer at a powwow seen from behind, wearing bright yellow and red regalia with beaded cuffs.",
             caption: "Worn at a powwow in Montana. The word is regalia, never “costume” — a costume is something you pretend in, and this is not pretending.",
@@ -192,7 +192,7 @@ var SYMBOL_EXPLORATIONS = [
         primer: "This flag puts the stars and stripes together with the rainbow of the Pride flag. People fly it to say that being LGBTQ+ and being American are one thing rather than two competing things. It works the same way the combined Mexican and American designs do: two identities held in a single image.",
         deeper: "The rainbow flag was designed in 1978 by Gilbert Baker, an artist and army veteran in San Francisco, and the first versions carried eight stripes rather than today's six. Combining it with the stars and stripes follows an old American habit — taking the national flag and altering it deliberately, in order to make a claim about who the country is supposed to belong to.",
         images: [
-          { src: "pride-main.webp", alt: "An American flag with the usual white stars on blue, but with rainbow-coloured stripes instead of red and white." },
+          { src: "pride-main.webp", alt: "An American flag with the usual white stars on blue, but with rainbow-colored stripes instead of red and white." },
           { src: "pride-rainbow.webp", label: "A", title: "The rainbow flag",
             alt: "A small handheld rainbow Pride flag held up outdoors at a parade.",
             caption: "The flag this borrows from. Gilbert Baker designed it in San Francisco in 1978, and the first ones he sewed had eight stripes rather than six.",
@@ -218,15 +218,15 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "hard-hat",
         title: "The Hard Hat",
-        simple: "A hard hat is safety equipment. Tools get dropped on building sites. The hat stops a falling tool from killing the person underneath. But the hat means more than that. It stands for physical work done properly. Sometimes people call a worker “a hard hat.” They usually mean somebody who is proud of building something real.",
+        simple: "A hard hat is safety equipment. Tools get dropped on construction sites. The hat stops a falling tool from killing the person underneath. But the hat means more than that. It stands for physical work done properly. Sometimes people call a worker “a hard hat.” They usually mean somebody who is proud of building something real.",
         primer: "A hard hat is safety equipment, worn so that a falling tool does not kill the person underneath. But it also stands for physical work done properly. When people call someone “a hard hat,” they usually mean a worker who takes pride in building something real and visible.",
-        deeper: "The hat exists because the work was dangerous: early versions were worn on big 1930s projects like the Hoover Dam and the Golden Gate Bridge. On a modern site the colour often signals the job — who is a visitor, who is an engineer, who is a supervisor. The hat also became political in 1970, when construction workers marched through New York City still wearing them, and the phrase started to mean a set of opinions as well as a job.",
+        deeper: "The hat exists because the work was dangerous: early versions were worn on big 1930s projects like the Hoover Dam and the Golden Gate Bridge. On a modern site the color often signals the job — who is a visitor, who is an engineer, who is a supervisor. The hat also became political in 1970, when construction workers marched through New York City still wearing them, and the phrase started to mean a set of opinions as well as a job.",
         images: [
           { src: "hardhat-main.webp", alt: "A group of construction workers in hard hats and orange high-visibility vests standing together on a site." },
-          { src: "hardhat-colours.webp", label: "A", title: "Look at the colours",
+          { src: "hardhat-colours.webp", label: "A", title: "Look at the colors",
             alt: "Close-up along a row of workers, showing hard hats in white, brown and dark red.",
-            caption: "Look along the row: the colours are not decoration. On many sites the colour of the hat tells you who somebody is before they speak — a visitor, a supervisor, an engineer.",
-            captionSimple: "Look along the row of workers. The colours are not just decoration. On many building sites the colour of the hat tells you who somebody is before they say a word. It can mean a visitor, a supervisor or an engineer." }
+            caption: "Look along the row: the colors are not decoration. On many sites the color of the hat tells you who somebody is before they speak — a visitor, a supervisor, an engineer.",
+            captionSimple: "Look along the row of workers. The colors are not just decoration. On many construction sites the color of the hat tells you who somebody is before they say a word. It can mean a visitor, a supervisor or an engineer." }
         ]
       },
       {
@@ -244,7 +244,7 @@ var SYMBOL_EXPLORATIONS = [
           { src: "farm-pitchfork.webp", label: "B", title: "The pitchfork",
             alt: "An old wooden-handled pitchfork with three metal tines.",
             caption: "Older than the tractor, and still the shorthand for farm work — which is why the painting American Gothic is instantly readable.",
-            captionSimple: "The pitchfork is older than the tractor. It is still the quickest way to say “farm work” in a picture. That is why people recognise the painting American Gothic straight away." },
+            captionSimple: "The pitchfork is older than the tractor. It is still the quickest way to say “farm work” in a picture. That is why people recognize the painting American Gothic right away." },
           { src: "farm-tractor.webp", label: "C", title: "The combine",
             alt: "A green combine harvester cutting a wide stripe through a field of ripe wheat.",
             caption: "The pitchfork's replacement. One machine now does the cutting, threshing and cleaning that once took a whole crew a whole season — which is most of the reason the farming jobs went away.",
@@ -324,17 +324,17 @@ var SYMBOL_EXPLORATIONS = [
       {
         slug: "religious-symbols",
         title: "Religious Symbols",
-        simple: "Americans practise many different religions. Many Americans practise no religion at all. The First Amendment protects both choices. It says the government cannot set up an official religion. It also says the government cannot stop you practising yours. Put these symbols together and they stand for that freedom. They do not stand for any single faith.",
-        primer: "Americans practise many different religions, and many practise none at all. The First Amendment protects both: the government may not set up an official religion, and it may not stop you practising yours. Taken together, these symbols stand for that freedom rather than for any single faith.",
+        simple: "Americans practice many different religions. Many Americans practice no religion at all. The First Amendment protects both choices. It says the government cannot set up an official religion. It also says the government cannot stop you practicing yours. Put these symbols together and they stand for that freedom. They do not stand for any single faith.",
+        primer: "Americans practice many different religions, and many practice none at all. The First Amendment protects both: the government may not set up an official religion, and it may not stop you practicing yours. Taken together, these symbols stand for that freedom rather than for any single faith.",
         deeper: "The protection was written by people who had watched religious persecution in Europe, and in the colonies themselves. It has been tested constantly ever since — over prayer in schools, over which holidays close an office, over what a courthouse is allowed to display. So the real question the symbol raises is not whether freedom of religion exists on paper, but who has actually received it in practice.",
         images: [
-          { src: "religion-chart.webp", alt: "A chart of many religious symbols from faiths around the world, each labelled." },
+          { src: "religion-chart.webp", alt: "A chart of many religious symbols from faiths around the world, each labeled." },
           { src: "religion-cross.webp", label: "A", title: "The cross",
-            alt: "A plain Christian cross.", caption: "Christianity — the most widely practised faith in the United States.",
-            captionSimple: "Christianity. It is the most widely practised faith in the United States." },
+            alt: "A plain Christian cross.", caption: "Christianity — the most widely practiced faith in the United States.",
+            captionSimple: "Christianity. It is the most widely practiced faith in the United States." },
           { src: "religion-star.webp", label: "B", title: "The Star of David",
-            alt: "A blue six-pointed Star of David.", caption: "Judaism — practised in America since the 1600s.",
-            captionSimple: "Judaism. It has been practised in America since the 1600s." },
+            alt: "A blue six-pointed Star of David.", caption: "Judaism — practiced in America since the 1600s.",
+            captionSimple: "Judaism. It has been practiced in America since the 1600s." },
           { src: "religion-crescent.webp", label: "C", title: "The star and crescent",
             alt: "A white star and crescent moon.", caption: "Islam — carried to America in part by enslaved West African Muslims.",
             captionSimple: "Islam. It was carried to America partly by enslaved West Africans who were Muslims." },
@@ -355,13 +355,13 @@ var SYMBOL_EXPLORATIONS = [
         primer: "A baseball cap began as sports equipment, because the brim keeps the sun out of a fielder's eyes. It turned into ordinary American clothing that almost anybody wears. A cap can say where you are from, which team you follow, or what you believe — entirely through whatever is printed on the front of it.",
         deeper: "The one shown here is a Seattle Mariners cap, which makes the point locally: around here, that logo tells other people something about you before you have said a word. The cap is cheap, plain, and has a flat panel right at eye level. That combination is why it became the standard American way to advertise a loyalty.",
         images: [
-          { src: "cap-main.webp", alt: "A teal and navy Seattle Mariners baseball cap with the stylised S logo on the front." },
+          { src: "cap-main.webp", alt: "A teal and navy Seattle Mariners baseball cap with the stylized S logo on the front." },
           { src: "cap-team.webp", label: "A", title: "Where it started",
             alt: "A black and white photograph of the 1914 West Point baseball team, most of the players wearing caps.",
             caption: "The 1914 West Point team. The cap was equipment first — the brim exists to keep the sun out of a fielder's eyes, and everything else came later.",
             captionSimple: "The 1914 West Point team. The cap was equipment first. The brim sticks out to keep the sun out of a fielder’s eyes. Everything else came later." },
           { src: "cap-display.webp", label: "B", title: "A wall of them",
-            alt: "A market stall stacked with dozens of baseball caps in many colours and logos.",
+            alt: "A market stall stacked with dozens of baseball caps in many colors and logos.",
             caption: "Dozens of them, all the same shape, all saying different things. The object is identical; the front panel is the message.",
             captionSimple: "Dozens of caps, all the same shape, all saying different things. The object is identical. The front panel is the message." }
         ]
@@ -371,7 +371,7 @@ var SYMBOL_EXPLORATIONS = [
         title: "The Smartphone",
         simple: "Most Americans use a smartphone every day. They talk to each other on it. They read the news on it. They take photographs and find their way with it. So the phone stands for being connected to everybody at once. It stands for something else too. Almost every pocket in the country holds the same object.",
         primer: "A smartphone is how most Americans talk to each other, read the news, take photographs and find their way around. It stands for being connected to everybody at once. It also stands for a country where very nearly the same object is sitting in almost every single pocket.",
-        deeper: "It cuts both ways at once. The same device that lets a movement organise thousands of people in a few hours also records where its owner goes all day, and it is assembled from materials and labour gathered across many countries. So choosing the phone as a symbol of America means choosing connection and dependence together — you cannot pick up only one of them.",
+        deeper: "It cuts both ways at once. The same device that lets a movement organize thousands of people in a few hours also records where its owner goes all day, and it is assembled from materials and labor gathered across many countries. So choosing the phone as a symbol of America means choosing connection and dependence together — you cannot pick up only one of them.",
         images: [
           { src: "phone-iphone.webp", alt: "An iPhone seen from the front, showing its home screen of app icons." },
           { src: "phone-samsung.webp", label: "A", title: "A different make",
