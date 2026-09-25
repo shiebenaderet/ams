@@ -396,6 +396,89 @@ footer.colophon{
   position:relative;z-index:1;
 }
 .save-dot{font-size:12px}
+
+/* region modal: holdings and needs stay folded until asked for */
+.secret-reveal{text-align:center;margin:0.875rem 0 0.25rem}
+
+/* ============ PROJECT BUTTON, HELP, CURTAIN (Dock) ============ */
+.proj-ctl{display:flex;align-items:center;gap:0.375rem;position:relative}
+.seal-btn.on{outline:3px solid var(--gold);outline-offset:1px}
+.proj-help{
+  position:absolute;top:calc(100% + 0.5rem);right:0;z-index:40;width:min(22rem,86vw);
+  padding:0.75rem 0.875rem;border:1.5px solid var(--ink-soft);border-radius:6px;
+  background:linear-gradient(170deg,#fbf3dc,#eadbb4);box-shadow:0 8px 24px rgba(0,0,0,.35);
+  font-size:15px;line-height:1.45;color:var(--ink);
+}
+.proj-help[hidden]{display:none}
+.proj-help p{margin-bottom:0.5rem}
+.proj-help .modal-actions{display:flex;justify-content:flex-end}
+.curtain{
+  position:fixed;inset:0;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:0.75rem;text-align:center;padding:2rem;color:var(--ink);
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(255,248,222,.6), transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(120,90,40,.3), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, var(--parch) 55%, var(--parch-dark) 100%);
+  box-shadow:inset 0 0 120px rgba(82,58,25,.45);
+}
+.curtain.show{display:flex}
+.curtain .c-rose{font-size:clamp(56px,9vw,150px);line-height:1;filter:sepia(.6)}
+.curtain .c-msg{font-family:'Pirata One',serif;font-weight:400;font-size:clamp(34px,5.5vw,96px);line-height:1.1}
+.curtain .c-sub{font-style:italic;font-size:clamp(16px,1.8vw,32px);color:var(--ink-soft);max-width:40ch}
+
+/* ============ PROJECTOR WINDOW (?view=projector) ============
+   The same file, opened by the Dock's Project button. It renders only the public
+   snapshot the Dock sends; every control is removed from the page at boot. */
+.proj-only{display:none}
+body.projector{overflow:hidden}
+body.projector .proj-only{display:block}
+body.projector .sheet{max-width:none;height:100vh;margin:0;border-radius:0;padding:0.625rem 1.125rem 0.875rem;display:flex;flex-direction:column}
+body.projector header.bar{margin-bottom:0.375rem;padding-bottom:0.125rem}
+body.projector h1.main-title{font-size:clamp(22px,2.2vw,46px)}
+body.projector .subtitle{display:none}
+body.projector #view-board{flex:1;min-height:0}
+body.projector .board-grid{
+  height:100%;gap:0.625rem;
+  grid-template-columns:minmax(0,1fr) minmax(15rem,27%);
+  grid-template-rows:auto minmax(0,1fr) auto;
+  grid-template-areas:"banner banner" "map regions" "ticker regions";
+}
+body.projector .phase-banner{grid-area:banner;padding:0.25rem 1rem}
+body.projector .phase-banner .round-label{font-size:clamp(26px,2.9vw,58px)}
+body.projector .phase-banner .day-tag{font-size:clamp(15px,1.3vw,26px)}
+body.projector .phase-banner .phase-instr{font-size:clamp(15px,1.3vw,27px)}
+body.projector .phase-banner .timer{font-size:clamp(46px,5.6vw,120px);min-width:3.2em;line-height:1.05}
+body.projector .map-panel{grid-area:map;min-height:0;display:flex}
+body.projector .map-panel svg{width:100%;height:100%}
+body.projector .port-group{cursor:default}
+body.projector .port-group:hover circle.port-dot{r:8.5}
+body.projector .ticker{grid-area:ticker;font-size:clamp(15px,1.3vw,26px);min-height:0}
+body.projector .region-row{grid-area:regions;grid-template-columns:minmax(0,1fr);grid-auto-rows:minmax(0,1fr);gap:0.5rem;min-height:0}
+body.projector .region-card{cursor:default;display:flex;flex-direction:column;min-height:0}
+body.projector .region-card:hover{transform:none;box-shadow:2px 3px 8px rgba(58,42,22,.22)}
+body.projector .region-card .rc-head{padding:0.25rem 0.625rem}
+body.projector .region-card .rc-head .rc-name{font-size:clamp(17px,1.5vw,30px)}
+body.projector .region-card .rc-head .rc-flag{font-size:clamp(15px,1.3vw,26px)}
+body.projector .region-card .rc-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-between;padding:0.25rem 0.625rem 0.375rem}
+/* the progress bar always shows; a long crew list is what gets cut */
+body.projector .rc-students{flex:0 1 auto;min-height:0;font-size:clamp(12px,0.95vw,21px);line-height:1.3;margin-bottom:0.125rem;padding-top:0.125rem;overflow:hidden}
+body.projector .progress-wrap{flex-shrink:0}
+body.projector .progress-label{font-size:clamp(13px,1.05vw,24px)}
+body.projector .progress-bar{height:0.8rem}
+.proj-label{position:fixed;right:0.5rem;bottom:0.25rem;z-index:5;font-size:11px;font-style:italic;color:var(--ink-faint);opacity:.6;pointer-events:none}
+.proj-card{
+  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:150;width:min(44rem,80vw);
+  padding:1.5rem 2rem;border-radius:10px;text-align:center;border:3px solid var(--ink-soft);
+  background:
+    radial-gradient(ellipse at 20% 15%, rgba(255,248,222,.65), transparent 60%),
+    radial-gradient(ellipse at 50% 50%, var(--parch) 55%, var(--parch-dark) 100%);
+  box-shadow:0 20px 70px rgba(0,0,0,.65), inset 0 0 50px rgba(120,90,40,.25);
+}
+.proj-card[hidden]{display:none}
+.proj-card .pc-kicker{font-family:'IM Fell English SC',serif;font-size:clamp(16px,1.5vw,30px);color:var(--ink-soft)}
+.proj-card .pc-ico{font-size:clamp(48px,6vw,110px);line-height:1.1}
+.proj-card .pc-title{font-family:'Pirata One',serif;font-weight:400;font-size:clamp(32px,3.6vw,72px);line-height:1.1}
+.proj-card .pc-text{font-style:italic;font-size:clamp(18px,1.8vw,36px);line-height:1.35;color:var(--ink-soft);margin-top:0.5rem}
 </style>
 </head>
 <body>
@@ -412,6 +495,17 @@ footer.colophon{
         <button data-lvl="g5" aria-pressed="false">Level 1</button>
         <button data-lvl="g8" aria-pressed="true" class="on">Level 2</button>
         <button data-lvl="hs" aria-pressed="false">Level 3</button>
+      </div>
+      <div class="proj-ctl">
+        <button class="seal-btn quiet small" id="btnProject" title="Open the public board in a second window for the smartboard">📽 Project</button>
+        <button class="seal-btn quiet small" id="btnProjHelp" aria-label="How projecting works" aria-expanded="false" aria-controls="projHelp">?</button>
+        <button class="seal-btn quiet small" id="btnCurtain" title="Cover the projected board (key B)" aria-pressed="false">🎭 Curtain</button>
+        <div class="proj-help" id="projHelp" role="note" hidden>
+          <p><b>📽 Project</b> opens the public board in its own window: map, round, timer, ticker and each region's progress. No needs lists, no holdings, no levels.</p>
+          <p>Drag the new window onto the smartboard and make it full screen (F11 on Windows, Ctrl+Cmd+F on Mac). Your laptop keeps the Dock and the secret lists.</p>
+          <p><b>B</b> (or 🎭 Curtain) covers the projector while you check something. With no projector window open, it covers this screen instead, for when the display is mirrored.</p>
+          <div class="modal-actions"><button class="seal-btn small" id="projHelpOk">Got it</button></div>
+        </div>
       </div>
       <button class="seal-btn quiet small" id="btnHome">⌂ Periods</button>
     </div>
@@ -444,7 +538,7 @@ footer.colophon{
         <div class="phase-instr" id="phaseInstr">Press “Test Voyage” to preview a ship crossing and a chance card.</div>
         <div class="timer" id="timerDisp" role="timer" aria-label="Round timer">–:––</div>
         <div class="sr-only" id="timerAnnounce" aria-live="polite"></div>
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+        <div id="boardBtns" style="display:flex;gap:0.5rem;flex-wrap:wrap">
           <button class="seal-btn small" id="btnDock">⚓ Admiralty Dock</button>
           <button class="seal-btn quiet small" id="btnLog">📜 Log</button>
         </div>
@@ -546,6 +640,20 @@ footer.colophon{
 <div class="modal-veil" id="modalVeil">
   <div class="modal-card" id="modalCard" role="dialog" aria-modal="true" tabindex="-1"></div>
 </div>
+<!-- the curtain: covers the projector window (or this screen, with no projector open) -->
+<div class="curtain" id="curtain" aria-hidden="true">
+  <div class="c-rose">⚓</div>
+  <div class="c-msg">The Admiralty is deliberating…</div>
+  <div class="c-sub">Hold your course. The board returns shortly.</div>
+</div>
+<!-- projector window only -->
+<div class="curtain" id="projWait" aria-live="polite">
+  <div class="c-rose">🧭</div>
+  <div class="c-msg">Waiting for the Dock…</div>
+  <div class="c-sub" id="projWaitSub">The board appears here as soon as the teacher's laptop is ready.</div>
+</div>
+<div class="proj-card" id="projCard" hidden aria-live="polite"></div>
+<div class="proj-label proj-only" id="projLabel">Projector view</div>
 <input type="file" id="fileBackup" accept="application/json,.json" hidden>
 <input type="file" id="rosterFile" accept="application/json,.json" hidden>
 
@@ -1306,6 +1414,90 @@ function rankStandings(rows){
   return rows.slice().sort((a, b) => pct(b) - pct(a) || (b.activity || 0) - (a.activity || 0));
 }
 
+/* ===================================================================
+   PROJECTOR — the only view of a game the smartboard window ever receives
+   ===================================================================
+   The teacher's laptop (the Dock) sends this snapshot to the projector window; the
+   projector renders from nothing else. It is built from an allow-list, never by
+   deleting secret fields from a copy, so a field added to the game later stays off
+   the smartboard until someone adds it here on purpose.
+
+   Kept: class name, day, round, phase, timer, winner, each region's needs-secured
+   count (the board's progress bars), crew names and roles, public ticker lines, the
+   chance card being resolved, the curtain.
+   Never kept: needs lists, inventories, Free Passage counts, cargo in a hold, the
+   ledger, reading versions or levels, anything else on a roster record. */
+
+/* Goods of a needs list a region holds, capped per good: {have, total}. */
+function needsCount(needs, inventory){
+  let have = 0, total = 0;
+  const inv = inventory || {};
+  for(const k in (needs || {})){
+    const n = needs[k];
+    total += n; have += Math.min(inv[k] || 0, n);
+  }
+  return { have, total };
+}
+
+/* Where the phase stands: no round yet, a round with time on (or paused with time
+   left), or a round whose time is over. */
+function phaseStatus(g){
+  if(!g || !g.round) return "none";
+  const t = g.timer || {};
+  return (t.running || t.remainMs > 0) ? "running" : "over";
+}
+
+/* A ticker line about reading levels (or the reading versions teams were built
+   from) stays on the laptop. */
+const PRIVATE_TICKER = /\blevels?\b|reading version|lexile|i-?ready/i;
+function publicTicker(items, max){
+  return (items || [])
+    .filter(i => i && !i.priv && typeof i.msg === "string" && !PRIVATE_TICKER.test(i.msg))
+    .slice(0, max || 4).map(i => i.msg.slice(0, 300));
+}
+
+const CREW_ROLES = ["merchant", "captain", "harbor"];
+const clipText = (v, n) => String(v == null ? "" : v).slice(0, n || 200);
+
+/* g: the active game (or null). regionDefs: {id: {needs}} — REGIONS in the page.
+   extra: {periodKey, phaseText, ticker:[{msg, priv}], curtain, card:{ico,title,text,from,leg}}. */
+function publicSnapshot(g, regionDefs, extra){
+  extra = extra || {};
+  const snap = { v: 1, curtain: !!extra.curtain, period: null };
+  if(!g || typeof g !== "object") return snap;
+  const regions = {}, crew = {};
+  Object.keys(regionDefs || {}).forEach(id => {
+    const reg = (g.regions || {})[id] || {};
+    const p = needsCount(regionDefs[id].needs, reg.inventory);
+    regions[id] = { have: p.have, total: p.total };
+    crew[id] = (Array.isArray(g.roster) ? g.roster : [])
+      .filter(s => s && s.region === id)
+      .map(s => ({ name: clipText(s.name, 40), role: CREW_ROLES.includes(s.role) ? s.role : "harbor" }))
+      .sort((a, b) => CREW_ROLES.indexOf(a.role) - CREW_ROLES.indexOf(b.role) || a.name.localeCompare(b.name));
+  });
+  const t = g.timer || {};
+  const c = extra.card;
+  snap.period = {
+    key: extra.periodKey == null ? null : clipText(extra.periodKey, 60),
+    name: clipText(g.name, 60),
+    day: Number.isInteger(g.day) ? g.day : 1,
+    round: Number.isInteger(g.round) ? g.round : 0,
+    roundType: g.roundType === "negotiate" || g.roundType === "shipping" ? g.roundType : null,
+    status: phaseStatus(g),
+    practice: !!g.practice,
+    winner: regionDefs && regionDefs[g.winner] ? g.winner : null,
+    timer: { running: !!t.running, endsAt: +t.endsAt || 0, remainMs: +t.remainMs || 0 },
+    phaseText: typeof extra.phaseText === "string" ? clipText(extra.phaseText, 400) : "",
+    regions, crew,
+    ticker: publicTicker(extra.ticker),
+    card: c && typeof c === "object"
+      ? { ico: clipText(c.ico, 16), title: clipText(c.title, 120), text: clipText(c.text, 400), from: clipText(c.from, 60),
+          leg: c.leg === "back" ? "back" : "out" }
+      : null,
+  };
+  return snap;
+}
+
 if(typeof module !== "undefined") module.exports = {
   LEVEL_KEYS, DEFAULT_LEVEL, levelKeyForRl, levelNumber, levelLabel,
   nextRoundNumber,
@@ -1314,6 +1506,7 @@ if(typeof module !== "undefined") module.exports = {
   shortName, reduceRoster, matchPeriods, suggestTeams, medianRl,
   applyDelta, netDeltas, reverseProblems, reverseDeltas,
   rankStandings,
+  needsCount, phaseStatus, publicTicker, publicSnapshot,
 };
 </script>
 <script>
@@ -1334,10 +1527,21 @@ function L(o){ return o[READING_LEVEL] || o.g8; }
    STATE — every class's game, saved in this browser (see BACKUPS for files)
    =================================================================== */
 const SAVE_KEY = "triangleTradeV1";
-let state = load() || { periods:{}, activePeriod:null };
+/* The projector window (this same file opened with ?view=projector by the Project
+   button) keeps no game of its own: it never reads the saved classes and never
+   writes anything. Only the Dock window saves. See PROJECTOR below. */
+const PROJECTOR = new URLSearchParams(location.search).get("view") === "projector";
+/* Link between the Dock and the projector window (see PROJECTOR — A SECOND WINDOW). */
+const PROJ_KEY = "triangleTradeProjector";
+const PROJ = { bc:null, win:null, inst:Math.random().toString(36).slice(2,10), seq:0,
+               curtain:false, lastPing:0, seen:false, lastJSON:"", t:null, events:new Set() };
+try{ PROJ.bc = new BroadcastChannel("triangle-trade"); }catch(e){ PROJ.bc = null; }
+let state = (!PROJECTOR && load()) || { periods:{}, activePeriod:null };
 
 function load(){ try{ return JSON.parse(localStorage.getItem(SAVE_KEY)); }catch(e){ return null; } }
 function save(){
+  if(PROJECTOR) return;
+  projBroadcast();
   state.updatedAt = Date.now();
   const d = document.getElementById("saveDot");
   try{
@@ -1361,12 +1565,7 @@ function newGame(name){
            regions, practiceSnap:null, trades:[], log:[], dock:null };
 }
 
-function needsProgress(game, rid){
-  const needs = REGIONS[rid].needs, inv = game.regions[rid].inventory;
-  let have=0, total=0;
-  for(const g in needs){ total += needs[g]; have += Math.min(inv[g]||0, needs[g]); }
-  return {have, total};
-}
+function needsProgress(game, rid){ return needsCount(REGIONS[rid].needs, game.regions[rid].inventory); }
 
 /* ===================================================================
    THE MAP — stylized age-of-sail North Atlantic (inline SVG)
@@ -1542,7 +1741,13 @@ function crewHTML(id){
   return `<div class="rc-students">${crew.map(s=>`${ROLE_ICO[s.role]} ${esc(s.name)}`).join(" · ")}</div>`;
 }
 
-function tick(msg){
+/* Ticker lines, newest first. {private:true} keeps a line on the laptop: the
+   projector gets publicTicker(TICKER), which also drops anything about levels. */
+const TICKER = [{msg:"⚓ Welcome aboard. The Atlantic awaits…", priv:false}];
+function tick(msg, opts){
+  TICKER.unshift({msg:String(msg), priv:!!(opts && opts.private)});
+  TICKER.length = Math.min(TICKER.length, 12);
+  projBroadcast();
   const t = $("#ticker");
   const span = document.createElement("span");
   span.className="tick-item"; span.textContent = msg;
@@ -1612,6 +1817,8 @@ function openRegionModal(id){
     <h3 style="color:${r.colorHex}">${r.flag} ${r.nm}</h3>
     <p style="text-align:center;font-style:italic;color:var(--ink-soft)">${r.colonies} · home port: ${r.port}</p>
     <p style="text-align:center;margin-top:0.5rem"><span class="secret-stamp">TOP SECRET — Teacher's Eyes Only</span></p>
+    <div class="secret-reveal"><button class="seal-btn quiet" id="revealSecrets" aria-expanded="false" aria-controls="regionSecrets">🗝 Show holdings &amp; needs</button></div>
+    <div id="regionSecrets" hidden>
     ${g.regions[id].freeCards?`<p style="text-align:center;margin-top:0.375rem">🕊️ Free Passage cards banked: <b>${g.regions[id].freeCards}</b></p>`:""}
     <p style="font-family:'IM Fell English SC',serif;margin:0.625rem 0 0.125rem">Current holdings</p>
     <div style="display:flex;flex-wrap:wrap;gap:0.25rem">${Object.entries(inv).filter(([k,n])=>n>0)
@@ -1619,7 +1826,16 @@ function openRegionModal(id){
     <p style="font-family:'IM Fell English SC',serif;margin:0.625rem 0 0.125rem">Needs list</p>
     <table class="needs-table">${rows}</table>
     ${r.special ? `<p style="font-size:13.5px;font-style:italic;margin-top:0.5rem">⚠ ${r.special}</p>`:""}
+    </div>
   `);
+  /* Folded by default, so a stray click on a projected (or mirrored) board opens
+     nothing students can read. One click shows it; the same button folds it again. */
+  const btn=$("#revealSecrets"), box=$("#regionSecrets");
+  btn.onclick=()=>{
+    box.hidden=!box.hidden;
+    btn.setAttribute("aria-expanded", box.hidden?"false":"true");
+    btn.innerHTML = box.hidden ? "🗝 Show holdings &amp; needs" : "🗝 Hide holdings &amp; needs";
+  };
 }
 
 function drawChanceCard(){
@@ -1642,9 +1858,12 @@ function showChanceCard(card, regionName){
    VOYAGE ANIMATION — ship sails between two ports
    =================================================================== */
 function sailShip(fromId, toId, done){
+  if(!PROJECTOR) projSend({type:"sail", from:fromId, to:toId});
   const svg = $("#theMap"); if(!svg) return done&&done();
   const g=game();
   const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // The projector always sails the ship (nothing waits on it there); the Dock
+  // skips it with Fast voyages on, because the voyage dialog waits for it.
   if((g && g.settings.fastSail) || reduceMotion){ setTimeout(()=>done&&done(), 120); return; }
   const a = REGIONS[fromId].mapXY, b = REGIONS[toId].mapXY;
   const mx = (a[0]+b[0])/2, my = (a[1]+b[1])/2 - Math.hypot(b[0]-a[0],b[1]-a[1])*0.18;
@@ -1699,7 +1918,7 @@ document.querySelectorAll("#lvlToggle button").forEach(b=>{
     if(g) renderBanner();
     if($("#view-readings").classList.contains("active")) renderReadings();
     if($("#view-endgame").classList.contains("active")) renderEndGame();
-    if(!regionOnly) tick(`Reading level set to ${levelLabel(key)}`);
+    if(!regionOnly) tick(`Reading level set to ${levelLabel(key)}`, {private:true});
   };
 });
 
@@ -1791,7 +2010,15 @@ function chime(kind){
 }
 
 /* --- banner --- */
+/* The banner's instruction line, at the class's level (not a region reading's). */
+function phaseTextFor(g){
+  const lv = o => o[g.level] || o.g8;
+  const st = phaseStatus(g);
+  if(st==="none") return "Begin the first round when your crews are ready. A round is one Negotiation, then one Shipping.";
+  return lv(st==="running" ? PHASE_TEXT[g.roundType] : PHASE_TEXT.ret);
+}
 function renderBanner(){
+  projBroadcast();
   const g=game(); if(!g) return;
   const banner=document.querySelector(".phase-banner");
   banner.classList.remove("negotiate","shipping","between");
@@ -3070,11 +3297,260 @@ function confetti(){
   }
 }
 
+/* ===================================================================
+   PROJECTOR — A SECOND WINDOW FOR THE SMARTBOARD
+   ===================================================================
+   The teacher runs the game on the laptop (the Dock window) with the smartboard as an
+   extended display. 📽 Project opens this same page with ?view=projector in a second
+   window, which the teacher drags onto the smartboard. That window:
+     - renders only publicSnapshot() (triangle-trade-logic.js): no needs lists, no
+       holdings, no Free Passage counts, no levels, nothing from the roster but names
+       and roles;
+     - has no controls: every button, dialog, file input and other view is removed
+       from its page at boot, and nothing on its board is clickable;
+     - never writes localStorage or IndexedDB and never runs the save or backup code,
+       so two windows can't overwrite each other's classes.
+   Transport: BroadcastChannel("triangle-trade"), plus postMessage between the two
+   windows (popup ↔ opener), plus a `storage`-event fallback on PROJ_KEY, which only the
+   Dock writes (and only once a projector has been opened). Events carry the Dock's
+   instance id and a sequence number, so one arriving by two routes plays once. */
+const msgTarget = () => location.protocol==="file:" ? "*" : location.origin;
+function projPost(msg){
+  msg.tt="triangle-trade"; msg.inst=PROJ.inst; msg.seq=++PROJ.seq;
+  if(PROJ.bc) try{ PROJ.bc.postMessage(msg); }catch(e){}
+  const w = PROJECTOR ? window.opener : PROJ.win;
+  if(w && !w.closed) try{ w.postMessage(msg, msgTarget()); }catch(e){}
+}
+
+/* ---------- Dock side ---------- */
+function projSend(msg){ if(PROJECTOR) return; msg.by="dock"; projPost(msg); }
+/* The chance card being resolved, as the projector may show it: the card itself,
+   never what is in the hold. */
+function projCardFor(g){
+  const d=g.dock;
+  if(!d || !d.card || !["card","pick","lucky"].includes(d.stage) || !REGIONS[d.from]) return null;
+  const c=cardById(d.card), txt=CHANCE_TEXT[d.card]; if(!c || !txt) return null;
+  const lv=o=>typeof o==="string" ? o : (o[g.level]||o.g8);
+  return {ico:c.ico, title:lv(txt.ttl), text:lv(txt), from:REGIONS[d.from].nm, leg:d.leg};
+}
+function projSnapshot(){
+  const pk=state.activePeriod, g=pk && state.periods[pk];
+  return publicSnapshot(g||null, REGIONS, {periodKey:pk, phaseText:g?phaseTextFor(g):"", ticker:TICKER,
+    curtain:PROJ.curtain, card:g?projCardFor(g):null});
+}
+function projBroadcast(){
+  if(PROJECTOR) return;
+  clearTimeout(PROJ.t); PROJ.t=setTimeout(projFlush, 30);
+}
+function projFlush(){
+  if(PROJECTOR) return;
+  const snap=projSnapshot();
+  projSend({type:"snap", snap});
+  if(PROJ.seen){ // storage fallback, for a browser without BroadcastChannel
+    const j=JSON.stringify(snap);
+    if(j!==PROJ.lastJSON){ PROJ.lastJSON=j; try{ localStorage.setItem(PROJ_KEY, j); }catch(e){} }
+  }
+  renderCurtainBtn();
+}
+const projectorOpen = () => !!(PROJ.win && !PROJ.win.closed) || Date.now()-PROJ.lastPing < 5000;
+function dockReceive(m){
+  if(!m || m.tt!=="triangle-trade" || m.by!=="projector") return;
+  if(m.type==="bye"){ PROJ.lastPing=0; PROJ.curtain=false; renderCurtainBtn(); return; }
+  PROJ.lastPing=Date.now(); PROJ.seen=true;
+  if(m.type==="hello") projFlush();
+  else if(m.type==="curtain"){
+    const k=m.inst+":"+m.seq; if(PROJ.events.has(k)) return; PROJ.events.add(k); // came by two routes
+    PROJ.curtain=!PROJ.curtain; projFlush();
+  }
+}
+/* B / 🎭: curtain the projector if one is open, else this screen (a mirrored display). */
+function toggleCurtain(){
+  if(projectorOpen()){ $("#curtain").classList.remove("show"); PROJ.curtain=!PROJ.curtain; projFlush(); }
+  else { PROJ.curtain=false; $("#curtain").classList.toggle("show"); }
+  renderCurtainBtn();
+}
+function renderCurtainBtn(){
+  const b=$("#btnCurtain"); if(!b) return;
+  const on = projectorOpen() ? PROJ.curtain : $("#curtain").classList.contains("show");
+  b.classList.toggle("on", on); b.setAttribute("aria-pressed", on?"true":"false");
+  b.textContent = on ? "🎭 Curtain down" : "🎭 Curtain";
+}
+function helpSeen(){ try{ return !!localStorage.getItem("ttProjectHelpSeen"); }catch(e){ return true; } }
+function showProjHelp(on){
+  $("#projHelp").hidden=!on;
+  $("#btnProjHelp").setAttribute("aria-expanded", on?"true":"false");
+  if(on) try{ localStorage.setItem("ttProjectHelpSeen","1"); }catch(e){}
+}
+function openProjector(){
+  if(PROJ.win && !PROJ.win.closed){ try{ PROJ.win.focus(); }catch(e){} projFlush(); return; }
+  const u=new URL(location.href); u.search="?view=projector"; u.hash="";
+  let w=null;
+  try{ w=window.open(u.href, "triangle-trade-projector", "popup,width=1280,height=760"); }catch(e){ w=null; }
+  if(!w){
+    noticeModal("📽 The projector window was blocked",
+      "The browser stopped the game from opening its second window. Click the blocked-pop-up icon at the right end of the address bar, choose <b>Always allow pop-ups</b> from this site, then press <b>📽 Project</b> again.");
+    return;
+  }
+  PROJ.win=w; PROJ.seen=true;
+  $("#curtain").classList.remove("show");
+  projFlush();
+  if(!helpSeen()) showProjHelp(true);
+}
+if(!PROJECTOR){
+  if(PROJ.bc) PROJ.bc.onmessage = e=>dockReceive(e.data);
+  window.addEventListener("message", e=>dockReceive(e.data));
+  window.addEventListener("pagehide", ()=>projSend({type:"bye"}));
+  setInterval(()=>{ projSend({type:"snap", snap:projSnapshot()}); renderCurtainBtn(); }, 1000); // heartbeat + timer
+  $("#btnProject").onclick=openProjector;
+  $("#btnProjHelp").onclick=()=>showProjHelp($("#projHelp").hidden);
+  $("#projHelpOk").onclick=()=>showProjHelp(false);
+  $("#btnCurtain").onclick=toggleCurtain;
+  $("#curtain").onclick=()=>{ $("#curtain").classList.remove("show"); renderCurtainBtn(); };
+}
+
+/* ---------- projector side ---------- */
+const PV = { snap:null, json:"", heard:0, bye:false, hadOpener:!!window.opener, openerGone:false, events:new Set(), winner:undefined, victoryUntil:0 };
+function projReceive(m){
+  if(!m || m.tt!=="triangle-trade" || m.by!=="dock") return;
+  PV.heard=Date.now(); PV.bye = m.type==="bye";
+  if(m.type==="snap" && m.snap && typeof m.snap==="object") projRender(m.snap);
+  else if(m.type==="sail"){
+    const k=m.inst+":"+m.seq; if(PV.events.has(k)) return; PV.events.add(k);
+    if(REGIONS[m.from] && REGIONS[m.to]) sailShip(m.from, m.to);
+  }
+  projLiveness();
+}
+function projRender(snap){
+  const j=JSON.stringify(snap); if(j===PV.json) return; PV.json=j; PV.snap=snap;
+  $("#curtain").classList.toggle("show", !!snap.curtain);
+  const p=snap.period;
+  if(!p){ projLiveness(); projTimer(); return; }
+  // banner
+  const banner=document.querySelector(".phase-banner");
+  banner.classList.remove("negotiate","shipping","between");
+  banner.classList.add(p.status==="running" && p.roundType ? p.roundType : "between");
+  $("#practiceSash").style.display = p.practice ? "block" : "none";
+  const day=`<span class="day-tag">${esc(p.name)} · Day ${p.day}</span>`;
+  const type=ROUND_LABEL[p.roundType]||"";
+  $("#roundLabel").innerHTML = p.status==="none" ? "Awaiting Orders "+day
+    : `Round ${p.round} · ${type}${p.status==="over"?" over":""} ${day}`;
+  $("#phaseInstr").textContent=p.phaseText;
+  // region cards: progress and crew only, and nothing to click
+  $("#regionRow").innerHTML=Object.entries(REGIONS).map(([id,r])=>{
+    const pr=(p.regions||{})[id]||{have:0,total:0}, crew=(p.crew||{})[id]||[];
+    const pct=pr.total ? 100*pr.have/pr.total : 0;
+    return `<div class="region-card${pr.total && pr.have>=pr.total?" winner":""}">
+      <div class="rc-head" style="background:${r.colorHex}"><span class="rc-name">${r.nm}</span><span class="rc-flag">${r.flag}</span></div>
+      <div class="rc-body">
+        ${crew.length?`<div class="rc-students">${crew.map(s=>`${ROLE_ICO[s.role]||""} ${esc(s.name)}`).join(" · ")}</div>`:""}
+        <div class="progress-wrap">
+          <div class="progress-label"><span>Needs secured</span><span>${pr.have} / ${pr.total}</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>
+      </div></div>`;
+  }).join("");
+  // ticker
+  const t=$("#ticker"); t.innerHTML="";
+  (p.ticker||[]).forEach((msg,i)=>{
+    if(i){ const sep=document.createElement("span"); sep.className="tick-sep"; sep.textContent="✦"; t.appendChild(sep); }
+    const s=document.createElement("span"); s.className="tick-item"; s.textContent=msg; t.appendChild(s);
+  });
+  // victory (only when it happens while projecting), else the chance card in play
+  if(PV.winner!==undefined && p.winner && p.winner!==PV.winner && REGIONS[p.winner]){
+    PV.victoryUntil=Date.now()+12000; confetti();
+    setTimeout(()=>{ if(PV.snap) projCardRender(PV.snap.period); }, 12100);
+  }
+  PV.winner=p.winner||null;
+  projCardRender(p);
+  projTimer(); projLiveness();
+}
+function projCardRender(p){
+  const box=$("#projCard");
+  if(p && p.winner && Date.now()<PV.victoryUntil){
+    const r=REGIONS[p.winner];
+    box.innerHTML=`<div class="pc-kicker">🏆 Victory!</div><div class="pc-ico">${r.flag}</div>
+      <div class="pc-title" style="color:${r.colorHex}">${r.nm}</div>
+      <div class="pc-text">has secured every item on its needs list and wins the Triangular Trade!</div>`;
+    box.hidden=false; return;
+  }
+  const c=p && p.card;
+  if(!c){ box.hidden=true; box.innerHTML=""; return; }
+  box.innerHTML=`<div class="pc-kicker">Chance Card · ${esc(c.from)} · ${c.leg==="back"?"return leg":"outbound leg"}</div>
+    <div class="pc-ico">${esc(c.ico)}</div><div class="pc-title">${esc(c.title)}</div><div class="pc-text">${esc(c.text)}</div>`;
+  box.hidden=false;
+}
+function projTimer(){
+  const p=PV.snap && PV.snap.period, d=$("#timerDisp");
+  if(!p){ d.textContent="–:––"; d.classList.remove("warn"); return; }
+  const t=p.timer, remain = t.running ? t.endsAt-Date.now() : t.remainMs;
+  d.textContent = (p.round && (t.running||remain>0)) ? fmtMs(remain) : "–:––";
+  d.classList.toggle("warn", t.running && remain<=60000 && remain>0);
+}
+/* The Dock is gone when it said goodbye (closed or reloading), when the window that
+   opened this one has closed, or after a long silence (a hidden Dock tab's timers
+   can slow to one a minute, so the silence allowed is generous). */
+function projLiveness(){
+  const op=window.opener;
+  // A closed opener reads as closed, or (in Chrome) as no opener at all.
+  const openerLost = PV.hadOpener && (!op || op.closed);
+  if(openerLost && !PV.openerGone){ PV.openerGone=true; PV.bye=true; }
+  // With only the storage fallback there is no heartbeat: the opener is the sign of life.
+  const gone = PV.bye || ((!PROJ.bc && PV.hadOpener) ? openerLost : (!PV.heard || Date.now()-PV.heard > 75000));
+  const noClass = !gone && PV.snap && !PV.snap.period;
+  $("#projWait").classList.toggle("show", gone || !!noClass);
+  $("#projWaitSub").textContent = gone
+    ? "The board comes back as soon as the Dock window on the teacher's laptop is open."
+    : "The teacher is choosing a class.";
+  if(gone || noClass){ $("#projCard").hidden=true; }
+}
+function projectorBoot(){
+  document.body.classList.add("projector");
+  document.title="Triangular Trade — Projector";
+  // Nothing that can change the game, open a secret, or pick a level stays on this page.
+  ["#view-home","#view-readings","#view-endgame","#view-teams","#roundControls","#boardBtns",".hdr-controls",
+   "#modalVeil","#fileBackup","#rosterFile","footer.colophon","#timerAnnounce"]
+    .forEach(sel=>document.querySelectorAll(sel).forEach(el=>el.remove()));
+  $("#view-board").classList.add("active");
+  $("#mapPanel").innerHTML=buildMap();
+  $("#theMap").querySelectorAll("[role],[tabindex]").forEach(el=>{
+    el.removeAttribute("role"); el.removeAttribute("tabindex"); el.removeAttribute("aria-label"); el.style.cursor="default";
+  });
+  $("#ticker").innerHTML=""; $("#regionRow").innerHTML="";
+  $("#roundLabel").textContent="Awaiting Orders"; $("#phaseInstr").textContent="";
+  if(PROJ.bc) PROJ.bc.onmessage = e=>projReceive(e.data);
+  window.addEventListener("message", e=>{ if(e.source===window.opener) projReceive(e.data); });
+  window.addEventListener("storage", e=>{
+    if(e.key!==PROJ_KEY || !e.newValue) return;
+    try{ projReceive({tt:"triangle-trade", by:"dock", type:"snap", snap:JSON.parse(e.newValue)}); }catch(err){}
+  });
+  if(!PROJ.bc){ try{ const j=localStorage.getItem(PROJ_KEY); if(j) projRender(JSON.parse(j)); }catch(e){} } // read only
+  document.addEventListener("keydown", e=>{
+    if((e.key==="b"||e.key==="B") && !e.ctrlKey && !e.metaKey && !e.altKey){ e.preventDefault(); projPost({type:"curtain", by:"projector"}); }
+  });
+  document.addEventListener("dblclick", ()=>{
+    try{ if(document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }catch(e){}
+  });
+  window.addEventListener("pagehide", ()=>projPost({type:"bye", by:"projector"}));
+  projPost({type:"hello", by:"projector"});
+  setInterval(()=>projPost({type:"ping", by:"projector"}), 2000);
+  setInterval(projTimer, 250);
+  setInterval(projLiveness, 1000);
+  projLiveness();
+}
+
 /* ---------- keyboard shortcuts (teacher console) ---------- */
 document.addEventListener("keydown", e=>{
-  const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement && document.activeElement.tagName);
-  if(e.key==="Escape"){ if(modalOpen() && !MODAL.locked) closeModal(); return; }
+  if(PROJECTOR) return; // the projector window has its own (B only)
+  const ae=document.activeElement;
+  const typing = !!ae && (/^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName) || ae.isContentEditable);
+  if(e.key==="Escape"){
+    if(modalOpen() && !MODAL.locked) closeModal();
+    else if(!$("#projHelp").hidden) showProjHelp(false);
+    return;
+  }
   if(typing) return;
+  // B works over an open dialog too: that is when the curtain is wanted most.
+  if((e.key==="b"||e.key==="B") && !e.ctrlKey && !e.metaKey && !e.altKey){ e.preventDefault(); toggleCurtain(); return; }
   if($("#modalVeil").classList.contains("open")) return;
   if(!$("#view-board").classList.contains("active")) return;
   const g=state.activePeriod && game(); if(!g) return;
@@ -3085,6 +3561,7 @@ document.addEventListener("keydown", e=>{
 
 /* boot */
 (async function boot(){
+  if(PROJECTOR){ projectorBoot(); return; } // no saved classes, no backup folder: see PROJECTOR
   renderHome();
   if(state.activePeriod && game()) openBoard();
   await loadBackupDir();
