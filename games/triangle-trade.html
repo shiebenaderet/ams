@@ -557,6 +557,7 @@ body.projector .progress-bar{height:0.8rem}
         <span class="spacer"></span>
         <button class="seal-btn quiet small" id="btnRestorePractice" style="display:none">↩ Undo Practice</button>
         <button class="seal-btn quiet small" id="btnReadings">📖 Readings</button>
+        <button class="seal-btn quiet small" id="btnHowTo" title="Opens the How to Play guide in a new tab. Its Present button shows it one panel at a time on the board.">❓ How to Play</button>
         <button class="seal-btn quiet small" id="btnTeams">👥 Teams</button>
         <button class="seal-btn quiet small" id="btnEndGame">🏁 End Game</button>
         <button class="seal-btn quiet small" id="btnEndDay">🌙 End Day</button>
@@ -1019,10 +1020,10 @@ const VOCAB = {
 
 const ROLES_TEXT = {
  harbor:{ico:"⚓", nm:"Harbormaster",
-  g2:"Most of your team are harbormasters. A harbormaster is in charge of a port (the town where ships come in). You stay at your home port the whole game. You keep the record: a list of what your team has, gets, and gives away. Merchants from other teams will visit. Talk with them. Every deal needs your team's yes.",
-  g5:"Everyone on the team except the merchant and the captain is a harbormaster. Harbormasters stay at the home port the whole game. They keep the record of every item the region owns, gives, and gets. They talk with merchants who visit, and they vote on every deal. No trade is final until the harbormasters say yes.",
-  g8:"Harbormasters are everyone on the team who is not the merchant or the captain. They never leave port. They keep the region's record of goods bought, sold, and shipped, bargain with visiting merchants, and approve every agreement by vote. Keep the record exact: the Admiralty Court (England's court for ships and trade) can check a captain's log, and mistakes can cost a whole cargo.",
-  hs:"Harbormasters are the rest of the team: the port authority and counting house. They never leave port. They maintain the ledger of holdings, negotiate with visiting merchants, and ratify every agreement by vote. The captain's log has to agree with their record, because the Admiralty Court can inspect it, and errors forfeit the entire cargo."},
+  g2:"Most of your team are harbormasters. A harbormaster is in charge of a port (the town where ships come in). You stay at your home port the whole game. You keep the record: a list of what your team has, gets, and gives away. Merchants from other teams will visit. Talk with them. Every deal needs your team's yes. Each harbormaster has one job. The Record Keeper writes every deal. The Counter counts your cards after each round. The Port Negotiator talks to visitors. The Strategist plans the next deal.",
+  g5:"Everyone on the team except the merchant and the captain is a harbormaster. Harbormasters stay at the home port the whole game. They keep the record of every item the region owns, gives, and gets. They talk with merchants who visit, and they vote on every deal. No trade is final until the harbormasters say yes. Each harbormaster has one job: Record Keeper (writes every deal and voyage in the trade log), Counter (counts the goods cards after each round), Port Negotiator (talks with visiting merchants), or Strategist (watches the board and plans the merchant's next visit).",
+  g8:"Harbormasters are everyone on the team who is not the merchant or the captain. They never leave port. They keep the region's record of goods bought, sold, and shipped, bargain with visiting merchants, and approve every agreement by vote. Keep the record exact: the Admiralty Court (England's court for ships and trade) can check a captain's log, and mistakes can cost a whole cargo. Split the work so every harbormaster has a job: the Record Keeper logs every deal and voyage, the Counter counts the goods cards after each round, the Port Negotiator bargains with visiting merchants, and the Strategist tracks the board and chooses the merchant's next target.",
+  hs:"Harbormasters are the rest of the team: the port authority and counting house. They never leave port. They maintain the ledger of holdings, negotiate with visiting merchants, and ratify every agreement by vote. The captain's log has to agree with their record, because the Admiralty Court can inspect it, and errors forfeit the entire cargo. Divide the office: a Record Keeper keeps the ledger, a Counter reconciles the goods cards each round, a Port Negotiator receives visiting merchants, and a Strategist reads the board and sets the merchant's next objective."},
  merchant:{ico:"🤝", nm:"Merchant",
   g2:"One person is the merchant. The merchant is in charge of trade. In a talking round (called Negotiation), you visit other ports. Find out what they have and what they need. Offer a deal. No goods move yet. Your harbormasters must say yes to every deal.",
   g5:"One person on the team is the merchant, the person in charge of trade. During Negotiation rounds, the merchant goes to other ports to learn what they have and need, and to offer deals. No goods move during Negotiation. A deal counts only after your harbormasters approve it.",
@@ -1046,6 +1047,11 @@ const REFLECT = {
   "How well did your team work together? Give one example.",
   "What would you change next time? How could the game be better?"
  ],
+ scarcity:{
+  g2:"Supply and demand: Which good did the most teams want? Were there enough for everyone? What did people give to get it?",
+  g5:"Supply and demand: Which good was the hardest to get? Why were there not enough for everyone? What happened to what people would trade for it?",
+  g8:"Supply and demand: Which good was scarcest in your class? Use the game to explain how its short supply and high demand changed what regions would give up to get it.",
+  hs:"Supply and demand: Identify the scarcest good in your class's game. Explain how limited supply and competing demand changed its trading value, and who gained power by holding it."},
  humanCost:{
   g2:"This game was about trading goods for points. But real people were traded too. Enslaved African people were forced to do the hardest work and were never paid. Who really paid the price for this 'success'? Write 2–3 sentences.",
   g5:"Our simulation scored you on goods and profit. But the real triangular trade ran on the forced labor of enslaved Africans, who received none of the wealth they created. When we call a region 'successful,' who actually paid for that success? Answer in 3–4 sentences.",
@@ -3149,6 +3155,8 @@ let currentReading="newEngland";
    games/triangle-trade.html and the readings are at the site root, so "../". In the
    planning repo this path doesn't resolve; that's expected. */
 const READINGS_BASE = "../";
+/* The How to Play guide sits beside the readings at the site root. */
+$("#btnHowTo") && ($("#btnHowTo").onclick = ()=>window.open(READINGS_BASE + "triangle-trade-how-to-play.html", "_blank", "noopener"));
 function renderReadings(){
   const tabs = Object.entries(REGIONS).map(([id,r])=>
     `<button class="read-tab ${currentReading===id?"on":""}" data-rt="${id}" style="--rc:${r.colorHex}" aria-pressed="${currentReading===id}">${r.flag} ${r.nm}</button>`).join("")
@@ -3255,12 +3263,13 @@ function renderEndGame(){
     $("#reflBody").innerHTML=`<div class="reading-paper" style="max-width:760px">
       <h3 style="color:${r.colorHex};font-size:26px">${r.flag} ${r.nm} — Reflection</h3>
       <p><b>1.</b> ${L(REFLECT.regions[id])}</p>
-      ${REFLECT.common.map((q,i)=>`<p><b>${i+2}.</b> ${q}</p>`).join("")}
-      <p style="border-top:1px dotted var(--ink-faint);padding-top:0.75rem"><b>${REFLECT.common.length+2}. Answer in CER form:</b></p>
+      <p><b>2.</b> ${L(REFLECT.scarcity)}</p>
+      ${REFLECT.common.map((q,i)=>`<p><b>${i+3}.</b> ${q}</p>`).join("")}
+      <p style="border-top:1px dotted var(--ink-faint);padding-top:0.75rem"><b>${REFLECT.common.length+3}. Answer in CER form:</b></p>
       <p style="font-style:italic;color:var(--ink-soft)">${L(REFLECT.cer)}</p>
       <div style="margin-top:0.875rem;border:2px solid var(--bad);border-radius:6px;padding:0.75rem 1rem;background:rgba(140,31,40,.07)">
         <p style="margin:0"><span class="secret-stamp" style="border-color:var(--bad)">REQUIRED</span></p>
-        <p style="margin-top:0.5rem"><b>⛓ ${REFLECT.common.length+3}. The human cost.</b> ${L(REFLECT.humanCost)}</p>
+        <p style="margin-top:0.5rem"><b>⛓ ${REFLECT.common.length+4}. The human cost.</b> ${L(REFLECT.humanCost)}</p>
       </div>
     </div>`;
     $("#reflBody").scrollIntoView({behavior:"smooth"});

@@ -47,3 +47,9 @@ The readings the game links to are at the site root (`triangle-trade-readings.ht
 `tools/build-triangle-readings.py` in `ams-planning`. Unlike the game, the readings
 are linked from the Unit 1 page, because students read them. The needs lists are
 secret in the game, so they are not on those pages; the teacher prints them as cards.
+
+The How to Play guide (`triangle-trade-how-to-play.html` at the site root, with a
+two-page student PDF and a teacher PDF) is built by `tools/build-triangle-trade-guide.js`
+in `ams-planning`. Its Present button shows one panel at a time for the board, and
+`?teacher` adds the pause questions, likely misunderstandings and the debrief plan.
+The game links to it from a How to Play button.
