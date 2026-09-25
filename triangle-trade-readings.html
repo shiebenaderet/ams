@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Triangle Trade &mdash; choose your reading &mdash; Mr. B&rsquo;s Social Studies</title>
+<meta name="description" content="The five regions of the Triangle Trade game (New England, the Middle Colonies, the Southern Colonies, the West Indies and England), written at four levels. Every level teaches the same words for each region. Built to be read aloud, translated or printed.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;display=swap">
+<style>
+:root{--ink:#1a1a1a;--muted:#5a5a5a;--rule:#d8d4cc;--bg:#fbfaf7;--card:#fff;
+  --accent:#1F4D3A;--band:#E9F1EC;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;--card:#1e1e22;
+  --accent:#8fc3a8;--band:#23302a;}}
+:root[data-theme="dark"]{--ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;
+  --card:#1e1e22;--accent:#8fc3a8;--band:#23302a;}
+*{box-sizing:border-box;}
+html{font-size:18px;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Atkinson Hyperlegible Next','Atkinson Hyperlegible',Georgia,serif;
+  font-size:1rem;line-height:1.7;text-align:left;}
+.wrap{max-width:34rem;margin:0 auto;padding:1.5rem 1rem 4rem;}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:.75rem;margin-bottom:1.5rem;}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
+.lvl{font-size:.95rem;color:var(--muted);margin:0 0 .75rem;}
+.lvl a{color:var(--accent);}
+.snav{position:sticky;top:0;z-index:20;background:var(--bg);
+  border-bottom:1px solid var(--rule);width:100%;}
+.snavin{max-width:46rem;margin:0 auto;padding:.4rem 1rem;display:flex;gap:.5rem .75rem;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.snav a,.snav span[aria-current]{font-size:.85rem;padding:.3rem .6rem;border:1px solid var(--rule);
+  border-radius:.4rem;text-decoration:none;color:var(--ink);background:var(--card);display:inline-block;}
+.snav span[aria-current]{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+:root[data-theme="dark"] .snav span[aria-current]{color:#16161a;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .snav span[aria-current]{color:#16161a;}}
+.sgroup,.sjump{display:flex;gap:.3rem;flex-wrap:wrap;}
+.sjump a{background:transparent;border-color:transparent;color:var(--muted);padding:.3rem .4rem;}
+.sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
+.snav a.spdf{font-weight:700;color:var(--accent);border-color:var(--accent);background:transparent;}
+h2,h3,.reading{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+.progress{position:fixed;right:.6rem;top:50%;transform:translateY(-50%);z-index:15;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.ptrack{width:4px;height:38vh;background:var(--rule);border-radius:2px;overflow:hidden;}
+.pfill{width:100%;height:0%;background:var(--accent);border-radius:2px;}
+.ppct{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+@media (max-width:640px){.progress{display:none;}
+  .snavin{padding:.35rem .6rem;gap:.35rem;}
+  .snav a,.snav span[aria-current]{font-size:.8rem;padding:.25rem .45rem;}
+  /* Five regions and a PDF link wrap to two more rows on a phone, and a sticky bar
+     three rows deep covers a quarter of the screen. One row that scrolls sideways. */
+  .sjump{flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:none;}
+  .sjump a{flex:none;}}
+.reading{margin:0 0 3rem;padding-top:.5rem;}
+h2{font-size:1.3rem;line-height:1.3;margin:2rem 0 .15rem;color:var(--accent);}
+.colonies{font-size:.92rem;color:var(--muted);margin:0 0 1rem;}
+h3{font-size:1.05rem;margin:1.75rem 0 .4rem;line-height:1.35;}
+p{margin:0 0 1rem;}
+b{font-weight:700;}
+.pk{display:none;}
+.vbox{background:var(--band);border-radius:.5rem;padding:.9rem 1.1rem;margin:1.25rem 0 1rem;}
+.vbox .vh{font-size:1rem;margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.05em;}
+.vbox dl{margin:0;}
+.vbox dt{font-weight:700;margin-top:.6rem;}
+.vbox dl > div:first-child dt{margin-top:0;}
+.vbox dd{margin:.1rem 0 0;font-size:.95rem;line-height:1.55;}
+table.facts{width:100%;border-collapse:collapse;font-size:.92rem;line-height:1.5;margin:0;}
+table.facts caption{text-align:left;font-weight:700;font-size:.85rem;text-transform:uppercase;
+  letter-spacing:.05em;padding:0 0 .3rem;}
+table.facts th{text-align:left;vertical-align:top;white-space:nowrap;padding:.35rem .8rem .35rem 0;
+  border-top:1px solid var(--rule);width:1%;font-weight:700;}
+table.facts td{padding:.35rem 0;border-top:1px solid var(--rule);vertical-align:top;}
+.help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+  padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
+.help p{margin:0 0 .5rem;}
+.help p:last-child{margin:0;}
+.help a{color:var(--accent);}
+footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
+  font-size:.9rem;color:var(--muted);}
+footer a{color:var(--accent);}
+.pick{border:1px solid var(--rule);background:var(--card);border-radius:.6rem;
+  margin:0 0 .7rem;display:flex;align-items:stretch;}
+.pick:hover,.pick:focus-within{border-color:var(--accent);}
+.pick .pmain{flex:1;display:block;padding:.9rem 1.1rem;text-decoration:none;color:var(--ink);}
+.pick .pmain b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
+.pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+.pick .ppdf{flex:none;display:flex;align-items:center;padding:.5rem .9rem;font-size:.85rem;
+  border-left:1px solid var(--rule);color:var(--accent);text-decoration:none;font-weight:700;
+  text-align:center;min-width:5.5rem;justify-content:center;}
+.pick .ppdf:hover,.pick .ppdf:focus{text-decoration:underline;}
+.small{font-size:.85rem;color:var(--muted);}
+/* The marked words: a <button> inherits none of the prose's typography, so every
+   reset here is load-bearing (see build-student-readings.py). */
+.vpop{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;
+  text-transform:inherit;letter-spacing:inherit;
+  cursor:help;display:inline;text-align:inherit;line-height:inherit;
+  border-bottom:2px dotted var(--accent);}
+.vpop:hover,.vpop:focus{background:var(--band);border-bottom-style:solid;}
+.vpop:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+b .vpop{font-weight:inherit;}
+.vpop-bubble{position:absolute;z-index:60;max-width:22rem;padding:.6rem .75rem;
+  border:2px solid var(--accent);border-radius:.45rem;background:var(--card);
+  color:var(--ink);font-size:.95rem;line-height:1.5;
+  box-shadow:0 6px 24px rgba(0,0,0,.28);}
+
+/* ---------------------------------------------------------------------------
+   PRINT. The paper version is this same page printed, not a second layout.
+   Black on white whatever the screen theme; no buttons, bars or switcher. Every
+   region starts its own sheet and carries its own small title line, so a teacher
+   can print one region's pages and the sheet still says what it is.
+   --------------------------------------------------------------------------- */
+@media print{
+  :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
+    --card:#fff;--accent:#000;--band:#fff;}
+  @page{size:letter portrait;margin:.6in .7in;}
+  html{font-size:11.5pt;}
+  body{background:#fff;color:#000;line-height:1.4;}
+  .wrap{max-width:none;padding:0;}
+  .snav,.progress,.help,#rtools,header.top,footer{display:none !important;}
+  .vpop{border-bottom:0;}
+  .vpop-bubble{display:none !important;}
+  .reading{margin:0;padding:0;}
+  .reading + .reading{break-before:page;page-break-before:always;}
+  .pk{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;color:#333;margin:0 0 .15rem;
+    text-transform:uppercase;letter-spacing:.06em;}
+  .pk span{text-transform:none;letter-spacing:0;}
+  h2{font-size:1.45rem;border-bottom:1pt solid #000;padding-bottom:.15rem;margin:0 0 .15rem;
+    break-after:avoid;page-break-after:avoid;}
+  .colonies{font-style:italic;margin-bottom:.4rem;}
+  p{orphans:3;widows:3;margin-bottom:.35rem;}
+  .vbox{border:1pt solid #000;border-radius:0;padding:.35rem .6rem;margin:.45rem 0 .4rem;
+    break-inside:avoid;}
+  .vbox .vh{font-size:.9rem;margin-bottom:.2rem;}
+  /* Two columns on paper: the words box is the part that pushed a region onto a
+     second sheet, and a definition reads fine at half the measure. */
+  .vbox dl{column-count:2;column-gap:1.4rem;}
+  .vbox dl > div{break-inside:avoid;page-break-inside:avoid;}
+  .vbox dt{margin-top:.2rem;}
+  .vbox dd{font-size:.92rem;line-height:1.3;}
+  table.facts{font-size:.92rem;line-height:1.35;break-inside:avoid;}
+  table.facts caption{font-size:.8rem;padding-bottom:.15rem;}
+  table.facts th,table.facts td{padding:.15rem .6rem .15rem 0;border-top:.75pt solid #000;}
+  a{color:#000;text-decoration:none;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <h1>The Triangle Trade</h1>
+  <p class="lvl">Choose the reading you want. You can switch at any time.</p>
+</header>
+
+<div class="help">
+  <p><b>They all teach the same thing.</b> Every level covers all five regions &mdash;
+  New England, the Middle Colonies, the Southern Colonies, the West Indies and England &mdash; and every level teaches the <b>same words</b> for each region,
+  so your team can talk about the same ideas no matter which one you picked. The longer
+  ones say more about <i>why</i> things happened &mdash; they are not about being smarter.</p>
+  <p><b>Pick the one you can read comfortably.</b> If it feels too hard or too easy,
+  switch. There is a level switcher at the top of every reading.</p>
+  <p><b>Read your own region.</b> Your team is one region in the game. Read your region
+  on your own, then fill in your Region Notes.</p>
+</div>
+
+<div class="pick"><a class="pmain" href="triangle-trade-level-0.html"><b>Level 0</b>The key ideas, in short sentences.<span class="wc">About 788 words &middot; all five regions</span></a><a class="ppdf" href="Triangle-Trade-Level-0.pdf" aria-label="Level 0, print or PDF">Print / PDF</a></div>
+<div class="pick"><a class="pmain" href="triangle-trade-level-1.html"><b>Level 1</b>The same facts, in plain words and a little more detail.<span class="wc">About 1,067 words &middot; all five regions</span></a><a class="ppdf" href="Triangle-Trade-Level-1.pdf" aria-label="Level 1, print or PDF">Print / PDF</a></div>
+<div class="pick"><a class="pmain" href="triangle-trade-level-2.html"><b>Level 2</b>The standard version.<span class="wc">About 1,220 words &middot; all five regions</span></a><a class="ppdf" href="Triangle-Trade-Level-2.pdf" aria-label="Level 2, print or PDF">Print / PDF</a></div>
+<div class="pick"><a class="pmain" href="triangle-trade-level-3.html"><b>Level 3</b>The long version, with more about why the trade worked the way it did.<span class="wc">About 1,658 words &middot; all five regions</span></a><a class="ppdf" href="Triangle-Trade-Level-3.pdf" aria-label="Level 3, print or PDF">Print / PDF</a></div>
+
+<div class="help" style="margin-top:1.5rem">
+  <p><b>Listening to it.</b> Every reading has a <b>Listen</b> button at the top. It
+  reads the page out loud and lights up each sentence as it goes.</p>
+  <p><b>Reading it in another language.</b> Right-click and choose <b>Translate to&hellip;</b>
+  Everything is real text, so the whole reading translates.</p>
+  <p><b>On paper.</b> Each <b>Print / PDF</b> starts every region on a new page, so you
+  can print just your region.</p>
+</div>
+
+<footer>
+  <p>Unit 1: Foundations &amp; Identity &middot; Mr. B&rsquo;s Social Studies.</p>
+  <p class="small"><a href="games/triangle-trade.html">The Triangle Trade game</a></p>
+</footer>
+</div>
+</body>
+</html>

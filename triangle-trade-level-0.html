@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Triangle Trade &mdash; Level 0 &mdash; Mr. B&rsquo;s Social Studies</title>
+<meta name="description" content="The five regions of the Triangle Trade game (New England, the Middle Colonies, the Southern Colonies, the West Indies and England), written at Level 0. Built to be read aloud, translated or printed.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;display=swap">
+<style>
+:root{--ink:#1a1a1a;--muted:#5a5a5a;--rule:#d8d4cc;--bg:#fbfaf7;--card:#fff;
+  --accent:#1F4D3A;--band:#E9F1EC;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;--card:#1e1e22;
+  --accent:#8fc3a8;--band:#23302a;}}
+:root[data-theme="dark"]{--ink:#eceae5;--muted:#a8a49c;--rule:#3a3a38;--bg:#16161a;
+  --card:#1e1e22;--accent:#8fc3a8;--band:#23302a;}
+*{box-sizing:border-box;}
+html{font-size:18px;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:'Atkinson Hyperlegible Next','Atkinson Hyperlegible',Georgia,serif;
+  font-size:1rem;line-height:1.7;text-align:left;}
+.wrap{max-width:34rem;margin:0 auto;padding:1.5rem 1rem 4rem;}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:.75rem;margin-bottom:1.5rem;}
+h1{font-size:1.5rem;line-height:1.25;margin:0 0 .25rem;}
+.lvl{font-size:.95rem;color:var(--muted);margin:0 0 .75rem;}
+.lvl a{color:var(--accent);}
+.snav{position:sticky;top:0;z-index:20;background:var(--bg);
+  border-bottom:1px solid var(--rule);width:100%;}
+.snavin{max-width:46rem;margin:0 auto;padding:.4rem 1rem;display:flex;gap:.5rem .75rem;
+  align-items:center;justify-content:space-between;flex-wrap:wrap;}
+.snav a,.snav span[aria-current]{font-size:.85rem;padding:.3rem .6rem;border:1px solid var(--rule);
+  border-radius:.4rem;text-decoration:none;color:var(--ink);background:var(--card);display:inline-block;}
+.snav span[aria-current]{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700;}
+:root[data-theme="dark"] .snav span[aria-current]{color:#16161a;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .snav span[aria-current]{color:#16161a;}}
+.sgroup,.sjump{display:flex;gap:.3rem;flex-wrap:wrap;}
+.sjump a{background:transparent;border-color:transparent;color:var(--muted);padding:.3rem .4rem;}
+.sjump a:hover,.sjump a:focus{color:var(--accent);border-color:var(--rule);}
+.snav a.spdf{font-weight:700;color:var(--accent);border-color:var(--accent);background:transparent;}
+h2,h3,.reading{scroll-margin-top:calc(var(--navh, 3.6rem) + .6rem);}
+.progress{position:fixed;right:.6rem;top:50%;transform:translateY(-50%);z-index:15;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.ptrack{width:4px;height:38vh;background:var(--rule);border-radius:2px;overflow:hidden;}
+.pfill{width:100%;height:0%;background:var(--accent);border-radius:2px;}
+.ppct{font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums;}
+@media (max-width:640px){.progress{display:none;}
+  .snavin{padding:.35rem .6rem;gap:.35rem;}
+  .snav a,.snav span[aria-current]{font-size:.8rem;padding:.25rem .45rem;}
+  /* Five regions and a PDF link wrap to two more rows on a phone, and a sticky bar
+     three rows deep covers a quarter of the screen. One row that scrolls sideways. */
+  .sjump{flex-wrap:nowrap;overflow-x:auto;max-width:100%;scrollbar-width:none;}
+  .sjump a{flex:none;}}
+.reading{margin:0 0 3rem;padding-top:.5rem;}
+h2{font-size:1.3rem;line-height:1.3;margin:2rem 0 .15rem;color:var(--accent);}
+.colonies{font-size:.92rem;color:var(--muted);margin:0 0 1rem;}
+h3{font-size:1.05rem;margin:1.75rem 0 .4rem;line-height:1.35;}
+p{margin:0 0 1rem;}
+b{font-weight:700;}
+.pk{display:none;}
+.vbox{background:var(--band);border-radius:.5rem;padding:.9rem 1.1rem;margin:1.25rem 0 1rem;}
+.vbox .vh{font-size:1rem;margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.05em;}
+.vbox dl{margin:0;}
+.vbox dt{font-weight:700;margin-top:.6rem;}
+.vbox dl > div:first-child dt{margin-top:0;}
+.vbox dd{margin:.1rem 0 0;font-size:.95rem;line-height:1.55;}
+table.facts{width:100%;border-collapse:collapse;font-size:.92rem;line-height:1.5;margin:0;}
+table.facts caption{text-align:left;font-weight:700;font-size:.85rem;text-transform:uppercase;
+  letter-spacing:.05em;padding:0 0 .3rem;}
+table.facts th{text-align:left;vertical-align:top;white-space:nowrap;padding:.35rem .8rem .35rem 0;
+  border-top:1px solid var(--rule);width:1%;font-weight:700;}
+table.facts td{padding:.35rem 0;border-top:1px solid var(--rule);vertical-align:top;}
+.help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
+  padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
+.help p{margin:0 0 .5rem;}
+.help p:last-child{margin:0;}
+.help a{color:var(--accent);}
+footer{border-top:1px solid var(--rule);margin-top:2.5rem;padding-top:1rem;
+  font-size:.9rem;color:var(--muted);}
+footer a{color:var(--accent);}
+.pick{border:1px solid var(--rule);background:var(--card);border-radius:.6rem;
+  margin:0 0 .7rem;display:flex;align-items:stretch;}
+.pick:hover,.pick:focus-within{border-color:var(--accent);}
+.pick .pmain{flex:1;display:block;padding:.9rem 1.1rem;text-decoration:none;color:var(--ink);}
+.pick .pmain b{display:block;font-size:1.15rem;color:var(--accent);margin-bottom:.15rem;}
+.pick .wc{display:block;font-size:.9rem;color:var(--muted);margin-top:.3rem;}
+.pick .ppdf{flex:none;display:flex;align-items:center;padding:.5rem .9rem;font-size:.85rem;
+  border-left:1px solid var(--rule);color:var(--accent);text-decoration:none;font-weight:700;
+  text-align:center;min-width:5.5rem;justify-content:center;}
+.pick .ppdf:hover,.pick .ppdf:focus{text-decoration:underline;}
+.small{font-size:.85rem;color:var(--muted);}
+/* The marked words: a <button> inherits none of the prose's typography, so every
+   reset here is load-bearing (see build-student-readings.py). */
+.vpop{font:inherit;color:inherit;background:none;border:0;padding:0;margin:0;
+  text-transform:inherit;letter-spacing:inherit;
+  cursor:help;display:inline;text-align:inherit;line-height:inherit;
+  border-bottom:2px dotted var(--accent);}
+.vpop:hover,.vpop:focus{background:var(--band);border-bottom-style:solid;}
+.vpop:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+b .vpop{font-weight:inherit;}
+.vpop-bubble{position:absolute;z-index:60;max-width:22rem;padding:.6rem .75rem;
+  border:2px solid var(--accent);border-radius:.45rem;background:var(--card);
+  color:var(--ink);font-size:.95rem;line-height:1.5;
+  box-shadow:0 6px 24px rgba(0,0,0,.28);}
+
+/* ---------------------------------------------------------------------------
+   PRINT. The paper version is this same page printed, not a second layout.
+   Black on white whatever the screen theme; no buttons, bars or switcher. Every
+   region starts its own sheet and carries its own small title line, so a teacher
+   can print one region's pages and the sheet still says what it is.
+   --------------------------------------------------------------------------- */
+@media print{
+  :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
+    --card:#fff;--accent:#000;--band:#fff;}
+  @page{size:letter portrait;margin:.6in .7in;}
+  html{font-size:11.5pt;}
+  body{background:#fff;color:#000;line-height:1.4;}
+  .wrap{max-width:none;padding:0;}
+  .snav,.progress,.help,#rtools,header.top,footer{display:none !important;}
+  .vpop{border-bottom:0;}
+  .vpop-bubble{display:none !important;}
+  .reading{margin:0;padding:0;}
+  .reading + .reading{break-before:page;page-break-before:always;}
+  .pk{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;color:#333;margin:0 0 .15rem;
+    text-transform:uppercase;letter-spacing:.06em;}
+  .pk span{text-transform:none;letter-spacing:0;}
+  h2{font-size:1.45rem;border-bottom:1pt solid #000;padding-bottom:.15rem;margin:0 0 .15rem;
+    break-after:avoid;page-break-after:avoid;}
+  .colonies{font-style:italic;margin-bottom:.4rem;}
+  p{orphans:3;widows:3;margin-bottom:.35rem;}
+  .vbox{border:1pt solid #000;border-radius:0;padding:.35rem .6rem;margin:.45rem 0 .4rem;
+    break-inside:avoid;}
+  .vbox .vh{font-size:.9rem;margin-bottom:.2rem;}
+  /* Two columns on paper: the words box is the part that pushed a region onto a
+     second sheet, and a definition reads fine at half the measure. */
+  .vbox dl{column-count:2;column-gap:1.4rem;}
+  .vbox dl > div{break-inside:avoid;page-break-inside:avoid;}
+  .vbox dt{margin-top:.2rem;}
+  .vbox dd{font-size:.92rem;line-height:1.3;}
+  table.facts{font-size:.92rem;line-height:1.35;break-inside:avoid;}
+  table.facts caption{font-size:.8rem;padding-bottom:.15rem;}
+  table.facts th,table.facts td{padding:.15rem .6rem .15rem 0;border-top:.75pt solid #000;}
+  a{color:#000;text-decoration:none;}
+}
+</style>
+</head>
+<body>
+<nav class="snav" aria-label="Reading navigation">
+  <div class="snavin">
+    <span class="sgroup"><span aria-current="page">Level 0</span><a href="triangle-trade-level-1.html" data-level="1">Level 1</a><a href="triangle-trade-level-2.html" data-level="2">Level 2</a><a href="triangle-trade-level-3.html" data-level="3">Level 3</a></span>
+    <span class="sjump"><a href="#newEngland">New England</a><a href="#middle">Middle</a><a href="#southern">Southern</a><a href="#westIndies">West Indies</a><a href="#england">England</a><a class="spdf" href="Triangle-Trade-Level-0.pdf">Print / PDF</a></span>
+  </div>
+</nav>
+<div class="progress" aria-hidden="true"><div class="ptrack"><div class="pfill" id="pfill"></div></div><span class="ppct" id="ppct">0%</span></div>
+<div class="wrap">
+<header class="top">
+  <h1>The Triangle Trade</h1>
+  <p class="lvl">Level 0 &mdash; The key ideas, in short sentences. <a href="triangle-trade-readings.html">All levels</a></p>
+</header>
+<div id="rtools"></div>
+<div class="help">
+  <p><b>Read your own region.</b> Your team is one region in the game. Find it with the
+  links at the top, read it on your own, then fill in your Region Notes.</p>
+  <p><b>Listen to it.</b> Press <b>Listen</b> and the reading is read out loud, one
+  sentence at a time. Tap a dotted word to see what it means. To read it in another
+  language, right-click and choose <b>Translate to&hellip;</b></p>
+  <p>These readings are about real history, including slavery and the Middle Passage.</p>
+</div>
+<section class="reading" id="newEngland" data-listen aria-labelledby="newEngland-h">
+  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 0 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <h2 id="newEngland-h">New England</h2>
+  <p class="colonies">Massachusetts · New Hampshire · Rhode Island · Connecticut &middot; Port: Boston</p>
+  <div class="rtext">
+<p>New England has rocky soil, so farms are small. But the sea is full of fish. People dry and salt the fish so it keeps.</p>
+<p>Tall trees give wood for ships. You have 7 ships. That is your big strength. Two regions have no ships. They must pay someone to carry their goods.</p>
+<p>Rum is made in a <b><button type="button" class="vpop" aria-describedby="newEngland-def-distillery">distillery</button></b> (a place that makes strong drinks). Rum comes from <b><button type="button" class="vpop" aria-describedby="newEngland-def-molasses">molasses</button></b> (a syrup left over from making sugar). Molasses comes from the West Indies. Game rule: hold 2 molasses before you trade 1 rum. That is your big problem.</p>
+<p>Here is a hard truth. The molasses was made by <b><button type="button" class="vpop" aria-describedby="newEngland-def-enslaved">enslaved</button></b> people (people forced to work for no pay). Some New England ships took rum to Africa. They traded it for captured people. They carried those people across the ocean by force. That trip is the <b><button type="button" class="vpop" aria-describedby="newEngland-def-middlePassage">Middle Passage</button></b>.</p>
+<p><b>You have:</b> fish, whale oil, lumber, rum, and 7 ships.</p>
+  </div>
+<aside class="vbox" data-no-listen aria-labelledby="newEngland-words">
+  <h3 id="newEngland-words" class="vh">Words to know</h3>
+  <dl><div><dt>Distillery</dt><dd id="newEngland-def-distillery">A place that makes rum from molasses.</dd></div><div><dt>Molasses</dt><dd id="newEngland-def-molasses">A thick brown syrup left over when sugar is made.</dd></div><div><dt>Enslaved / Slavery</dt><dd id="newEngland-def-enslaved">An enslaved person was owned by another person. They were forced to work for no pay. They could not leave. We say enslaved person because they were people first.</dd></div><div><dt>The Middle Passage</dt><dd id="newEngland-def-middlePassage">The Middle Passage was the trip across the ocean from Africa to the Americas. Captured African people were forced onto ships. They were chained and crowded. Many died. The people who lived were sold and enslaved.</dd></div><div><dt>Export / Import</dt><dd id="newEngland-def-export">Export = send goods out to sell. Import = bring goods in to buy.</dd></div><div><dt>Raw Materials</dt><dd id="newEngland-def-rawMaterials">Things from nature, like wood, fish, and crops, before they are made into something.</dd></div><div><dt>Naval Stores</dt><dd id="newEngland-def-navalStores">Sticky tar from pine trees. Ships need it to keep water out.</dd></div></dl>
+</aside>
+<table class="facts" data-no-listen>
+  <caption>New England in the game</caption>
+  <tr><th scope="row">Starts with</th><td>7 Dried Fish, 3 Whale Oil, 5 Lumber, 6 Rum</td></tr>
+  <tr><th scope="row">Ships</th><td>Owns 7 ships.</td></tr>
+</table>
+</section>
+<section class="reading" id="middle" data-listen aria-labelledby="middle-h">
+  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 0 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <h2 id="middle-h">Middle Colonies</h2>
+  <p class="colonies">New York · New Jersey · Pennsylvania · Delaware &middot; Port: Philadelphia</p>
+  <div class="rtext">
+<p>The Middle Colonies have rich farmland. Farmers grow lots of wheat. They grow more than they can eat! This area is called the breadbasket. It grows food for others.</p>
+<p>There are many cattle too. Traders get furs from Native Americans. Furs sell for a lot in England.</p>
+<p>You have 2 ships.</p>
+<p>Your big strength is food. Everyone needs food! Your big problem is that food is cheap and heavy. So try two steps. Trade wheat for sugar in the West Indies. Then trade the sugar to England.</p>
+<p>Here is a hard truth. Your wheat fed the sugar islands. There, <b><button type="button" class="vpop" aria-describedby="middle-def-enslaved">enslaved</button></b> people (people forced to work for no pay) grew the sugar. They were taken from Africa by force. Ships carried them across the ocean. That trip is the <b><button type="button" class="vpop" aria-describedby="middle-def-middlePassage">Middle Passage</button></b>. Slavery was legal here too. Many enslaved people lived in New York City.</p>
+<p><b>You have:</b> wheat and grains, lumber, cattle, furs, and 2 ships.</p>
+  </div>
+<aside class="vbox" data-no-listen aria-labelledby="middle-words">
+  <h3 id="middle-words" class="vh">Words to know</h3>
+  <dl><div><dt>Enslaved / Slavery</dt><dd id="middle-def-enslaved">An enslaved person was owned by another person. They were forced to work for no pay. They could not leave. We say enslaved person because they were people first.</dd></div><div><dt>The Middle Passage</dt><dd id="middle-def-middlePassage">The Middle Passage was the trip across the ocean from Africa to the Americas. Captured African people were forced onto ships. They were chained and crowded. Many died. The people who lived were sold and enslaved.</dd></div><div><dt>Export / Import</dt><dd id="middle-def-export">Export = send goods out to sell. Import = bring goods in to buy.</dd></div><div><dt>Raw Materials</dt><dd id="middle-def-rawMaterials">Things from nature, like wood, fish, and crops, before they are made into something.</dd></div><div><dt>Cash Crop</dt><dd id="middle-def-cashCrop">A crop grown to sell, not to eat. Tobacco is one.</dd></div><div><dt>Monopoly</dt><dd id="middle-def-monopoly">When you are the ONLY one who has something to sell.</dd></div></dl>
+</aside>
+<table class="facts" data-no-listen>
+  <caption>Middle Colonies in the game</caption>
+  <tr><th scope="row">Starts with</th><td>7 Wheat &amp; Grains, 7 Lumber, 5 Cattle, 7 Furs</td></tr>
+  <tr><th scope="row">Ships</th><td>Owns 2 ships.</td></tr>
+</table>
+</section>
+<section class="reading" id="southern" data-listen aria-labelledby="southern-h">
+  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 0 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <h2 id="southern-h">Southern Colonies</h2>
+  <p class="colonies">Maryland · Virginia · N. Carolina · S. Carolina · Georgia &middot; Port: Charleston</p>
+  <div class="rtext">
+<p>The Southern Colonies grow tobacco. It is a <b><button type="button" class="vpop" aria-describedby="southern-def-cashCrop">cash crop</button></b> (a crop grown to sell). They grow so much that England pays very little for it. They also grow rice and <b><button type="button" class="vpop" aria-describedby="southern-def-indigo">indigo</button></b> (a plant that makes blue dye). Pine trees give <b><button type="button" class="vpop" aria-describedby="southern-def-navalStores">naval stores</button></b> (tar that keeps ships from leaking).</p>
+<p>You have 8 kinds of goods. That is more than anyone! That is your big strength.</p>
+<p>Your big problem: you have NO ships. You must pay another region to carry your goods. Or you can trade for a ship of your own.</p>
+<p>Who did the work? <b><button type="button" class="vpop" aria-describedby="southern-def-enslaved">Enslaved</button></b> African people (people forced to work for no pay). They planted and picked the crops. They could not leave. Many were taken from Africa by force. Ships carried them across the ocean. That trip is called the <b><button type="button" class="vpop" aria-describedby="southern-def-middlePassage">Middle Passage</button></b>. Many people died on it.</p>
+<p><b>You have:</b> tobacco, rice, naval stores, fish, lumber, furs, silk, indigo. No ships.</p>
+  </div>
+<aside class="vbox" data-no-listen aria-labelledby="southern-words">
+  <h3 id="southern-words" class="vh">Words to know</h3>
+  <dl><div><dt>Cash Crop</dt><dd id="southern-def-cashCrop">A crop grown to sell, not to eat. Tobacco is one.</dd></div><div><dt>Indigo</dt><dd id="southern-def-indigo">A plant that makes blue dye for cloth.</dd></div><div><dt>Naval Stores</dt><dd id="southern-def-navalStores">Sticky tar from pine trees. Ships need it to keep water out.</dd></div><div><dt>Enslaved / Slavery</dt><dd id="southern-def-enslaved">An enslaved person was owned by another person. They were forced to work for no pay. They could not leave. We say enslaved person because they were people first.</dd></div><div><dt>The Middle Passage</dt><dd id="southern-def-middlePassage">The Middle Passage was the trip across the ocean from Africa to the Americas. Captured African people were forced onto ships. They were chained and crowded. Many died. The people who lived were sold and enslaved.</dd></div><div><dt>Duty</dt><dd id="southern-def-duty">A tax on goods that come in by ship.</dd></div><div><dt>Mercantilism</dt><dd id="southern-def-mercantilism">The idea that colonies are there to make the home country rich.</dd></div></dl>
+</aside>
+<table class="facts" data-no-listen>
+  <caption>Southern Colonies in the game</caption>
+  <tr><th scope="row">Starts with</th><td>7 Tobacco, 4 Rice, 5 Naval Stores, 1 Dried Fish, 4 Lumber, 2 Furs, 2 Silk, 3 Indigo</td></tr>
+  <tr><th scope="row">Ships</th><td>None. This region has to hire a ship from another region.</td></tr>
+</table>
+</section>
+<section class="reading" id="westIndies" data-listen aria-labelledby="westIndies-h">
+  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 0 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <h2 id="westIndies-h">West Indies</h2>
+  <p class="colonies">Jamaica · Barbados · Antigua · St. Kitts &middot; Port: Kingston</p>
+  <div class="rtext">
+<p>The West Indies are warm islands in the Caribbean Sea. Sugar cane grows well here. Sugar is worth a lot of money everywhere. That is your big strength.</p>
+<p>Making sugar leaves a thick brown syrup called <b><button type="button" class="vpop" aria-describedby="westIndies-def-molasses">molasses</button></b>. New England buys it to make rum. You have citrus fruit too, like limes and oranges.</p>
+<p><b><button type="button" class="vpop" aria-describedby="westIndies-def-enslaved">Enslaved</button></b> African people (people forced to work for no pay) grew the sugar. The work was hard and dangerous. Most people on the islands were enslaved. They were taken from Africa by force. Ships carried them across the ocean. That trip is called the <b><button type="button" class="vpop" aria-describedby="westIndies-def-middlePassage">Middle Passage</button></b>. This was cruel and wrong.</p>
+<p>Your big problem: the islands grow almost nothing else. Even food must come from other places. And you have NO ships. You must pay another region to carry your goods. Or you can trade for a ship.</p>
+<p><b>You have:</b> sugar, molasses, citrus fruit. No ships.</p>
+  </div>
+<aside class="vbox" data-no-listen aria-labelledby="westIndies-words">
+  <h3 id="westIndies-words" class="vh">Words to know</h3>
+  <dl><div><dt>Molasses</dt><dd id="westIndies-def-molasses">A thick brown syrup left over when sugar is made.</dd></div><div><dt>Enslaved / Slavery</dt><dd id="westIndies-def-enslaved">An enslaved person was owned by another person. They were forced to work for no pay. They could not leave. We say enslaved person because they were people first.</dd></div><div><dt>The Middle Passage</dt><dd id="westIndies-def-middlePassage">The Middle Passage was the trip across the ocean from Africa to the Americas. Captured African people were forced onto ships. They were chained and crowded. Many died. The people who lived were sold and enslaved.</dd></div><div><dt>Cash Crop</dt><dd id="westIndies-def-cashCrop">A crop grown to sell, not to eat. Tobacco is one.</dd></div><div><dt>Monopoly</dt><dd id="westIndies-def-monopoly">When you are the ONLY one who has something to sell.</dd></div></dl>
+</aside>
+<table class="facts" data-no-listen>
+  <caption>West Indies in the game</caption>
+  <tr><th scope="row">Starts with</th><td>4 Citrus Fruit, 9 Sugar, 15 Molasses</td></tr>
+  <tr><th scope="row">Ships</th><td>None. This region has to hire a ship from another region.</td></tr>
+</table>
+</section>
+<section class="reading" id="england" data-listen aria-labelledby="england-h">
+  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 0 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <h2 id="england-h">England</h2>
+  <p class="colonies">The Mother Country &middot; Port: London</p>
+  <div class="rtext">
+<p>You play England. England rules the colonies, so it is called the <b><button type="button" class="vpop" aria-describedby="england-def-motherCountry">Mother Country</button></b>. It made the trade rules. The colonies had to sell many goods only to England.</p>
+<p>England's shops make <b><button type="button" class="vpop" aria-describedby="england-def-manufacturedGoods">manufactured goods</button></b> (things made by workers), like guns and tools. The colonies must buy them from you. That is your big strength. You also have the most ships: 8. Other teams may pay you to carry their goods.</p>
+<p>Your big problem: you need more items than anyone else. You must trade with the colonies to get them.</p>
+<p>English ships also carried people. They took cloth and guns to Africa. They traded them for captured African people. Then the ships carried those people across the ocean by force. That trip is the <b><button type="button" class="vpop" aria-describedby="england-def-middlePassage">Middle Passage</button></b>. In the Americas, the people were sold. They were <b><button type="button" class="vpop" aria-describedby="england-def-enslaved">enslaved</button></b> (forced to work for no pay). The ships came home with sugar and tobacco. Two English towns, Liverpool and Bristol, got rich.</p>
+<p><b>You have:</b> guns, gunpowder, clothing, fine furniture, tools, books, silver, and 8 ships.</p>
+  </div>
+<aside class="vbox" data-no-listen aria-labelledby="england-words">
+  <h3 id="england-words" class="vh">Words to know</h3>
+  <dl><div><dt>Mother Country</dt><dd id="england-def-motherCountry">The country that rules the colonies. For us, that is England.</dd></div><div><dt>Manufactured Goods</dt><dd id="england-def-manufacturedGoods">Things made by workers in shops, like tools, guns, and books.</dd></div><div><dt>Enslaved / Slavery</dt><dd id="england-def-enslaved">An enslaved person was owned by another person. They were forced to work for no pay. They could not leave. We say enslaved person because they were people first.</dd></div><div><dt>The Middle Passage</dt><dd id="england-def-middlePassage">The Middle Passage was the trip across the ocean from Africa to the Americas. Captured African people were forced onto ships. They were chained and crowded. Many died. The people who lived were sold and enslaved.</dd></div><div><dt>Mercantilism</dt><dd id="england-def-mercantilism">The idea that colonies are there to make the home country rich.</dd></div><div><dt>Duty</dt><dd id="england-def-duty">A tax on goods that come in by ship.</dd></div><div><dt>Monopoly</dt><dd id="england-def-monopoly">When you are the ONLY one who has something to sell.</dd></div></dl>
+</aside>
+<table class="facts" data-no-listen>
+  <caption>England in the game</caption>
+  <tr><th scope="row">Starts with</th><td>4 Guns, 4 Gunpowder, 2 Clothing, 2 Fine Furniture, 3 Tools, 3 Books, 2 Silver</td></tr>
+  <tr><th scope="row">Ships</th><td>Owns 8 ships.</td></tr>
+</table>
+</section>
+<footer>
+  <p>Unit 1: Foundations &amp; Identity &middot; Mr. B&rsquo;s Social Studies. <a href="Triangle-Trade-Level-0.pdf">Print / PDF</a></p>
+</footer>
+</div>
+<script src="vocab-pops.js"></script>
+<script src="reader-tools.js"></script>
+<script>
+/* Sticky-bar height for anchor offsets, the reading-progress bar, and a level
+   switcher that keeps your place: switching level lands on the region you were
+   reading, not at the top of the new page. */
+(function () {
+  var bar = document.querySelector('.snav');
+  var fill = document.getElementById('pfill'), pct = document.getElementById('ppct'), t = 0;
+  function measure() {
+    if (bar) document.documentElement.style.setProperty('--navh', bar.offsetHeight + 'px');
+  }
+  function paint() {
+    t = 0;
+    if (!fill) return;
+    var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
+    var p = max > 8 ? Math.round(Math.min(1, Math.max(0, d.scrollTop / max)) * 100) : 0;
+    fill.style.height = p + '%';
+    pct.textContent = p + '%';
+  }
+  addEventListener('resize', measure, { passive: true });
+  addEventListener('scroll', function () { if (!t) t = requestAnimationFrame(paint); }, { passive: true });
+  measure(); paint();
+
+  var secs = [].slice.call(document.querySelectorAll('section.reading'));
+  function here() {
+    var off = (bar ? bar.offsetHeight : 0) + 60, cur = '';
+    secs.forEach(function (s) { if (s.getBoundingClientRect().top - off <= 0) cur = s.id; });
+    return cur || location.hash.slice(1);
+  }
+  [].forEach.call(document.querySelectorAll('a[data-level]'), function (a) {
+    function keep() {
+      var h = here();
+      a.href = a.getAttribute('href').split('#')[0] + (h ? '#' + h : '');
+    }
+    a.addEventListener('pointerdown', keep);
+    a.addEventListener('focus', keep);
+    a.addEventListener('click', keep);
+  });
+})();
+</script>
+</body>
+</html>
