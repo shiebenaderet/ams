@@ -58,6 +58,7 @@ h3{font-size:1.05rem;margin:1.75rem 0 .4rem;line-height:1.35;}
 p{margin:0 0 1rem;}
 b{font-weight:700;}
 .pk{display:none;}
+.cband{display:none;}
 .vbox{background:var(--band);border-radius:.5rem;padding:.9rem 1.1rem;margin:1.25rem 0 1rem;}
 .vbox .vh{font-size:1rem;margin:0 0 .4rem;text-transform:uppercase;letter-spacing:.05em;}
 .vbox dl{margin:0;}
@@ -127,24 +128,27 @@ b .vpop{font-weight:inherit;}
   html{font-size:11pt;}
   body.lv0{font-size:1.18rem;}
   body{background:#fff;color:#000;line-height:1.4;}
-  /* Level 3 is the longest reading plus the fullest monopoly notes: narrower margins and
+  /* Levels 2 and 3 are the longest readings plus the fullest monopoly notes: narrower margins and
      slightly tighter leading (never smaller type) keep one region per page. */
-  body.lv3 .reading{page:lv3;}
-  @page lv3{margin:.45in .6in;}
-  body.lv3{line-height:1.3;}
-  body.lv3 p{margin-bottom:.25rem;}
+  body.lv2 .reading,body.lv3 .reading{page:tight;}
+  @page tight{margin:.4in .5in;}
+  body.lv2,body.lv3{line-height:1.3;}
+  body.lv2 p,body.lv3 p{margin-bottom:.25rem;}
   .wrap{max-width:none;padding:0;}
   .snav,.progress,.help,#rtools,header.top,footer{display:none !important;}
   .vpop{border-bottom:0;}
   .vpop-bubble{display:none !important;}
   .reading{margin:0;padding:0;}
   .reading + .reading{break-before:page;page-break-before:always;}
-  .pk{display:flex;justify-content:space-between;gap:1rem;font-size:.78rem;color:#333;margin:0 0 .15rem;
-    text-transform:uppercase;letter-spacing:.06em;}
-  .pk span{text-transform:none;letter-spacing:0;}
-  h2{font-size:1.45rem;border-bottom:1pt solid #000;padding-bottom:.15rem;margin:0 0 .15rem;
+  .pk{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;background:#222;color:#fff;
+    font-size:10.5pt;padding:.2rem .5rem;margin:0 0 .35rem;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .pk i{font-weight:700;}
+  h2{font-size:18pt;font-weight:800;text-align:center;border:0;padding:0;margin:0 0 .05rem;
     break-after:avoid;page-break-after:avoid;}
-  .colonies{font-style:italic;margin-bottom:.4rem;}
+  .colonies{text-align:center;font-style:normal;margin:0 0 .3rem;font-size:11pt;color:#000;}
+  .colonies .cn{font-weight:700;}
+  .cband{display:block;height:4pt;margin:0 0 .45rem;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   p{orphans:3;widows:3;margin-bottom:.35rem;}
   .vbox{border:1pt solid #000;border-radius:0;padding:.35rem .6rem;margin:.45rem 0 .4rem;
     break-inside:avoid;}
@@ -156,6 +160,9 @@ b .vpop{font-weight:inherit;}
   .vbox dt{margin-top:.2rem;}
   .vbox dd{font-size:.92rem;line-height:1.3;}
   .mono{border:1pt solid #000;border-radius:0;background:#fff;padding:.25rem .55rem .3rem;margin:.35rem 0 .4rem;break-inside:avoid;}
+  body.lv2 .mono,body.lv3 .mono{padding:.15rem .5rem .2rem;margin:.25rem 0 0;}
+  body.lv2 .rules,body.lv3 .rules{padding:.2rem .55rem;margin:.2rem 0 .3rem;}
+  body.lv2 .cband,body.lv3 .cband{margin-bottom:.3rem;}
   .mono .mintro{margin:.05rem 0 .15rem;line-height:1.3;}
   .mono .mnote,.mono .mall{margin:.2rem 0 0;line-height:1.3;}
   table.mtab{line-height:1.25;}
@@ -189,9 +196,10 @@ b .vpop{font-weight:inherit;}
   <p>These readings are about real history, including slavery and the Middle Passage.</p>
 </div>
 <section class="reading" id="newEngland" data-listen aria-labelledby="newEngland-h">
-  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 2 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <p class="pk" data-no-listen><i>The Triangle Trade</i><span>Reading: New England &middot; Level 2</span></p>
   <h2 id="newEngland-h">New England</h2>
-  <p class="colonies">Massachusetts · New Hampshire · Rhode Island · Connecticut &middot; Port: Boston</p>
+  <p class="colonies"><span class="cn">Massachusetts · New Hampshire · Rhode Island · Connecticut</span><span class="port"><span class="sep"> &middot; </span>Home port: Boston</span></p>
+  <div class="cband" style="background:#1f3a5c"></div>
 <aside class="rules" data-no-listen aria-label="Rules for New England">
   <p class="rh">Rules for New England</p>
   <ul><li><b>Rum rule:</b> every 1 rum you trade away uses up 2 molasses from your port. Put the 2 molasses cards back in the teacher&rsquo;s box.</li><li><b>You have 7 ships.</b> More than you need: carry other regions&rsquo; cargo and charge a fee.</li><li>A ship carries <b>6 goods at most</b>, each way. <b>One voyage</b> per Shipping round.</li></ul>
@@ -213,9 +221,10 @@ b .vpop{font-weight:inherit;}
 </div>
 </section>
 <section class="reading" id="middle" data-listen aria-labelledby="middle-h">
-  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 2 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <p class="pk" data-no-listen><i>The Triangle Trade</i><span>Reading: Middle Colonies &middot; Level 2</span></p>
   <h2 id="middle-h">Middle Colonies</h2>
-  <p class="colonies">New York · New Jersey · Pennsylvania · Delaware &middot; Port: Philadelphia</p>
+  <p class="colonies"><span class="cn">New York · New Jersey · Pennsylvania · Delaware</span><span class="port"><span class="sep"> &middot; </span>Home port: Philadelphia</span></p>
+  <div class="cband" style="background:#3e6b35"></div>
 <aside class="rules" data-no-listen aria-label="Rules for Middle Colonies">
   <p class="rh">Rules for Middle Colonies</p>
   <ul><li><b>You have 2 ships.</b> Use them well, or carry other regions&rsquo; cargo for a fee.</li><li>A ship carries <b>6 goods at most</b>, each way. <b>One voyage</b> per Shipping round.</li></ul>
@@ -237,9 +246,10 @@ b .vpop{font-weight:inherit;}
 </div>
 </section>
 <section class="reading" id="southern" data-listen aria-labelledby="southern-h">
-  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 2 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <p class="pk" data-no-listen><i>The Triangle Trade</i><span>Reading: Southern Colonies &middot; Level 2</span></p>
   <h2 id="southern-h">Southern Colonies</h2>
-  <p class="colonies">Maryland · Virginia · N. Carolina · S. Carolina · Georgia &middot; Port: Charleston</p>
+  <p class="colonies"><span class="cn">Maryland · Virginia · N. Carolina · S. Carolina · Georgia</span><span class="port"><span class="sep"> &middot; </span>Home port: Charleston</span></p>
+  <div class="cband" style="background:#8a4e12"></div>
 <aside class="rules" data-no-listen aria-label="Rules for Southern Colonies">
   <p class="rh">Rules for Southern Colonies</p>
   <ul><li><b>You have no ships.</b> To send goods, hire another region&rsquo;s ship (pay the fee in goods, carried as cargo) or trade for a ship card.</li><li><b>In Negotiation you can&rsquo;t send your Merchant out.</b> Other regions&rsquo; Merchants come to you, so be ready to make deals at your port.</li><li>A ship carries <b>6 goods at most</b>, each way. <b>One voyage</b> per Shipping round.</li></ul>
@@ -261,9 +271,10 @@ b .vpop{font-weight:inherit;}
 </div>
 </section>
 <section class="reading" id="westIndies" data-listen aria-labelledby="westIndies-h">
-  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 2 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <p class="pk" data-no-listen><i>The Triangle Trade</i><span>Reading: West Indies &middot; Level 2</span></p>
   <h2 id="westIndies-h">West Indies</h2>
-  <p class="colonies">Jamaica · Barbados · Antigua · St. Kitts &middot; Port: Kingston</p>
+  <p class="colonies"><span class="cn">Jamaica · Barbados · Antigua · St. Kitts</span><span class="port"><span class="sep"> &middot; </span>Home port: Kingston</span></p>
+  <div class="cband" style="background:#0f6b6b"></div>
 <aside class="rules" data-no-listen aria-label="Rules for West Indies">
   <p class="rh">Rules for West Indies</p>
   <ul><li><b>You have no ships.</b> To send goods, hire another region&rsquo;s ship (pay the fee in goods, carried as cargo) or trade for a ship card.</li><li><b>In Negotiation you can&rsquo;t send your Merchant out.</b> Other regions&rsquo; Merchants come to you, so be ready to make deals at your port.</li><li>A ship carries <b>6 goods at most</b>, each way. <b>One voyage</b> per Shipping round.</li></ul>
@@ -285,9 +296,10 @@ b .vpop{font-weight:inherit;}
 </div>
 </section>
 <section class="reading" id="england" data-listen aria-labelledby="england-h">
-  <p class="pk" data-no-listen>The Triangle Trade &middot; Level 2 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
+  <p class="pk" data-no-listen><i>The Triangle Trade</i><span>Reading: England &middot; Level 2</span></p>
   <h2 id="england-h">England</h2>
-  <p class="colonies">The Mother Country &middot; Port: London</p>
+  <p class="colonies"><span class="cn">The Mother Country</span><span class="port"><span class="sep"> &middot; </span>Home port: London</span></p>
+  <div class="cband" style="background:#8c1f28"></div>
 <aside class="rules" data-no-listen aria-label="Rules for England">
   <p class="rh">Rules for England</p>
   <ul><li><b>Duties:</b> when a chance card makes another region pay a duty (a tax), the goods go to <b>you</b>.</li><li><b>You have 8 ships.</b> More than you need: carry other regions&rsquo; cargo and charge a fee.</li><li>A ship carries <b>6 goods at most</b>, each way. <b>One voyage</b> per Shipping round.</li></ul>
