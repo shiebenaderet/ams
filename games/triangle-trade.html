@@ -262,6 +262,16 @@ a.print-link{text-decoration:none;display:inline-block}
 .reading-paper h3{font-family:'Pirata One',serif;font-weight:400;font-size:34px;margin-bottom:0.125rem}
 .reading-paper .colonies-line{font-style:italic;color:var(--ink-soft);margin-bottom:0.875rem}
 .reading-paper p{font-size:clamp(16px,1.6vw,21px);line-height:1.65;margin-bottom:0.875rem}
+/* End-of-game reflection: question, then Look at / Start with (see REFLECT in triangle-trade-data.js) */
+.refl-paper h4{font-size:clamp(15px,1.4vw,18px);text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin:1.25rem 0 0.375rem;padding-top:0.5rem;border-top:1px dotted var(--ink-faint)}
+.refl-paper .refl-q{margin-bottom:0.875rem}
+.refl-paper p.refl-ask{margin-bottom:0.25rem}
+.refl-paper p.refl-sup{font-size:clamp(15px,1.4vw,18px);line-height:1.5;margin:0 0 0.125rem 1.5rem}
+.refl-paper p.refl-start{font-style:italic}
+.refl-paper p.refl-start b{font-style:normal}
+.refl-paper .refl-cer{margin:0 0 0.625rem 1.5rem}
+.refl-paper .refl-required{margin:1rem 0;border:2px solid var(--bad);border-radius:6px;padding:0.75rem 1rem;background:rgba(140,31,40,.07)}
+.refl-paper .refl-required h4{border-top:0;margin-top:0.5rem;padding-top:0}
 .vocab-strip{display:flex;flex-wrap:wrap;gap:0.375rem;margin-top:0.875rem;padding-top:0.75rem;border-top:1px dotted var(--ink-faint)}
 .vocab-chip{
   color:var(--ink);
@@ -349,6 +359,7 @@ a.print-link{text-decoration:none;display:inline-block}
 .cargo-row .cr-count{font-family:'IM Fell English SC',serif;min-width:20px;text-align:center;font-size:17px}
 .cargo-cap{font-family:'IM Fell English SC',serif;text-align:center;font-size:15px;margin:0.25rem 0}
 .cargo-cap.over{color:var(--bad)}
+.rum-rule{margin:0.25rem 0.25rem 0.375rem 1.75rem;font-size:14px;color:var(--ink-soft);line-height:1.35}
 .pick-chip{
   display:inline-flex;align-items:center;gap:0.25rem;margin:0.1875rem;padding:0.375rem 0.625rem;cursor:pointer;
   border:1.5px solid var(--ink-faint);border-radius:14px;background:rgba(255,252,240,.8);font-size:15px;
@@ -493,7 +504,7 @@ body.projector .progress-bar{height:0.8rem}
   <header class="bar">
     <div class="title-block">
       <h1 class="main-title">⚓ The Triangular Trade</h1>
-      <div class="subtitle">A Colonial Trading Simulation · Mr. Benaderet · 8th Grade American Studies</div>
+      <div class="subtitle">A Colonial Trading Simulation · 8th Grade American Studies</div>
     </div>
     <div class="hdr-controls">
       <div class="lvl-toggle" id="lvlToggle" role="group" aria-label="Reading level">
@@ -715,7 +726,7 @@ const REGIONS = {
     port:"Boston",
     start:{fish:7, whaleOil:3, lumber:5, ship:7, rum:6},
     needs:{wheat:1, books:2, gunpowder:1, navalStores:2, sugar:1, citrus:2, clothing:1, furniture:1, guns:1, tobacco:1, cattle:1},
-    special:"Rum rule: must hold 2 molasses before each 1 rum may be traded.",
+    special:"Rum rule: each 1 rum traded uses up 2 molasses.",
     mapXY:[288,281], labelDX:-18, labelDY:-2, anchor:"end", badgeXY:[-14,-28],
   },
   middle:{
@@ -750,7 +761,7 @@ const REGIONS = {
     colonies:"The Mother Country",
     port:"London",
     start:{guns:4, gunpowder:4, clothing:2, furniture:2, tools:3, books:3, silver:2, ship:8},
-    needs:{tobacco:2, whaleOil:1, navalStores:3, rice:1, indigo:2, furs:2, sugar:3, cattle:1, silk:1, lumber:2, wheat:1},
+    needs:{tobacco:2, whaleOil:1, navalStores:3, rice:1, indigo:2, furs:2, sugar:3, silk:1},
     special:"Duties from chance cards are paid to England (when duties toggle is ON).",
     mapXY:[787,192], labelDX:-14, labelDY:-12, anchor:"end", badgeXY:[50,2],
   },
@@ -867,6 +878,12 @@ const DOCK_UI = {
   loadHint:{g2:"Pick what to load. Leave it empty if you are going to pick things up.", g5:"Choose what to load — or leave it empty if you're sailing to collect goods.", g8:"Leave empty if sailing to collect goods.", hs:"Leave the hold empty if the voyage is to collect rather than deliver."},
   backHint:{g2:"What do you carry back home? Leave empty if you just dropped things off.", g5:"What do you take back home? Leave empty for a delivery-only trip.", g8:"Leave empty for a pure delivery.", hs:"Leave empty if this leg is delivery only."},
   inspectLog:{g2:"Check the captain's paper log. Is it correct?", g5:"Inspect the captain's paper log. Is everything recorded correctly?", g8:"Inspect the captain's log (paper). Is it accurate?", hs:"Audit the captain's manifest against the harbormaster's ledger. Does it reconcile?"},
+  /* New England's rum rule, shown under the rum count when New England loads cargo.
+     {n} rum loaded, {cost} molasses it uses up, {have} molasses at home, {max} the most
+     rum New England may load. */
+  rumEach:{g2:"Rum rule: each rum uses up 2 molasses.", g5:"Rum rule: each rum New England sends uses up 2 molasses.", g8:"Rum rule: each rum traded uses up 2 molasses.", hs:"Rum rule: each rum shipped consumes 2 molasses."},
+  rumNow:{g2:"Rum rule: {n} rum uses up {cost} molasses.", g5:"Rum rule: {n} rum uses up {cost} molasses.", g8:"Rum rule: {n} rum uses up {cost} molasses.", hs:"Rum rule: {n} rum consumes {cost} molasses."},
+  rumCap:{g2:"You have {have} molasses. You can load {max} rum at most.", g5:"New England holds {have} molasses, so load at most {max} rum.", g8:"New England holds {have} — load at most {max} rum.", hs:"New England holds {have} molasses: lade no more than {max} rum."},
   /* Dock buttons and titles. {from}/{to}/{n}/{items} are filled in by the game. */
   soBeIt:{g2:"OK", g5:"So be it", g8:"So Be It", hs:"So Be It"},
   acceptFate:{g2:"OK, that happens", g5:"Accept it", g8:"Accept Fate", hs:"Accept Fate"},
@@ -914,42 +931,48 @@ const PHASE_TEXT = {
 
 /* ===================================================================
    READING CONTENT — 4 levels (g2/g5/g8/hs = Level 0/1/2/3).
-   Rewritten Sep 2026 for Unit 1 (teacher review: docs/triangle-trade-reading-edits.html).
-   Every region, every level: products, what it lacks, biggest advantage, biggest challenge,
-   ships, and who did the work — enslaved people and the Middle Passage named plainly.
-   "You" is the region's trading interests in the game; the history of the slave
-   trade is told in the third person, never as a role to play.
-   Each reading ends with a "You have:" line that must match REGIONS[r].start. The
-   needs list is secret in the game, so no reading prints it: prose may say what
-   kind of goods a region lacks, never the list (it goes on the teacher's secret
-   card). tests/triangle-trade-readings.test.js checks both.
+   Restructured Sep 2026 on the model of the Huntington Library's "Triangular
+   Trade" region briefing (teacher review: docs/triangle-trade-reading-edits.html).
+   Same three paragraphs, in the same order, at every level, so a student who
+   switches levels finds things in the same place:
+     1. What you produce, what you have more of than you need, your ports, your
+        ships (or none: hire one or trade for one).
+     2. Who wants your goods, what kinds of goods you are short of, and one
+        concrete strategy hint, ending on a "work out the best trades" line.
+     3. Who did the work: enslaved people and the Middle Passage, named plainly
+        and specific to the region, told in the third person, never as a role.
+   A hard word is glossed once, in parentheses, where it first appears; no bold.
+   No reading lists what the region has or needs: the handouts print "What you
+   have" and "What you need to import" from REGIONS right after the reading, so
+   paragraph 2 names only kinds of goods (food, manufactured goods).
+   tests/triangle-trade-readings.test.js checks all of this against REGIONS.
    =================================================================== */
 const READINGS = {
 newEngland:{
- g2:"New England has rocky soil, so farms are small. But the sea is full of fish. People dry and salt the fish so it keeps.\n\nTall trees give wood for ships. You have 7 ships. That is your big strength. Two regions have no ships. They must pay someone to carry their goods.\n\nRum is made in a <b>distillery</b> (a place that makes strong drinks). Rum comes from <b>molasses</b> (a syrup left over from making sugar). Molasses comes from the West Indies. Game rule: hold 2 molasses before you trade 1 rum. That is your big problem.\n\nHere is a hard truth. The molasses was made by <b>enslaved</b> people (people forced to work for no pay). Some New England ships took rum to Africa. They traded it for captured people. They carried those people across the ocean by force. That trip is the <b>Middle Passage</b>.\n\n<b>You have:</b> fish, whale oil, lumber, rum, and 7 ships.",
- g5:"New England's soil is thin and rocky, so farms are small. The ocean is where the wealth is. Fishermen catch far more fish than people can eat. They dry or salt the extra fish so it keeps.\n\nForests give lumber, and the ports of Boston and Newport build ships. You have 7 ships, the most of any colony. That is your biggest advantage. The Southern Colonies and the West Indies have no ships, so they must pay someone to carry their goods.\n\nRhode Island has distilleries, factories that make rum out of molasses. Molasses comes from the West Indies, so you must trade for it first. Game rule: hold 2 molasses before you trade each 1 rum. Your biggest challenge is that your best product depends on someone else's.\n\nThe history behind the rum is hard. The molasses was made by enslaved Africans, who were forced to work and never paid. Ships from Newport carried rum to West Africa and traded it for captured people. Then they carried those people across the Atlantic Ocean in chains. That forced crossing is called the Middle Passage. New England grew no sugar, but its ships and rum were part of the slave trade.\n\n<b>You have:</b> fish, whale oil, lumber, rum, and 7 ships.",
- g8:"Farms in New England cannot produce crops such as tobacco, sugar cane, or rice: the soil is thin and rocky, and the growing season is short. Farmers raise some wheat, but barely enough for the region's own people. Instead, New Englanders turned to the sea. Fishing fleets work the North Atlantic and bring home far more cod than the colonies can eat, dried in the sun or salted to store.\n\nForests supply lumber for shipbuilding, and the ports of Boston (Massachusetts) and Newport (Rhode Island) are busy with trade. Your biggest advantage is your fleet: 7 merchant ships, the most of any colony. The Southern Colonies and the West Indies own no ships, so you can earn goods by carrying their cargo, for a price.\n\nRhode Island's distilleries turn molasses into rum. Since you have no molasses, you must get it from the West Indies. The game's rule: acquire 2 molasses before you trade each 1 rum. That dependence is your biggest challenge. When the Molasses Act of 1733 taxed molasses from French islands, many New England merchants simply smuggled it.\n\nNew England's trade was tied to slavery. The molasses came from plantations worked by enslaved Africans, and the cheapest dried fish was shipped south to feed them. Newport merchants sent rum to West Africa to buy captive people, who were then carried across the Atlantic in the Middle Passage: weeks chained in crowded holds, where many died. Slavery was also legal in New England itself.\n\n<b>You have:</b> fish, whale oil, lumber, rum, and 7 ships.",
- hs:"New England's thin, glacial soil and short summers ruled out the plantation agriculture that enriched the colonies farther south; its wheat barely feeds its own people. The region's wealth lay instead offshore and in its forests. Fishing fleets worked the North Atlantic banks and brought home far more cod than the colonies could consume, and dried, salted fish became almost a currency. Timber fed the shipyards of Boston and Newport, and the ships those yards launched are your greatest asset: seven merchant vessels, the largest fleet in the colonies.\n\nThat fleet defines New England's role. The region earned not only by selling goods but by moving everyone else's, which was called the carrying trade. The Southern Colonies and the West Indies own no ships, so every cargo they send must travel in someone else's hold; make sure it is yours, and charge for it.\n\nThe weakness sits inside your best export. Rhode Island's distilleries converted West Indian molasses into rum, which sold at every port, but the molasses had to be imported first. The game's rule reflects that cost: secure 2 molasses before each unit of rum you trade. When Parliament's Molasses Act of 1733 taxed molasses from the French islands, New England merchants largely ignored it and smuggled, an early sign of how colonists treated trade laws they disliked.\n\nThe tidy version of this story places slavery in the South and the Caribbean. The account books say otherwise. The molasses in New England rum was produced by enslaved people on sugar plantations, and New England's poorest-grade fish was shipped south as cheap food for them. Rhode Island merchants, many sailing from Newport, organized more slave-trading voyages than those of any other mainland colony: rum went to West Africa, captive Africans were forced aboard, and the ships carried them through the Middle Passage to be sold in the Caribbean. Enslaved people also lived and worked in Boston and Newport. The North's prosperity was built into the same system as the South's.\n\n<b>You have:</b> fish, whale oil, lumber, rum, and 7 ships."},
+ g2:"New England has thin, rocky soil, so farms are small. But the sea is full of fish. You catch more fish than you can eat, so you dry and salt it to sell. Your boats hunt whales for whale oil. Your woods give lumber. You build ships. You have 7 ships. Your big port is Boston.\n\nRum sells well in many ports. Rum is made from molasses (a thick syrup left from making sugar). Molasses comes from the West Indies. Game rule: every rum you trade uses up 2 molasses. You are short of farm crops and of things made in shops. Take fish and lumber to the West Indies. Trade them for molasses. Make the best trades you can.\n\nWho did the work? Enslaved people (people forced to work for no pay) made the molasses. Some New England ships took rum to Africa. They traded it for people who had been caught. Then they took them across the sea by force. That trip is the Middle Passage.",
+ g5:"New England's soil is thin and rocky, so farms are small. The sea is where your wealth is. Your fishing boats catch far more fish than your people can eat, so you dry and salt the extra to sell. Whalers bring home whale oil for lamps. Your forests give lumber, and your shipyards build ships. You have 7 merchant ships, the most of any colony. Your main ports are Boston and Newport.\n\nRhode Island has distilleries (factories that make rum). Rum is made from molasses (the syrup left over from making sugar), and molasses comes from the West Indies. Game rule: each rum you trade uses up 2 molasses. The sugar islands pay well for fish and lumber. You are short of farm crops and of goods made in England. Two regions have no ships, so you can carry their cargo and charge for it. Try trading fish and lumber in the West Indies for molasses. Then your rum is ready to sell. Work out the best trades you can.\n\nThe molasses was made by enslaved Africans, people forced to work for life with no pay. Ships from Newport carried rum to West Africa and traded it for captured people. Then they carried those people across the Atlantic in chains. That forced crossing is called the Middle Passage.",
+ g8:"New England's soil is thin and rocky and its growing season is short, so its farms barely feed its own people. Instead, New Englanders turned to the sea. Fishing fleets bring home far more cod than the colonies can eat, dried in the sun or salted to keep. Whalers supply whale oil for lamps, and the forests supply lumber for shipyards. Your fleet of 7 merchant ships is the largest of any colony. Your main ports are Boston (Massachusetts) and Newport (Rhode Island).\n\nYour most valuable export is rum, made in Rhode Island's distilleries (factories that make liquor) from West Indian molasses (the syrup left over from making sugar). The game's rule: each rum you trade uses up 2 molasses. The sugar islands grew almost nothing but cane, so they paid well for dried fish and lumber. You are short of farm crops and of manufactured goods (goods made by skilled workers), which the Navigation Acts required the colonies to buy through England. Your fleet is also a business: the Southern Colonies and the West Indies own no ships, so you can carry their cargo for a price. Plan a loop: fish and lumber to the West Indies, molasses home, rum out again. Work out the most profitable trades you can.\n\nNew England's trade was tied to slavery. The molasses came from sugar plantations worked by enslaved Africans, and the cheapest dried fish was shipped south to feed them. Newport merchants sent rum to West Africa to buy captive people, who were carried across the Atlantic in the Middle Passage (the forced crossing): weeks chained in crowded holds, where many died. Slavery was also legal in New England itself.",
+ hs:"New England's thin, glacial soil and short summers ruled out the plantation agriculture that enriched the colonies farther south; its farms barely feed its own people. The region's wealth lay instead offshore and in its forests. Fishing fleets worked the North Atlantic banks and brought home far more cod than the colonies could consume, dried and salted for export. Whalers supplied whale oil for lamps, and timber fed the shipyards of Boston and Newport. Those yards launched your greatest asset: 7 merchant ships, the largest fleet in the colonies.\n\nYour most profitable export is rum, distilled in Rhode Island from West Indian molasses (the by-product of sugar refining), which means your best product depends on someone else's. The game's rule reflects that cost: each unit of rum you trade consumes 2 molasses. Sugar planters, who devoted nearly every acre to cane, paid well for dried fish and lumber. You in turn are short of farm crops and of the manufactured goods the Navigation Acts routed through England. When Parliament's Molasses Act of 1733 taxed molasses from the French islands, New England merchants largely smuggled it, an early sign of how colonists treated trade laws they disliked. Your fleet is a second business, called the carrying trade: the Southern Colonies and the West Indies own no ships, so every cargo they send must travel in someone's hold. Make it yours, charge for it, and work out the most profitable circuit you can.\n\nThe tidy version of this story places slavery in the South and the Caribbean. The account books say otherwise. The molasses in New England rum was produced by enslaved people on sugar plantations, and the poorest-grade fish was shipped south as cheap food for them. Rhode Island merchants, many sailing from Newport, organized more slave-trading voyages than those of any other mainland colony: rum went to West Africa, captive Africans were forced aboard, and the ships carried them through the Middle Passage (the forced Atlantic crossing) to be sold in the Caribbean. Enslaved people also lived and worked in Boston and Newport. The North's prosperity was built into the same system as the South's."},
 middle:{
- g2:"The Middle Colonies have rich farmland. Farmers grow lots of wheat. They grow more than they can eat! This area is called the breadbasket. It grows food for others.\n\nThere are many cattle too. Traders get furs from Native Americans. Furs sell for a lot in England.\n\nYou have 2 ships.\n\nYour big strength is food. Everyone needs food! Your big problem is that food is cheap and heavy. So try two steps. Trade wheat for sugar in the West Indies. Then trade the sugar to England.\n\nHere is a hard truth. Your wheat fed the sugar islands. There, <b>enslaved</b> people (people forced to work for no pay) grew the sugar. They were taken from Africa by force. Ships carried them across the ocean. That trip is the <b>Middle Passage</b>. Slavery was legal here too. Many enslaved people lived in New York City.\n\n<b>You have:</b> wheat and grains, lumber, cattle, furs, and 2 ships.",
- g5:"Farms in the Middle Colonies grow huge amounts of wheat and corn, far more than people can use. The region was called the breadbasket of the colonies. There are plenty of cattle and forests for lumber. Traders also get furs from Native Americans, and furs sell for a high price in England.\n\nYou have 2 merchant ships. That is enough to trade on your own, but not to carry much.\n\nYour biggest advantage is that every region needs food, and you grow it. Your biggest challenge is that wheat and cattle are heavy and cheap. Here is a plan: sugar sells for a high price in England. Trade your wheat for sugar in the West Indies. Then carry the sugar to England.\n\nThat trade has a hard history. The sugar islands grew almost no food, because nearly every field was sugar cane. Middle Colonies wheat, cattle, and lumber fed and built the plantations where enslaved Africans were forced to work. They had been carried across the Atlantic in chained ships. That forced crossing is called the Middle Passage. Slavery was legal in the Middle Colonies too. New York City had one of the largest numbers of enslaved people of any colonial city.\n\n<b>You have:</b> wheat and grains, lumber, cattle, furs, and 2 ships.",
- g8:"Farms in the Middle Colonies produce large amounts of wheat and corn, much more than the colonists can use. That is why the region was called the breadbasket of British America. Some tobacco grows in Delaware, but not enough to export. Pennsylvania and New York have plenty of timber, grain, and cattle to sell. Trade with Native American nations brings in furs, which sell for a high price in England.\n\nYour main ports are Philadelphia (Pennsylvania) and New York City (New York). You own 2 merchant ships. That is enough to trade on your own, but small next to New England's 7 or England's 8.\n\nYour biggest advantage is that food is a necessity, and you grow it. Your biggest challenge is that food is bulky and worth little per shipload. Sugar, by contrast, is expensive in England. Trade some of your products in the West Indies for sugar, then take that sugar to England for manufactured goods. The profitable route is often indirect.\n\nThat route depended on slavery. Sugar planters kept nearly every acre in cane and bought their food. Philadelphia flour and New York grain fed the enslaved Africans who worked the plantations, and colonial lumber became their barrels and buildings. Those Africans had survived the Middle Passage, the forced voyage across the Atlantic in which captives were chained below deck for weeks. Slavery also existed in New York, New Jersey, and Pennsylvania. New York City had one of the largest enslaved populations of any colonial city.\n\n<b>You have:</b> wheat and grains, lumber, cattle, furs, and 2 ships.",
- hs:"The Middle Colonies were the breadbasket of British America: harvests of wheat and corn far exceeded what the colonists consumed, and the surplus left Philadelphia and New York as grain, flour, and salted meat. Add cattle, abundant timber, and a fur trade with Native American nations whose pelts commanded high prices in London, and higher still on the European continent, though the Navigation Acts required that furs pass through England first.\n\nThe region owns a small merchant fleet of 2 ships, enough to trade independently but not lavishly. That is the first limit on your strategy. The second is the nature of your goods: useful to everyone, but bulky and cheap per shipload. Your advantage is necessity; your challenge is value.\n\nThe sophisticated play is indirect. Sugar commands extraordinary prices in England. Convert your wheat into West Indian sugar, then convert that sugar into English manufactures, and you have multiplied the value of your harvest twice.\n\nThe tidy version calls this region the colonies' pantry and stops there. Follow the flour, though, and it leads to the cane fields. Sugar islands devoted so much land to cane that they imported their food, so Middle Colonies grain fed the enslaved people forced to work there, and colonial lumber and livestock built and powered the sugar mills. Those people had survived the Middle Passage, the forced crossing of the Atlantic that killed many of the captives packed below deck. Slavery was also part of daily life here. New York City had one of the largest enslaved populations of any colonial city, and enslaved people worked its docks and households; Pennsylvania's Quaker merchants held enslaved people as well. Yet it was also in Pennsylvania, in 1688, that a small group of Germantown Quakers wrote one of the first protests against slavery in the colonies, which shows that people at the time could see the wrong clearly.\n\n<b>You have:</b> wheat and grains, lumber, cattle, furs, and 2 ships."},
+ g2:"The Middle Colonies have rich farm land. Farms grow lots of wheat and corn. They grow much more than you can eat. You raise cattle too, and your woods give lumber. You trade with Native Americans for furs. Furs sell for a lot in England. Your big ports are Philadelphia and New York City. You have 2 ships.\n\nAll people need food, and you grow it. But wheat is heavy and cheap. You are short of things made in shops. Sugar sells for a lot in England. Trade wheat for sugar in the West Indies. Then trade the sugar in England for things made in shops. Make the best trades you can.\n\nWho did the work? On the sugar islands, enslaved people (people forced to work for no pay) grew the sugar. Your wheat and cattle fed them. They had been taken from Africa by force. Ships took them across the sea. That trip is the Middle Passage. Slavery was legal here too, in New York, New Jersey, and Pennsylvania.",
+ g5:"Farms in the Middle Colonies grow huge amounts of wheat and corn, far more than your people can eat. The region was called the breadbasket of the colonies. You also raise cattle and cut lumber from your forests. Traders get furs from Native Americans, and furs bring a high price in England. Your two main ports are Philadelphia and New York City. You have 2 merchant ships. That is enough to trade on your own, but not to carry a lot.\n\nEvery region needs food, and you grow it. But wheat and cattle are heavy and cheap. You are short of manufactured goods (things made by skilled workers in workshops) and of goods from warm places. Sugar is expensive in England. If you trade wheat in the West Indies for sugar, you can take the sugar to England and trade it for the manufactured goods you lack. Try to make the best trades you can.\n\nThe sugar islands grew almost no food, because nearly every field was sugar cane. Your wheat, cattle, and lumber fed and built the plantations. There, enslaved Africans were forced to work for no pay. They had been carried across the Atlantic in chained ships. That forced crossing is called the Middle Passage. Slavery was legal in the Middle Colonies too. New York City had one of the largest numbers of enslaved people of any colonial city.",
+ g8:"Farms in the Middle Colonies produce large amounts of wheat and corn, much more than the colonists can use. The region was called the breadbasket of British America. Some tobacco grows in Delaware, but not enough to export. Pennsylvania and New York also have plenty of cattle and lumber. Trade with Native American nations brings in furs, which sell for a high price in England. Your main ports are Philadelphia (Pennsylvania) and New York City (New York). You own 2 merchant ships: enough to trade on your own, but small next to New England's 7 or England's 8.\n\nFood is a necessity, and you grow it, but grain and cattle are bulky and worth little per shipload. You are short of manufactured goods (goods made by skilled workers). The Navigation Acts required the colonies to buy them through England. You also lack the tropical goods that only warm places produce. Sugar, by contrast, is expensive in England. Trade some of your products in the West Indies for sugar, then take that sugar to England for the manufactured goods you lack. The profitable route is often the indirect one. Work out the best trades you can.\n\nThat route depended on slavery. Sugar planters kept nearly every acre in cane and bought their food. Philadelphia flour and New York grain fed the enslaved Africans who worked the plantations, and colonial lumber became their barrels and buildings. Those Africans had survived the Middle Passage (the forced crossing of the Atlantic), chained below deck for weeks. Slavery also existed in New York, New Jersey, and Pennsylvania, and New York City had one of the largest enslaved populations of any colonial city.",
+ hs:"The Middle Colonies were the breadbasket of British America: harvests of wheat and corn far exceeded what the colonists consumed, and the surplus left Philadelphia and New York as grain, flour, and salted meat. Some tobacco grows in Delaware, though never enough to export. Add cattle, abundant lumber, and a fur trade with Native American nations whose pelts commanded high prices in London, and higher still on the European continent, though the Navigation Acts required that furs pass through England first. Your merchant fleet numbers 2 ships, enough to trade independently but not lavishly.\n\nThat is the first limit on your strategy. The second is the nature of your goods: useful to everyone, but bulky and cheap per shipload. You are short of manufactured goods, which English law reserved to English makers, and of the tropical commodities your climate cannot grow. The sophisticated play is indirect. Sugar commands extraordinary prices in England. Convert your wheat into West Indian sugar, then convert that sugar into English manufactures, and you have multiplied the value of your harvest twice. Work out the most profitable chain of trades you can.\n\nThe tidy version calls this region the colonies' pantry and stops there. Follow the flour, though, and it leads to the cane fields. Sugar islands devoted so much land to cane that they imported their food, so Middle Colonies grain fed the enslaved people forced to work there, and colonial lumber and livestock built and powered the sugar mills. Those people had survived the Middle Passage, the forced crossing of the Atlantic that killed many of the captives packed below deck. Slavery was also part of daily life here. New York City had one of the largest enslaved populations of any colonial city, and Pennsylvania's Quaker merchants held enslaved people as well. Yet it was also in Pennsylvania, in 1688, that a small group of Germantown Quakers wrote one of the first protests against slavery in the colonies, which shows that people at the time could see the wrong clearly."},
 southern:{
- g2:"The Southern Colonies grow tobacco. It is a <b>cash crop</b> (a crop grown to sell). They grow so much that England pays very little for it. They also grow rice and <b>indigo</b> (a plant that makes blue dye). Pine trees give <b>naval stores</b> (tar that keeps ships from leaking).\n\nYou have 8 kinds of goods. That is more than anyone! That is your big strength.\n\nYour big problem: you have NO ships. You must pay another region to carry your goods. Or you can trade for a ship of your own.\n\nWho did the work? <b>Enslaved</b> African people (people forced to work for no pay). They planted and picked the crops. They could not leave. Many were taken from Africa by force. Ships carried them across the ocean. That trip is called the <b>Middle Passage</b>. Many people died on it.\n\n<b>You have:</b> tobacco, rice, naval stores, fish, lumber, furs, silk, indigo. No ships.",
- g5:"Tobacco is the great cash crop of the Southern Colonies. You grow so much that the price drops, and England will not pay much for it. South Carolina grows rice, silk, and indigo, a plant that makes a blue dye England wants for its cloth. North Carolina makes naval stores: the pine tar and resin every shipbuilder uses to keep ships from leaking. Maryland adds fish, and traders bring in furs.\n\nThat is eight kinds of goods, the most of any region. That is your biggest advantage. Your biggest challenge is that you have no ships. Your ports, Charleston and Savannah, are full of goods that cannot move. You must pay New England, the Middle Colonies, or England to carry your cargo, or trade for a ship of your own.\n\nThe wealth of these plantations came from enslaved people. Planters forced enslaved Africans and their children to plant and harvest the tobacco, rice, and indigo, with no pay. In South Carolina, more than half of all the people were enslaved. Many had been carried from West Africa across the Atlantic Ocean in crowded ships. That forced crossing is called the Middle Passage. More captured Africans were brought to Charleston than to any other mainland port.\n\n<b>You have:</b> tobacco, rice, naval stores, fish, lumber, furs, silk, indigo. No ships.",
- g8:"Tobacco is the major cash crop of the Southern Colonies. You grow far more than England can buy, and taxes plus oversupply have pushed the price down to about a penny a pound, though buyers elsewhere in Europe would pay more. Under the Navigation Act of 1660, tobacco could be sold only to England. South Carolina produces rice, some silk, and indigo, the blue dye England wants for its cloth. North Carolina produces naval stores (pine tar and resin for shipbuilding). Maryland has a fishing industry, and furs come from trade with Native Americans.\n\nEight kinds of goods is the most varied supply in the game, and that is your biggest advantage. Your biggest challenge is that you have no merchant ships. Your ports, Charleston (South Carolina) and Savannah (Georgia), depend on others. You must hire a ship from New England, the Middle Colonies, or England, or trade for a ship of your own.\n\nEvery one of these crops rested on slavery. Planters forced enslaved Africans and their descendants to clear the land and grow the tobacco, rice, and indigo, without pay and for life. By the early 1700s, enslaved people were the majority of South Carolina's population. Many had survived the Middle Passage, the forced voyage across the Atlantic in chained, crowded holds, and more captives arrived at Charleston than at any other mainland port.\n\n<b>You have:</b> tobacco, rice, naval stores, fish, lumber, furs, silk, indigo. No ships.",
- hs:"The South is rich in goods and poor in transport. Tobacco dominates, grown in such quantity that the English market is glutted: under heavy duties the price collapsed to about a penny a pound, while buyers on the European continent who would pay far more were walled off by the Navigation Acts. South Carolina adds rice, silk, and indigo, a dye so prized by English cloth-makers that Parliament paid a bounty for it from 1748. North Carolina supplies naval stores, without which no shipyard in England or New England can operate. Maryland contributes fish, and the backcountry fur trade rounds out eight distinct goods, the most diverse inventory in the game.\n\nAnd none of it moves. The South owns no merchant ships; Charleston and Savannah are warehouses waiting for other people's vessels. Every negotiation therefore carries a freight question: who carries the cargo, and at what price? Hire a hull from New England, the Middle Colonies, or England, or trade for a ship outright, but solve that first, because unsold tobacco wins nothing.\n\nThe dependence ran deep enough that planters described it as a kind of bondage. Thomas Jefferson wrote that Virginia's tobacco growers fell so far into debt to British merchants that they became “a species of property, annexed to certain mercantile houses in London” (Thomas Jefferson, 1786). The phrase is striking because the men who used it held people as actual property. The tobacco, rice, and indigo were planted and harvested by enslaved people, many of them survivors of the Middle Passage; more captive Africans entered through Charleston than through any other mainland port. The tidy version leaves out their knowledge and their resistance. Carolina planters sought out captives from the rice-growing regions of West Africa for their skill. And in 1739, enslaved people near the Stono River rose up and marched toward Spanish Florida, which had promised freedom to those who escaped.\n\n<b>You have:</b> tobacco, rice, naval stores, fish, lumber, furs, silk, indigo. No ships."},
+ g2:"The Southern Colonies grow tobacco. It is a cash crop (a crop grown to sell). You grow so much that England pays very little for it. You grow rice and indigo (a plant that makes blue dye). Pine trees give naval stores (tar used to build ships). You have fish, lumber, furs, and silk too. That is 8 kinds of goods! Your big port is Charleston. But you have no ships.\n\nEngland buys your tobacco, rice, and indigo. Ship builders want your naval stores. You are short of food and of things made in shops. First, get your goods on a ship. Pay a team with ships to carry them. Or trade for a ship of your own. Then make the best trades you can.\n\nWho did the work? Enslaved African people (people forced to work for no pay). They planted and picked the crops. Many were taken from Africa by force. Ships took them across the sea. That trip is the Middle Passage. Many people died on it.",
+ g5:"Tobacco is the great cash crop (a crop grown to sell) of the Southern Colonies. You grow so much that the price has dropped, and England pays little for it. South Carolina grows rice, some silk, and indigo (a plant that makes a blue dye). North Carolina makes naval stores (pine tar and resin used to build ships). You also have fish, lumber, and furs. That is eight kinds of goods, the most of any region. Your main ports are Charleston and Savannah. But you have no ships.\n\nEngland's cloth makers want your indigo, and English buyers want your tobacco and rice. Shipbuilders everywhere want naval stores. You are short of food grains and of manufactured goods (things made by skilled workers). Your first problem is moving your goods. Hire a ship from New England, the Middle Colonies, or England and pay with some of your goods, or trade for a ship of your own. Then work out the best trades you can.\n\nYour crops were planted and harvested by enslaved Africans and their children, who were forced to work for life with no pay. In South Carolina, more than half of all the people were enslaved. Many had been carried from West Africa across the Atlantic in crowded ships. That forced crossing is called the Middle Passage.",
+ g8:"Tobacco is the major cash crop (a crop grown to sell) of the Southern Colonies, and you grow far more than England can buy. South Carolina produces rice, some silk, and indigo (a plant that makes blue dye). North Carolina produces naval stores (pine tar and resin used to build and seal ships) and lumber. Maryland sells fish, and furs come from trade with Native Americans. Eight kinds of goods is the most varied supply in the game. Your main ports are Charleston (South Carolina) and Savannah (Georgia), but you own no merchant ships.\n\nUnder the Navigation Act of 1660, tobacco could be sold only to England. Taxes and oversupply pushed its price down to about a penny a pound, though buyers elsewhere in Europe would have paid more. England's cloth makers still want your indigo, English buyers want your rice, and every shipyard wants naval stores. You are short of food grains and of manufactured goods (goods made by skilled workers). Before you can trade, you have to move your cargo: hire a ship from New England, the Middle Colonies, or England, or trade for a ship of your own. Work out the best trades you can.\n\nEvery one of these crops rested on slavery. Planters forced enslaved Africans and their descendants to clear the land and grow the tobacco, rice, and indigo, without pay and for life. By the early 1700s, enslaved people were the majority of South Carolina's population. Many had survived the Middle Passage (the forced crossing of the Atlantic) in chained, crowded holds, and more captives arrived at Charleston than at any other mainland port.",
+ hs:"The South is rich in goods and poor in transport. Tobacco, the great cash crop, is grown in such quantity that the English market is glutted. South Carolina adds rice, silk, and indigo, a blue dye so prized by English cloth-makers that Parliament paid a bounty for it from 1748. North Carolina supplies lumber and naval stores (the pine tar and resin every wooden ship needs). Maryland contributes fish, and the backcountry fur trade rounds out eight distinct goods, the most diverse inventory in the game. Your ports are Charleston and Savannah, and you own no ships.\n\nUnder heavy duties the price of tobacco collapsed to about a penny a pound, while buyers on the European continent who would pay far more were walled off by the Navigation Acts. You are short of food grains and manufactured goods, and none of your surplus moves on its own. Every negotiation therefore carries a freight question: who carries the cargo, and at what price? Hire a hull from New England, the Middle Colonies, or England, or trade for a ship outright, but solve that first, because unsold tobacco wins nothing. Then work out the best trades you can.\n\nThe dependence ran deep enough that planters described it as a kind of bondage. Thomas Jefferson wrote that Virginia's tobacco growers fell so far into debt to British merchants that they became “a species of property, annexed to certain mercantile houses in London” (Thomas Jefferson, 1786). The phrase is striking because the men who used it held people as actual property. The tobacco, rice, and indigo were planted and harvested by enslaved people, many of them survivors of the Middle Passage (the forced Atlantic crossing); more captive Africans entered through Charleston than through any other mainland port. The tidy version leaves out their knowledge and their resistance. Carolina planters sought out captives from the rice-growing regions of West Africa for their skill. And in 1739, enslaved people near the Stono River rose up and marched toward Spanish Florida, which had promised freedom to those who escaped."},
 westIndies:{
- g2:"The West Indies are warm islands in the Caribbean Sea. Sugar cane grows well here. Sugar is worth a lot of money everywhere. That is your big strength.\n\nMaking sugar leaves a thick brown syrup called <b>molasses</b>. New England buys it to make rum. You have citrus fruit too, like limes and oranges.\n\n<b>Enslaved</b> African people (people forced to work for no pay) grew the sugar. The work was hard and dangerous. Most people on the islands were enslaved. They were taken from Africa by force. Ships carried them across the ocean. That trip is called the <b>Middle Passage</b>. This was cruel and wrong.\n\nYour big problem: the islands grow almost nothing else. Even food must come from other places. And you have NO ships. You must pay another region to carry your goods. Or you can trade for a ship.\n\n<b>You have:</b> sugar, molasses, citrus fruit. No ships.",
- g5:"The islands of the West Indies are covered with sugar cane plantations. Sugar is expensive and wanted all over the world, so you hold the most valuable product in the game. That is your biggest advantage. Making sugar also leaves molasses, a brown syrup that New England's distilleries use to make rum. You have citrus fruit too: oranges and limes that keep sailors healthy.\n\nThis wealth came at a terrible human cost. Plantation owners forced enslaved Africans to plant, cut, and boil the cane in heat and danger. Most people on the islands were enslaved. They had been taken from their homes in Africa and carried across the Atlantic Ocean in chained, crowded ships. That forced crossing is called the Middle Passage. The people who made the sugar got none of its wealth.\n\nYour biggest challenge is that the islands grow little else. Food and manufactured goods must all be brought in. You have no ships, so you must pay New England, the Middle Colonies, or England to carry your goods, or trade for a ship of your own. French, Spanish, and Dutch islands sell sugar too, so you must keep the English colonies buying from you.\n\n<b>You have:</b> sugar, molasses, citrus fruit. No ships.",
- g8:"The islands of the West Indies have large sugar cane plantations. Sugar is expensive and in demand all over the world, which makes it your biggest advantage. Making crystallized sugar also produces molasses, a dark brown syrup that New England's distilleries depend on for rum. You also supply citrus fruit, which sailors ate to stay healthy on long voyages. Your ports include Kingston (Jamaica) and Bridgetown (Barbados).\n\nSugar required an enormous workforce, and planters filled it through the transatlantic slave trade. Enslaved Africans were forcibly taken from their homes and carried through the Middle Passage, the brutal voyage across the Atlantic, then made to work the cane fields and boiling houses. By the mid-1700s, about nine in ten people in Jamaica were enslaved. The wealth of these islands cannot be separated from the people who were forced to produce it.\n\nYour biggest challenge is that the islands grow almost nothing but sugar, so they must import food and manufactured goods. You own no ships and must hire one from New England, the Middle Colonies, or England, or trade for a ship. French, Spanish, and Dutch islands grow sugar too and often sell it cheaper; the Molasses Act of 1733 taxed their molasses to protect your trade.\n\n<b>You have:</b> sugar, molasses, citrus fruit. No ships.",
- hs:"The West Indies were the engine of the Atlantic economy. Sugar commanded prices no mainland crop could touch, and planters devoted so much land to cane that they imported even their food rather than spare an acre. Molasses, sugar's by-product, fed New England's distilleries; citrus, a sideline, helped keep sailors healthy at sea. That concentration is your biggest advantage: everyone wants what you have.\n\nIt is also your biggest challenge. You need nearly everything else, and you own no ships to fetch it. You must hire New England, Middle Colony, or English vessels, or trade for a ship of your own. French, Spanish, and Dutch islands undercut your prices, so English colonial loyalty is your lifeline; planters lobbied Parliament for the Molasses Act of 1733 to tax their rivals' molasses.\n\nThat profit was extracted through slavery on an industrial scale. Enslaved Africans, forcibly transported through the Middle Passage, performed the dangerous labor of the cane fields and boiling houses, and by the mid-1700s made up about nine in ten of Jamaica's people. Olaudah Equiano, carried across the Atlantic as a boy, remembered the voyage this way: “I now wished for the last friend, death, to relieve me” (Olaudah Equiano, <i>The Interesting Narrative</i>, 1789).\n\nThe tidy version counts the sugar and stops. What it leaves out is the arithmetic of the plantations themselves. Sugar work was so deadly that on many islands deaths outnumbered births for generations, and planters chose to keep buying newly captured Africans rather than change how they worked people. That is why the Caribbean took a far larger share of the slave trade than mainland North America. Enslaved people resisted, from daily refusals to open revolt; in Jamaica, communities of escaped people called Maroons fought the British until a treaty in 1739 recognized their freedom. The sugar and molasses you move for points in this game were the products of that suffering and that struggle.\n\n<b>You have:</b> sugar, molasses, citrus fruit. No ships."},
+ g2:"The West Indies are warm islands in the Caribbean Sea. Sugar cane grows well here. Sugar is worth a lot everywhere. Making sugar leaves a thick syrup called molasses. You have citrus fruit too, like limes and oranges. Your big port is Kingston, in Jamaica. You have no ships.\n\nEveryone wants sugar. New England wants molasses to make rum. But your islands grow almost nothing but sugar. You are short of food and of things made in shops. Pay a team with ships to carry your goods. Or trade for a ship. Use your sugar to get what you lack. Make the best trades you can.\n\nWho did the work? Enslaved African people (people forced to work for no pay). They grew the sugar and boiled it. The work was hard and could kill. Most people on the islands were enslaved. They were taken from Africa by force. Ships took them across the sea. That trip is the Middle Passage.",
+ g5:"The islands of the West Indies, such as Jamaica, Barbados, Antigua, and St. Kitts, are covered with sugar cane. Sugar is expensive and wanted all over the world, so you hold the most valuable good in the game. Making sugar also leaves molasses (a dark syrup), which New England turns into rum. You also grow citrus fruit, like limes and oranges. Your main port is Kingston, in Jamaica. You have no ships.\n\nEngland pays high prices for sugar, and New England wants your molasses for its rum. But planters used nearly every field for cane, so the islands grow little else. You are short of food and of manufactured goods (things made by skilled workers). Hire a ship from New England, the Middle Colonies, or England to carry your cargo, or trade for a ship. Sugar is your strongest card, so do not give it away cheaply. Work out the best trades you can.\n\nThe sugar was made by enslaved Africans, who were forced to plant, cut, and boil the cane in heat and danger, with no pay. Most people on the islands were enslaved. They had been taken from Africa and carried across the Atlantic in chained, crowded ships. That forced crossing is called the Middle Passage.",
+ g8:"The West Indies, including Jamaica, Barbados, Antigua, and St. Kitts, are covered with sugar cane plantations. Sugar is expensive and in demand all over the world, which makes it the most valuable good in the game. Making crystallized sugar also produces molasses (a dark brown syrup), which New England's distilleries depend on for rum. You also supply citrus fruit, which sailors ate to stay healthy on long voyages. Your ports include Kingston (Jamaica) and Bridgetown (Barbados). You own no ships.\n\nEngland pays high prices for sugar, and New England needs your molasses to trade its rum. But the islands grow almost nothing except sugar, so they must import food and manufactured goods (goods made by skilled workers). You must hire a ship from New England, the Middle Colonies, or England, or trade for one. French, Spanish, and Dutch islands grow sugar too and often sell it cheaper; the Molasses Act of 1733 taxed their molasses to protect your trade. Since you control the game's most wanted good, set your prices with care. Work out the best trades you can.\n\nSugar required an enormous workforce, and planters filled it through the transatlantic slave trade. Enslaved Africans were forcibly taken from their homes and carried through the Middle Passage (the brutal crossing of the Atlantic), then made to work the cane fields and boiling houses. By the mid-1700s, about nine in ten people in Jamaica were enslaved. The wealth of these islands cannot be separated from the people who were forced to produce it.",
+ hs:"The West Indies were the engine of the Atlantic economy. On Jamaica, Barbados, Antigua, and St. Kitts, sugar commanded prices no mainland crop could touch, and planters devoted so much land to cane that they imported even their food rather than spare an acre. Molasses, sugar's by-product, fed New England's distilleries; citrus, a sideline, helped keep sailors healthy at sea. Your principal ports are Kingston (Jamaica) and Bridgetown (Barbados), and you own no ships.\n\nThat concentration is your advantage: everyone wants what you have, and New England cannot trade its rum without your molasses. It is also your weakness. You are short of food and manufactured goods, and you have no vessels to fetch them, so you must hire New England, Middle Colony, or English ships, or trade for one outright. French, Spanish, and Dutch islands undercut your prices, so English colonial loyalty is your lifeline; planters lobbied Parliament for the Molasses Act of 1733 to tax their rivals' molasses. Price your sugar as the scarce good it is, and work out the best trades you can.\n\nThat profit was extracted through slavery on an industrial scale. Enslaved Africans, forcibly transported through the Middle Passage (the forced Atlantic crossing), performed the dangerous labor of the cane fields and boiling houses, and by the mid-1700s made up about nine in ten of Jamaica's people. Olaudah Equiano, carried across the Atlantic as a boy, remembered the voyage this way: “I now wished for the last friend, death, to relieve me” (Olaudah Equiano, <i>The Interesting Narrative</i>, 1789). Sugar work was so deadly that on many islands deaths outnumbered births for generations, and planters kept buying newly captured Africans rather than change how they worked people. Enslaved people resisted, from daily refusals to open revolt; in Jamaica, communities of escaped people called Maroons fought the British until a treaty in 1739 recognized their freedom."},
 england:{
- g2:"You play England. England rules the colonies, so it is called the <b>Mother Country</b>. It made the trade rules. The colonies had to sell many goods only to England.\n\nEngland's shops make <b>manufactured goods</b> (things made by workers), like guns and tools. The colonies must buy them from you. That is your big strength. You also have the most ships: 8. Other teams may pay you to carry their goods.\n\nYour big problem: you need more items than anyone else. You must trade with the colonies to get them.\n\nEnglish ships also carried people. They took cloth and guns to Africa. They traded them for captured African people. Then the ships carried those people across the ocean by force. That trip is the <b>Middle Passage</b>. In the Americas, the people were sold. They were <b>enslaved</b> (forced to work for no pay). The ships came home with sugar and tobacco. Two English towns, Liverpool and Bristol, got rich.\n\n<b>You have:</b> guns, gunpowder, clothing, fine furniture, tools, books, silver, and 8 ships.",
- g5:"You represent the merchants of England, the Mother Country. England believed the colonies were there to make England rich. That idea is called mercantilism. England makes nearly all the manufactured goods: guns, gunpowder, tools, books, clothing, and furniture. The colonies could not buy these from other countries. They had to deal with England.\n\nYou have the most ships in the game, 8. Your ships and your goods are your biggest advantages. When a chance card makes a ship pay a duty (a tax), those goods usually go to England.\n\nYour biggest challenge is your needs list. It has more items than anyone's, and almost all of them come from the colonies: forest products for your ships, cash crops for English buyers, and food. You must trade with the colonies to get them.\n\nEnglish ships did more than carry goods. They took cloth, guns, and metal goods to West Africa and traded them for captured Africans. Then they carried those people across the Atlantic Ocean in chains. That forced crossing is called the Middle Passage. In the Americas, the people who lived were sold into slavery. The ships came home with sugar and tobacco grown by enslaved people. Port cities like Liverpool and Bristol grew rich from this trade.\n\n<b>You have:</b> guns, gunpowder, clothing, fine furniture, tools, books, silver, and 8 ships.",
- g8:"You represent the merchants of England, the Mother Country. Under mercantilism, colonies existed to benefit the nation that ruled them. They supplied raw materials and bought its manufactured goods. England controls most of the manufactured goods the colonies want: guns, gunpowder, clothing, furniture, tools, and books. The Navigation Acts, beginning in 1651, required colonial trade to travel on English ships. Many colonial goods could be sold only to England.\n\nYour biggest advantages are that monopoly and your fleet. You have 8 ships, the most in the game, so you can also earn by carrying cargo for regions without ships. Parliament can place duties (taxes on imported goods) on trade; in the game, duties from chance cards are usually paid to England.\n\nYour biggest challenge is your needs list, the longest in the game. Nearly everything on it is a colonial raw material: forest products for the fleet, cash crops for English buyers, and food. You depend on the colonies as much as they depend on you.\n\nEnglish ships were also the largest carriers of the transatlantic slave trade in the 1700s. They carried cloth, guns, and metal goods to West Africa, where they were traded for captive Africans. The captives were carried through the Middle Passage, the forced voyage across the Atlantic, and sold into slavery in the Americas. The ships returned with sugar and tobacco grown by enslaved people. Liverpool and Bristol grew rich from this trade.\n\n<b>You have:</b> guns, gunpowder, clothing, fine furniture, tools, books, silver, and 8 ships.",
- hs:"You represent England's merchants and the government behind them, operating the machinery of mercantilism: the doctrine that colonies exist to enrich the Mother Country. The law is your first asset. The Navigation Acts, beginning in 1651, confined colonial trade to English ships and routed the most valuable colonial goods through England, so almost every musket, printed book, bolt of cloth, and fine chair in America passes through your hands at your prices. Manufactured goods sell dear; raw materials buy cheap; the difference is empire.\n\nYour second asset is the fleet: 8 merchant ships, the most in the game, and shipless regions will pay for space in your holds. Parliament supplies the third: duties levied by chance cards usually fall into your stores.\n\nYet the empire runs on colonial goods, and that is your challenge. The fleet consumes the products of colonial forests; London buyers demand colonial cash crops; even food must come in. Your needs list is the longest in the game, and almost all of it is raw materials only the colonies supply. Dominance is not self-sufficiency.\n\nEven at the time, critics saw the design plainly. Adam Smith wrote: “To found a great empire for the sole purpose of raising up a people of customers, may at first sight appear a project fit only for a nation of shopkeepers. It is, however, a project altogether unfit for a nation of shopkeepers; but extremely fit for a nation whose government is influenced by shopkeepers.” (Adam Smith, <i>The Wealth of Nations</i>, 1776).\n\nWhat the tidy version of mercantilism leaves out is the cargo on the second leg. In the 1700s British ships carried more captive Africans across the Atlantic than those of any other nation. Cloth, guns, and metal goods went to West Africa; captives were forced through the Middle Passage and sold into slavery; sugar and tobacco grown by enslaved people came home. Liverpool and Bristol built their docks and fortunes on that circuit.\n\n<b>You have:</b> guns, gunpowder, clothing, fine furniture, tools, books, silver, and 8 ships."},
+ g2:"You play England. England rules the colonies, so it is called the Mother Country. English workers make manufactured goods (things made in shops). They make guns, gunpowder, tools, clothing, furniture, and books. You have silver too. Your big port is London. You have 8 ships, the most in the game.\n\nEngland made the trade rules. The colonies had to buy these goods from you. You are short of what colony farms, woods, and seas give. You must bring in a long list of colony goods. Try this. Trade your goods for colony crops. Carry goods for teams with no ships, and ask to be paid. Make the best trades you can.\n\nWho did the work? English ships took cloth and guns to Africa. They traded them for African people who had been caught. Then the ships took the people across the sea by force. That trip is the Middle Passage. In the Americas, the people were sold and enslaved (forced to work for no pay). The ships came home with sugar and tobacco.",
+ g5:"You represent the merchants of England, the Mother Country (the nation that rules the colonies). English workshops make manufactured goods (things made by skilled workers): guns, gunpowder, tools, books, clothing, and fine furniture. You also hold silver. Your main port is London. You have 8 merchant ships, the most in the game.\n\nEngland believed colonies existed to make it rich. That idea is called mercantilism. The colonies had to buy manufactured goods from England. They had to sell many of their crops to England too. But England lacks the goods of colonial farms and forests. You must import a long list of colonial goods. Trade your manufactured goods for colonial raw materials (goods from nature, like crops and wood). Two regions have no ships, so you can also carry their cargo and charge for it. Work out the best trades you can.\n\nEnglish ships also carried people. They took cloth, guns, and metal goods to West Africa and traded them for captured Africans. Then they carried those people across the Atlantic in chains. That forced crossing is called the Middle Passage. In the Americas, the people who lived were sold into slavery. The ships came home with sugar and tobacco grown by enslaved people.",
+ g8:"You represent the merchants of England, the Mother Country (the nation that rules the colonies). England controls most of the manufactured goods (goods made by skilled workers) the colonies want: guns, gunpowder, clothing, fine furniture, tools, and books. You also hold silver. Your main port is London, and your 8 merchant ships are the most in the game.\n\nUnder mercantilism (the belief that colonies exist to make the ruling nation rich), colonies supply raw materials and buy the ruling nation's manufactured goods. The Navigation Acts, beginning in 1651, required colonial trade to travel on English ships. Many colonial goods could be sold only to England. That monopoly (complete control of a trade) is your advantage. Your challenge is a long import list, nearly all colonial raw materials: forest products for the fleet and cash crops for English buyers. Trade manufactured goods for those raw materials, and earn more by carrying cargo for the regions that own no ships. Work out the best trades you can.\n\nEnglish ships were also the largest carriers of the transatlantic slave trade in the 1700s. They carried cloth, guns, and metal goods to West Africa, where they were traded for captive Africans. The captives were carried through the Middle Passage (the forced crossing of the Atlantic) and sold into slavery in the Americas. The ships returned with sugar and tobacco grown by enslaved people. Liverpool and Bristol grew rich from this trade.",
+ hs:"You represent England's merchants and the government behind them. The guns, gunpowder, tools, books, clothing, and fine furniture the colonies buy come almost entirely from English workshops, and you also hold silver. Your port is London, and your 8 merchant ships are the largest fleet in the game.\n\nYou operate the machinery of mercantilism, the doctrine that colonies exist to enrich the Mother Country. The Navigation Acts, beginning in 1651, confined colonial trade to English ships and routed the most valuable colonial goods through England, so manufactured goods sell dear and raw materials buy cheap; the difference is empire. Yet the empire runs on colonial goods. The fleet consumes the products of colonial forests, London buyers demand colonial cash crops, and your import list is as long as any colony's. Dominance is not self-sufficiency. Trade manufactures for raw materials, sell space in your holds to the shipless regions, and work out the most profitable trades you can.\n\nEven at the time, critics saw the design plainly. Adam Smith wrote: “To found a great empire for the sole purpose of raising up a people of customers, may at first sight appear a project fit only for a nation of shopkeepers. It is, however, a project altogether unfit for a nation of shopkeepers; but extremely fit for a nation whose government is influenced by shopkeepers.” (Adam Smith, <i>The Wealth of Nations</i>, 1776). What the tidy version of mercantilism leaves out is the cargo on the second leg. In the 1700s British ships carried more captive Africans across the Atlantic than those of any other nation. Cloth, guns, and metal goods went to West Africa; captives were forced through the Middle Passage (the forced Atlantic crossing) and sold into slavery; sugar and tobacco grown by enslaved people came home. Liverpool and Bristol built their docks and fortunes on that circuit."},
 };
 
 const VOCAB = {
@@ -1043,59 +1066,267 @@ const ROLES_TEXT = {
   hs:"The captain converts agreements into delivered goods: manifest filed, cargo loaded (six items per hull), and a chance card drawn at the teacher's Dock for each leg of the voyage. Storms, pirates, and customs men stand between every deal and its completion; a banked Free Passage card can cancel one such loss, but never the Admiralty Court. The captain sails only while the merchant is home."},
 };
 
-/* common: one version for every level (the game prints them unleveled), so they are
-   written plainly enough for Level 0. */
+/* The end-of-game reflection, asked by the game's end screen and printed on the
+   Day 21 Reflection sheet (tools/build-triangle-trade-kit.js). It follows CLAUDE.md,
+   "Writing questions students answer": one direct question, never yes/no and never
+   behind a lead-in, and every question carries its own support.
+     q      the question
+     look   "Look at:" one or two named places to find evidence (the Harbormaster
+            Record's What we have counts and Trade Log, paragraph 3 of the Group
+            Handout, the map's historical routes shown at the debrief)
+     start  "Start with:" a sentence starter that opens the student's own answer,
+            never the answer with a blank in it
+   Each of the three is leveled (g2/g5/g8/hs = Level 0-3); Level 0 adds a small word
+   bank in brackets and a fuller frame.
+     common     four questions every region answers: two on how the game ended,
+                two on how the team worked
+     scarcity   supply and demand
+     humanCost  who did the work; the game's end screen marks it REQUIRED
+     cer        the unit question, with a Claim, Evidence and Reasoning part, each
+                with its guidance and its starter
+     regions    per region, (a) the game, from that region's real position, and
+                (b) the history: who did the work, and who paid
+   tests/triangle-trade-readings.test.js checks the shape and the questioning rules. */
 const REFLECT = {
  common:[
-  "Were you able to trade all of your goods?",
-  "Which of your goods did you have too much of?",
-  "Which goods did everyone want?",
-  "What was your job on the team (harbormaster, merchant, or captain)? What did you do well?",
-  "How well did your team work together? Give one example.",
-  "What would you change next time? How could the game be better?"
+  {q:{g2:"Which of your goods did the other teams want the least, and why?",
+      g5:"Which of your goods did other regions want the least, and why?",
+      g8:"Which of your goods was hardest to trade away, and why did other regions want so little of it?",
+      hs:"Which of your region's goods met the weakest demand, and what explains why other regions passed it over?"},
+   look:{g2:"The What we have counts on your Harbormaster Record. Which number stayed big?",
+      g5:"The What we have counts on your Harbormaster Record, from R1 to the last round.",
+      g8:"The What we have counts on your Harbormaster Record: which number barely moved from R1 to the last round?",
+      hs:"Your Harbormaster Record's What we have counts, round by round: which good left port least often?"},
+   start:{g2:"The good they wanted least was ___. They did not want it because ___. (Words: too many, did not need)",
+      g5:"The good other regions wanted least was ___, because ___.",
+      g8:"We had trouble trading our ___ because the other regions ___.",
+      hs:"Demand for our ___ stayed weak because ___."}},
+  {q:{g2:"Which good did almost every team want, and what could the team that had it do?",
+      g5:"Which good did almost every region want, and what power did that give the region that had it?",
+      g8:"Which good did nearly every region want, and what power did that give the region that controlled it?",
+      hs:"Which good was in demand across nearly every region, and how did control of it turn into bargaining power?"},
+   look:{g2:"The What you need to import list on your Group Handout. Think about what visiting merchants asked for.",
+      g5:"The What you need to import list on your Group Handout, and what visiting merchants asked you for.",
+      g8:"The What you need to import list on your Group Handout, and what visiting merchants kept asking for.",
+      hs:"Your Group Handout's What you need to import list, and the requests visiting merchants made in Negotiation."},
+   start:{g2:"Almost every team wanted ___. The team with it could ___. (Words: sugar, guns, ask for more, say no)",
+      g5:"Almost every region wanted ___. Because ___ had it, they could ___.",
+      g8:"The good nearly everyone wanted was ___. Because ___ controlled it, they could ___.",
+      hs:"Control of ___ gave ___ leverage, because ___."}},
+  {q:{g2:"What was your job on the team, and what did you do to help?",
+      g5:"What was your job on the team, and what is one thing you did that helped?",
+      g8:"What was your job on the team, and what did you do in that job that helped your region?",
+      hs:"What role did you hold, and which of your actions in that role most helped your region?"},
+   look:{g2:"Your Trade Log. Find one deal or trip you helped with.",
+      g5:"Your Trade Log: find one deal, count or voyage you worked on.",
+      g8:"Your Trade Log and your What we have counts: find one deal, voyage or count you were part of.",
+      hs:"Your Trade Log and your What we have counts: find a deal, voyage or count that shows your work."},
+   start:{g2:"My job was ___. I helped when I ___. (Jobs: Captain, Merchant, Harbormaster)",
+      g5:"My job was ___. One thing I did that helped was ___.",
+      g8:"As our ___, I helped the team when I ___.",
+      hs:"As our ___, my most useful contribution was ___, because ___."}},
+  {q:{g2:"Which rule would you change, and why?",
+      g5:"Which one rule would you change, and why?",
+      g8:"Which one rule would you change, and what difference would the change make to the game?",
+      hs:"Which single rule would you rewrite, and how would the change alter the way the game played?"},
+   look:{g2:"The Rules box on your Group Handout.",
+      g5:"The Rules box on your Group Handout, and a time a rule got in your way.",
+      g8:"The Rules box on your Group Handout and your Trade Log: when did a rule stop a trade or a voyage?",
+      hs:"The Rules box on your Group Handout and your Trade Log: find the point where a rule held back a trade or a voyage."},
+   start:{g2:"I would change the rule about ___. I would make it ___ because ___. (Words: ships, cargo, chance cards, duties, rum)",
+      g5:"I would change the rule about ___ so that ___, because ___.",
+      g8:"I would change the rule that ___. Then the game would ___.",
+      hs:"I think the rule on ___ should change so that ___, because ___."}},
  ],
  scarcity:{
-  g2:"Supply and demand: Which good did the most teams want? Were there enough for everyone? What did people give to get it?",
-  g5:"Supply and demand: Which good was the hardest to get? Why were there not enough for everyone? What happened to what people would trade for it?",
-  g8:"Supply and demand: Which good was scarcest in your class? Use the game to explain how its short supply and high demand changed what regions would give up to get it.",
-  hs:"Supply and demand: Identify the scarcest good in your class's game. Explain how limited supply and competing demand changed its trading value, and who gained power by holding it."},
+  q:{g2:"Which good was the hardest to get, and what did teams give to get it?",
+     g5:"Which good was hardest to get in our class, and what did regions give up to get it?",
+     g8:"Which good was scarcest in our class, and what did its short supply make regions give up?",
+     hs:"Which good was scarcest in our class's game, and how did limited supply against heavy demand change what regions gave up to obtain it?"},
+  look:{g2:"Your Trade Log. (Words: supply = how many there are, demand = how many want it, few, many)",
+     g5:"Your Trade Log (what you gave for it) and your What we have counts (how many you had each round).",
+     g8:"Your Trade Log (what you gave for it early in the game, and late) and your What we have counts.",
+     hs:"Your Trade Log, comparing what the good cost early and late, and your What we have counts round by round."},
+  start:{g2:"The hardest good to get was ___. It was hard to get because ___. To get it, we gave ___.",
+     g5:"The hardest good to get was ___. Because there were few and many regions wanted it, ___.",
+     g8:"Supply of ___ was low and demand was high, so ___.",
+     hs:"Because the supply of ___ could not meet demand, its price ___."}},
  humanCost:{
-  g2:"This game was about trading goods for points. But real people were traded too. Enslaved African people were forced to do the hardest work and were never paid. Who really paid the price for this 'success'? Write 2–3 sentences.",
-  g5:"Our simulation scored you on goods and profit. But the real triangular trade ran on the forced labor of enslaved Africans, who received none of the wealth they created. When we call a region 'successful,' who actually paid for that success? Answer in 3–4 sentences.",
-  g8:"This simulation rewarded profit and efficient trade — but it left out the human cost. The triangular trade depended on the transatlantic slave trade: enslaved Africans were forced to produce the very goods you competed for. Whose labor made the 'winning' region's success possible, and why must we hold the economic story and the moral story together? Explain.",
-  hs:"The game's scoring measures only one thing the historical system measured: profit. Reconstruct what it omits. The commodities you optimized — sugar above all — were produced by enslaved people whose forced labor generated wealth they never shared. Argue why an account of this economy that stops at 'who won' is not merely incomplete but misleading, and what a fuller reckoning must include.",
- },
+  q:{g2:"Who was forced to make the goods we traded, and what did the game's score leave out?",
+     g5:"Who was forced to do the work that made our goods, and what did the game's score leave out?",
+     g8:"Whose forced work produced the goods your class traded, and what did the game's score leave out?",
+     hs:"Whose forced labor produced the goods your class competed for, and what does a score counted in goods leave out?"},
+  look:{g2:"Paragraph 3 of your Group Handout. The Middle Passage on the map. (Words: enslaved, forced, no pay)",
+     g5:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes the map showed.",
+     g8:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes map.",
+     hs:"Paragraph 3 of your Group Handout, and the Middle Passage leg of the historical routes shown on the map at the debrief."},
+  start:{g2:"The goods were made by ___. They were forced to ___. The score did not show ___.",
+     g5:"The goods were made by ___, who ___. The score did not show ___.",
+     g8:"The goods we traded were produced by ___. Our score left out ___.",
+     hs:"Behind the goods we traded were ___; a score counted in goods cannot show ___."}},
  cer:{
-  g2:"The big question: Was the Triangle Trade worth it, and to whom? Use this frame. Claim: The Triangle Trade was worth it for ___ because ___. It was not worth it for ___ because ___. Evidence: In the game, ___. In history, ___. Reasoning: This shows that ___.",
-  g5:"Answer the unit question in CER form: Was the Triangle Trade worth it, and to whom? CLAIM: say who it was worth it for, and who it was not. EVIDENCE: give one example from the game and one fact from your reading. REASONING: explain how your evidence proves your claim. Think about the people the game did not score.",
-  g8:"Write a CER paragraph that answers the unit question: Was the Triangle Trade worth it, and to whom? Claim: take a position on who gained and who paid. Evidence: use at least one result from the simulation (a trade, a shortage, a final score) and one historical fact from your reading. Reasoning: explain why the system produced those winners and losers, and what the game's scoring left out.",
-  hs:"Construct a CER argument on the unit's summative question: Was the Triangle Trade worth it, and to whom? Your claim should distinguish among groups (planters, merchants, colonial buyers, the Crown, enslaved Africans) rather than give one verdict. Support it with evidence from the simulation and from history, and reason about the gap between them: what the game measured, what it could not, and whose judgment of worth counts."},
+  q:{g2:"Was the Triangle Trade worth it, and to whom?",
+     g5:"Was the Triangle Trade worth it, and to whom?",
+     g8:"Was the Triangle Trade worth it, and to whom?",
+     hs:"Was the Triangle Trade worth it, and to whom?"},
+  look:{g2:"Your answers on Side 1. Paragraph 3 of your Group Handout.",
+     g5:"Your answers on Side 1, your Trade Log, and paragraph 3 of your Group Handout.",
+     g8:"Your answers on Side 1, your Trade Log, and paragraph 3 of your Group Handout.",
+     hs:"Your Side 1 answers, your Trade Log, the historical routes on the map, and paragraph 3 of your Group Handout."},
+  claim:{
+   guide:{g2:"Say who it was worth it for. Say who it was not worth it for.",
+      g5:"Say who it was worth it for, and who it was not.",
+      g8:"Take a position on who gained and who paid.",
+      hs:"Distinguish among groups (planters, merchants, colonial buyers, the Crown, enslaved Africans) rather than give one verdict."},
+   start:{g2:"The Triangle Trade was worth it for ___ because ___. It was not worth it for ___ because ___. (Words: planters, merchants, England, the colonies, enslaved people)",
+      g5:"The Triangle Trade was worth it for ___, but not for ___, because ___.",
+      g8:"The Triangle Trade was worth it for ___ because ___, but not for ___ because ___.",
+      hs:"For ___, the Triangle Trade was worth it because ___; for ___, it was not, because ___."}},
+  evidence:{
+   guide:{g2:"Give one thing from the game and one fact from your reading.",
+      g5:"Give one example from the game and one fact from your reading.",
+      g8:"Use one result from the game (a trade, a shortage, a final place) and one fact from your reading.",
+      hs:"Support the claim with a result from the simulation and a fact from history."},
+   start:{g2:"In the game, ___. In history, ___.",
+      g5:"In our game, ___. My reading says ___.",
+      g8:"In our game, ___. In history, ___.",
+      hs:"Our class's game showed ___, and the historical record adds ___."}},
+  reasoning:{
+   guide:{g2:"Tell how your evidence shows your claim.",
+      g5:"Explain how your evidence proves your claim. Think about the people the game did not score.",
+      g8:"Explain why the system made those winners and losers, and what the game's scoring left out.",
+      hs:"Reason about the gap between the game and history: what the game measured, what it could not, and whose judgment of worth counts."},
+   start:{g2:"This shows that ___. The game did not count ___.",
+      g5:"This shows ___ because ___.",
+      g8:"This shows that ___, because ___. The game's score left out ___.",
+      hs:"The gap between the game and history matters because ___."}},
+ },
  regions:{
   newEngland:{
-   g2:"You had a rum rule: get 2 molasses before you trade 1 rum. How did it change your trades? In real history, New England ships took rum to Africa and carried captured people across the ocean. How were New England's ships part of the slave trade?",
-   g5:"Your rum depended on molasses from the West Indies. How did the 2-molasses rule shape your trades? Then connect it to history: how did New England's rum and ships tie a region with few plantations to slavery and the Middle Passage?",
-   g8:"The rum rule tied your best export to West Indian molasses. How did that dependence shape your trades? New England had few plantations, yet its rum and ships carried the slave trade. Using your reading, explain how.",
-   hs:"The rum rule bound your most profitable export to a West Indian import, and your fleet made you the carrier for other regions. Trace how that same dependence and that same fleet tied New England to plantation slavery and the Middle Passage. Does the claim that New England only carried goods hold up?"},
+   a:{q:{g2:"How did the rum rule and your ships change your trades?",
+       g5:"How did the rum rule and your 7 ships change the trades your team made?",
+       g8:"How did the rum rule and your 7 ships shape the trades your team chose?",
+       hs:"How did the rum rule's drain on molasses, and your fleet's value to regions with no ships, shape your strategy?"},
+    look:{g2:"The Rules box on your Group Handout. Your Trade Log. (Rum rule: each 1 rum you trade uses up 2 molasses.)",
+       g5:"The Rules box on your Group Handout (each rum traded uses up 2 molasses) and your Trade Log.",
+       g8:"The Rules box on your Group Handout, and your Trade Log: molasses used, and cargo carried for others.",
+       hs:"The Rules box on your Group Handout, and your Trade Log: the molasses you had to secure and the voyages you sailed for hire."},
+    start:{g2:"To trade rum, we had to ___. We used our ships to ___. (Words: molasses, carry, hire, trade)",
+       g5:"Our ships let us ___. The rum rule meant we had to ___.",
+       g8:"Because every rum used up 2 molasses, we ___. Our ships helped us ___.",
+       hs:"The rum rule tied us to ___, while our fleet let us ___."}},
+   b:{q:{g2:"How were New England's rum, fish and ships part of slavery?",
+       g5:"How were New England's rum, fish and ships tied to slavery?",
+       g8:"How did New England's rum, fish and ships depend on the work of enslaved people?",
+       hs:"How did New England's rum distilleries, fishing fleets and merchant ships depend on enslaved people's forced labor?"},
+    look:{g2:"Paragraph 3 of your Group Handout. The Middle Passage on the map. (Words: molasses, Africa, captive)",
+       g5:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes map.",
+       g8:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes map.",
+       hs:"Paragraph 3 of your Group Handout, and the historical routes on the map, especially the leg from Africa."},
+    start:{g2:"The molasses for rum was made by ___. New England ships took rum to ___.",
+       g5:"New England's rum was made from molasses that ___. Its ships ___.",
+       g8:"New England's rum depended on ___, and its fish fed ___. Its ships ___.",
+       hs:"New England's rum depended on ___, and its ships ___."}}},
   middle:{
-   g2:"You had food everyone needs. Was it easy to trade? Why or why not? In real history, your wheat fed the sugar islands. Who did the work there?",
-   g5:"You had useful products everyone needs: wheat, cattle, lumber. Why was trading them sometimes harder than you expected? In history, who ate Middle Colonies food on the sugar islands, and why couldn't the islands grow their own?",
-   g8:"The Middle Colonies had many useful survival products (lumber, wheat, cattle), yet most groups find trading them difficult. Why do you think other regions didn't want all your goods? How did the region's food trade connect it to slavery in the West Indies?",
-   hs:"Your goods were universally useful yet weakly demanded: abundant, bulky, and low-value per unit. What does your experience suggest about the difference between usefulness and market power? And does a region that grew food for plantations share responsibility for what happened on them?"},
+   a:{q:{g2:"How did you get things made in shops when so few teams wanted your food and wood?",
+       g5:"How did your team get manufactured goods when so few regions wanted your wheat, cattle or lumber?",
+       g8:"How did your team get manufactured goods when few regions wanted your food and lumber?",
+       hs:"How did your team turn bulky, weakly demanded food and lumber into the manufactured goods only England held?"},
+    look:{g2:"What you have on your Group Handout. Your Trade Log. (Words: wheat, cattle, lumber, sugar, trade)",
+       g5:"What you have on your Group Handout, and your Trade Log: which trades brought in manufactured goods?",
+       g8:"Your What we have counts for wheat, cattle and lumber, and the Trade Log rows that got you manufactured goods.",
+       hs:"Your What we have counts for food and lumber across the rounds, and the chain of trades in your Trade Log that ended in manufactured goods."},
+    start:{g2:"Not many teams wanted our ___. So we ___.",
+       g5:"Few regions wanted our ___, so we ___.",
+       g8:"Because our food and lumber were hard to trade, we ___.",
+       hs:"Our goods were useful but weak in trade, so we ___."}},
+   b:{q:{g2:"How did Middle Colonies wheat help slavery on the sugar islands?",
+       g5:"How did Middle Colonies food and lumber help slavery on the sugar islands?",
+       g8:"How did Middle Colonies flour, grain and lumber help keep slavery running on the sugar islands?",
+       hs:"How did Middle Colonies grain, flour and lumber sustain slavery on the sugar islands?"},
+    look:{g2:"Paragraph 3 of your Group Handout. (Words: enslaved, sugar, fed, forced)",
+       g5:"Paragraph 3 of your Group Handout.",
+       g8:"Paragraph 3 of your Group Handout, and the route to the West Indies on the historical routes map.",
+       hs:"Paragraph 3 of your Group Handout, and the historical routes linking the mainland colonies to the West Indies."},
+    start:{g2:"On the sugar islands, our wheat fed ___. They had to ___.",
+       g5:"Our food fed ___ on the sugar islands. The islands bought food because ___.",
+       g8:"Middle Colonies food and lumber went to the sugar islands, where ___.",
+       hs:"Our grain and lumber kept the plantations running by ___."}}},
   southern:{
-   g2:"You had EIGHT kinds of goods but no ships. What happened? In real life, who grew the tobacco and rice? Did they get any of the money?",
-   g5:"When you saw your eight products, did you expect an easy win? What got in the way? In history, enslaved people grew the tobacco, rice, and indigo. Who got rich from their work, and what did they get?",
-   g8:"What were your first thoughts when you saw all the products you had to trade, and what actually happened without ships? Then look past the game: the planters' wealth came from the forced labor of enslaved people. Explain who gained from the Southern economy and who paid for it.",
-   hs:"You held the most diverse inventory in the game and no means to move it. How did that shape your strategy, and what does it suggest about why the real South depended on outside merchants? Then weigh Jefferson's complaint that planters were a species of property against the fact that those same planters held enslaved people as property."},
+   a:{q:{g2:"How did having 8 kinds of goods but no ships change the way you traded?",
+       g5:"How did having eight kinds of goods but no ships change the way your team traded?",
+       g8:"How did having eight kinds of goods but no ships shape the way your team traded?",
+       hs:"How did holding the most varied supply in the game, but no ships, shape your strategy?"},
+    look:{g2:"Your Trade Log: whose ship took your goods?",
+       g5:"The Rules box on your Group Handout, and your Trade Log: whose ship carried each cargo?",
+       g8:"Your Trade Log (whose ship carried each cargo, and what you paid for it) and your What we have counts.",
+       hs:"Your Trade Log: whose ships carried your cargo, what you paid for them, and how long goods waited in port."},
+    start:{g2:"We had no ships, so we ___. It cost us ___. (Words: hire, pay, wait, trade for a ship)",
+       g5:"Because we had no ships, we had to ___. That cost us ___.",
+       g8:"Having no ships meant we ___. Even with eight kinds of goods, ___.",
+       hs:"Depending on other regions' ships cost us ___, which suggests ___."}},
+   b:{q:{g2:"Who grew the tobacco and rice, and who got the money?",
+       g5:"Who grew the tobacco, rice and indigo, and who got rich from their work?",
+       g8:"Who did the work that grew the South's tobacco, rice and indigo, and who kept the money?",
+       hs:"Who bore the cost of the Southern Colonies' tobacco, rice and indigo, and who collected the wealth those crops produced?"},
+    look:{g2:"Paragraph 3 of your Group Handout. (Words: enslaved, planters, no pay, forced)",
+       g5:"Paragraph 3 of your Group Handout.",
+       g8:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes map.",
+       hs:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes map."},
+    start:{g2:"The crops were grown by ___. They got ___. The money went to ___.",
+       g5:"The crops were grown by ___, but the money went to ___.",
+       g8:"The work was done by ___, but the money went to ___, because ___.",
+       hs:"The planters' wealth depended on ___, who ___."}}},
   westIndies:{
-   g2:"You had only 3 kinds of goods and no ships. Was that hard? In real life, who made the sugar? What did they get for it?",
-   g5:"You had the fewest kinds of goods, but the most valuable one. How did that change your trading? In history, enslaved Africans made the sugar. Who got the wealth from it?",
-   g8:"Your group had only sugar, molasses, and citrus. How did this affect your trades? The real islands' sugar was made by enslaved people who got none of its value. If the West Indies won, who actually paid for the win?",
-   hs:"You held the game's most valuable monopoly and its narrowest economy. Was that strength or weakness in practice? Then connect it to history: the islands' sugar wealth depended on enslaved labor so deadly that planters relied on the slave trade to replace the people who died. What does a score counted in sugar hide?"},
+   a:{q:{g2:"How did you use your sugar to make up for having no ships?",
+       g5:"How did your team use sugar, the good almost everyone wanted, to make up for having no ships?",
+       g8:"How did your team use sugar, the most wanted good, to make up for having no ships?",
+       hs:"How far did sugar, the game's most wanted good, make up for your narrow economy and your lack of ships?"},
+    look:{g2:"Your Trade Log: what did you get for each sugar?",
+       g5:"Your Trade Log: what did you get for each sugar, and whose ship carried it?",
+       g8:"Your Trade Log (what each sugar bought, whose ship carried it) and your What we have count for molasses.",
+       hs:"Your Trade Log (what each sugar fetched, and the ships you hired) and your What we have counts for molasses."},
+    start:{g2:"Teams wanted our sugar, so we ___. With no ships, we had to ___. (Words: hire, trade, wait, ask for more)",
+       g5:"Other regions wanted our sugar, so we could ___. Having no ships meant ___.",
+       g8:"Because everyone wanted sugar, we ___. But with only three goods and no ships, ___.",
+       hs:"Sugar gave us the power to ___, but our narrow economy ___."}},
+   b:{q:{g2:"Who made the sugar, and what did it cost them?",
+       g5:"Who made the West Indies' sugar, and what did the work cost them?",
+       g8:"Who made the West Indies' sugar, and what did making it cost them?",
+       hs:"Who was forced to produce the West Indies' sugar wealth, and what did producing it cost them?"},
+    look:{g2:"Paragraph 3 of your Group Handout. (Words: enslaved, forced, hard, died)",
+       g5:"Paragraph 3 of your Group Handout, and the Middle Passage on the map.",
+       g8:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes map.",
+       hs:"Paragraph 3 of your Group Handout, and the Middle Passage leg of the historical routes."},
+    start:{g2:"The sugar was made by ___. The work was ___.",
+       g5:"The sugar was made by ___, who ___.",
+       g8:"The West Indies' sugar was made by ___. The work cost them ___.",
+       hs:"The islands' sugar wealth rested on ___, and the cost to them was ___."}}},
   england:{
-   g2:"You were the ruling country with the most ships. Was the game easy for you? Why or why not? In real history, what did English ships carry besides goods?",
-   g5:"England had the most ships and control of manufactured goods. Did those advantages make winning easy? What evidence from the game supports your answer? What did English ships carry on the Middle Passage?",
-   g8:"Do you think your region had an advantage over the other regions? Explain using evidence from the simulation. Then explain how England's fleet and factories were connected to the slave trade.",
-   hs:"England's structural advantages (fleet, manufactures, duties) mirror real mercantilist power. Did they translate into victory? Evaluate whether the game's design, and history's, favors the Mother Country, and account for what British ships carried on the second leg."},
+   a:{q:{g2:"Which helped England most in the game: things made in shops, 8 ships, or taxes?",
+       g5:"Which advantage helped England most: manufactured goods, 8 ships, or duties?",
+       g8:"Which advantage helped England most: manufactured goods, 8 ships, or duties?",
+       hs:"Which advantage did the most to decide England's game: manufactured goods, the largest fleet, or duties?"},
+    look:{g2:"Your Trade Log. The taxes England got.",
+       g5:"Your Trade Log, and the duties England collected, shown on the game's end screen.",
+       g8:"Your Trade Log, and England's duty and seizure haul on the game's end screen.",
+       hs:"Your Trade Log, your What we have counts, and England's duty and seizure haul on the game's end screen."},
+    start:{g2:"The thing that helped us most was ___. It helped because ___. (Words: guns, tools, ships, taxes, carry)",
+       g5:"Our biggest advantage was ___, because ___.",
+       g8:"The advantage that helped us most was ___, because it let us ___.",
+       hs:"Our deciding advantage was ___, because ___."}},
+   b:{q:{g2:"Who did English ships carry from Africa, and who got rich from it?",
+       g5:"Who did English ships carry from Africa to the Americas, and who got rich from it?",
+       g8:"Who did English ships carry from Africa to the Americas, and who in England grew rich from it?",
+       hs:"Who did English ships carry through the Middle Passage, and who in England grew rich from it?"},
+    look:{g2:"Paragraph 3 of your Group Handout. The Middle Passage on the map. (Words: captive, enslaved, forced)",
+       g5:"Paragraph 3 of your Group Handout, and the Middle Passage on the historical routes map.",
+       g8:"Paragraph 3 of your Group Handout, and the three legs of the historical routes on the map.",
+       hs:"Paragraph 3 of your Group Handout, and all three legs of the historical routes on the map."},
+    start:{g2:"English ships carried ___. The money went to ___.",
+       g5:"English ships carried ___. The people who got rich were ___.",
+       g8:"From Africa, English ships carried ___. The profits went to ___.",
+       hs:"English ships carried ___ through the Middle Passage, and the profits went to ___."}}},
  }
 };
 
@@ -1418,6 +1649,30 @@ function reverseDeltas(game, deltas){
 }
 
 /* ===================================================================
+   RUM RULE — New England's distilleries turn molasses into rum
+   ===================================================================
+   Each rum New England sends away uses up 2 molasses, which leave the game. Only
+   New England's outbound rum pays; rum anyone receives, or carries home, is free. */
+const RUM_REGION = "newEngland";
+const MOLASSES_PER_RUM = 2;
+
+/* Molasses a voyage from `from` uses up for the outbound `cargo`. */
+function molassesCost(cargo, from){
+  if(from !== RUM_REGION) return 0;
+  return MOLASSES_PER_RUM * Math.max(0, (cargo && cargo.rum) || 0);
+}
+
+/* The most rum New England can load: no more than it holds, no more than its molasses
+   at home can pay for (molasses already loaded as cargo is not at home), and no more
+   than the hold has room for. */
+function rumAllowance(inventory, holdLeft, molassesAboard){
+  const inv = inventory || {};
+  const molasses = Math.max(0, (inv.molasses || 0) - (molassesAboard || 0));
+  return Math.max(0, Math.min(inv.rum || 0, Math.floor(molasses / MOLASSES_PER_RUM),
+    holdLeft == null ? Infinity : holdLeft));
+}
+
+/* ===================================================================
    ENDGAME — standings
    =================================================================== */
 /* rows: [{rid, have, total, activity}]. Higher share of needs first; on a tie, the
@@ -1545,6 +1800,7 @@ if(typeof module !== "undefined") module.exports = {
   makePeriodBackup, makeAllBackup, gameProblems, parseBackup, backupPreviewText, whenText,
   shortName, reduceRoster, matchPeriods, suggestTeams, medianRl,
   applyDelta, netDeltas, reverseProblems, reverseDeltas,
+  RUM_REGION, MOLASSES_PER_RUM, molassesCost, rumAllowance,
   rankStandings,
   needsCount, phaseStatus, publicTicker, publicSnapshot, voyageLanes,
 };
@@ -2502,6 +2758,19 @@ function renderCargoStage(leg){
   const inv = g.regions[ownerId].inventory;
   const draft = d[leg];
   for(const k in draft) if(draft[k]>(inv[k]||0)) draft[k]=inv[k]||0;
+  // New England's rum rule: every rum it sends away uses up 2 molasses left at home.
+  const rumRule = leg==="out" && d.from===RUM_REGION && (inv.rum||0)>0;
+  const holdLeftFor = k => Math.max(0, 6 - (sum(draft) - (draft[k]||0)));
+  const maxFor = k => {
+    if(!rumRule) return inv[k]||0;
+    if(k==="rum") return rumAllowance(inv, holdLeftFor("rum"), draft.molasses);
+    if(k==="molasses") return Math.max(0, (inv.molasses||0) - molassesCost(draft, d.from));
+    return inv[k]||0;
+  };
+  if(rumRule && draft.rum){ // molasses may have changed since this draft was saved
+    draft.rum=Math.min(draft.rum, rumAllowance(inv, Infinity, draft.molasses));
+    if(!draft.rum) delete draft.rum;
+  }
   const vars={from:REGIONS[d.from].nm, to:REGIONS[d.to].nm};
   const title = leg==="out" ? LT(DOCK_UI.loadOutTitle, vars) : LT(DOCK_UI.loadBackTitle, vars);
   const rows = Object.entries(inv).filter(([k,n])=>k!=="ship"&&n>0).map(([k,n])=>`
@@ -2509,7 +2778,7 @@ function renderCargoStage(leg){
       <span aria-hidden="true">${GOODS[k].ico}</span><span class="cr-name">${GOODS[k].nm}</span>
       <span class="cr-avail">have ${n}</span>
       <button data-d="-1" aria-label="One fewer ${GOODS[k].nm}">−</button><span class="cr-count" id="cnt-${leg}-${k}" aria-live="polite">${draft[k]||0}</span><button data-d="1" aria-label="One more ${GOODS[k].nm}">＋</button>
-    </div>`).join("") || "<p class='dock-summary'>Nothing left in this port's stores.</p>";
+    </div>${rumRule&&k==="rum"?`<p class="rum-rule" id="rumRule" aria-live="polite"></p>`:""}`).join("") || "<p class='dock-summary'>Nothing left in this port's stores.</p>";
   openModal(`
     <h3>${leg==="out"?"🧺":"🔄"} ${title}</h3>
     <p class="dock-summary">${L(DOCK_UI.holdLimit)} ${leg==="back"?L(DOCK_UI.backHint):L(DOCK_UI.loadHint)}</p>
@@ -2526,11 +2795,17 @@ function renderCargoStage(leg){
   const cap=()=>{ const t=sum(draft); const el=$("#capLine");
     el.textContent=`Hold: ${t} / 6`; el.classList.toggle("over",t>6);
     const btn=$("#dockLaunch")||$("#dockReturn"); if(btn) btn.disabled=t>6;
+    const rr=$("#rumRule");
+    if(rr){
+      const n=draft.rum||0;
+      const first = n ? LT(DOCK_UI.rumNow, {n, cost:molassesCost(draft, d.from)}) : L(DOCK_UI.rumEach);
+      rr.textContent = first+" "+LT(DOCK_UI.rumCap, {have:inv.molasses||0, max:maxFor("rum")});
+    }
   };
   document.querySelectorAll(".cargo-row button").forEach(b=>{
     b.onclick=()=>{
-      const k=b.closest(".cargo-row").dataset.good, dd=+b.dataset.d;
-      draft[k]=Math.min(inv[k]||0, Math.max(0,(draft[k]||0)+dd));
+      const k=b.closest(".cargo-row").dataset.good, dd=+b.dataset.d, cur=draft[k]||0;
+      draft[k] = dd<0 ? Math.max(0, cur-1) : Math.max(cur, Math.min(maxFor(k), cur+1));
       if(!draft[k]) delete draft[k];
       $(`#cnt-${leg}-${k}`).textContent=draft[k]||0; cap(); save();
     };
@@ -2545,10 +2820,17 @@ function launchVoyage(){
   const g=dockGame(), d=g.dock, pk=dockPk;
   for(const k in d.out) if(!d.out[k]) delete d.out[k];
   if(sum(d.out)>6) return;
+  const molasses=molassesCost(d.out, d.from); // New England's rum rule
+  if(molasses > (g.regions[d.from].inventory.molasses||0) - (d.out.molasses||0)) return renderCargoStage("out");
   d.loaded=deep(d.out);
   for(const k in d.out) vMove(g, d.from, k, -d.out[k]); // cargo aboard
+  if(molasses){ // distilled into rum: leaves the game, and is part of this voyage's deltas so Undo returns it
+    vMove(g, d.from, "molasses", -molasses);
+    d.molassesUsed=molasses;
+  }
   d.stage="sail"; d.leg="out"; save(); renderRegions(); renderDockBtn(); closeModal();
   tick(`⛵ ${REGIONS[d.from].nm} sails for ${REGIONS[d.to].nm} aboard ${d.carrier===d.from?"their own":REGIONS[d.carrier].nm+"'s"} ship — ${cargoStr(d.out)}`);
+  if(molasses) tick(`🥃 New England's distilleries use up ${molasses} molasses to make ${d.out.rum} rum.`);
   sailShip(d.from, d.to, ()=>arrive(pk,"out"));
 }
 function startReturnLeg(){
@@ -2712,7 +2994,7 @@ function finishLeg(){
     if(sum(d.back)) tick(`🏠 ${REGIONS[d.from].nm} receives: ${cargoStr(d.back)}`);
     g.trades.push({day:g.day, round:g.round, practice:!!g.practice, from:d.from, carrier:d.carrier, to:d.to,
       loaded:d.loaded||{}, loadedBack:d.loadedBack||{}, delivered:d.delivered, returned:deep(d.back),
-      cards:d.cards, deltas:d.deltas, ts:Date.now()});
+      cards:d.cards, deltas:d.deltas, ...(d.molassesUsed?{molassesUsed:d.molassesUsed}:{}), ts:Date.now()});
     g.dock=null; save(); renderRegions(); renderDockBtn(); closeModal();
     checkWin();
   }
@@ -3448,17 +3730,31 @@ function renderEndGame(){
     </div>`;
   document.querySelectorAll("[data-refl]").forEach(b=>b.onclick=()=>{
     const id=b.dataset.refl, r=REGIONS[id];
-    $("#reflBody").innerHTML=`<div class="reading-paper" style="max-width:760px">
+    // Same questions, order and support as the printed Reflection sheet: each question,
+    // then where to look and how to start, at the class's reading level.
+    const reg=REFLECT.regions[id], cer=REFLECT.cer;
+    const sup=it=>`<p class="refl-sup"><b>Look at:</b> ${L(it.look)}</p>
+      <p class="refl-sup refl-start"><b>Start with:</b> ${L(it.start)}</p>`;
+    const ask=(it,n)=>`<div class="refl-q"><p class="refl-ask"><b>${n}</b> ${L(it.q)}</p>${sup(it)}</div>`;
+    $("#reflBody").innerHTML=`<div class="reading-paper refl-paper" style="max-width:760px">
       <h3 style="color:${r.colorHex};font-size:26px">${r.flag} ${r.nm} — Reflection</h3>
-      <p><b>1.</b> ${L(REFLECT.regions[id])}</p>
-      <p><b>2.</b> ${L(REFLECT.scarcity)}</p>
-      ${REFLECT.common.map((q,i)=>`<p><b>${i+3}.</b> ${q}</p>`).join("")}
-      <p style="border-top:1px dotted var(--ink-faint);padding-top:0.75rem"><b>${REFLECT.common.length+3}. Answer in CER form:</b></p>
-      <p style="font-style:italic;color:var(--ink-soft)">${L(REFLECT.cer)}</p>
-      <div style="margin-top:0.875rem;border:2px solid var(--bad);border-radius:6px;padding:0.75rem 1rem;background:rgba(140,31,40,.07)">
+      <h4>How it ended</h4>
+      ${ask(REFLECT.common[0],"1.")}${ask(REFLECT.common[1],"2.")}${ask(REFLECT.scarcity,"3.")}
+      <h4>Our region: the game, then the history</h4>
+      ${ask(reg.a,"4a.")}${ask(reg.b,"4b.")}
+      <div class="refl-required">
         <p style="margin:0"><span class="secret-stamp" style="border-color:var(--bad)">REQUIRED</span></p>
-        <p style="margin-top:0.5rem"><b>⛓ ${REFLECT.common.length+4}. The human cost.</b> ${L(REFLECT.humanCost)}</p>
+        <h4>⛓ What the game left out</h4>
+        ${ask(REFLECT.humanCost,"5.")}
       </div>
+      <h4>The big question: answer in CER form</h4>
+      <div class="refl-q"><p class="refl-ask"><b>6.</b> ${L(cer.q)}</p>
+        <p class="refl-sup"><b>Look at:</b> ${L(cer.look)}</p></div>
+      ${[["Claim",cer.claim],["Evidence",cer.evidence],["Reasoning",cer.reasoning]].map(([k,p])=>`<div class="refl-cer">
+        <p class="refl-ask"><b>${k}.</b> ${L(p.guide)}</p>
+        <p class="refl-sup refl-start"><b>Start with:</b> ${L(p.start)}</p></div>`).join("")}
+      <h4>How we worked</h4>
+      ${ask(REFLECT.common[2],"7.")}${ask(REFLECT.common[3],"8.")}
     </div>`;
     $("#reflBody").scrollIntoView({behavior:"smooth"});
   });

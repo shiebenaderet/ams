@@ -64,11 +64,11 @@ h1{font-size:2rem;line-height:1.15;margin:.1rem 0 .4rem;}
 
 /* goal */
 .regions{list-style:none;margin:0 0 .8em;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5em,1fr));gap:.5em;}
-.reg{border:1px solid var(--rule);border-radius:.5em;background:var(--card);overflow:hidden;display:flex;flex-direction:column;}
-.chip{display:block;color:#fff;font-weight:800;padding:.35em .55em;line-height:1.2;
+.reg{border:1px solid var(--rule);border-radius:.5em;background:var(--card);overflow:hidden;display:flex;flex-direction:column;text-align:center;}
+.chip{display:block;color:#fff;font-weight:800;padding:.35em .3em;line-height:1.2;white-space:nowrap;text-align:center;
   -webkit-print-color-adjust:exact;print-color-adjust:exact;}
 .rport,.rships{padding:.2em .55em;font-size:.92em;}
-.rships{padding-bottom:.45em;display:flex;align-items:center;gap:.3em;}
+.rships{padding-bottom:.45em;display:flex;align-items:center;justify-content:center;gap:.3em;}
 .noship-note{font-size:1em;}
 .score{margin:0;padding-left:1.2em;}
 .score li{margin:.2em 0;}
@@ -245,7 +245,7 @@ html.present .more{display:none;}
 html.present .lead{font-size:1.05em;margin-bottom:.45em;}
 html.present .regions{grid-template-columns:repeat(5,1fr);gap:.4em;margin-bottom:.4em;}
 html.present .reg .chip{padding:.25em .5em;}
-html.present .reg .chip{font-size:.95em;}
+html.present .reg .chip{font-size:.9em;}
 html.present .rport,html.present .rships{font-size:.72em;}
 html.present .noship-note{font-size:.85em;margin-bottom:.4em;}
 html.present .score{font-size:.85em;}
@@ -319,13 +319,24 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
   .noship-note,.score{display:inline;}
   .score{padding:0;list-style:none;}
   .score li{display:inline;margin:0 0 0 .3em;}
-  .sheet.s1{display:grid;grid-template-columns:1fr 1fr;column-gap:.9rem;align-items:start;}
-  .s1 > .panel{grid-column:1 / -1;}
-  .s1 > #jobs{display:contents;}
-  #jobs > .slide:first-child{grid-column:1;grid-row:3 / span 2;}
-  .s1 > #table{grid-column:2;grid-row:3;}
-  #jobs > .hmslide{grid-column:2;grid-row:4;margin:0 0 .45rem;}
-  .s1 > #round{grid-row:5;}
+  /* Page 1: the goal and the build-up, at full size. Page 2: jobs, table, a round. */
+  .sheet.s1b{break-before:page;page-break-before:always;display:grid;grid-template-columns:1fr 1fr;column-gap:.9rem;align-items:start;}
+  .s1b > .panel{grid-column:1 / -1;}
+  .s1b > #jobs{display:contents;}
+  #jobs > .slide:first-child{grid-column:1;grid-row:1 / span 2;}
+  .s1b > #table{grid-column:2;grid-row:1;}
+  #jobs > .hmslide{grid-column:2;grid-row:2;margin:0 0 .45rem;}
+  .s1b > #round{grid-row:3;margin-top:.4rem;}
+  #buildup .strip{display:block;counter-reset:none;}
+  #buildup .strip li{display:grid;grid-template-columns:3.4em 1fr;column-gap:.8em;row-gap:.15em;align-items:start;
+    border:1.5pt solid #000;border-radius:.4em;padding:.4em .7em;margin:0 0 .4em;font-size:1.05rem;line-height:1.3;}
+  #buildup .strip li + li::before{display:none;}
+  #buildup .strip li .sico{grid-row:span 4;width:2.7em;height:2.7em;}
+  #buildup .strip li .sico .ico{width:1.7em;height:1.7em;}
+  #buildup .strip li .st{font-size:1.2em;}
+  #buildup .strip li .sa{font-size:1em;}
+  #buildup .strip li .sb{font-size:.95em;color:#222;}
+  #buildup .strip li .su{font-size:.95em;margin-top:.1em;}
   .hm-h{font-size:1.1em !important;margin:0 0 .15em;}
   .hm-sub{margin:0 0 .25em !important;}
   .hmjobs{grid-template-columns:1fr;gap:.25em;}
@@ -347,8 +358,9 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
   #table .tkey{list-style:none;padding:0;}
   #table .tkey li{margin:.1em 0;}
   .regions .reg{display:block;}
-  .reg .rport,.reg .rships{display:inline-flex;padding:.25em 0 .3em .45em;}
-  .reg .rships{padding-left:.35em;gap:.15em;}
+  .reg .chip{font-size:.9em;}
+  .reg .rport{display:block;padding:.25em .3em 0;}
+  .reg .rships{display:flex;justify-content:center;padding:.1em .3em .3em;gap:.15em;}
   .strip li{display:grid;grid-template-columns:auto 1fr;column-gap:.4em;text-align:left;align-items:start;justify-items:start;}
   .strip li .sico{grid-row:span 3;width:2.2em;height:2.2em;}
   .strip li .sico .ico{width:1.3em;height:1.3em;}
@@ -404,7 +416,7 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 </div>
 <nav class="toc" aria-label="On this page"><a href="#goal">Goal</a><a href="#buildup">Build-up</a><a href="#jobs">Jobs</a><a href="#table">Table</a><a href="#round">A round</a><a href="#ships">Ships</a><a href="#chance">Chance cards</a><a href="#faq">Questions</a><a href="#history">History</a><a class="tonly" href="#teacher">Teacher notes</a></nav>
 </header>
-<p class="pr ptitle"><b>How to Play: The Triangle Trade</b> <span>Unit 1 · Mr. B’s Social Studies</span></p>
+<p class="pr ptitle"><b>How to Play: The Triangle Trade</b> <span>Unit 1: Foundations &amp; Identity</span></p>
 <main id="stage" tabindex="-1">
 <div class="sheet s1">
 <section class="panel" id="goal" aria-labelledby="goal-h">
@@ -447,17 +459,19 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 <div class="slide" data-title="The build-up">
 <h2 id="buildup-h">The build-up: five steps</h2>
 <ol class="strip"><li><span class="sico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 5.5h6.5A2.5 2.5 0 0 1 12 8v12a2 2 0 0 0-2-2H3z"/><path d="M21 5.5h-6.5A2.5 2.5 0 0 0 12 8v12a2 2 0 0 1 2-2h7z"/></svg><span class="snum">1</span></span>
-<b class="st">Read</b><span class="sa">Read your region's reading <b>on your own</b>.</span><span class="sb"><a href="triangle-trade-readings.html">Readings</a> come in four levels.</span></li>
+<b class="st">Read</b><span class="sa">Read your region's <b>Group Handout</b> on your own.</span><span class="sb">Rules for your region, the reading, what you have, what you need. <a href="triangle-trade-readings.html">Readings</a> come in four levels.</span><span class="su pr"><b>You&rsquo;ll use:</b> Your Group Handout</span></li>
 <li><span class="sico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg><span class="snum">2</span></span>
-<b class="st">Take notes</b><span class="sa">Fill in the <b>Region Notes</b> sheet.</span><span class="sb">Products, needs, ships, who did the work, biggest advantage, biggest challenge.</span></li>
+<b class="st">Take notes</b><span class="sa">Fill in side 1 of the <b>Region Notes</b> sheet.</span><span class="sb">Products, needs, ships, who did the work, biggest advantage, biggest challenge.</span><span class="su pr"><b>You&rsquo;ll use:</b> Region Notes, side 1</span></li>
 <li><span class="sico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="7.5" r="3"/><circle cx="5" cy="10" r="2.3"/><circle cx="19" cy="10" r="2.3"/><path d="M6.5 20a5.5 5.5 0 0 1 11 0M1.5 19a3.6 3.6 0 0 1 5.2-3.4M22.5 19a3.6 3.6 0 0 0-5.2-3.4"/></svg><span class="snum">3</span></span>
-<b class="st">Plan as a team</b><span class="sa">Copy your <b>secret needs</b>. Make a plan.</span><span class="sb">Your monopolies, your ship plan, your first move.</span></li>
+<b class="st">Plan as a team</b><span class="sa">Copy your <b>secret needs</b>. Make a plan.</span><span class="sb">Your monopolies, your ship plan, your first move. Pick your Captain, Merchant and Harbormaster jobs.</span><span class="su pr"><b>You&rsquo;ll use:</b> Region Notes, side 2, and the Harbormaster Record</span></li>
 <li><span class="sico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 16h19l-3 4.5h-13z"/><path d="M12 2.5V16"/><path d="M12 4l6.5 9.5H12z"/><path d="M12 6.5 6.5 13.5H12"/></svg><span class="snum">4</span></span>
-<b class="st">Trade</b><span class="sa">Play <b>rounds</b>: Negotiation, then Shipping.</span><span class="sb">The teacher runs the clock.</span></li>
+<b class="st">Trade</b><span class="sa">Play <b>rounds</b>: Negotiation, then Shipping.</span><span class="sb">The teacher runs the clock and the Dock.</span><span class="su pr"><b>You&rsquo;ll use:</b> Goods cards, the trade log, the Dock</span></li>
 <li><span class="sico"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="4" width="15" height="17" rx="2"/><path d="M9 3h6v3H9z"/><path d="m8 13 2.5 2.5L16 10"/></svg><span class="snum">5</span></span>
-<b class="st">Count up and reflect</b><span class="sa">Count your goods. Then think:</span><span class="sb"><i>Was the Triangle Trade worth it, and to whom?</i></span></li></ol>
+<b class="st">Count up and reflect</b><span class="sa">Count your goods. Then think:</span><span class="sb"><i>Was the Triangle Trade worth it, and to whom?</i></span><span class="su pr"><b>You&rsquo;ll use:</b> What we have, then the Reflection sheet</span></li></ol>
 </div>
 </section>
+</div>
+<div class="sheet s1b">
 <section class="panel" id="jobs" aria-labelledby="jobs-h">
 <div class="slide" data-title="Your team's jobs">
 <h2 id="jobs-h">Your team's jobs</h2>
@@ -512,7 +526,7 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 <li><b>Table tent</b>: your region's name and home port.</li>
 <li><b>Goods cards</b>: 28 cards in your region's color. <b>Ships are cards too.</b> Keep them in the bag.</li>
 <li><b>Harbormaster Record</b>, one per team. Side 1: <b>TOP SECRET</b> needs and a count of what you have. Side 2: the <b>trade log</b>.</li>
-<li><b>Reading</b> and <b>Region Notes</b> sheet, one each.</li>
+<li><b>Group Handout</b> (your region&rsquo;s reading, rules and needs) and <b>Region Notes</b> sheet, one each.</li>
 </ol>
 </div>
 <p class="key-seats"><b>C</b> Captain · <b>M</b> Merchant · <b>H</b> Harbormaster</p>
@@ -801,7 +815,7 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 </div>
 <div class="slide faqslide" data-title="Questions 4 of 5">
 <h2 class="po">Questions and answers (4 of 5)</h2>
-<dl class="faq"><div class="qa"><dt>What happens with rum in New England?</dt><dd>Follow this rule: “Rum rule: must hold 2 molasses before each 1 rum may be traded.” The Harbormasters and the teacher check it.</dd></div>
+<dl class="faq"><div class="qa"><dt>What happens with rum in New England?</dt><dd>Follow this rule: “Rum rule: each 1 rum traded uses up 2 molasses.” The Harbormasters and the teacher check it.</dd></div>
 <div class="qa"><dt>Who wins if nobody finishes?</dt><dd>The team with the most of its needs list. A tie goes to the team with more voyages.</dd></div>
 <div class="qa"><dt>Why did the teacher stop the game?</dt><dd>Sometimes the teacher <b>pauses the game</b> to ask the whole class a question. That’s part of the game. Each trading day also ends with a few minutes on the <b>standings</b>.</dd></div></dl>
 </div>
@@ -851,7 +865,7 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 </ul>
 <h3>Rules the Dock doesn’t enforce</h3>
 <ul>
-<li>The rum rule (“Rum rule: must hold 2 molasses before each 1 rum may be traded.”). The game shows it on New England’s card but doesn’t check it.</li>
+<li>The rum rule (“Rum rule: each 1 rum traded uses up 2 molasses.”). The game shows it on New England’s card but doesn’t check it. When New England trades rum, take 2 molasses per rum out of play: Log » Adjust Goods on New England, and the 2 molasses cards come back to you.</li>
 <li>Payment for a hired ship: <b>the fee rides as cargo</b>. Load the fee goods in the hold with the rest (they count toward the limit). If the voyage sails <i>to</i> the ship&rsquo;s owner, the Dock delivers the fee with everything else. If it sails somewhere else, leave the fee out of the Dock&rsquo;s cargo: the Captain hands those cards to the owner&rsquo;s port at the end of the voyage, and you move them with Log » Adjust Goods.</li>
 <li>A traded ship card moves only when you use Log » Transfer Ship.</li>
 </ul>
