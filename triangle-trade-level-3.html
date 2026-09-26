@@ -64,16 +64,21 @@ b{font-weight:700;}
 .vbox dt{font-weight:700;margin-top:.6rem;}
 .vbox dl > div:first-child dt{margin-top:0;}
 .vbox dd{margin:.1rem 0 0;font-size:.95rem;line-height:1.55;}
-table.facts{width:100%;border-collapse:collapse;font-size:.92rem;line-height:1.5;margin:0;}
+.mono{border:1px solid var(--rule);border-radius:.5rem;background:var(--card);padding:.7rem .9rem;margin:0 0 1rem;}
+.mono .mh{font-weight:700;margin:0 0 .2rem;}
+.mono .mintro,.mono .mnote{margin:.2rem 0 .5rem;line-height:1.5;}
+.mono .mnote,.mono .mall{margin:.5rem 0 0;}
+table.mtab{width:100%;border-collapse:collapse;line-height:1.4;}
+table.mtab th,table.mtab td{text-align:left;vertical-align:top;padding:.3rem .6rem .3rem 0;border-top:1px solid var(--rule);}
+table.mtab thead th{font-size:.85rem;border-top:0;}
+table.mtab tbody th{white-space:nowrap;font-weight:700;}
+table.mtab .n{text-align:center;width:1%;white-space:nowrap;}
 .rules{border:2px solid var(--ink);border-radius:.4rem;background:var(--band);padding:.6rem .9rem;margin:0 0 1rem;}
 .rules .rh{font-weight:700;margin:0 0 .25rem;}
 .rules ul{margin:0;padding-left:1.2rem;}
 .rules li{margin:.2rem 0;line-height:1.45;}
-table.facts caption{text-align:left;font-weight:700;font-size:.85rem;text-transform:uppercase;
   letter-spacing:.05em;padding:0 0 .3rem;}
-table.facts th{text-align:left;vertical-align:top;white-space:nowrap;padding:.35rem .8rem .35rem 0;
   border-top:1px solid var(--rule);width:1%;font-weight:700;}
-table.facts td{padding:.35rem 0;border-top:1px solid var(--rule);vertical-align:top;}
 .help{background:var(--card);border:1px solid var(--rule);border-radius:.5rem;
   padding:.8rem 1rem;font-size:.95rem;margin:0 0 1.75rem;}
 .help p{margin:0 0 .5rem;}
@@ -122,6 +127,12 @@ b .vpop{font-weight:inherit;}
   html{font-size:11pt;}
   body.lv0{font-size:1.18rem;}
   body{background:#fff;color:#000;line-height:1.4;}
+  /* Level 3 is the longest reading plus the fullest monopoly notes: narrower margins and
+     slightly tighter leading (never smaller type) keep one region per page. */
+  body.lv3 .reading{page:lv3;}
+  @page lv3{margin:.45in .6in;}
+  body.lv3{line-height:1.3;}
+  body.lv3 p{margin-bottom:.25rem;}
   .wrap{max-width:none;padding:0;}
   .snav,.progress,.help,#rtools,header.top,footer{display:none !important;}
   .vpop{border-bottom:0;}
@@ -144,11 +155,13 @@ b .vpop{font-weight:inherit;}
   .vbox dl > div{break-inside:avoid;page-break-inside:avoid;}
   .vbox dt{margin-top:.2rem;}
   .vbox dd{font-size:.92rem;line-height:1.3;}
+  .mono{border:1pt solid #000;border-radius:0;background:#fff;padding:.25rem .55rem .3rem;margin:.35rem 0 .4rem;break-inside:avoid;}
+  .mono .mintro{margin:.05rem 0 .15rem;line-height:1.3;}
+  .mono .mnote,.mono .mall{margin:.2rem 0 0;line-height:1.3;}
+  table.mtab{line-height:1.25;}
+  table.mtab th,table.mtab td{padding:.08rem .5rem .08rem 0;border-top:.75pt solid #000;}
   .rules{border:1.5pt solid #000;border-radius:0;background:#fff;padding:.3rem .6rem;margin:.3rem 0 .45rem;break-inside:avoid;}
   .rules li{margin:.05rem 0;line-height:1.3;}
-  table.facts{font-size:.92rem;line-height:1.35;break-inside:avoid;}
-  table.facts caption{font-size:.84rem;padding-bottom:.15rem;}
-  table.facts th,table.facts td{padding:.15rem .6rem .15rem 0;border-top:.75pt solid #000;}
   a{color:#000;text-decoration:none;}
 }
 </style>
@@ -188,10 +201,16 @@ b .vpop{font-weight:inherit;}
 <p>Your most profitable export is rum, distilled in Rhode Island from West Indian molasses (the by-product of sugar refining), which means your best product depends on someone else's. The game's rule reflects that cost: each unit of rum you trade consumes 2 molasses. Sugar planters, who devoted nearly every acre to cane, paid well for dried fish and lumber. You in turn are short of farm crops and of the manufactured goods the Navigation Acts routed through England. When Parliament's Molasses Act of 1733 taxed molasses from the French islands, New England merchants largely smuggled it, an early sign of how colonists treated trade laws they disliked. Your fleet is a second business, called the carrying trade: the Southern Colonies and the West Indies own no ships, so every cargo they send must travel in someone's hold. Make it yours, charge for it, and work out the most profitable circuit you can.</p>
 <p>The tidy version of this story places slavery in the South and the Caribbean. The account books say otherwise. The molasses in New England rum was produced by enslaved people on sugar plantations, and the poorest-grade fish was shipped south as cheap food for them. Rhode Island merchants, many sailing from Newport, organized more slave-trading voyages than those of any other mainland colony: rum went to West Africa, captive Africans were forced aboard, and the ships carried them through the Middle Passage (the forced Atlantic crossing) to be sold in the Caribbean. Enslaved people also lived and worked in Boston and Newport. The North's prosperity was built into the same system as the South's.</p>
   </div>
-<table class="facts" data-no-listen>
-  <caption>New England in the game</caption>
-  <tr><th scope="row">Starts with</th><td>7 Dried Fish, 3 Whale Oil, 5 Lumber, 6 Rum</td></tr>
-</table>
+<div class="mono" data-no-listen>
+  <p class="mh">Your monopolies</p>
+  <p class="mintro">A monopoly makes you the sole supplier of a good. Buyers cannot turn to a rival, so you set the terms, but only to the extent that they need the good and cannot do without it.</p>
+  <table class="mtab">
+    <thead><tr><th scope="col">Good</th><th scope="col" class="n">You have</th><th scope="col">Why others want it</th></tr></thead>
+    <tbody><tr><th scope="row">Whale Oil</th><td class="n">3</td><td>The best lamp oil of the time; it also made bright, clean-burning candles.</td></tr><tr><th scope="row">Rum</th><td class="n">6</td><td>Drunk across the colonies and at sea, and carried to West Africa, where traders exchanged it for captive Africans.</td></tr></tbody>
+  </table>
+  <p class="mnote">Your rum monopoly carries a dependency: each rum you trade consumes 2 molasses, and the West Indies is molasses's only source, so your best export is only as strong as your deal with them. Whale oil is the rarer asset, with just 3 in the entire game; do not let it go cheaply.</p>
+  <p class="mall"><b>All your starting goods:</b> 7 Dried Fish, 3 Whale Oil, 5 Lumber, 6 Rum</p>
+</div>
 </section>
 <section class="reading" id="middle" data-listen aria-labelledby="middle-h">
   <p class="pk" data-no-listen>The Triangle Trade &middot; Level 3 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
@@ -206,10 +225,16 @@ b .vpop{font-weight:inherit;}
 <p>That is the first limit on your strategy. The second is the nature of your goods: useful to everyone, but bulky and cheap per shipload. You are short of manufactured goods, which English law reserved to English makers, and of the tropical commodities your climate cannot grow. The sophisticated play is indirect. Sugar commands extraordinary prices in England. Convert your wheat into West Indian sugar, then convert that sugar into English manufactures, and you have multiplied the value of your harvest twice. Work out the most profitable chain of trades you can.</p>
 <p>The tidy version calls this region the colonies' pantry and stops there. Follow the flour, though, and it leads to the cane fields. Sugar islands devoted so much land to cane that they imported their food, so Middle Colonies grain fed the enslaved people forced to work there, and colonial lumber and livestock built and powered the sugar mills. Those people had survived the Middle Passage, the forced crossing of the Atlantic that killed many of the captives packed below deck. Slavery was also part of daily life here. New York City had one of the largest enslaved populations of any colonial city, and Pennsylvania's Quaker merchants held enslaved people as well. Yet it was also in Pennsylvania, in 1688, that a small group of Germantown Quakers wrote one of the first protests against slavery in the colonies, which shows that people at the time could see the wrong clearly.</p>
   </div>
-<table class="facts" data-no-listen>
-  <caption>Middle Colonies in the game</caption>
-  <tr><th scope="row">Starts with</th><td>7 Wheat &amp; Grains, 7 Lumber, 5 Cattle, 7 Furs</td></tr>
-</table>
+<div class="mono" data-no-listen>
+  <p class="mh">Your monopolies</p>
+  <p class="mintro">A monopoly makes you the sole supplier of a good. Buyers cannot turn to a rival, so you set the terms, but only to the extent that they need the good and cannot do without it.</p>
+  <table class="mtab">
+    <thead><tr><th scope="col">Good</th><th scope="col" class="n">You have</th><th scope="col">Why others want it</th></tr></thead>
+    <tbody><tr><th scope="row">Wheat &amp; Grains</th><td class="n">7</td><td>Flour and bread fed towns and ships' crews, and the sugar islands, which grew little of their own food.</td></tr><tr><th scope="row">Cattle</th><td class="n">5</td><td>Salted beef fed ships' crews and plantations, and working animals were always in short supply on the islands.</td></tr></tbody>
+  </table>
+  <p class="mnote">Your monopolies are food, the most universal need and the least glamorous. Wheat and cattle command steady demand from regions that do not grow their own, but bulky, cheap goods rarely win a high price on their own. Their value lies in what you can turn them into.</p>
+  <p class="mall"><b>All your starting goods:</b> 7 Wheat &amp; Grains, 7 Lumber, 5 Cattle, 7 Furs</p>
+</div>
 </section>
 <section class="reading" id="southern" data-listen aria-labelledby="southern-h">
   <p class="pk" data-no-listen>The Triangle Trade &middot; Level 3 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
@@ -224,10 +249,16 @@ b .vpop{font-weight:inherit;}
 <p>Under heavy duties the price of tobacco collapsed to about a penny a pound, while buyers on the European continent who would pay far more were walled off by the Navigation Acts. You are short of food grains and manufactured goods, and none of your surplus moves on its own. Every negotiation therefore carries a freight question: who carries the cargo, and at what price? Hire a hull from New England, the Middle Colonies, or England, or trade for a ship outright, but solve that first, because unsold tobacco wins nothing. Then work out the best trades you can.</p>
 <p>The dependence ran deep enough that planters described it as a kind of bondage. Thomas Jefferson wrote that Virginia's tobacco growers fell so far into debt to British merchants that they became “a species of property, annexed to certain mercantile houses in London” (Thomas Jefferson, 1786). The phrase is striking because the men who used it held people as actual property. The tobacco, rice, and indigo were planted and harvested by enslaved people, many of them survivors of the Middle Passage (the forced Atlantic crossing); more captive Africans entered through Charleston than through any other mainland port. The tidy version leaves out their knowledge and their resistance. Carolina planters sought out captives from the rice-growing regions of West Africa for their skill. And in 1739, enslaved people near the Stono River rose up and marched toward Spanish Florida, which had promised freedom to those who escaped.</p>
   </div>
-<table class="facts" data-no-listen>
-  <caption>Southern Colonies in the game</caption>
-  <tr><th scope="row">Starts with</th><td>7 Tobacco, 4 Rice, 5 Naval Stores, 1 Dried Fish, 4 Lumber, 2 Furs, 2 Silk, 3 Indigo</td></tr>
-</table>
+<div class="mono" data-no-listen>
+  <p class="mh">Your monopolies</p>
+  <p class="mintro">A monopoly makes you the sole supplier of a good. Buyers cannot turn to a rival, so you set the terms, but only to the extent that they need the good and cannot do without it.</p>
+  <table class="mtab">
+    <thead><tr><th scope="col">Good</th><th scope="col" class="n">You have</th><th scope="col">Why others want it</th></tr></thead>
+    <tbody><tr><th scope="row">Tobacco</th><td class="n">7</td><td>England's great colonial import: smoked at home and sold on to buyers across Europe.</td></tr><tr><th scope="row">Rice</th><td class="n">4</td><td>A food crop sold to England and Europe and shipped to the sugar islands.</td></tr><tr><th scope="row">Naval Stores</th><td class="n">5</td><td>Tar, pitch, and turpentine sealed and preserved wooden hulls; England's navy could not sail without them.</td></tr><tr><th scope="row">Silk</th><td class="n">2</td><td>The finest cloth there was; England paid a bounty to encourage colonial silk.</td></tr><tr><th scope="row">Indigo</th><td class="n">3</td><td>A deep blue dye that England's cloth makers needed and Parliament paid a bounty to encourage.</td></tr></tbody>
+  </table>
+  <p class="mnote">You hold more monopolies than any other colony, yet a monopoly pays only when the goods reach a buyer. With no ships, every sale depends on a hired hull, and the fee comes out of your cargo. Solve transport, and your five monopolies are a strong hand.</p>
+  <p class="mall"><b>All your starting goods:</b> 7 Tobacco, 4 Rice, 5 Naval Stores, 1 Dried Fish, 4 Lumber, 2 Furs, 2 Silk, 3 Indigo</p>
+</div>
 </section>
 <section class="reading" id="westIndies" data-listen aria-labelledby="westIndies-h">
   <p class="pk" data-no-listen>The Triangle Trade &middot; Level 3 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
@@ -242,10 +273,16 @@ b .vpop{font-weight:inherit;}
 <p>That concentration is your advantage: everyone wants what you have, and New England cannot trade its rum without your molasses. It is also your weakness. You are short of food and manufactured goods, and you have no vessels to fetch them, so you must hire New England, Middle Colony, or English ships, or trade for one outright. French, Spanish, and Dutch islands undercut your prices, so English colonial loyalty is your lifeline; planters lobbied Parliament for the Molasses Act of 1733 to tax their rivals' molasses. Price your sugar as the scarce good it is, and work out the best trades you can.</p>
 <p>That profit was extracted through slavery on an industrial scale. Enslaved Africans, forcibly transported through the Middle Passage (the forced Atlantic crossing), performed the dangerous labor of the cane fields and boiling houses, and by the mid-1700s made up about nine in ten of Jamaica's people. Olaudah Equiano, carried across the Atlantic as a boy, remembered the voyage this way: “I now wished for the last friend, death, to relieve me” (Olaudah Equiano, <i>The Interesting Narrative</i>, 1789). Sugar work was so deadly that on many islands deaths outnumbered births for generations, and planters kept buying newly captured Africans rather than change how they worked people. Enslaved people resisted, from daily refusals to open revolt; in Jamaica, communities of escaped people called Maroons fought the British until a treaty in 1739 recognized their freedom.</p>
   </div>
-<table class="facts" data-no-listen>
-  <caption>West Indies in the game</caption>
-  <tr><th scope="row">Starts with</th><td>4 Citrus Fruit, 9 Sugar, 15 Molasses</td></tr>
-</table>
+<div class="mono" data-no-listen>
+  <p class="mh">Your monopolies</p>
+  <p class="mintro">A monopoly makes you the sole supplier of a good. Buyers cannot turn to a rival, so you set the terms, but only to the extent that they need the good and cannot do without it.</p>
+  <table class="mtab">
+    <thead><tr><th scope="col">Good</th><th scope="col" class="n">You have</th><th scope="col">Why others want it</th></tr></thead>
+    <tbody><tr><th scope="row">Citrus Fruit</th><td class="n">4</td><td>Limes and lemons helped keep sailors healthy on long voyages.</td></tr><tr><th scope="row">Sugar</th><td class="n">9</td><td>The most valuable crop in the Atlantic world, sweetening English tea and food.</td></tr><tr><th scope="row">Molasses</th><td class="n">15</td><td>The raw material of New England's rum. In the game, every rum New England trades uses up 2 molasses.</td></tr></tbody>
+  </table>
+  <p class="mnote">Sugar is the most sought-after good in the game, and you are its only source. Molasses is subtler: no region needs it to win, but New England cannot trade a single rum without 2 of it, which gives you leverage over the region with the most ships.</p>
+  <p class="mall"><b>All your starting goods:</b> 4 Citrus Fruit, 9 Sugar, 15 Molasses</p>
+</div>
 </section>
 <section class="reading" id="england" data-listen aria-labelledby="england-h">
   <p class="pk" data-no-listen>The Triangle Trade &middot; Level 3 <span>mrbsocialstudies.org/triangle-trade-readings.html</span></p>
@@ -260,10 +297,16 @@ b .vpop{font-weight:inherit;}
 <p>You operate the machinery of mercantilism, the doctrine that colonies exist to enrich the Mother Country. The Navigation Acts, beginning in 1651, confined colonial trade to English ships and routed the most valuable colonial goods through England, so manufactured goods sell dear and raw materials buy cheap; the difference is empire. Yet the empire runs on colonial goods. The fleet consumes the products of colonial forests, London buyers demand colonial cash crops, and your import list is as long as any colony's. Dominance is not self-sufficiency. Trade manufactures for raw materials, sell space in your holds to the shipless regions, and work out the most profitable trades you can.</p>
 <p>Even at the time, critics saw the design plainly. Adam Smith wrote: “To found a great empire for the sole purpose of raising up a people of customers, may at first sight appear a project fit only for a nation of shopkeepers. It is, however, a project altogether unfit for a nation of shopkeepers; but extremely fit for a nation whose government is influenced by shopkeepers.” (Adam Smith, <i>The Wealth of Nations</i>, 1776). What the tidy version of mercantilism leaves out is the cargo on the second leg. In the 1700s British ships carried more captive Africans across the Atlantic than those of any other nation. Cloth, guns, and metal goods went to West Africa; captives were forced through the Middle Passage (the forced Atlantic crossing) and sold into slavery; sugar and tobacco grown by enslaved people came home. Liverpool and Bristol built their docks and fortunes on that circuit.</p>
   </div>
-<table class="facts" data-no-listen>
-  <caption>England in the game</caption>
-  <tr><th scope="row">Starts with</th><td>4 Guns, 4 Gunpowder, 2 Clothing, 2 Fine Furniture, 3 Tools, 3 Books, 2 Silver</td></tr>
-</table>
+<div class="mono" data-no-listen>
+  <p class="mh">Your monopolies</p>
+  <p class="mintro">A monopoly makes you the sole supplier of a good. Buyers cannot turn to a rival, so you set the terms, but only to the extent that they need the good and cannot do without it.</p>
+  <table class="mtab">
+    <thead><tr><th scope="col">Good</th><th scope="col" class="n">You have</th><th scope="col">Why others want it</th></tr></thead>
+    <tbody><tr><th scope="row">Guns</th><td class="n">4</td><td>Used for hunting and defense, and made mostly in English workshops.</td></tr><tr><th scope="row">Gunpowder</th><td class="n">4</td><td>Every gun needed it, and colonists could make very little of their own.</td></tr><tr><th scope="row">Clothing</th><td class="n">2</td><td>English law reserved finished cloth to English makers, so colonists bought theirs from England.</td></tr><tr><th scope="row">Fine Furniture</th><td class="n">2</td><td>A sign of wealth: planters and merchants furnished their houses from London.</td></tr><tr><th scope="row">Tools</th><td class="n">3</td><td>Axes, hoes, and saws of English iron, needed by every farm and workshop.</td></tr><tr><th scope="row">Books</th><td class="n">3</td><td>Most books, from Bibles to schoolbooks, were printed in England.</td></tr><tr><th scope="row">Silver</th><td class="n">2</td><td>Hard money was scarce in the colonies; silver paid debts and settled trades.</td></tr></tbody>
+  </table>
+  <p class="mnote">Every one of your seven monopolies is a manufactured good, and the Navigation Acts were written to keep it so. Clothing, fine furniture, and silver are the scarcest goods in the game, with only 2 of each in existence, so you control what the colonies can least easily find elsewhere.</p>
+  <p class="mall"><b>All your starting goods:</b> 4 Guns, 4 Gunpowder, 2 Clothing, 2 Fine Furniture, 3 Tools, 3 Books, 2 Silver</p>
+</div>
 </section>
 <footer>
   <p>Unit 1: Foundations &amp; Identity &middot; Mr. B&rsquo;s Social Studies. <a href="Triangle-Trade-Level-3.pdf">Print / PDF</a></p>

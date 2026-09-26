@@ -1339,6 +1339,58 @@ const READING_VOCAB = {
   westIndies:["molasses","enslaved","middlePassage","cashCrop","monopoly"],
   england:["motherCountry","manufacturedGoods","enslaved","middlePassage","mercantilism","duty","monopoly"],
 };
+
+/* "Your monopolies" under each reading (Sep 27). Which goods are a region's monopolies is
+   NOT written here: the readings builder works it out from REGIONS[*].start (a good only
+   one region starts with), so the table can't drift from the game. This holds the words:
+   the intro at each level, why others want each good (g2 at Level 0, g5 at Level 1, g8 at
+   Levels 2 and 3), and a note on each region's monopolies for Levels 2 and 3. None of it
+   names another region's needs list, which is secret. */
+const MONOPOLIES = {
+  intro:{
+    g2:"Only your region has these goods. That is called a monopoly (only one seller). A team that wants them must trade with you.",
+    g5:"A monopoly is a good that only your region has. Any team that wants it has to trade with you, so you can ask a good price.",
+    g8:"A monopoly means you are the only seller of a good. Buyers who want it cannot shop around, so you can set a higher price, as long as they want it badly enough.",
+    hs:"A monopoly makes you the sole supplier of a good. Buyers cannot turn to a rival, so you set the terms, but only to the extent that they need the good and cannot do without it."},
+  why:{
+    whaleOil:{g2:"People burn it in lamps for light.", g5:"It burned in lamps and made fine candles.", g8:"The best lamp oil of the time; it also made bright, clean-burning candles."},
+    rum:{g2:"People drank it. Traders took it to Africa to buy captured people.", g5:"Colonists and sailors drank it, and traders took it to West Africa to trade for captive Africans.", g8:"Drunk across the colonies and at sea, and carried to West Africa, where traders exchanged it for captive Africans."},
+    wheat:{g2:"It is food. Flour and bread come from it.", g5:"Flour and bread fed towns, ships' crews, and the sugar islands.", g8:"Flour and bread fed towns and ships' crews, and the sugar islands, which grew little of their own food."},
+    cattle:{g2:"It is meat.", g5:"Salted beef fed ships' crews and the sugar islands.", g8:"Salted beef fed ships' crews and plantations, and working animals were always in short supply on the islands."},
+    tobacco:{g2:"People in England smoke it.", g5:"Smokers in England and Europe bought it.", g8:"England's great colonial import: smoked at home and sold on to buyers across Europe."},
+    rice:{g2:"It is food.", g5:"Rice fed people in England, Europe, and the islands.", g8:"A food crop sold to England and Europe and shipped to the sugar islands."},
+    navalStores:{g2:"Tar and resin keep ships from leaking.", g5:"Tar, pitch, and resin were needed to build ships and keep them from leaking.", g8:"Tar, pitch, and turpentine sealed and preserved wooden hulls; England's navy could not sail without them."},
+    silk:{g2:"It makes fine cloth.", g5:"Silk made fine, costly cloth.", g8:"The finest cloth there was; England paid a bounty to encourage colonial silk."},
+    indigo:{g2:"It makes blue dye for cloth.", g5:"England's cloth makers used it to dye cloth blue.", g8:"A deep blue dye that England's cloth makers needed and Parliament paid a bounty to encourage."},
+    citrus:{g2:"Limes and lemons help sailors stay healthy.", g5:"Limes and lemons helped keep sailors healthy on long voyages.", g8:"Limes and lemons helped keep sailors healthy on long voyages."},
+    sugar:{g2:"Everyone wants sugar. It sells for a lot.", g5:"Sugar sweetened food and tea, and it sold for more than almost any crop.", g8:"The most valuable crop in the Atlantic world, sweetening English tea and food."},
+    molasses:{g2:"New England makes rum from it. In the game, each rum they trade uses up 2 molasses.", g5:"New England made rum from it. In the game, every rum New England trades uses up 2 molasses.", g8:"The raw material of New England's rum. In the game, every rum New England trades uses up 2 molasses."},
+    guns:{g2:"People use them to hunt and to fight.", g5:"Colonists used them for hunting and defense.", g8:"Used for hunting and defense, and made mostly in English workshops."},
+    gunpowder:{g2:"Guns need it.", g5:"Every gun needed it.", g8:"Every gun needed it, and colonists could make very little of their own."},
+    clothing:{g2:"People need clothes.", g5:"English law meant most finished cloth came from England.", g8:"English law reserved finished cloth to English makers, so colonists bought theirs from England."},
+    furniture:{g2:"Rich people want nice chairs and tables.", g5:"Wealthy colonists wanted fine English furniture.", g8:"A sign of wealth: planters and merchants furnished their houses from London."},
+    tools:{g2:"Farmers and builders need them.", g5:"Farmers and craftsmen needed metal tools.", g8:"Axes, hoes, and saws of English iron, needed by every farm and workshop."},
+    books:{g2:"People read them to learn.", g5:"Most books were printed in England.", g8:"Most books, from Bibles to schoolbooks, were printed in England."},
+    silver:{g2:"It is used as money.", g5:"Coins were scarce in the colonies, and silver was money.", g8:"Hard money was scarce in the colonies; silver paid debts and settled trades."},
+  },
+  region:{
+    newEngland:{
+      g8:"Rum is yours alone, but every rum you trade uses up 2 molasses, and only the West Indies has molasses. Whale oil is rare: only 3 exist in the whole game.",
+      hs:"Your rum monopoly carries a dependency: each rum you trade consumes 2 molasses, and the West Indies is molasses's only source, so your best export is only as strong as your deal with them. Whale oil is the rarer asset, with just 3 in the entire game; do not let it go cheaply."},
+    middle:{
+      g8:"Your monopolies are food. Everyone eats, but food is bulky and cheap, so its power is steady demand, not a high price.",
+      hs:"Your monopolies are food, the most universal need and the least glamorous. Wheat and cattle command steady demand from regions that do not grow their own, but bulky, cheap goods rarely win a high price on their own. Their value lies in what you can turn them into."},
+    southern:{
+      g8:"You have more monopolies than any colony. But a monopoly only pays when the goods move, and you have no ships.",
+      hs:"You hold more monopolies than any other colony, yet a monopoly pays only when the goods reach a buyer. With no ships, every sale depends on a hired hull, and the fee comes out of your cargo. Solve transport, and your five monopolies are a strong hand."},
+    westIndies:{
+      g8:"Sugar is the good nearly everyone wants. Molasses is on no one's list, but New England cannot trade rum without it.",
+      hs:"Sugar is the most sought-after good in the game, and you are its only source. Molasses is subtler: no region needs it to win, but New England cannot trade a single rum without 2 of it, which gives you leverage over the region with the most ships."},
+    england:{
+      g8:"All seven of your monopolies are manufactured goods, and English law kept it that way. Clothing, furniture, and silver are the rarest goods in the game: only 2 of each exist.",
+      hs:"Every one of your seven monopolies is a manufactured good, and the Navigation Acts were written to keep it so. Clothing, fine furniture, and silver are the scarcest goods in the game, with only 2 of each in existence, so you control what the colonies can least easily find elsewhere."},
+  },
+};
 </script>
 <!-- triangle-trade-logic.js -->
 <script>
