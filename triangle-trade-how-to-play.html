@@ -399,7 +399,7 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 <p class="intro">Five regions trade goods to get what they need. Here is how the game works, step by step.</p>
 <div class="tools">
 <button type="button" class="btn primary" id="presentBtn" aria-keyshortcuts="P"><svg class="ico sm hide" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9 7 7M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg>Show on the board</button>
-<a class="btn" href="Triangle-Trade-How-To-Play.pdf">Print / PDF</a>
+<a class="btn" href="Triangle-Trade-How-To-Play.pdf" data-teacher-href="Triangle-Trade-How-To-Play-Teacher.pdf">Print / PDF</a>
 <a class="btn" href="triangle-trade-readings.html">The readings</a>
 </div>
 <nav class="toc" aria-label="On this page"><a href="#goal">Goal</a><a href="#buildup">Build-up</a><a href="#jobs">Jobs</a><a href="#table">Table</a><a href="#round">A round</a><a href="#ships">Ships</a><a href="#chance">Chance cards</a><a href="#faq">Questions</a><a href="#history">History</a><a class="tonly" href="#teacher">Teacher notes</a></nav>
@@ -859,7 +859,7 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 </main>
 <footer>
 <p>Unit 1: Foundations &amp; Identity · Mr. B’s Social Studies</p>
-<p class="small"><a href="triangle-trade-readings.html">The Triangle Trade readings</a> · <a href="games/triangle-trade.html">The game</a> · <a href="Triangle-Trade-How-To-Play.pdf">Print / PDF</a></p>
+<p class="small"><a href="triangle-trade-readings.html">The Triangle Trade readings</a> · <a href="games/triangle-trade.html">The game</a> · <a href="Triangle-Trade-How-To-Play.pdf" data-teacher-href="Triangle-Trade-How-To-Play-Teacher.pdf">Print / PDF</a></p>
 </footer>
 </div>
 <div class="pbar" id="pbar" hidden>
@@ -873,7 +873,11 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 
 (function(){
   var root=document.documentElement;
-  try{ if(new URLSearchParams(location.search).has('teacher')) root.classList.add('teacher'); }catch(e){}
+  try{ if(new URLSearchParams(location.search).has('teacher')){
+    root.classList.add('teacher');
+    /* With the teacher notes showing, Print / PDF hands over the PDF that has them. */
+    document.querySelectorAll('a[data-teacher-href]').forEach(function(a){ a.href=a.getAttribute('data-teacher-href'); a.textContent+=' (with teacher notes)'; });
+  } }catch(e){}
   var slides=Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var bar=document.getElementById('pbar'), count=document.getElementById('pCount');
   var btn=document.getElementById('presentBtn');
