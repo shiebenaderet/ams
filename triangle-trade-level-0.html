@@ -6,8 +6,7 @@
 <title>The Triangle Trade &mdash; Level 0 &mdash; Mr. B&rsquo;s Social Studies</title>
 <meta name="description" content="The five regions of the Triangle Trade game (New England, the Middle Colonies, the Southern Colonies, the West Indies and England), written at Level 0. Built to be read aloud, translated or printed.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,200..800;1,200..800&amp;display=swap">
+<link rel="stylesheet" href="fonts/atkinson.css">
 <style>
 :root{--ink:#1a1a1a;--muted:#5a5a5a;--rule:#d8d4cc;--bg:#fbfaf7;--card:#fff;
   --accent:#1F4D3A;--band:#E9F1EC;}
@@ -114,7 +113,10 @@ b .vpop{font-weight:inherit;}
   :root,:root[data-theme="dark"]{--ink:#000;--muted:#333;--rule:#999;--bg:#fff;
     --card:#fff;--accent:#000;--band:#fff;}
   @page{size:letter portrait;margin:.6in .7in;}
-  html{font-size:11.5pt;}
+  /* The print type floor (CLAUDE.md): 11pt reading text. Level 0 prints larger,
+     for the readers it's written for, and still fits one region per page. */
+  html{font-size:11pt;}
+  body.lv0{font-size:1.18rem;}
   body{background:#fff;color:#000;line-height:1.4;}
   .wrap{max-width:none;padding:0;}
   .snav,.progress,.help,#rtools,header.top,footer{display:none !important;}
@@ -139,13 +141,13 @@ b .vpop{font-weight:inherit;}
   .vbox dt{margin-top:.2rem;}
   .vbox dd{font-size:.92rem;line-height:1.3;}
   table.facts{font-size:.92rem;line-height:1.35;break-inside:avoid;}
-  table.facts caption{font-size:.8rem;padding-bottom:.15rem;}
+  table.facts caption{font-size:.84rem;padding-bottom:.15rem;}
   table.facts th,table.facts td{padding:.15rem .6rem .15rem 0;border-top:.75pt solid #000;}
   a{color:#000;text-decoration:none;}
 }
 </style>
 </head>
-<body>
+<body class="lv0">
 <nav class="snav" aria-label="Reading navigation">
   <div class="snavin">
     <span class="sgroup"><span aria-current="page">Level 0</span><a href="triangle-trade-level-1.html" data-level="1">Level 1</a><a href="triangle-trade-level-2.html" data-level="2">Level 2</a><a href="triangle-trade-level-3.html" data-level="3">Level 3</a></span>
