@@ -331,6 +331,9 @@ a.print-link{text-decoration:none;display:inline-block}
 .stu-chip:active{cursor:grabbing}
 .stu-chip .role-tag{cursor:pointer;font-size:15px;min-width:32px;min-height:32px;text-align:center;border:1px solid var(--ink-faint);border-radius:4px;background:rgba(255,252,240,.9)}
 .stu-chip .stu-name{flex:1}
+.stu-chip .stu-rl{font-size:12px;min-width:2.1em;text-align:center;border:1px solid var(--ink-faint);border-radius:3px;padding:0 0.2rem;color:var(--ink-soft)}
+.stu-chip .stu-rl.none{border-style:dashed}
+.tb-note.warn{color:#8b1a1a;font-style:normal;font-weight:bold}
 .stu-chip .stu-move{max-width:92px;font-family:'IM Fell English',serif;font-size:12px;padding:0.125rem;border:1px solid var(--ink-faint);border-radius:3px;background:rgba(255,252,240,.9);color:var(--ink)}
 .tb-privacy{font-size:13.5px;font-style:italic;color:var(--ink-soft);max-width:760px}
 .tb-note{font-style:italic;color:var(--ink-soft);min-height:1em}
@@ -1598,8 +1601,19 @@ function shortName(raw){
   return (first.slice(0, 24) + (initial ? " " + initial + "." : "")).trim();
 }
 
+/* The reading version as a whole number 0-3, or null. Accepts it stored as a number or
+   as text ("2"), and falls back to the label ("Level 2 · gr 7-8") when the number is
+   missing, so one file format quirk can't silently drop every version and leave the
+   teams in roster order. Nothing else from the reading record is kept. */
 function cleanRl(rec){
-  const rl = rec && rec.reading ? rec.reading.rl : null;
+  const rd = rec && rec.reading;
+  if(!rd) return null;
+  let rl = rd.rl;
+  if(typeof rl === "string" && /^\s*[0-3]\s*$/.test(rl)) rl = Number(rl);
+  if(!(Number.isInteger(rl) && rl >= 0 && rl <= 3) && typeof rd.rlLabel === "string"){
+    const m = /\bLevel\s*([0-3])\b/i.exec(rd.rlLabel);
+    rl = m ? Number(m[1]) : null;
+  }
   return (Number.isInteger(rl) && rl >= 0 && rl <= 3) ? rl : null;
 }
 
@@ -3444,10 +3458,17 @@ function moveSailor(g, s, region){
 function renderTeams(){
   const g=game(); if(!g) return;
   const roster=ensureRoster(g);
+  // Say how many students came with a reading version: with few or none, a suggestion
+  // can only follow roster order, and that should never be mistaken for a sort.
+  const known=roster.filter(s=>Number.isInteger(s.rl)).length;
+  const few=roster.length && known < roster.length/2;
+  $("#tbNote").classList.toggle("warn", !!few);
   $("#tbNote").textContent = !roster.length
     ? "No roster yet. Load the Grouping Tool's export, or type names below."
-    : g.teamsSuggested ? "Teams were suggested by reading version. Move anyone who should be elsewhere, then accept." : "";
-  const cols=[["unassigned","Unassigned Crew",null]].concat(Object.entries(REGIONS).map(([id,r])=>[id,r.nm,r.colorHex]));
+    : (few ? `Only ${known} of ${roster.length} students have a reading version, so suggested teams can't follow reading level. Load reading levels in the Grouping Tool, export again, then Load roster here. `
+           : `Reading versions: ${known} of ${roster.length} students (L0 to L3 on each name; — means none). `)
+      + (g.teamsSuggested ? "Teams were suggested by reading version. Move anyone who should be elsewhere, then accept." : "");
+  const cols=[["unassigned","Unassigned Crew",null]].concat(teamOrder().map(id=>[id,REGIONS[id].nm,REGIONS[id].colorHex]));
   const moveOpts=s=>[["","Unassigned"]].concat(Object.entries(REGIONS).map(([id,r])=>[id,r.nm]))
     .map(([id,nm])=>`<option value="${id}" ${(s.region||"")===id?"selected":""}>${nm}</option>`).join("");
   $("#tbCols").innerHTML=cols.map(([id,nm,color])=>{
@@ -3459,6 +3480,7 @@ function renderTeams(){
       <div class="stu-chip" draggable="true" data-i="${i}">
         ${s.region?`<button type="button" class="role-tag" title="${ROLE_NM[s.role]} — click to change" aria-label="${esc(s.name)}: ${ROLE_NM[s.role]}. Change role">${ROLE_ICO[s.role]}</button>`:""}
         <span class="stu-name">${esc(s.name)}</span>
+        <span class="stu-rl${Number.isInteger(s.rl)?"":" none"}" title="Reading version">${Number.isInteger(s.rl)?"L"+s.rl:"—"}</span>
         <select class="stu-move" aria-label="Move ${esc(s.name)} to">${moveOpts(s)}</select>
       </div>`).join("")}</div></div>`;
   }).join("");
