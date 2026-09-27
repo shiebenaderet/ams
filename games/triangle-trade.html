@@ -1640,12 +1640,21 @@ function matchPeriods(names, gamePeriods){
   return out;
 }
 
+/* Which region gets which readers, strongest first. Set by how hard each region is to
+   PLAY, not by how long its reading is (that order drifted every time a reading was
+   edited): England has the most goods, ships, duties and the longest needs list; the
+   Southern Colonies have eight goods, no ships and a freight question on every trade;
+   New England has the rum rule and ships to hire out; the Middle Colonies have four
+   goods and two ships; the West Indies have three goods and the most-wanted one. */
+const TEAM_ORDER = ["england", "southern", "newEngland", "middle", "westIndies"];
+
 /* Five region teams by reading version, like the Grouping Tool's "same version":
-   sort by version, cut into five nearly equal teams. England comes first in `order`,
-   gets the highest-version readers (its reading has the most text) and, when the class
-   does not divide evenly, the first extra seat. Students with no version go last, so
-   they fill out the final teams.
-   students: [{rl}], order: region ids, England first. → array of region ids, one per student. */
+   sort by version, cut into five nearly equal teams in `order` (strongest readers
+   first). The first team also takes the first extra seat when the class does not
+   divide evenly. Students with no version go in the middle of the line (after the
+   Level 2-3 readers, before the Level 0-1 readers), so they don't all land on the
+   easiest team; the teacher can move them with each name's "move to" menu.
+   students: [{rl}], order: region ids. → array of region ids, one per student. */
 function suggestTeams(students, order){
   const n = students.length, k = order.length;
   const base = Math.floor(n / k);
@@ -1654,7 +1663,7 @@ function suggestTeams(students, order){
   const idx = students.map((s, i) => i);
   const scored = idx.filter(i => students[i].rl != null).sort((a, b) => students[b].rl - students[a].rl || a - b);
   const unscored = idx.filter(i => students[i].rl == null);
-  const queue = scored.concat(unscored);
+  const queue = scored.filter(i => students[i].rl >= 2).concat(unscored, scored.filter(i => students[i].rl < 2));
   const out = new Array(n);
   let q = 0;
   order.forEach((rid, t) => { for(let j = 0; j < sizes[t]; j++) out[queue[q++]] = rid; });
@@ -1866,7 +1875,7 @@ if(typeof module !== "undefined") module.exports = {
   nextRoundNumber,
   BACKUP_FORMAT, BACKUP_VERSION, slugPeriod, backupFilename, uniqueBackupFilename,
   makePeriodBackup, makeAllBackup, gameProblems, parseBackup, backupPreviewText, whenText,
-  shortName, reduceRoster, matchPeriods, suggestTeams, medianRl,
+  shortName, reduceRoster, matchPeriods, suggestTeams, TEAM_ORDER, medianRl,
   applyDelta, netDeltas, reverseProblems, reverseDeltas,
   RUM_REGION, MOLASSES_PER_RUM, molassesCost, rumAllowance,
   rankStandings,
@@ -3397,10 +3406,7 @@ $("#btnClearRoster").onclick=()=>{
 /* ---------- suggestion ---------- */
 /* England first (its reading is longest), then the rest by reading length, so the
    higher reading versions meet the longer texts. */
-function teamOrder(){
-  const len=id=>((READINGS[id]||{}).g8||"").length;
-  return ["england"].concat(Object.keys(REGIONS).filter(id=>id!=="england").sort((a,b)=>len(b)-len(a)));
-}
+function teamOrder(){ return TEAM_ORDER.filter(id=>REGIONS[id]); }
 function suggestTeamsFor(g){
   const roster=ensureRoster(g);
   const teams=suggestTeams(roster, teamOrder());
