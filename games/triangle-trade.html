@@ -2810,13 +2810,14 @@ function renderCargoStage(leg){
   const inv = g.regions[ownerId].inventory;
   const draft = d[leg];
   for(const k in draft) if(draft[k]>(inv[k]||0)) draft[k]=inv[k]||0;
-  // New England's rum rule: every rum it sends away uses up 2 molasses left at home.
-  const rumRule = leg==="out" && d.from===RUM_REGION && (inv.rum||0)>0;
+  // New England's rum rule: every rum that leaves Boston uses up 2 molasses left at home,
+  // whether New England sails it out or another region's ship loads it for the trip back.
+  const rumRule = ownerId===RUM_REGION && (inv.rum||0)>0;
   const holdLeftFor = k => Math.max(0, 6 - (sum(draft) - (draft[k]||0)));
   const maxFor = k => {
     if(!rumRule) return inv[k]||0;
     if(k==="rum") return rumAllowance(inv, holdLeftFor("rum"), draft.molasses);
-    if(k==="molasses") return Math.max(0, (inv.molasses||0) - molassesCost(draft, d.from));
+    if(k==="molasses") return Math.max(0, (inv.molasses||0) - molassesCost(draft, ownerId));
     return inv[k]||0;
   };
   if(rumRule && draft.rum){ // molasses may have changed since this draft was saved
@@ -2850,7 +2851,7 @@ function renderCargoStage(leg){
     const rr=$("#rumRule");
     if(rr){
       const n=draft.rum||0;
-      const first = n ? LT(DOCK_UI.rumNow, {n, cost:molassesCost(draft, d.from)}) : L(DOCK_UI.rumEach);
+      const first = n ? LT(DOCK_UI.rumNow, {n, cost:molassesCost(draft, ownerId)}) : L(DOCK_UI.rumEach);
       rr.textContent = first+" "+LT(DOCK_UI.rumCap, {have:inv.molasses||0, max:maxFor("rum")});
     }
   };
@@ -2889,10 +2890,17 @@ function startReturnLeg(){
   const g=dockGame(), d=g.dock, pk=dockPk;
   for(const k in d.back) if(!d.back[k]) delete d.back[k];
   if(sum(d.back)>6) return;
+  const molasses=molassesCost(d.back, d.to); // rum loaded at Boston for the trip back
+  if(molasses > (g.regions[d.to].inventory.molasses||0) - (d.back.molasses||0)) return renderCargoStage("back");
   d.loadedBack=deep(d.back);
   for(const k in d.back) vMove(g, d.to, k, -d.back[k]);
+  if(molasses){
+    vMove(g, d.to, "molasses", -molasses);
+    d.molassesUsed=(d.molassesUsed||0)+molasses;
+  }
   d.stage="sail"; d.leg="back"; save(); renderRegions(); closeModal();
   tick(`⛵ Homeward bound: ${REGIONS[d.to].nm} → ${REGIONS[d.from].nm} — ${cargoStr(d.back)}`);
+  if(molasses) tick(`🥃 New England's distilleries use up ${molasses} molasses to make ${d.back.rum} rum.`);
   sailShip(d.to, d.from, ()=>arrive(pk,"back"));
 }
 /* The animation finished. If the teacher has since switched class, or already
