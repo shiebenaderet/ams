@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore the five colonial trade regions, match their goods, and complete your comparison chart to get ready for the Triangle Trade simulation.">
+<title>Colonial Trade Regions</title>
+<style>
+@font-face{font-family:"Pirata One";src:url("colonial-trade-regions/fonts/pirata-one-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IM Fell English";src:url("colonial-trade-regions/fonts/im-fell-english-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IM Fell English";src:url("colonial-trade-regions/fonts/im-fell-english-latin-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"IM Fell English SC";src:url("colonial-trade-regions/fonts/im-fell-english-sc-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"OpenDyslexic";src:url("../fonts/OpenDyslexic-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"OpenDyslexic";src:url("../fonts/OpenDyslexic-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
+/* Layout: parchment sheet from the Triangle Trade simulation. Home = his blank Atlantic map inked onto parchment with pulsing region seals and toggleable routes; each region zooms into its own scene with four hotspots that open parchment pop-ups. Practice = his Part 3 chart on parchment. Deliberately single theme, like the simulation. */
+:root{
+  color-scheme:light;
+  --ink:#3a2a16; --ink-soft:#5d4327; --ink-faint:#6e5736;
+  --parch:#ece0c2; --parch-deep:#e0d0a8; --parch-dark:#cdb988; --sea:#e6d9b6; --paper:#f6eed8;
+  --gold:#8a6d1f; --seal-hi:#b03a30; --seal-lo:#7c1d18;
+  --ne-d:#1f3a5c; --mid-d:#3e6b35; --so-d:#8a4e12; --wi-d:#0f6b6b; --en-d:#8c1f28;
+  --ne:#cfd1c6; --mid:#d3d8b4; --so:#e6cda6; --wi:#c3d6c3; --en:#e2bfae;
+  --to-wi:#0f6b6b; --to-wi-text:#0f6b6b; --to-col:#8a6d1f; --to-col-text:#5c4610; --to-en:#8c1f28;
+  --good:#3e6b35; --bad:#8c1f28;
+  --display:"Pirata One", Georgia, serif;
+  --body:"IM Fell English", Georgia, serif;
+  --sc:"IM Fell English SC", Georgia, serif;
+  --hand:"IM Fell English", Georgia, serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{background:#2b2113}
+body{color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.45;margin:0;padding-inline:16px;padding-block:14px 28px;
+  background:#2b2113;background-image:radial-gradient(ellipse at 50% 30%,#41331d 0%,#2b2113 70%);min-height:100%}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid #1b1208;outline-offset:2px;box-shadow:0 0 0 6px #f6ecd2}
+.wrap{max-width:1400px;margin:0 auto;display:flex;flex-direction:column;gap:12px;position:relative;
+  padding:16px 22px 26px;border-radius:6px;
+  background:radial-gradient(ellipse at 18% 12%,rgba(255,248,222,.55),transparent 55%),radial-gradient(ellipse at 85% 90%,rgba(120,90,40,.25),transparent 50%),radial-gradient(ellipse at 50% 50%,var(--parch) 60%,var(--parch-deep) 100%);
+  box-shadow:0 0 0 1px rgba(58,42,22,.35),0 18px 60px rgba(0,0,0,.55),inset 0 0 80px rgba(120,90,40,.28)}
+@media (max-width:600px){.wrap{padding:12px}}
+
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;border-bottom:3px double var(--ink-soft);padding-bottom:10px}
+.bar h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.04;margin:0;letter-spacing:.5px;text-shadow:1px 1px 0 rgba(255,245,215,.6)}
+.pills{display:flex;flex-wrap:wrap;border:1.5px solid var(--ink-soft);border-radius:4px;overflow:hidden;background:rgba(255,250,230,.4)}
+.pills button{font-family:var(--sc);font-size:16px;padding:9px 14px;min-height:42px;border:0;border-right:1px solid rgba(93,67,39,.35);background:transparent;color:var(--ink-soft)}
+.pills button:last-child{border-right:0}
+.pills button[aria-pressed="true"]{background:var(--ink-soft);color:#f4ead0}
+.pills button:hover:not([aria-pressed="true"]){background:rgba(93,67,39,.15)}
+
+.stage{position:relative;width:min(100%, calc((100vh - 240px) * 1.324));min-width:min(100%,520px);max-width:100%;aspect-ratio:1626/1228;margin:0 auto;overflow:hidden;overflow:clip;
+  border:2px solid var(--ink-soft);border-radius:5px;background:var(--sea);box-shadow:1px 3px 10px rgba(58,42,22,.3)}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 40px rgba(120,90,40,.3);z-index:6}
+.maplayer{position:absolute;inset:0;transform-origin:0 0;transition:transform 1.1s cubic-bezier(.6,.05,.25,1);
+  background:radial-gradient(ellipse at 30% 25%,rgba(255,248,222,.5),transparent 60%),var(--sea)}
+.maplayer img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.places span{position:absolute;transform:translate(-50%,-50%);font-family:var(--body);font-style:italic;font-size:clamp(14px,1.7vw,22px);color:var(--ink-faint);white-space:nowrap;pointer-events:none}
+.places .sea{font-size:clamp(16px,2.1vw,28px);letter-spacing:.02em;color:rgba(93,67,39,.75)}
+.credit-map{position:absolute;right:1%;top:1%;font-size:11px;font-style:italic;color:var(--ink-faint);pointer-events:none}
+.maplayer svg{position:absolute;inset:0;width:100%;height:100%}
+.photo{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .25s ease;pointer-events:none;filter:sepia(.25)}
+.photo.on{opacity:1;transition:opacity .8s ease .55s}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,33,19,.3),rgba(43,33,19,.05) 40%,rgba(43,33,19,.35))}
+
+.route .edge{fill:none;stroke:rgba(236,224,194,.9);stroke-width:10;stroke-linecap:round}
+.route .col{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:14 7}
+.route text{font-family:var(--body);font-style:italic;font-size:34px;paint-order:stroke;stroke:rgba(236,224,194,.95);stroke-width:6px;stroke-linejoin:round}
+.route{opacity:0;transition:opacity .4s}
+.route.on{opacity:1}
+
+.hot{--dw:clamp(32px,3.8vw,50px);position:absolute;transform:translate(calc(var(--dw) / -2),-50%);border:0;background:none;padding:0;display:flex;align-items:center;gap:8px;z-index:3}
+.hot .dot{position:relative;width:var(--dw);height:var(--dw);border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--hc) 70%,#fff),var(--hc) 70%);
+  border:2px solid rgba(246,236,210,.9);box-shadow:0 3px 8px rgba(0,0,0,.4),inset 0 -2px 4px rgba(0,0,0,.35);
+  display:grid;place-items:center;font-size:clamp(15px,1.7vw,22px);color:#f6ecd2;flex-shrink:0;font-family:var(--sc)}
+.hot .dot::before{content:"";position:absolute;inset:-4px;border-radius:50%;border:3px solid var(--hc)}
+@media (prefers-reduced-motion:no-preference){ .hot .dot::before{animation:pulse 1.8s ease-out infinite} }
+@keyframes pulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.9);opacity:0}}
+.hot .lab{background:var(--paper);border:1.5px solid var(--hc);border-left-width:6px;border-radius:4px;padding:3px 10px;font-family:var(--sc);font-size:clamp(13px,1.35vw,18px);white-space:nowrap;box-shadow:0 2px 5px rgba(58,42,22,.3)}
+.hot.left{flex-direction:row-reverse;transform:translate(calc(-100% + var(--dw) / 2),-50%)}
+.hot.left .lab{border-left-width:1.5px;border-right-width:6px}
+.hot:hover .dot{transform:scale(1.1)}
+.hot.seen .dot::before{animation:none;opacity:0}
+.hot.seen .dot{background:radial-gradient(circle at 35% 30%,#6f9a63,var(--good) 70%)}
+
+.homeui{position:absolute;inset:0;z-index:2;pointer-events:none;transition:opacity .4s}
+.homeui > *{pointer-events:auto}
+.legend{position:absolute;left:1.2%;bottom:1.6%;display:flex;flex-wrap:wrap;gap:6px;max-width:70%}
+.leg{display:flex;align-items:center;gap:8px;background:var(--paper);border:1.5px solid var(--ink-soft);border-radius:4px;padding:4px 10px;font-family:var(--sc);font-size:clamp(12px,1.25vw,16px);box-shadow:0 2px 5px rgba(58,42,22,.25)}
+.leg .sw{width:26px;height:0;border-top:5px dashed var(--sw)}
+.leg[aria-pressed="true"]{outline:2px solid var(--ink);background:#fff8e6}
+.tip{position:absolute;left:50%;top:1.6%;transform:translateX(-50%);white-space:nowrap;background:rgba(58,42,22,.85);color:#f6ecd2;border-radius:4px;padding:5px 12px;font-style:italic;font-size:clamp(12px,1.25vw,16px)}
+
+.scene{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;transition:opacity .2s}
+.scene.on{opacity:1;pointer-events:auto;transition:opacity .5s .5s}
+.scene .head{position:absolute;left:0;right:0;top:0;background:linear-gradient(180deg,rgba(236,224,194,.97),rgba(224,208,168,.95));border-bottom:3px double var(--ink-soft);padding:8px 16px;display:flex;align-items:center;gap:14px}
+.scene .head h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,54px);line-height:1;margin:0;color:var(--sc-c,var(--ink))}
+.scene .head .geo{font-style:italic;color:var(--ink-soft);font-size:clamp(13px,1.4vw,18px)}
+.scene .head .flag{width:clamp(44px,5vw,70px);flex-shrink:0;border:1.5px solid var(--ink-soft)}
+.glow{position:absolute;width:18%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--gc) 45%,transparent) 0%,transparent 70%);pointer-events:none}
+.city{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:6px;font-family:var(--sc);font-size:clamp(13px,1.5vw,20px);pointer-events:none;text-shadow:0 0 3px var(--parch),0 0 3px var(--parch)}
+.city::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--parch)}
+.sceneNav{position:absolute;left:1.2%;right:1.2%;bottom:1.8%;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{font-family:var(--sc);font-size:clamp(13px,1.3vw,16px);color:#f6ecd2;border:0;border-radius:6px;padding:8px 14px;min-height:40px;
+  background:radial-gradient(circle at 35% 30%,#7d6334,#57421c 70%);box-shadow:0 3px 8px rgba(0,0,0,.35),inset 0 1px 2px rgba(240,220,170,.4),inset 0 -2px 4px rgba(40,28,8,.5);transition:transform .08s}
+.btn:hover{transform:translateY(-1px)}
+.btn.dark{background:radial-gradient(circle at 35% 30%,var(--seal-hi),var(--seal-lo) 70%);box-shadow:0 3px 8px rgba(0,0,0,.4),inset 0 1px 2px rgba(255,200,180,.45),inset 0 -2px 4px rgba(60,5,5,.5)}
+.sceneNav .grp{display:flex;gap:6px;flex-wrap:wrap}
+.progress{font-family:var(--sc);background:var(--paper);border-radius:4px;padding:5px 12px;border:1.5px solid var(--ink-soft);font-size:clamp(13px,1.3vw,16px)}
+
+.modal{position:absolute;inset:0;z-index:10;background:rgba(25,17,6,.66);display:grid;place-items:center;padding:3%}
+.card{width:min(640px,100%);max-height:100%;overflow:auto;border-radius:8px;border:2px solid var(--ink-soft);border-top:10px solid var(--cc);
+  background:radial-gradient(ellipse at 20% 15%,rgba(255,248,222,.6),transparent 60%),radial-gradient(ellipse at 50% 50%,var(--parch) 55%,var(--parch-dark) 100%);
+  box-shadow:0 16px 50px rgba(0,0,0,.6),inset 0 0 50px rgba(120,90,40,.25);display:flex;flex-direction:column}
+@media (prefers-reduced-motion:no-preference){ .card{animation:cardIn .45s cubic-bezier(.2,1.4,.4,1)} }
+@keyframes cardIn{from{transform:scale(.55) rotate(-7deg);opacity:0}to{transform:none;opacity:1}}
+.card header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 18px 4px}
+.card h3{font-family:var(--display);font-weight:400;font-size:clamp(28px,3vw,38px);line-height:1;margin:0}
+.card .x{border:0;background:none;min-width:44px;min-height:44px;font-size:26px;color:var(--ink-soft);flex-shrink:0}
+.card .body{padding:4px 18px 18px;display:flex;flex-direction:column;gap:12px}
+.card .lead{font-size:clamp(18px,1.8vw,22px);margin:0;font-weight:400}
+.card p{margin:0}
+.tiles{display:flex;flex-wrap:wrap;gap:10px}
+.tile{flex:1 1 110px;background:rgba(255,252,240,.7);border:1px solid var(--ink-faint);border-radius:6px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;box-shadow:1px 2px 5px rgba(58,42,22,.18)}
+.tile .e{font-size:38px;line-height:1;filter:sepia(.35)}
+.tile img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;filter:sepia(.2)}
+.tile .n{font-family:var(--sc);font-size:17px}
+.tile .from{font-size:14px;font-style:italic;color:var(--ink-soft)}
+.figure{margin:0;display:flex;flex-direction:column;gap:4px}
+.figure img{width:100%;max-height:300px;object-fit:cover;border-radius:4px;border:1px solid var(--ink-faint);filter:sepia(.2)}
+.figure figcaption{font-size:14px;font-style:italic;color:var(--ink-soft)}
+.loop{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--sc)}
+.loop span.b{background:rgba(255,252,240,.75);border:1px solid var(--ink-faint);border-left:5px solid var(--cc);border-radius:4px;padding:8px 10px}
+
+/* Step tracker */
+.steps{display:flex;flex-wrap:wrap;gap:6px;align-items:stretch}
+.step{display:flex;align-items:center;gap:8px;border:1.5px solid var(--ink-soft);border-radius:5px;background:rgba(255,250,230,.45);padding:6px 12px 6px 6px;text-align:left;min-height:48px}
+.step .num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:20px;color:#f6ecd2;background:radial-gradient(circle at 35% 30%,#7d6334,#57421c 70%);flex-shrink:0}
+.step .st{display:flex;flex-direction:column;line-height:1.1}
+.step b{font-family:var(--sc);font-weight:400;font-size:17px}
+.step small{font-style:italic;color:var(--ink-soft);font-size:14px}
+.step[aria-pressed="true"]{background:var(--ink-soft);color:#f4ead0;border-color:var(--ink)}
+.step[aria-pressed="true"] small{color:#e8dcbc}
+.step[aria-disabled="true"]{border-style:dashed}
+.step[aria-disabled="true"] .num{background:#6b5a40}
+.step.done .num{background:radial-gradient(circle at 35% 30%,#6f9a63,var(--good) 70%)}
+.help{width:48px;border:1.5px solid var(--ink-soft);border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--seal-hi),var(--seal-lo) 70%);color:#f6ecd2;font-family:var(--display);font-size:24px;min-height:48px}
+.gq{margin:0;padding:10px 14px;border:1.5px dashed var(--ink-faint);border-left:6px solid var(--gold);border-radius:4px;background:rgba(255,250,232,.5);font-size:clamp(16px,1.6vw,20px);max-width:none}
+.gq b{font-family:var(--display);font-weight:400;font-size:1.15em}
+/* Page overlay (intro, unlocks, finale) */
+.overlay{position:fixed;inset:0;z-index:200;background:rgba(25,17,6,.72);display:grid;place-items:center;padding:16px;overflow:auto}
+.ocard{width:min(720px,100%);border-radius:8px;border:2px solid var(--ink-soft);padding:22px 26px;display:flex;flex-direction:column;gap:14px;
+  background:radial-gradient(ellipse at 20% 15%,rgba(255,248,222,.6),transparent 60%),radial-gradient(ellipse at 50% 50%,var(--parch) 55%,var(--parch-dark) 100%);
+  box-shadow:0 16px 50px rgba(0,0,0,.6),inset 0 0 50px rgba(120,90,40,.25)}
+@media (prefers-reduced-motion:no-preference){ .ocard{animation:cardIn .45s cubic-bezier(.2,1.4,.4,1)} }
+.ocard h2{font-family:var(--display);font-weight:400;font-size:clamp(32px,4vw,46px);line-height:1;margin:0;text-align:center}
+.ocard p{margin:0}
+.ocard .q{border:1.5px solid var(--ink-faint);border-left:6px solid var(--gold);border-radius:4px;padding:10px 14px;background:rgba(255,252,240,.6);font-size:19px}
+.ocard ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.ocard li{display:flex;gap:12px;align-items:flex-start}
+.ocard li .num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-size:22px;color:#f6ecd2;background:radial-gradient(circle at 35% 30%,#7d6334,#57421c 70%);flex-shrink:0}
+.ocard li b{font-family:var(--sc);font-weight:400;font-size:19px}
+.ocard .acts{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.ocard .big{font-size:18px;padding:10px 22px}
+.ocard .teacher{align-self:center;border:0;background:none;color:var(--ink-soft);font-style:italic;text-decoration:underline;font-size:14px}
+.ocard .icon{font-size:54px;text-align:center;line-height:1}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:210;background:rgba(58,42,22,.95);color:#f6ecd2;border-radius:5px;padding:10px 18px;font-style:italic;font-size:17px;max-width:min(560px,92vw);text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.notes .acts{display:flex;gap:10px;flex-wrap:wrap}
+.scene .head .credit{margin-left:auto;font-size:13px;font-style:italic;color:var(--ink-soft);max-width:34%;text-align:right;line-height:1.2}
+@media (max-width:700px){.scene .head .credit{display:none}}
+.hot.home .lab{font-size:clamp(14px,1.6vw,21px)}
+.ocard.small{width:min(380px,100%);padding:18px 20px}
+.codeform{display:flex;flex-direction:column;gap:8px}
+.codeform label{font-family:var(--display);font-size:28px;line-height:1}
+.codeform input{font-family:var(--body);font-size:22px;padding:10px 12px;border:1.5px solid var(--ink-soft);border-radius:4px;background:var(--paper);color:var(--ink)}
+.codemsg{min-height:1.3em;font-style:italic;color:var(--bad)}
+/* Secret code + certificate */
+.codebar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:8px 12px;border:1.5px dashed var(--ink-faint);border-radius:5px;background:rgba(255,250,232,.45)}
+.codebar .lbl{font-family:var(--display);font-size:22px}
+.codebar .slots{display:flex;gap:6px;flex-wrap:wrap}
+.slot{width:40px;height:48px;border:1.5px solid var(--ink-soft);border-radius:4px;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.slot small{font-size:11px;color:var(--ink-soft)}
+.slot b{font-family:Georgia,serif;font-weight:700;font-size:24px;color:var(--seal-lo);min-height:26px}
+.slot.got{background:#f3e3c2;box-shadow:inset 0 0 0 2px var(--gold)}
+.codebar .hintc{font-style:italic;color:var(--ink-soft);font-size:15px}
+.cell{position:relative;padding-right:38px!important}
+.stamp{position:absolute;right:4px;top:4px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:Georgia,serif;font-weight:700;font-size:15px;color:#f6ecd2;
+  background:radial-gradient(circle at 35% 30%,var(--seal-hi),var(--seal-lo) 70%);box-shadow:0 2px 4px rgba(0,0,0,.35);transform:rotate(-8deg)}
+.stamp sup{font-size:9px;margin-left:1px}
+.codeinline{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.codeinline input{font-family:var(--body);font-size:20px;padding:8px 12px;border:1.5px solid var(--ink-soft);border-radius:4px;background:var(--paper);color:var(--ink);width:12ch;text-transform:uppercase;letter-spacing:.1em}
+.cert{align-items:center;text-align:center;border:3px double var(--ink-soft)}
+.cert .frame{width:min(260px,60vw);aspect-ratio:4/5;border-radius:50%;overflow:hidden;border:6px solid #8a6d1f;box-shadow:0 0 0 3px var(--parch),0 0 0 6px var(--ink-soft),0 10px 24px rgba(0,0,0,.35)}
+.cert .frame img{width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:sepia(.55) contrast(1.05)}
+.cert .ready{font-family:var(--display);font-size:clamp(28px,4vw,42px);line-height:1.05;color:var(--seal-lo)}
+.cert .sig{font-family:var(--display);font-size:22px;border-top:1.5px solid var(--ink-soft);padding-top:4px;min-width:220px}
+.cert .sig small{display:block;font-family:var(--body);font-style:italic;font-size:14px;color:var(--ink-soft)}
+/* Dyslexia-friendly text (OpenDyslexic, OFL) */
+body.dys{--display:"OpenDyslexic",Verdana,sans-serif;--body:"OpenDyslexic",Verdana,sans-serif;--sc:"OpenDyslexic",Verdana,sans-serif;--hand:"OpenDyslexic",Verdana,sans-serif;line-height:1.6}
+body.dys *{font-style:normal!important;letter-spacing:0;word-spacing:0}
+body.dys .scene .head .credit{display:none}
+body.dys .bar h1{font-size:clamp(22px,2.8vw,34px)}
+body.dys .scene .head h2{font-size:clamp(22px,3vw,40px)}
+body.dys .card h3,body.dys .ocard h2,body.dys .practice h2{font-size:clamp(22px,2.6vw,32px)}
+body.dys .route text{font-size:28px}
+body.dys .slot b,body.dys .stamp{font-family:"OpenDyslexic",Verdana,sans-serif}
+.dysbtn{background:radial-gradient(circle at 35% 30%,#7d6334,#57421c 70%);font-family:"OpenDyslexic",Verdana,sans-serif;font-size:17px}
+.dysbtn[aria-pressed="true"]{box-shadow:0 0 0 3px var(--gold)}
+/* Words: glossary + definitions */
+.wordsbtn{background:radial-gradient(circle at 35% 30%,#7d6334,#57421c 70%);font-size:22px}
+.term{display:inline;border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;text-decoration:underline dotted var(--gold);text-decoration-thickness:2px;text-underline-offset:3px}
+.term:hover{background:rgba(138,109,31,.15)}
+.tile.clickable{cursor:pointer;font:inherit;color:inherit}
+.tile.clickable:hover{outline:2px solid var(--gold)}
+.defwrap{position:fixed;inset:0;z-index:300;background:rgba(25,17,6,.55);display:grid;place-items:center;padding:16px}
+.defcard{width:min(520px,100%);max-height:92vh;overflow:auto;border-radius:8px;border:2px solid var(--ink-soft);border-top:8px solid var(--gold);padding:16px 18px;display:flex;flex-direction:column;gap:10px;
+  background:radial-gradient(ellipse at 20% 15%,rgba(255,248,222,.6),transparent 60%),radial-gradient(ellipse at 50% 50%,var(--parch) 55%,var(--parch-dark) 100%);box-shadow:0 16px 50px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:no-preference){ .defcard{animation:cardIn .35s cubic-bezier(.2,1.4,.4,1)} }
+.defhead{display:flex;align-items:center;gap:12px}
+.defhead .big{font-size:48px;line-height:1}
+.defhead h3{font-family:var(--display);font-weight:400;font-size:clamp(28px,3vw,38px);margin:0;line-height:1;flex:1}
+.defcard .x{border:0;background:none;min-width:44px;min-height:44px;font-size:26px;color:var(--ink-soft)}
+.defcard .pic{width:100%;max-height:230px;object-fit:cover;border-radius:4px;border:1px solid var(--ink-faint);filter:sepia(.2)}
+.defcard .cap{font-size:14px;font-style:italic;color:var(--ink-soft);margin:-6px 0 0}
+.defcard .def{font-size:clamp(18px,1.7vw,21px);margin:0}
+.defcard .sub{font-family:var(--sc);font-size:17px;margin:0;color:var(--ink-soft)}
+.lvls{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.lvls span{font-style:italic;color:var(--ink-soft);font-size:15px;margin-right:4px}
+.lvls button{border:1.5px solid var(--ink-soft);background:var(--paper);border-radius:4px;padding:5px 10px;font-family:var(--sc);font-size:15px;min-height:36px}
+.lvls button[aria-pressed="true"]{background:var(--ink-soft);color:#f4ead0}
+.rchips{display:flex;flex-wrap:wrap;gap:6px}
+.rchip{border:1.5px solid var(--rc);border-left-width:7px;border-radius:4px;padding:3px 10px;background:var(--paper);font-family:var(--sc);font-size:15px}
+button.rchip[aria-pressed="true"]{background:var(--rc);color:#f6ecd2}
+.gloss{width:min(1000px,100%)!important;max-height:92vh;overflow:auto}
+.gtabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.gtabs button{border:1.5px solid var(--ink-soft);background:var(--paper);border-radius:4px;padding:7px 14px;font-family:var(--sc);font-size:17px}
+.gtabs button[aria-pressed="true"]{background:var(--ink-soft);color:#f4ead0}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.gcard{border:1px solid var(--ink-faint);border-radius:6px;background:rgba(255,252,240,.7);padding:10px 12px;display:flex;flex-direction:column;gap:6px;text-align:left;font:inherit;color:inherit;cursor:pointer;box-shadow:1px 2px 5px rgba(58,42,22,.18);min-width:0}
+.gcard:hover{outline:2px solid var(--gold)}
+.gcard .top{display:flex;align-items:center;gap:10px}
+.gcard .top .e{font-size:34px;line-height:1}
+.gcard .top img{width:48px;height:48px;border-radius:6px;object-fit:cover;filter:sepia(.2)}
+.gcard .top b{font-family:var(--sc);font-weight:400;font-size:19px}
+.gcard p{margin:0;font-size:16px}
+.gcard .rchips .rchip{font-size:13px;padding:2px 8px}
+.traymsg{margin:0;min-height:1.4em;font-style:italic;font-size:18px}
+.traymsg.ok{color:var(--good)} .traymsg.no{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){ .maplayer,.photo,.photo.on,.route,.scene,.scene.on{transition:none!important} .pop,.cell.shake,.hot .dot::before{animation:none!important} }
+/* Step 2 layout: tray beside the map so both are on screen while dragging */
+body.match #mapMode{display:flex;gap:14px;align-items:flex-start;justify-content:center}
+body.match #mapMode .stage{margin:0;flex:0 0 auto}
+body.match #mapMode .tray{margin:0;width:auto;min-width:260px;max-width:520px;flex:1 1 300px;position:sticky;top:8px}
+@media (max-width:900px){ body.match #mapMode{display:block} body.match #mapMode .tray{margin-top:10px;max-width:none} }
+/* Match mode */
+body.match .legend, body.match .tip, body.match .route{display:none}
+.matchmsg{position:absolute;left:50%;top:2%;transform:translateX(-50%);z-index:5;background:rgba(58,42,22,.9);color:#f6ecd2;border-radius:4px;padding:7px 18px;font-style:italic;font-size:clamp(14px,1.5vw,19px);display:none;max-width:92%;text-align:center}
+body.match .matchmsg{display:block}
+.matchmsg.ok{background:var(--good)} .matchmsg.no{background:var(--bad)}
+.bin{position:absolute;display:flex;flex-wrap:wrap;gap:2px;max-width:13%;font-size:clamp(16px,2vw,26px);pointer-events:none;z-index:2}
+.bin span{background:var(--paper);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.3);padding:1px 3px}
+.bin img{width:clamp(22px,2.6vw,34px);height:clamp(22px,2.6vw,34px);object-fit:cover;border-radius:6px;display:block}
+.hot.target .dot{transform:scale(1.35)} .hot.target .lab{background:var(--hc);color:#f6ecd2}
+.tray{background:rgba(255,250,232,.45);border:1.5px solid var(--ink-faint);border-radius:5px;padding:12px;display:flex;flex-direction:column;gap:10px;width:min(100%, calc((100vh - 240px) * 1.324));min-width:min(100%,520px);margin:10px auto 0}
+.trayhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.tokens{display:flex;flex-wrap:wrap;gap:8px;min-height:60px}
+.token{display:flex;align-items:center;gap:6px;border:1.5px solid var(--ink-faint);background:rgba(255,252,240,.8);border-radius:14px;padding:5px 14px 5px 6px;font-family:var(--sc);font-size:17px;touch-action:none;user-select:none}
+.token .e{font-size:26px;line-height:1;width:32px;text-align:center}
+.token img{pointer-events:none;-webkit-user-drag:none;width:32px;height:32px;border-radius:50%;object-fit:cover}
+.token[aria-pressed="true"]{box-shadow:0 0 0 3px var(--gold);background:var(--paper)}
+.ghost{position:fixed;z-index:1000;pointer-events:none;transform:translate(-50%,-50%) rotate(-3deg) scale(1.08);box-shadow:0 10px 24px rgba(0,0,0,.3);opacity:.95}
+.dragging{opacity:.3}
+.burst{position:fixed;z-index:1001;pointer-events:none;width:10px;height:10px;border-radius:50%}
+@media (prefers-reduced-motion:no-preference){ .burst{animation:burst .6s ease-out forwards} }
+@keyframes burst{to{transform:translate(var(--bx),var(--by)) scale(.3);opacity:0}}
+.cell.dropover{outline:4px solid var(--gold);outline-offset:-4px}
+.pop{animation:pop .45s}
+@keyframes pop{40%{transform:scale(1.06)}}
+/* Flip cards */
+.flips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:520px){.flips{grid-template-columns:1fr}}
+.flip{perspective:900px;border:0;background:none;padding:0;min-height:130px;text-align:center}
+.flip .in{position:relative;width:100%;height:100%;min-height:130px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px}
+.flip .f{background:radial-gradient(circle at 35% 30%,#7d6334,#57421c 70%);color:#f6ecd2}
+.flip .f strong{font-family:var(--display);font-weight:400;font-size:28px;line-height:1}
+.flip .f small{opacity:.85}
+.flip .b{background:var(--paper);transform:rotateY(180deg);font-size:19px;border:2px solid var(--cc);border-left-width:8px}
+@media (prefers-reduced-motion:reduce){ .flip .in{transition:none} }
+
+/* Practice: styled like the Part 3 handout */
+.practice{display:flex;flex-direction:column;gap:12px;font-family:var(--hand);max-width:1100px;margin:0 auto;width:100%}
+.practice h2{font-family:var(--display);font-weight:400;font-size:clamp(26px,3vw,36px);margin:6px 0 0}
+.practice .inst{margin:0;font-style:italic;color:var(--ink-soft)}
+.prow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.cols{display:flex;flex-wrap:wrap;gap:6px}
+.cols button{border:1.5px solid var(--ink-soft);background:var(--paper);border-radius:4px;padding:7px 12px;font-family:var(--sc);font-size:16px}
+.cols button[aria-pressed="true"]{background:var(--ink-soft);color:#f4ead0}
+.count{font-family:var(--sc);font-variant-numeric:tabular-nums}
+.status{min-height:1.5em;font-weight:700}
+.status.ok{color:var(--good)} .status.no{color:var(--bad)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px;table-layout:fixed;background:rgba(255,252,240,.55)}
+th,td{border:1.5px solid var(--ink-soft);padding:0;vertical-align:middle}
+thead th{padding:10px 6px;font-family:var(--sc);font-weight:400;font-size:17px}
+thead th.active{background:var(--parch-dark)}
+tbody th{width:140px;padding:8px;font-family:var(--sc);font-weight:400;font-size:17px;border-left:8px solid var(--rc)}
+.cell{width:100%;min-height:84px;border:0;background:transparent;padding:8px 10px;text-align:left;font-size:17px;color:var(--ink);display:flex;align-items:center}
+.cell:disabled{cursor:default}
+.cell.open{background:repeating-linear-gradient(135deg,transparent 0 10px,rgba(138,109,31,.12) 10px 20px)}
+.cell.open:hover{outline:3px solid var(--gold);outline-offset:-3px}
+.cell.done{background:var(--rf)}
+.cell.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.bank{border:1.5px dashed var(--ink-faint);border-radius:5px;padding:12px;display:flex;flex-direction:column;gap:10px;background:rgba(255,250,232,.4)}
+.bank h3{margin:0;font-family:var(--sc);font-weight:400;font-size:18px}
+.ans{display:flex;flex-wrap:wrap;gap:10px}
+.ans button{touch-action:none;user-select:none;border:1.5px solid var(--ink-faint);background:rgba(255,252,240,.85);border-radius:5px;padding:9px 14px;font-size:17px;max-width:280px;text-align:left;color:var(--ink);box-shadow:1px 2px 5px rgba(58,42,22,.2)}
+.ans button[aria-pressed="true"]{background:var(--paper);box-shadow:0 0 0 3px var(--gold)}
+.empty{color:var(--ink-soft);font-style:italic}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="bar">
+    <h1>Colonial Trade Regions</h1>
+    <nav class="steps" aria-label="Steps">
+      <button id="modeMap" class="step" aria-pressed="true"><span class="num">1</span><span class="st"><b>Explore the regions</b><small id="s1meta">0 of 5 regions</small></span></button>
+      <button id="modeMatch" class="step" aria-pressed="false" aria-disabled="true"><span class="num">2</span><span class="st"><b>Match the goods</b><small id="s2meta">Locked</small></span></button>
+      <button id="modeChart" class="step" aria-pressed="false" aria-disabled="true"><span class="num">3</span><span class="st"><b>Practice the chart</b><small id="s3meta">Locked</small></span></button>
+      <button id="wordsBtn" class="help wordsbtn" aria-label="Word bank" title="Word bank">📖</button>
+      <button id="dysBtn" class="help dysbtn" aria-pressed="false" aria-label="Dyslexia-friendly text" title="Dyslexia-friendly text">Aa</button>
+      <button id="helpBtn" class="help" aria-label="How this works">?</button>
+    </nav>
+  </header>
+  <p class="gq"><b>Guiding question:</b> On Thursday you will represent one of these five regions in the Triangle Trade simulation. What does each region have, what does it need, and who can it trade with to get it?</p>
+
+  <section id="mapMode">
+    <div class="stage" id="stage">
+      <div class="maplayer" id="maplayer">
+        <img src="colonial-trade-regions/img/map.png" alt="Blank map of the Atlantic Ocean showing North America, the West Indies, South America, Europe, and Africa">
+        <div class="places" aria-hidden="true">
+          <span style="left:14%;top:40%">North America</span><span style="left:21%;top:85.5%">West Indies</span>
+          <span style="left:26%;top:97%">South America</span><span style="left:52%;top:72%" class="sea">Atlantic Ocean</span>
+          <span style="left:88%;top:41.5%">Europe</span><span style="left:86%;top:83%">Africa</span>
+        </div>
+        <span class="credit-map">Base map: d-maps.com</span>
+        <svg viewBox="0 0 1626 1228" id="routes" aria-hidden="true">
+          <defs>
+            <marker id="chev" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="3.2" markerHeight="3.2" orient="auto" markerUnits="strokeWidth">
+              <path d="M1,1 L10,6 L1,11" fill="none" stroke="#3a2a16" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+        </svg>
+      </div>
+      <div class="photo" id="photo"></div>
+      <div class="homeui" id="homeui">
+        <div class="legend" role="group" aria-label="Trade routes">
+          <button class="leg" data-g="wi" aria-pressed="false" style="--sw:var(--to-wi)"><span class="sw"></span>to the West Indies</button>
+          <button class="leg" data-g="col" aria-pressed="false" style="--sw:var(--to-col)"><span class="sw"></span>to the Colonies</button>
+          <button class="leg" data-g="en" aria-pressed="false" style="--sw:var(--to-en)"><span class="sw"></span>to England</button>
+        </div>
+        <div class="tip" id="tip">Step 1: Click a region to explore it</div>
+      </div>
+      <div class="scene" id="scene"></div>
+      <div class="modal" id="modal" hidden></div>
+      <div class="matchmsg" id="matchmsg" aria-hidden="true"></div>
+    </div>
+    <div class="tray" id="tray" hidden>
+      <div class="trayhead"><strong>Drag each good to the region that produces it.</strong><span><span class="count" id="mcount">0 / 16</span> <button class="btn" id="mreset">Shuffle again</button></span></div>
+      <p class="traymsg" id="traymsg" role="status"></p>
+      <div class="tokens" id="tokens"></div>
+    </div>
+  </section>
+
+  <section id="chartMode" class="practice" hidden>
+    <h2>Part 3. Comparison Chart - ALL FIVE REGIONS:</h2>
+    <p class="inst">Pick a column. Drag each answer card into the row where it belongs. (You can also tap a card, then tap the row.)</p>
+    <div class="prow">
+      <div class="cols" id="colTabs" role="group" aria-label="Chart column"></div>
+      <div style="display:flex;gap:12px;align-items:center"><span class="count" id="count">0 / 20</span><button class="btn" id="reset">Start over</button></div>
+    </div>
+    <div class="status" id="status" role="status"></div>
+    <div class="codebar" id="codebar" aria-live="polite"></div>
+    <div class="tablewrap"><table id="chart"></table></div>
+    <div class="bank"><h3 id="bankTitle">Answer cards</h3><div class="ans" id="ans"></div></div>
+  </section>
+</div>
+<div class="overlay" id="overlay" hidden><div class="ocard" id="ocard" role="dialog" aria-modal="true" aria-labelledby="otitle"></div></div>
+<div class="toast" id="toast" role="status" hidden></div>
+<div class="defwrap" id="defwrap" hidden><div class="defcard" id="defcard" role="dialog" aria-modal="true"></div></div>
+
+<script>
+const WORDS={"terms": {"mercantilism": {"nm": "Mercantilism", "ico": "👑", "lv": ["The idea that colonies are there to make the home country rich.", "The belief that colonies exist to help the home country. Colonies send it raw materials and buy its finished goods.", "An economic system in which colonies exist to benefit the Mother Country. Colonies supply raw materials and must buy the home country's manufactured goods.", "An economic doctrine holding that national power derives from a favorable balance of trade, under which colonies exist to supply raw materials to, and consume the manufactures of, the imperial center."]}, "rawMaterials": {"nm": "Raw Materials", "ico": "🪵", "lv": ["Things from nature, like wood, fish, and crops, before they are made into something.", "Things from nature, like lumber, fish, tobacco, and furs, before they are made into goods.", "Natural resources, such as lumber, fish, tobacco, and furs, before they are made into finished products.", "Unprocessed natural commodities; under mercantilism, the colonial side of the exchange, exported cheap and returned dear as manufactures."]}, "manufacturedGoods": {"nm": "Manufactured Goods", "ico": "🔨", "lv": ["Things made by workers in shops, like tools, guns, and books.", "Goods made by skilled workers from raw materials, like tools, guns, clothing, furniture, and books.", "Finished products made from raw materials, such as tools, guns, clothing, furniture, and books, which England controlled and sold at high prices.", "Finished commodities whose production England monopolized; their price premium over raw materials was the engine of mercantilist profit."]}, "monopoly": {"nm": "Monopoly", "ico": "🎯", "lv": ["When you are the ONLY one who has something to sell.", "Being the only seller of a product. Everyone who wants it must come to you.", "Complete control of a product or trade. In the game, it means being the only region that has a certain good.", "Exclusive control over a commodity or market, conferring the power to set terms; identify your own monopolies and price them accordingly."]}, "cashCrop": {"nm": "Cash Crop", "ico": "🌿", "lv": ["A crop grown to sell, not to eat. Tobacco is one.", "A crop grown to sell for money, not to feed your own family. Tobacco, rice, and sugar are cash crops.", "A crop grown to sell and export, not to feed the people who grow it. Tobacco, rice, indigo, and sugar drove colonial economies.", "A crop cultivated primarily for market exchange; the plantation colonies' commitment to cash crops produced wealth, import-dependence, and the demand for enslaved labor."]}, "navalStores": {"nm": "Naval Stores", "ico": "🌲", "lv": ["Sticky tar from pine trees. Ships need it to keep water out.", "Pine tar and resin used to keep wooden ships from leaking. Every shipbuilder needed them.", "Products of pine forests (tar, pitch, and resin) essential for building and maintaining wooden ships.", "Pine-derived tar, pitch, and resin essential to caulking and rigging wooden vessels; a strategic commodity for any naval power."], "good": "navalStores"}, "distillery": {"nm": "Distillery", "ico": "🏭", "lv": ["A place that makes rum from molasses.", "A factory that turns molasses into rum. Rhode Island had many.", "A factory that makes alcoholic drinks. New England distilleries made rum from West Indian molasses.", "A works converting molasses to rum; the New England distilleries bound the northern colonies into the sugar economy and its slave trade."]}, "molasses": {"nm": "Molasses", "ico": "🍯", "lv": ["A thick brown syrup left over when sugar is made.", "The dark syrup left over from making sugar. It is cheaper than sugar, and rum is made from it.", "A dark brown syrup left over when sugar is made. It sold for less than sugar, and rum is made from it.", "Sugar refining's by-product and rum's precursor; its price differential with sugar made it the West Indies' volume export to the northern colonies."], "img": "MOLASSES", "good": "molasses"}, "duty": {"nm": "Duty", "ico": "🛃", "lv": ["A tax on goods that come in by ship.", "A tax on goods brought in from another place. In the game, duties usually go to England.", "A tax on imported goods. Parliament could place duties on trade to raise money; in the game, duties usually go to England.", "An import tax; under the Navigation Acts, a fiscal instrument by which the Crown captured revenue from colonial commerce."]}, "export": {"nm": "Export / Import", "ico": "⇄", "lv": ["Export = send goods out to sell. Import = bring goods in to buy.", "To export is to sell goods to another place. To import is to buy goods from another place.", "Exporting is selling goods abroad; importing is buying them from abroad. Every region must do both to win.", "The two directions of trade; mercantilism sought to maximize exports over imports at the national level, the favorable balance of trade."]}, "motherCountry": {"nm": "Mother Country", "ico": "👑", "lv": ["The country that rules the colonies. For us, that is England.", "The nation that started and controls the colonies. Here, that is England.", "The nation that controls the colonies; England set the trade rules all colonies had to follow.", "The imperial metropole; the legal and economic center to which colonial trade was subordinated."]}, "indigo": {"nm": "Indigo", "ico": "🟣", "lv": ["A plant that makes blue dye for cloth.", "A plant grown in South Carolina that makes a deep blue dye. England wanted it for cloth.", "A blue dye made from plants, grown in South Carolina by enslaved workers; England wanted all of it for its cloth.", "A plant-derived blue dyestuff cultivated by enslaved people in the Lower South; so prized by the English textile industry that Parliament paid a bounty for it."], "img": "INDIGO", "good": "indigo"}, "enslaved": {"nm": "Enslaved / Slavery", "ico": "⛓️", "lv": ["An enslaved person was owned by another person. They were forced to work for no pay. They could not leave. We say enslaved person because they were people first.", "An enslaved person was held as property and forced to work without pay, for life. Their children were enslaved too. We say enslaved person, not slave, because slavery was done to them. It was not who they were.", "Slavery is a system in which people are held as property and forced to work without pay for life, with their children born into the same condition. Colonial laws tied slavery to African descent. Historians write enslaved people to keep their humanity in view.", "Chattel slavery: the legal status of being owned as property, lifelong and inherited through the mother, which colonial law attached to African descent. Enslaved names something done to people by others, where slave can sound like an identity; historians use it to keep both the people and those responsible in view."]}, "middlePassage": {"nm": "The Middle Passage", "ico": "⛓️", "lv": ["The Middle Passage was the trip across the ocean from Africa to the Americas. Captured African people were forced onto ships. They were chained and crowded. Many died. The people who lived were sold and enslaved.", "The forced voyage of captured Africans across the Atlantic Ocean to the Americas. It was the middle leg of the triangle. People were chained below deck for weeks, with little food or air, and many died. Those who lived were sold into slavery.", "The second leg of the triangular trade: the forced voyage of captive Africans across the Atlantic to the Americas, lasting weeks or months. Captives were chained in crowded holds, and roughly one in seven died on the way. Survivors were sold into slavery in the West Indies and the mainland colonies.", "The middle leg of the Atlantic triangle, in which captive Africans were shipped to the Americas. About 12.5 million people were forced aboard slave ships over the whole history of the trade, and nearly 2 million died at sea. Each was a person with a name, a family, and a home, which the ships' records almost never kept. The name itself describes the voyage from the traders' side: for the people aboard it was not the middle of anything, but the violent break from everything they knew."]}}, "goods": {"fish": {"nm": "Dried Fish", "ico": "🐟", "lv": ["Fish that is dried and salted so it does not go bad. Then it can travel far on ships.", "Cod and other fish, dried in the sun or packed in salt so they last for months. Dried fish could be shipped far away.", "Cod preserved by drying and salting so it would keep for months at sea. It was New England's biggest export, sold to Europe and the West Indies.", "Salt- or air-cured cod, New England's leading export; the cheapest grades fed enslaved people on West Indian plantations, tying the fisheries directly to the sugar economy."], "why": {"g2": "It is food that lasts a long time.", "g5": "It fed people in Europe and on the sugar islands.", "g8": "Cheap, long-lasting food for Europe, ships' crews, and West Indian plantations."}, "from": ["ne", "so"]}, "whaleOil": {"nm": "Whale Oil", "ico": "🐋", "lv": ["Oil that comes from whale fat. People burned it in lamps.", "Oil boiled from whale blubber (fat). It burned in lamps and made candles.", "Oil boiled from whale blubber, burned in lamps and made into candles. New England whalers hunted whales far out at sea to get it.", "Rendered from blubber and, in its finest form, spermaceti; the premium lamp fuel of the age and the basis of a New England industry centered on Nantucket."], "why": {"g2": "People burn it in lamps for light.", "g5": "It burned in lamps and made fine candles.", "g8": "The best lamp oil of the time; it also made bright, clean-burning candles."}, "from": ["ne"]}, "lumber": {"nm": "Lumber", "ico": "🪵", "lv": ["Wood cut into boards. People build ships, houses, and barrels with it.", "Trees cut into boards and beams. Lumber built ships, houses, and the barrels that carried goods.", "Wood cut from colonial forests into boards, beams, and barrel staves. The colonies had huge forests, while England had cut down most of its own.", "Timber, planking, and barrel staves from the colonies' vast forests; England, largely deforested, depended on colonial wood, and the tallest pines were reserved as masts for the Royal Navy."], "why": {"g2": "People build ships and barrels with it.", "g5": "Everyone needed wood for ships, houses, and barrels.", "g8": "Ships, buildings, and the barrels that held almost every good all needed wood."}, "from": ["ne", "mid", "so"]}, "rum": {"nm": "Rum", "ico": "🍺", "lv": ["A strong drink made from molasses.", "A strong alcoholic drink made from molasses in New England factories called distilleries.", "A strong alcoholic drink made from West Indian molasses, mostly in New England. It was sold in the colonies and traded in West Africa.", "Spirits distilled from molasses in New England's distilleries; drunk throughout the colonies and exchanged on the West African coast for captive people."], "why": {"g2": "People drank it. Traders took it to Africa to buy captured people.", "g5": "Colonists and sailors drank it, and traders took it to West Africa to trade for captive Africans.", "g8": "Drunk across the colonies and at sea, and carried to West Africa, where traders exchanged it for captive Africans."}, "from": ["ne"]}, "wheat": {"nm": "Wheat & Grains", "ico": "🌾", "lv": ["Plants like wheat and corn. Their seeds are ground into flour for bread.", "Crops like wheat, corn, and oats. Wheat was ground into flour at mills to make bread.", "Food crops such as wheat, corn, and oats. The Middle Colonies grew so much that they were called the breadbasket colonies, and they milled wheat into flour to sell.", "Wheat, maize, and other cereals, the staple of the Middle Colonies' breadbasket economy; milled into flour and shipped to feed the northern ports and the food-poor sugar islands."], "why": {"g2": "It is food. Flour and bread come from it.", "g5": "Flour and bread fed towns, ships' crews, and the sugar islands.", "g8": "Flour and bread fed towns and ships' crews, and the sugar islands, which grew little of their own food."}, "from": ["mid"]}, "cattle": {"nm": "Cattle", "ico": "🐄", "lv": ["Cows. People eat the meat and use the hides (skins).", "Cows raised for meat, milk, and leather. Beef was salted so it could travel on ships.", "Cows raised for beef, milk, and hides. Salted beef fed ships' crews and plantations, and cattle were shipped live to the islands.", "Livestock raised for meat, dairy, hides, and hauling; salted beef supplied ships and plantations, and the islands imported animals to power their sugar mills."], "why": {"g2": "It is meat.", "g5": "Salted beef fed ships' crews and the sugar islands.", "g8": "Salted beef fed ships' crews and plantations, and working animals were always in short supply on the islands."}, "from": ["mid"]}, "furs": {"nm": "Furs", "ico": "🦫", "lv": ["Soft animal skins, like beaver fur. They were made into hats and coats.", "Animal skins, mostly beaver, traded from Native Americans. In Europe they were made into fancy hats.", "Animal pelts, especially beaver, that colonists got by trading with Native American nations. Europeans turned beaver fur into felt for fashionable hats.", "Pelts, above all beaver, obtained largely through trade with Native nations such as the Haudenosaunee; the European felt-hat trade drove demand and reshaped Native economies and alliances."], "why": {"g2": "People in Europe want fur hats.", "g5": "Beaver fur made fancy hats in Europe.", "g8": "European hat makers paid well for beaver fur."}, "from": ["mid", "so"], "img": "FUR", "cap": "Traders exchanging goods for furs"}, "tobacco": {"nm": "Tobacco", "ico": "🌿", "lv": ["A plant with big leaves. People dry the leaves and smoke them.", "A plant whose dried leaves are smoked. It was the most important cash crop of Virginia and Maryland.", "A cash crop grown on plantations in Virginia and Maryland, mostly by enslaved workers. Its dried leaves were shipped to England and sold across Europe.", "The Chesapeake's staple cash crop, grown more and more by enslaved labor; England's largest colonial import, much of it re-exported to Europe at a profit to English merchants."], "why": {"g2": "People in England smoke it.", "g5": "Smokers in England and Europe bought it.", "g8": "England's great colonial import: smoked at home and sold on to buyers across Europe."}, "from": ["so"]}, "rice": {"nm": "Rice", "ico": "🍚", "lv": ["A small grain people cook and eat.", "A grain grown in wet, flooded fields in South Carolina and Georgia.", "A food crop grown in flooded fields along the South Carolina and Georgia coast. Enslaved Africans, many from West African rice-growing regions, did the work.", "The Carolina lowcountry's staple, grown in tidal swamps with methods many enslaved West Africans brought with them; the work was exceptionally deadly, and the profits exceptional."], "why": {"g2": "It is food.", "g5": "Rice fed people in England, Europe, and the islands.", "g8": "A food crop sold to England and Europe and shipped to the sugar islands."}, "from": ["so"]}, "navalStores": {"nm": "Naval Stores", "ico": "🌲", "lv": ["Sticky tar from pine trees. Ships need it to keep water out.", "Pine tar and resin used to keep wooden ships from leaking. Every shipbuilder needed them.", "Products of pine forests (tar, pitch, and resin) essential for building and maintaining wooden ships.", "Pine-derived tar, pitch, and resin essential to caulking and rigging wooden vessels; a strategic commodity for any naval power."], "why": {"g2": "Tar and resin keep ships from leaking.", "g5": "Tar, pitch, and resin were needed to build ships and keep them from leaking.", "g8": "Tar, pitch, and turpentine sealed and preserved wooden hulls; England's navy could not sail without them."}, "from": ["so"]}, "silk": {"nm": "Silk", "ico": "🧵", "lv": ["Soft, shiny cloth. Silkworms make the thread.", "A soft, shiny cloth made from thread spun by silkworms. It was very expensive.", "A fine, costly cloth made from silkworm thread. Georgia and South Carolina tried raising silkworms, and England paid extra to encourage it.", "A luxury textile from silkworm cocoons; England paid bounties for colonial silk in Georgia and Carolina, though production stayed small."], "why": {"g2": "It makes fine cloth.", "g5": "Silk made fine, costly cloth.", "g8": "The finest cloth there was; England paid a bounty to encourage colonial silk."}, "from": ["so"]}, "indigo": {"nm": "Indigo", "ico": "🟣", "lv": ["A plant that makes blue dye for cloth.", "A plant grown in South Carolina that makes a deep blue dye. England wanted it for cloth.", "A blue dye made from plants, grown in South Carolina by enslaved workers; England wanted all of it for its cloth.", "A plant-derived blue dyestuff cultivated by enslaved people in the Lower South; so prized by the English textile industry that Parliament paid a bounty for it."], "why": {"g2": "It makes blue dye for cloth.", "g5": "England's cloth makers used it to dye cloth blue.", "g8": "A deep blue dye that England's cloth makers needed and Parliament paid a bounty to encourage."}, "from": ["so"], "img": "INDIGO", "cap": "An indigo works in the West Indies, 1600s engraving. Enslaved workers soaked, beat, and dried the plants to make the dye."}, "citrus": {"nm": "Citrus Fruit", "ico": "🍊", "lv": ["Fruits like limes and lemons.", "Limes, lemons, and oranges grown in the warm West Indies.", "Limes, lemons, and oranges from the warm West Indies. Sailors learned that citrus prevents scurvy, a sickness caused by a lack of vitamin C.", "Tropical fruit, chiefly limes and lemons; its value against scurvy on long voyages was known to some by the 1700s and became standard issue in the Royal Navy in 1795."], "why": {"g2": "Limes and lemons help sailors stay healthy.", "g5": "Limes and lemons helped keep sailors healthy on long voyages.", "g8": "Limes and lemons helped keep sailors healthy on long voyages."}, "from": ["wi"], "img": "LIMES"}, "sugar": {"nm": "Sugar", "ico": "🍬", "lv": ["Sweet crystals made from sugar cane plants.", "A sweetener made by boiling the juice of sugar cane. It was the most valuable crop in the colonies.", "Made by crushing sugar cane and boiling the juice. It was the most valuable colonial product, grown on West Indian plantations by enslaved Africans in brutal conditions.", "The Caribbean's staple and the most profitable commodity of the Atlantic economy; its production, in mills and boiling houses worked by enslaved Africans, had some of the highest death rates of any labor system."], "why": {"g2": "Everyone wants sugar. It sells for a lot.", "g5": "Sugar sweetened food and tea, and it sold for more than almost any crop.", "g8": "The most valuable crop in the Atlantic world, sweetening English tea and food."}, "from": ["wi"], "img": "CANE", "cap": "Sugar cane"}, "molasses": {"nm": "Molasses", "ico": "🍯", "lv": ["A thick brown syrup left over when sugar is made.", "The dark syrup left over from making sugar. It is cheaper than sugar, and rum is made from it.", "A dark brown syrup left over when sugar is made. It sold for less than sugar, and rum is made from it.", "Sugar refining's by-product and rum's precursor; its price differential with sugar made it the West Indies' volume export to the northern colonies."], "why": {"g2": "New England makes rum from it. In the game, each rum they trade uses up 2 molasses.", "g5": "New England made rum from it. In the game, every rum New England trades uses up 2 molasses.", "g8": "The raw material of New England's rum. In the game, every rum New England trades uses up 2 molasses."}, "from": ["wi"], "img": "MOLASSES"}, "guns": {"nm": "Guns", "ico": "🗡️", "lv": ["Weapons that fire bullets. People used them to hunt and fight.", "Muskets and pistols made in English workshops. Colonists used them to hunt and to defend themselves.", "Muskets and pistols made by English gunsmiths. Colonists needed them for hunting and defense, and guns were also traded in West Africa.", "Firearms made in England, above all by Birmingham's gunmakers; essential to colonial defense and hunting, and a major trade good on the West African coast."], "why": {"g2": "People use them to hunt and to fight.", "g5": "Colonists used them for hunting and defense.", "g8": "Used for hunting and defense, and made mostly in English workshops."}, "from": ["en"]}, "gunpowder": {"nm": "Gunpowder", "ico": "💥", "lv": ["Black powder that makes guns fire.", "The explosive powder that makes guns and cannons fire. England made most of it.", "An explosive powder that fires guns and cannons. The colonies made very little, so they bought it from England.", "Black powder, made of saltpeter, sulfur, and charcoal; the colonies produced little, a dependence that became critical when the Revolution began."], "why": {"g2": "Guns need it.", "g5": "Every gun needed it.", "g8": "Every gun needed it, and colonists could make very little of their own."}, "from": ["en"]}, "clothing": {"nm": "Clothing", "ico": "👕", "lv": ["Clothes made from cloth, like shirts and coats.", "Shirts, coats, and fine cloth made in English workshops and sold to the colonies.", "Cloth and finished clothes from English mills and tailors. Colonists could make rough homespun cloth, but fine cloth came from England.", "Finished textiles and garments; English woolens and linens dominated colonial markets, and Parliament restricted colonial cloth-making to protect them."], "why": {"g2": "People need clothes.", "g5": "English law meant most finished cloth came from England.", "g8": "English law reserved finished cloth to English makers, so colonists bought theirs from England."}, "from": ["en"]}, "furniture": {"nm": "Fine Furniture", "ico": "🪑", "lv": ["Fancy tables, chairs, and beds.", "Fancy chairs, tables, and cabinets made by skilled English craftsmen.", "Stylish, carefully built furniture from English workshops. Wealthy colonists bought it to show off their status.", "Fashionable cabinetwork in London styles, bought by colonial elites as markers of status; colonial craftsmen increasingly copied it."], "why": {"g2": "Rich people want nice chairs and tables.", "g5": "Wealthy colonists wanted fine English furniture.", "g8": "A sign of wealth: planters and merchants furnished their houses from London."}, "from": ["en"]}, "tools": {"nm": "Tools", "ico": "🔨", "lv": ["Things like hammers, axes, and saws that help you work.", "Iron hammers, axes, saws, and plows. Farmers and builders needed them every day.", "Iron hammers, axes, saws, hoes, and plows. England limited colonial manufacturing, so most finished tools came from England.", "Iron implements for farming and building; the Iron Act of 1750 allowed colonial pig iron but barred new colonial mills that turned it into finished goods."], "why": {"g2": "Farmers and builders need them.", "g5": "Farmers and craftsmen needed metal tools.", "g8": "Axes, hoes, and saws of English iron, needed by every farm and workshop."}, "from": ["en"]}, "books": {"nm": "Books", "ico": "📚", "lv": ["Books to read and learn from, like Bibles.", "Books, Bibles, and almanacs printed in England. Colonists wanted them to read and learn.", "Printed books such as Bibles, schoolbooks, and law books. Colonial printers made newspapers and almanacs, but most books came from London.", "Bound books, mostly imported from London's presses; colonial printers concentrated on newspapers, almanacs, and pamphlets, which would soon carry revolutionary arguments."], "why": {"g2": "People read them to learn.", "g5": "Most books were printed in England.", "g8": "Most books, from Bibles to schoolbooks, were printed in England."}, "from": ["en"]}, "silver": {"nm": "Silver", "ico": "🪙", "lv": ["A shiny metal used to make coins.", "A valuable metal. Coins made of silver were used as money.", "A valuable metal used for coins and fine dishes. The colonies had little money of their own, so silver coins were always in short supply.", "Hard money; mercantilism aimed to pile up precious metal at home, leaving the colonies short of coin and reliant on barter, credit, and foreign coins like the Spanish dollar."], "why": {"g2": "It is used as money.", "g5": "Coins were scarce in the colonies, and silver was money.", "g8": "Hard money was scarce in the colonies; silver paid debts and settled trades."}, "from": ["en"]}, "ship": {"nm": "Merchant Ship", "ico": "⛵", "lv": ["A sailing ship that carries goods to sell.", "A sailing ship built to carry cargo from port to port. Without ships, a region cannot move its goods.", "A wooden sailing ship built to carry cargo. New England built many of them; regions without ships had to pay others to carry their goods.", "A cargo vessel; New England's shipyards built a large share of the empire's merchant fleet, and control of shipping meant control of the terms of trade."], "why": {"g2": "Ships carry goods to other places.", "g5": "Without a ship, you cannot move your goods.", "g8": "Ships carry every trade. A region without ships has to pay someone else."}, "from": ["ne", "mid", "en"]}}};
+const IMG = {INDIGO:"colonial-trade-regions/img/indigo.jpg",MRB:"colonial-trade-regions/img/mrb.jpg",NEBG:"colonial-trade-regions/img/nebg.jpg",MIDBG:"colonial-trade-regions/img/midbg.jpg",SOBG:"colonial-trade-regions/img/sobg.jpg",WIMAP:"colonial-trade-regions/img/wimap.jpg",SHIP:"colonial-trade-regions/img/ship.jpg",FUR:"colonial-trade-regions/img/fur.jpg",STORM:"colonial-trade-regions/img/storm.jpg",CANE:"colonial-trade-regions/img/cane.jpg",LIMES:"colonial-trade-regions/img/limes.jpg",MILL:"colonial-trade-regions/img/mill.jpg",MOLASSES:"colonial-trade-regions/img/molasses.jpg"};
+// map coordinates measured on the original 2000px map, converted to the cropped frame
+const W=1626,H=1228; const P=(x,y)=>[x-187,y-159]; const pct=([x,y])=>[x/W*100,y/H*100];
+const COLS=["Main Products","Main Needs","Biggest Advantage","Biggest Challenge"];
+const ORDER=["ne","mid","so","wi","en"];
+const FLAG=`<svg class="flag" viewBox="0 0 60 30" aria-label="British flag of 1707"><rect width="60" height="30" fill="#012169"/><path d="M0,0 60,30 M60,0 0,30" stroke="#fff" stroke-width="6"/><path d="M30,0v30M0,15h60" stroke="#fff" stroke-width="10"/><path d="M30,0v30M0,15h60" stroke="#C8102E" stroke-width="6"/></svg>`;
+
+const R={
+ ne:{name:"New England",c:"--ne",d:"--ne-d",geo:"Rocky soil, cold winters, good harbors",
+   hot:P(600,735),anchor:P(600,748),lab:"right",zoom:{at:P(640,730),s:2.6},photo:"NEBG",pos:"center 40%",credit:"Boston harbor, engraving by John Carwitham, 1730s",
+   products:{lead:"Fish, lumber, rum, ships",tiles:[["🐟","Fish"],["🪵","Lumber"],["🍺","Rum"],["⛵","Ships"]],text:"New England's forests and ocean were its riches. Shipyards in towns like Boston built ships for the whole empire."},
+   needs:{lead:"Grain, manufactured goods, sugar",tiles:[["🌾","Grain","Middle Colonies"],["🔨","Manufactured goods","England"],["🍯","Sugar and molasses","West Indies"]],text:"Molasses from the West Indies was turned into rum in New England."},
+   adv:{lead:"Control shipping, and everyone needs ships!",icon:"⚓",text:"New England merchants and sailors carried goods for every other region."},
+   chal:{lead:"Can't grow enough food. Harsh winters.",icon:"❄️",text:"Rocky soil and a short growing season meant New England had to buy grain."},
+   key:["Fish, lumber, rum, ships","Grain, manufactured goods, sugar","Control shipping and everyone needs ships!","Can't grow enough food, harsh winters"]},
+ mid:{name:"Middle Colonies",c:"--mid",d:"--mid-d",geo:"Fertile soil, moderate climate",
+   hot:P(515,815),anchor:P(515,815),lab:"right",zoom:{at:P(540,830),s:2.8},photo:"MIDBG",pos:"55% center",credit:"The port of Philadelphia, engraving, 1768",
+   products:{lead:"Wheat, flour, tools, furs",tiles:[["🌾","Wheat"],["🍞","Flour"],["🔨","Tools"],["🦫","Furs"]],text:"Farms grew so much wheat that mills ground it into flour to ship to other regions."},
+   needs:{lead:"Ships, manufactured goods, luxury items",tiles:[["⛵","Ships","New England"],["🔨","Manufactured goods","England"],["🎩","Luxury items","England"]]},
+   adv:{lead:"The “Breadbasket.” Everyone needs their food.",icon:"🧺",text:"Their grain fed New England and the West Indies."},
+   chal:{lead:"Limited ships, so they must rely on others.",icon:"🚫",text:"To sell their grain far away, they needed New England ships or English ships."},
+   key:["Wheat, flour, tools, furs","Ships, manufactured goods, luxury items","“Breadbasket” everyone needs their food","Limited ships and must rely on others"]},
+ so:{name:"Southern Colonies",c:"--so",d:"--so-d",geo:"Rich soil, warm climate, long growing season",
+   hot:P(440,915),anchor:P(455,920),lab:"right",zoom:{at:P(470,930),s:2.6},photo:"SOBG",pos:"center 60%",credit:"Mulberry Plantation, South Carolina, painted by Thomas Coram, around 1770",
+   products:{lead:"Tobacco, rice, indigo, cattle",tiles:[["🌿","Tobacco"],["🍚","Rice"],["🟣","Indigo (blue dye)"],["🐄","Cattle"]],text:"Large plantations grew cash crops to sell to England."},
+   needs:{lead:"Ships, manufactured goods, tools, food",tiles:[["⛵","Ships","New England"],["🔨","Manufactured goods","England"],["🔧","Tools","England"],["🥖","Food","Middle Colonies"]]},
+   adv:{lead:"Valuable cash crops that England wants.",icon:"💰",text:"Tobacco, rice, and indigo sold for high prices in England."},
+   chal:{lead:"No ships. Completely depends on others.",icon:"🚢",text:"Planters had to wait for other people's ships to carry their crops away and bring goods back."},
+   labor:{img:"SOBG",text:"Plantation work was forced on enslaved Africans. Their unpaid labor is what made the cash crops so profitable.",cap:"Mulberry Plantation, South Carolina, around 1770. The rows of small houses were quarters for enslaved people."},
+   key:["Tobacco, rice, indigo, cattle","Ships, manufactured goods, tools, food","Valuable cash crops that England wants","No ships, completely depend on others"]},
+ wi:{name:"West Indies",c:"--wi",d:"--wi-d",geo:"Caribbean islands like Jamaica and Barbados",
+   hot:P(575,1140),anchor:P(565,1150),lab:"right",photo:"WIMAP",zoom:{at:P(570,1140),s:2.2},credit:"Map of the West Indies in 1763",
+   products:{lead:"Sugar, molasses, citrus",tiles:[["CANE","Sugar"],["MOLASSES","Molasses"],["LIMES","Citrus"]]},
+   needs:{lead:"Almost everything: food, tools, supplies",tiles:[["🥖","Food","Middle Colonies and New England"],["🔧","Tools","England"],["🪵","Lumber and supplies","New England"]],text:"The islands used their land for sugar, so they had to import almost everything else."},
+   adv:{lead:"Sugar is the most valuable product.",img:"CANE",text:"High demand and limited supply. Sugar could be traded for almost anything."},
+   chal:{lead:"Only 3 products. Must import everything. Weather.",img:"STORM",text:"Hurricanes and tropical diseases could destroy a whole harvest."},
+   labor:{img:"MILL",text:"Sugar plantations depended entirely on enslaved Africans, forced to work in brutal conditions.",cap:"Engraving of enslaved workers at a sugar mill"},
+   key:["Sugar, molasses, citrus","Almost everything: food, tools, supplies","Sugar is the most valuable product","Only 3 products, must import everything, weather"]},
+ en:{name:"England",c:"--en",d:"--en-d",geo:"Rules the colonies and sets the trade rules",
+   hot:P(1570,545),anchor:P(1560,560),lab:"left",photo:"SHIP",zoom:{at:P(1570,540),s:2.4},flag:true,credit:"A British warship",
+   products:{lead:"Manufactured goods",tiles:[["🪑","Furniture"],["💥","Guns"],["📚","Books"],["🧥","Fine clothing"],["🔨","Tools"],["🥄","Silver goods"]],text:"Under mercantilism, only England was allowed to make finished goods."},
+   needs:{lead:"Raw materials from the colonies",img:"FUR",tiles:[["🪵","Lumber","New England"],["🦫","Furs","Middle Colonies"],["🌿","Tobacco, rice, indigo","Southern Colonies"],["🍬","Sugar","West Indies"]],cap:"Traders exchanging goods for furs"},
+   adv:{lead:"Controls all trade rules, has the most ships, and a monopoly on manufactured goods.",img:"SHIP",text:"Parliament set the rules, and England had the most powerful navy and merchant fleet."},
+   chal:{lead:"Needs the colonies to cooperate. Lacks raw materials.",icon:"🤝",text:"England could not grow sugar, tobacco, rice, or indigo, and it was running short of lumber."},
+   merc:true,
+   key:["Furniture, guns, books, clothing, tools, silver","Raw materials from colonies","Controls all trade rules, has the most ships, monopoly on manufactured goods","Needs colonies to cooperate, no natural resources"]}
+};
+
+// trade routes: from, to, label, color group, bend
+const ROUTES=[
+ ["ne","en","lumber, fur, whale oil","en",45],["mid","en","furs","en",85],["so","en","tobacco, indigo, rice","en",120],["wi","en","sugar, molasses","en",150],
+ ["en","ne","manufactured goods","col",80],["wi","ne","molasses, sugar","col",110],["mid","ne","grain","col",40],["ne","so","ships","col",-70],
+ ["ne","wi","fish, lumber","wi",-35],["mid","wi","grains, flour","wi",45],["so","wi","rice","wi",60],["en","wi","tools, goods","wi",-120]
+];
+const GC={wi:"var(--to-wi)",col:"var(--to-col)",en:"var(--to-en)"};
+const GT={wi:"var(--to-wi-text)",col:"var(--to-col-text)",en:"var(--to-en)"};
+
+const $=s=>document.querySelector(s);
+const stage=$("#stage"), layer=$("#maplayer");
+
+// draw routes
+(function(){
+  let out="";
+  ROUTES.forEach((r,i)=>{
+    const [f,t,label,g,bend]=r, A=R[f].anchor, B=R[t].anchor;
+    const dx=B[0]-A[0], dy=B[1]-A[1], L=Math.hypot(dx,dy);
+    const cx=(A[0]+B[0])/2 - dy/L*bend, cy=(A[1]+B[1])/2 + dx/L*bend;
+    const d=`M${A[0]},${A[1]} Q${cx},${cy} ${B[0]},${B[1]}`;
+    const rev=A[0]>B[0];
+    const td=rev?`M${B[0]},${B[1]} Q${cx},${cy} ${A[0]},${A[1]}`:d;
+    out+=`<g class="route" data-g="${g}"><path class="edge" d="${d}" marker-end="url(#chev)"/><path class="col" d="${d}" style="stroke:${GC[g]}"/>
+      <path id="tp${i}" d="${td}" fill="none"/><text dy="-12" style="fill:${GT[g]}"><textPath href="#tp${i}" startOffset="50%" text-anchor="middle">${label}</textPath></text></g>`;
+  });
+  $("#routes").insertAdjacentHTML("beforeend",out);
+})();
+document.querySelectorAll(".leg").forEach(b=>b.onclick=()=>{
+  const on=b.getAttribute("aria-pressed")!=="true"; b.setAttribute("aria-pressed",on);
+  document.querySelectorAll(`.route[data-g="${b.dataset.g}"]`).forEach(r=>r.classList.toggle("on",on));
+});
+
+// home hotspots
+ORDER.forEach(k=>{
+  const r=R[k],[x,y]=pct(r.hot);
+  const b=document.createElement("button");
+  b.className="hot home "+(r.lab==="left"?"left":""); b.style.left=x+"%"; b.style.top=y+"%";
+  b.style.setProperty("--hc",`var(${r.d})`);
+  b.innerHTML=`<span class="dot" aria-hidden="true">+</span><span class="lab">${r.name}</span>`;
+  b.dataset.k=k;
+  b.onclick=()=>{ if(mode==="match"){ if(mPicked) tryMatch(mPicked,k,b); } else openScene(k); };
+  $("#homeui").appendChild(b);
+});
+
+let current=null;
+const SKEY="colonial-trade-regions-v1";
+const S={seen:{},done:{},matched:false,charted:false,intro:false};
+try{ Object.assign(S, JSON.parse(localStorage.getItem(SKEY)||"{}")); }catch(e){}
+function save(){ try{ localStorage.setItem(SKEY, JSON.stringify(S)); }catch(e){} }
+const seen=S.seen;
+const CORE=["products","needs","adv","chal"];
+const coreDone=k=>CORE.every(id=>seen[k]&&seen[k][id]);
+const allDone=()=>ORDER.every(k=>S.done[k]);
+function toast(t){ const el=$("#toast"); el.textContent=t; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,3800); }
+function refresh(){
+  const n=ORDER.filter(k=>S.done[k]).length;
+  $("#s1meta").textContent= n===5?"Done":`${n} of 5 regions`;
+  $("#modeMap").classList.toggle("done",n===5);
+  $("#modeMatch").setAttribute("aria-disabled",!allDone());
+  $("#s2meta").textContent= S.matched?"Done":(allDone()?"Unlocked":"Locked");
+  $("#modeMatch").classList.toggle("done",!!S.matched);
+  $("#modeChart").setAttribute("aria-disabled",!S.matched);
+  $("#s3meta").textContent= S.charted?"Done":(S.matched?"Unlocked":"Locked");
+  $("#modeChart").classList.toggle("done",!!S.charted);
+  document.querySelectorAll("#homeui .hot").forEach(h=>{ const d=S.done[h.dataset.k]; h.classList.toggle("seen",!!d); h.querySelector(".dot").textContent=d?"✓":"+"; });
+  $("#tip").textContent = allDone() ? "All regions explored. Go to Step 2: Match the goods" : `Step 1: Click a region to explore it (${n} of 5 done)`;
+}
+function zoomTo(k){
+  const z=R[k].zoom;
+  if(!z){ layer.style.transform=""; return null; }
+  const s=z.s, [px,py]=pct(z.at);
+  let tx=50-px*s, ty=56-py*s;
+  tx=Math.min(0,Math.max(100-100*s,tx)); ty=Math.min(0,Math.max(100-100*s,ty));
+  layer.style.transform=`translate(${tx}%,${ty}%) scale(${s})`;
+  return pt=>{const [a,b]=pct(pt); return [tx+a*s, ty+b*s];};
+}
+const HOTS=[["products","📦",COLS[0],[20,34]],["needs","🛒",COLS[1],[80,34]],["adv","⭐",COLS[2],[20,72]],["chal","⚠️",COLS[3],[80,72]]];
+
+function openScene(k){
+  current=k; const r=R[k]; seen[k]=seen[k]||{};
+  $("#homeui").inert=true; $("#scene").inert=false;
+  $("#homeui").style.opacity=0; $("#homeui").style.pointerEvents="none";
+  document.querySelectorAll(".route").forEach(x=>x.style.visibility="hidden");
+  zoomTo(k);
+  const ph=$("#photo");
+  ph.classList.remove("on"); void ph.offsetWidth;
+  ph.style.backgroundImage=`url(${IMG[r.photo]})`; ph.style.backgroundPosition=r.pos||"center"; ph.classList.add("on");
+  const extras=[...HOTS];
+  const side=r.labor||r.merc;
+  if(r.labor) extras.push(["labor","👥","Who did the work?",[34,88]]);
+  if(r.merc) extras.push(["merc","🔄","Mercantilism",[34,88]]);
+  extras.push(["goods","⚓","Trade goods",[side?66:50,88]]);
+  let html=`<div class="head">${r.flag?FLAG:""}<div><h2>${r.name}</h2><div class="geo">${r.geo}</div></div><span class="credit">${r.credit||""}</span></div>`;
+  extras.forEach(([id,icon,label,[x,y]])=>{
+    html+=`<button class="hot ${x>50?'left':''} ${seen[k][id]?'seen':''}" data-id="${id}" style="left:${x}%;top:${y}%;--hc:var(${r.d})"><span class="dot" aria-hidden="true">${seen[k][id]?'✓':icon}</span><span class="lab">${label}</span></button>`;
+  });
+  const i=ORDER.indexOf(k);
+  html+=`<div class="sceneNav"><button class="btn dark" id="back">← Map</button>
+    <span class="progress" id="prog"></span>
+    <div class="grp"><button class="btn" id="keyBtn">Quiz me: flip cards</button><button class="btn" id="prev" aria-label="Previous region">←</button><button class="btn" id="next" aria-label="Next region">→</button></div></div>`;
+  const sc=$("#scene"); sc.innerHTML=html; sc.style.setProperty("--sc-c",`var(${r.d})`); sc.classList.add("on");
+  sc.querySelectorAll(".hot").forEach(b=>b.onclick=()=>openCard(b.dataset.id));
+  $("#back").onclick=goHome; $("#keyBtn").onclick=()=>openCard("key");
+  $("#prev").onclick=()=>openScene(ORDER[(i+4)%5]); $("#next").onclick=()=>openScene(ORDER[(i+1)%5]);
+  updateProg();
+}
+function updateProg(){ const n=CORE.filter(id=>seen[current][id]).length; $("#prog").textContent= S.done[current] ? "Chart row filled in ✓" : `${n} of 4 explored · fill in your chart as you go`; }
+function goHome(){
+  $("#homeui").inert=false; $("#scene").inert=true;
+  current=null; closeCard(); $("#scene").classList.remove("on"); $("#photo").classList.remove("on");
+  layer.style.transform=""; $("#homeui").style.opacity=1; $("#homeui").style.pointerEvents="";
+  document.querySelectorAll(".route").forEach(x=>x.style.visibility="");
+}
+function tiles(list){
+  return `<div class="tiles">${list.map(([e,n,from])=>`<div class="tile">${IMG[e]?`<img src="${IMG[e]}" alt="${n}">`:`<span class="e" aria-hidden="true">${e}</span>`}<span class="n">${n}</span>${from?`<span class="from">from ${from}</span>`:""}</div>`).join("")}</div>`;
+}
+function fig(k,cap){ return `<figure class="figure"><img src="${IMG[k]}" alt="${cap||''}">${cap?`<figcaption>${cap}</figcaption>`:""}</figure>`; }
+let cardReturn=null, defReturn=null;
+function activeDialog(){ for(const id of ["defwrap","overlay","modal"]){ const el=$("#"+id); if(el && !el.hidden) return el; } return null; }
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Tab") return; const d=activeDialog(); if(!d) return;
+  const f=[...d.querySelectorAll("button,input")].filter(x=>!x.disabled && x.getClientRects().length);
+  if(!f.length) return; const a=document.activeElement, first=f[0], last=f[f.length-1];
+  if(!d.contains(a)){ e.preventDefault(); first.focus(); }
+  else if(e.shiftKey && a===first){ e.preventDefault(); last.focus(); }
+  else if(!e.shiftKey && a===last){ e.preventDefault(); first.focus(); }
+},true);
+function closeOverlay(){ const o=$("#overlay"), c=$("#ocard"); o.hidden=true; c.classList.remove("gloss","cert","small"); glossOpen=false; if(!S.intro){ S.intro=true; save(); } }
+function openCard(id){
+  if(!$("#modal").contains(document.activeElement)) cardReturn=document.activeElement;
+  const r=R[current]; let title, body;
+  if(id==="key"){ title=`${r.name}: flip cards`; body=`<p>Say the answer out loud or write it in your chart, then flip to check.</p><div class="flips">${COLS.map((c,i)=>`<button class="flip" aria-pressed="false"><div class="in"><div class="f"><strong>${c}</strong><small>Tap to flip</small></div><div class="b">${r.key[i]}</div></div></button>`).join("")}</div>`; }
+  else if(id==="goods"){ title="Trade goods";
+    const gs=Object.entries(WORDS.goods).filter(([g,v])=>v.from.includes(current));
+    body=`<p class="lead">In Thursday's simulation, ${r.name} starts with these goods.</p>
+      <div class="tiles">${gs.map(([g,v])=>`<button class="tile clickable" data-good="${g}">${v.img?`<img src="${IMG[v.img]}" alt="">`:`<span class="e" aria-hidden="true">${v.ico}</span>`}<span class="n">${v.nm}</span></button>`).join("")}</div>
+      <p>Click a good to learn what it is and why other regions wanted it.</p>`; }
+  else if(id==="merc"){ title="Mercantilism"; body=`<p class="lead">Colonies existed to make England rich.</p>
+    <div class="loop"><span class="b">Colonies send cheap raw materials</span>→<span class="b">England makes finished goods</span>→<span class="b">Colonies buy them back at high prices</span></div>
+    <p>Colonies could only trade inside the British Empire (England and its colonies), not with France, Spain, or the Dutch. England set the rules through Parliament and could charge fees on shipping.</p>`; }
+  else {
+    const c=r[id]; const idx=["products","needs","adv","chal"].indexOf(id);
+    title = id==="labor" ? "Who did the work?" : COLS[idx];
+    body = `<p class="lead">${id==="labor"?"":c.lead}</p>`;
+    if(c.img) body+=fig(c.img, c.cap);
+    if(c.icon) body=`<div style="font-size:64px;line-height:1" aria-hidden="true">${c.icon}</div>`+body;
+    if(c.tiles) body+=tiles(c.tiles);
+    if(c.text) body+=`<p>${c.text}</p>`;
+  }
+  const m=$("#modal"); m.hidden=false;
+  m.innerHTML=`<div class="card" role="dialog" aria-modal="true" aria-label="${title}" style="--cc:var(${r.d});--cf:var(${r.c})"><header><h3>${title}</h3><button class="x" aria-label="Close">×</button></header><div class="body">${body}</div></div>`;
+  wireWords(m);
+  m.querySelectorAll(".flip").forEach(f=>f.onclick=()=>{const on=!f.classList.contains("on");f.classList.toggle("on",on);f.setAttribute("aria-pressed",on);});
+  m.querySelector(".x").onclick=()=>closeCard(true); m.onclick=e=>{ if(e.target===m) closeCard(true); };
+  m.querySelector(".x").focus();
+  if(id!=="key"){ seen[current][id]=true; save(); const h=$(`#scene .hot[data-id="${id}"]`); if(h){h.classList.add("seen"); h.querySelector(".dot").textContent="✓";} updateProg(); }
+}
+function closeCard(user){ const m=$("#modal"); m.hidden=true; m.innerHTML="";
+  if(cardReturn && document.contains(cardReturn)) cardReturn.focus();
+  if(user && current && coreDone(current) && !S.done[current]) openNotes(); }
+function openNotes(){
+  const r=R[current], k=current, m=$("#modal"); m.hidden=false;
+  m.innerHTML=`<div class="card notes" role="dialog" aria-modal="true" aria-label="Fill in your chart row" style="--cc:var(${r.d})"><header><h3>📝 Fill in your chart row</h3></header><div class="body">
+    <p class="lead">You explored all four parts of ${r.name}.</p>
+    <p>Before you move on, fill in the <b>${r.name}</b> row of your Part 3 chart: Main Products, Main Needs, Biggest Advantage, and Biggest Challenge.</p>
+    <p>On Thursday you might be ${r.name}, or you might need to trade with them. Either way, you'll need this row.</p>
+    <div class="acts"><button class="btn dark" id="nDone">I filled in my row</button><button class="btn" id="nFlip">Check my row with flip cards</button></div></div></div>`;
+  $("#nFlip").onclick=()=>openCard("key");
+  $("#nDone").onclick=()=>{ S.done[k]=true; save(); refresh(); m.hidden=true; m.innerHTML=""; updateProg();
+    burst(innerWidth/2, innerHeight/2);
+    if(allDone()) showOverlay("unlock2");
+    else { const left=ORDER.filter(x=>!S.done[x]).map(x=>R[x].name); toast(`${r.name} done! Still to explore: ${left.join(", ")}.`); goHome(); } };
+  $("#nDone").focus();
+}
+document.addEventListener("keydown",e=>{
+  if(!$("#defwrap").hidden){ if(e.key==="Escape") closeDef(); return; }
+  if(!$("#overlay").hidden){ if(e.key==="Escape") closeOverlay(); return; }
+  if($("#mapMode").hidden) return;
+  if(e.key==="Escape"){ if(!$("#modal").hidden) closeCard(true); else if(current) goHome(); }
+  if(!$("#modal").hidden || !current) return;
+  if(e.key==="ArrowRight") openScene(ORDER[(ORDER.indexOf(current)+1)%5]);
+  if(e.key==="ArrowLeft") openScene(ORDER[(ORDER.indexOf(current)+4)%5]);
+});
+
+// modes
+let mode="map";
+function setMode(m){
+  if(m==="match" && !allDone()){ toast("Explore all five regions and fill in their chart rows to unlock Match the goods."); return; }
+  if(m==="chart" && !S.matched){ toast(allDone()?"Match all 16 goods to unlock Practice the chart.":"Finish Steps 1 and 2 to unlock Practice the chart."); return; }
+  mode=m; if(current) goHome();
+  $("#mapMode").hidden=m==="chart"; $("#chartMode").hidden=m!=="chart"; $("#tray").hidden=m!=="match";
+  document.body.classList.toggle("match",m==="match");
+  [["modeMap","map"],["modeMatch","match"],["modeChart","chart"]].forEach(([id,v])=>$("#"+id).setAttribute("aria-pressed",m===v)); }
+$("#modeMap").onclick=()=>setMode("map"); $("#modeMatch").onclick=()=>setMode("match"); $("#modeChart").onclick=()=>setMode("chart");
+
+// shared drag helper (mouse + touch); onDrop(x,y) returns true if accepted
+function draggable(el,onDrop,onHover){
+  el.addEventListener("pointerdown",e=>{
+    if(e.button!==0) return;
+    const sx=e.clientX, sy=e.clientY; let ghost=null;
+    const move=ev=>{
+      if(!ghost && Math.hypot(ev.clientX-sx,ev.clientY-sy)<6) return;
+      if(!ghost){ ghost=el.cloneNode(true); ghost.classList.add("ghost"); ghost.style.width=el.offsetWidth+"px"; document.body.appendChild(ghost); el.classList.add("dragging"); }
+      ghost.style.left=ev.clientX+"px"; ghost.style.top=ev.clientY+"px";
+      onHover&&onHover(ev.clientX,ev.clientY);
+    };
+    const up=ev=>{
+      document.removeEventListener("pointermove",move); document.removeEventListener("pointerup",up); document.removeEventListener("pointercancel",up);
+      if(!ghost) return;
+      onHover&&onHover(null);
+      const ok=onDrop(ev.clientX,ev.clientY);
+      el.classList.remove("dragging");
+      if(ok){ ghost.remove(); }
+      else { const r=el.getBoundingClientRect(); ghost.style.transition="left .3s,top .3s"; ghost.style.left=(r.left+r.width/2)+"px"; ghost.style.top=(r.top+r.height/2)+"px"; setTimeout(()=>ghost.remove(),300); }
+      el.dataset.dragged="1"; setTimeout(()=>delete el.dataset.dragged,50);
+    };
+    document.addEventListener("pointermove",move); document.addEventListener("pointerup",up); document.addEventListener("pointercancel",up);
+  });
+}
+function burst(x,y,color){
+  for(let i=0;i<14;i++){ const d=document.createElement("div"); d.className="burst"; const a=i/14*Math.PI*2, r=40+Math.random()*30;
+    d.style.left=x+"px"; d.style.top=y+"px"; d.style.background=color||"var(--good)"; d.style.setProperty("--bx",Math.cos(a)*r+"px"); d.style.setProperty("--by",Math.sin(a)*r+"px");
+    document.body.appendChild(d); setTimeout(()=>d.remove(),650); }
+}
+
+// Match the goods
+const GOODS=[["🐟","Fish",["ne","so"]],["🪵","Lumber",["ne","mid","so"]],["⛵","Ships",["ne","mid","en"]],["🍺","Rum",["ne"]],
+ ["🌾","Wheat",["mid"]],["🍞","Flour",["mid"]],["🦫","Furs",["mid","so"]],
+ ["🌿","Tobacco",["so"]],["🍚","Rice",["so"]],["🟣","Indigo",["so"]],
+ ["CANE","Sugar",["wi"]],["MOLASSES","Molasses",["wi"]],["LIMES","Citrus",["wi"]],
+ ["🪑","Furniture",["en"]],["📚","Books",["en"]],["🗡️","Guns",["en"]]];
+const HINT={ne:"rocky soil, cold winters, good harbors",mid:"fertile soil, moderate climate",so:"rich soil, warm climate, long growing season",wi:"tropical islands",en:"the only place allowed to make finished goods"};
+let mPicked=null, matched=0;
+function tokenFace(g){ return IMG[g[0]]?`<img src="${IMG[g[0]]}" alt="" draggable="false">`:`<span class="e" aria-hidden="true">${g[0]}</span>`; }
+function nearestRegion(x,y){
+  const sr=stage.getBoundingClientRect(); if(x<sr.left||x>sr.right||y<sr.top||y>sr.bottom) return null;
+  let best=null,bd=1e9;
+  document.querySelectorAll("#homeui .hot").forEach(h=>h.querySelectorAll(".dot,.lab").forEach(el=>{
+    const r=el.getBoundingClientRect(), dx=Math.max(r.left-x,0,x-r.right), dy=Math.max(r.top-y,0,y-r.bottom), d=Math.hypot(dx,dy);
+    if(d<bd){bd=d;best=h.dataset.k;} }));
+  return bd<Math.max(44,sr.width*0.06)?best:null;
+}
+function mmsg(t,c){ const m=$("#matchmsg"); m.textContent=t; m.className="matchmsg "+(c||""); const tm=$("#traymsg"); tm.textContent=t; tm.className="traymsg "+(c||""); }
+function tryMatch(tok,k,hotEl){
+  const g=GOODS[+tok.dataset.i];
+  if(g[2].includes(k)){
+    const r=hotEl.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height/2);
+    tok.remove(); matched++; $("#mcount").textContent=`${matched} / 16`;
+    const bin=$(`#bin-${k}`); bin.insertAdjacentHTML("beforeend",IMG[g[0]]?`<img src="${IMG[g[0]]}" alt="${g[1]}">`:`<span title="${g[1]}">${g[0]}</span>`);
+    mPicked=null;
+    const also=g[2].filter(x=>x!==k).map(x=>R[x].name);
+    mmsg(matched===16?"All 16 matched! Every region's goods are in place.":`Yes! ${R[k].name} has ${g[1].toLowerCase()}.${also.length?` So ${also.length>1?"do":"does"} ${also.join(" and ")}.`:""}`,"ok");
+    S.mDone=S.mDone||[]; S.mDone.push([+tok.dataset.i,k]); save();
+    if(matched===16 && !S.matched){ S.matched=true; save(); refresh(); setTimeout(()=>showOverlay("unlock3"),900); }
+    return true;
+  }
+  mmsg(`Not quite. ${R[k].name} doesn't produce ${g[1].toLowerCase()}. Hint: it comes from a place with ${HINT[g[2][0]]}.`,"no");
+  hotEl.querySelector(".dot").classList.remove("pop"); void hotEl.offsetWidth;
+  return false;
+}
+function setupMatch(keep){
+  if(!keep) { S.mDone=[]; save(); }
+  const done=S.mDone||[]; matched=done.length; mPicked=null; $("#mcount").textContent=`${matched} / 16`; mmsg(matched?`${matched} of 16 matched. Keep going!`:"Drag a good onto the region that produces it.");
+  document.querySelectorAll(".bin").forEach(b=>b.remove());
+  ORDER.forEach(k=>{const [x,y]=pct(R[k].hot); const left=R[k].lab==="left";
+    $("#homeui").insertAdjacentHTML("beforeend",`<div class="bin" id="bin-${k}" style="${left?`right:${100-x+2}%`:`left:${x+2}%`};top:${y+3.5}%"></div>`);});
+  done.forEach(([i,k])=>{ const g=GOODS[i]; $(`#bin-${k}`).insertAdjacentHTML("beforeend",IMG[g[0]]?`<img src="${IMG[g[0]]}" alt="${g[1]}">`:`<span title="${g[1]}">${g[0]}</span>`); });
+  const order=shuffle(GOODS.map((g,i)=>i)).filter(i=>!done.some(d=>d[0]===i));
+  $("#tokens").innerHTML=order.map(i=>`<button class="token" data-i="${i}" aria-pressed="false">${tokenFace(GOODS[i])}${GOODS[i][1]}</button>`).join("");
+  $("#tokens").querySelectorAll(".token").forEach(t=>{
+    t.onclick=()=>{ if(t.dataset.dragged) return; mPicked=mPicked===t?null:t; $("#tokens").querySelectorAll(".token").forEach(x=>x.setAttribute("aria-pressed",x===mPicked)); if(mPicked) mmsg(`Now click the region that produces ${GOODS[+t.dataset.i][1].toLowerCase()}.`); };
+    draggable(t,(x,y)=>{ const k=nearestRegion(x,y); if(!k) return false; return tryMatch(t,k,$(`#homeui .hot[data-k="${k}"]`)); },
+      (x,y)=>{ const k=x==null?null:nearestRegion(x,y); document.querySelectorAll("#homeui .hot").forEach(h=>h.classList.toggle("target",h.dataset.k===k)); });
+  });
+}
+$("#mreset").onclick=()=>setupMatch(false);
+
+// secret code: seven stamped cells spell MUSTANG in order
+const SECRET=[["ne",0,"M"],["wi",1,"U"],["mid",2,"S"],["en",3,"T"],["so",0,"A"],["en",1,"N"],["ne",3,"G"]];
+const secretAt=(k,c)=>SECRET.findIndex(x=>x[0]===k&&x[1]===c);
+function renderCodebar(){
+  const got=SECRET.filter(([k,c])=>placed[k+c]).length;
+  $("#codebar").innerHTML=`<span class="lbl">Secret code</span><div class="slots">${SECRET.map(([k,c,L],i)=>`<div class="slot ${placed[k+c]?'got':''}"><small>${i+1}</small><b>${placed[k+c]?L:""}</b></div>`).join("")}</div>
+    <span class="hintc">${got<7?`Seven cells hide a sealed letter. ${got} of 7 found.`:"All 7 letters found!"}</span>
+    ${got===7?`<form class="codeinline" id="cbForm" autocomplete="off"><input id="cbIn" aria-label="Secret code" spellcheck="false" autocapitalize="characters"><button class="btn dark">Enter code</button></form><span class="codemsg" id="cbMsg" role="status"></span>`:""}`;
+  const f=$("#cbForm"); if(f) f.onsubmit=e=>{ e.preventDefault(); if(!checkSecret($("#cbIn").value)){ $("#cbMsg").textContent="Not quite. Read the letters in order, 1 to 7."; } };
+}
+// practice chart
+let placed={}, activeCol=0, picked=null, order={};
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function resetPractice(keep){placed=keep&&S.placed?S.placed:{};S.placed=placed;save();picked=null;activeCol=Math.max(0,COLS.findIndex((_,i)=>ORDER.some(k=>!placed[k+i])));COLS.forEach((_,c)=>order[c]=shuffle(ORDER));$("#status").textContent="";$("#status").className="status";renderPractice();}
+function renderPractice(){
+  $("#colTabs").innerHTML=COLS.map((c,i)=>{const left=ORDER.filter(k=>!placed[k+i]).length;return `<button data-c="${i}" aria-pressed="${i===activeCol}">${c}${left?"":" ✓"}</button>`;}).join("");
+  $("#colTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{activeCol=+b.dataset.c;picked=null;renderPractice();});
+  $("#chart").innerHTML=`<thead><tr><th>Region</th>${COLS.map((c,i)=>`<th class="${i===activeCol?'active':''}">${c}</th>`).join("")}</tr></thead>
+   <tbody>${ORDER.map(k=>`<tr><th style="--rc:var(${R[k].d})">${R[k].name}</th>${COLS.map((_,i)=>{const done=placed[k+i],open=!done&&i===activeCol;
+     return `<td><button class="cell ${done?'done':''} ${open?'open':''}" style="--rf:var(${R[k].c})" data-k="${k}" ${open?'':'disabled'} aria-label="${R[k].name}, ${COLS[i]}${done?': '+R[k].key[i]:''}">${done?R[k].key[i]:""}${done&&secretAt(k,i)>-1?`<span class="stamp" aria-hidden="true">${SECRET[secretAt(k,i)][2]}<sup>${secretAt(k,i)+1}</sup></span>`:""}</button></td>`;}).join("")}</tr>`).join("")}</tbody>`;
+  $("#chart").querySelectorAll(".cell.open").forEach(b=>b.onclick=()=>place(b));
+  const left=order[activeCol].filter(k=>!placed[k+activeCol]);
+  $("#bankTitle").textContent=`Answer cards: ${COLS[activeCol]}`;
+  $("#ans").innerHTML=left.length?left.map(k=>`<button data-k="${k}" aria-pressed="${picked===k}">${R[k].key[activeCol]}</button>`).join(""):`<span class="empty">This column is done. Pick another column above.</span>`;
+  $("#ans").querySelectorAll("button").forEach(t=>{
+    t.onclick=()=>{ if(t.dataset.dragged) return; const kk=t.dataset.k; picked=picked===kk?null:kk;renderPractice(); const nb=$(`#ans button[data-k="${kk}"]`); if(nb) nb.focus(); };
+    draggable(t,(x,y)=>{ const el=document.elementFromPoint(x,y); const cell=el&&el.closest(".cell.open"); if(!cell) return false; picked=t.dataset.k; const ok=place(cell,x,y); if(!ok) picked=null; return ok; },
+      (x,y)=>{ document.querySelectorAll(".cell.dropover").forEach(c=>c.classList.remove("dropover")); if(x==null) return; const el=document.elementFromPoint(x,y); const c=el&&el.closest(".cell.open"); if(c) c.classList.add("dropover"); });
+  });
+  $("#count").textContent=`${Object.keys(placed).length} / 20`;
+  renderCodebar();
+}
+function place(cell,bx,by){
+  const st=$("#status");
+  if(!picked){st.textContent="Choose an answer card first.";st.className="status no";return;}
+  if(cell.dataset.k===picked){
+    placed[picked+activeCol]=true;picked=null;save();const n=Object.keys(placed).length;
+    st.textContent=n===20?"Chart complete! Every region is filled in.":"Correct!";st.className="status ok";
+    if(n===20){ S.charted=true; save(); refresh(); setTimeout(()=>showOverlay("finale"),900); }
+    const r=cell.getBoundingClientRect(); burst(bx??r.left+r.width/2, by??r.top+r.height/2);
+    const k=cell.dataset.k, col=activeCol;
+    if(ORDER.every(k=>placed[k+activeCol])&&n<20) activeCol=COLS.findIndex((_,i)=>ORDER.some(k=>!placed[k+i]));
+    renderPractice();
+    const nc=$(`#chart tbody tr:nth-child(${ORDER.indexOf(k)+1}) td:nth-child(${col+2}) .cell`); if(nc) nc.classList.add("pop");
+    const nb=$("#ans button"); if(nb) nb.focus();
+    return true;
+  } else {
+    st.textContent=`Not quite. That card doesn't describe ${R[cell.dataset.k].name}. Try another row.`;st.className="status no";
+    cell.classList.remove("shake");void cell.offsetWidth;cell.classList.add("shake");
+    const pb=$(`#ans button[data-k="${picked}"]`); if(pb) pb.focus();
+    return false;
+  }
+}
+$("#reset").onclick=()=>resetPractice(false);
+
+const GQ="On Thursday you will represent one of these five regions in the Triangle Trade simulation, and you won't know which one until then. What does each region have, what does it need, and who can it trade with to get it?";
+function showOverlay(kind){
+  const o=$("#overlay"), c=$("#ocard"); let h="";
+  if(kind==="intro") h=`<h2 id="otitle">Get Ready to Trade</h2>
+    <p class="q"><b>Guiding question:</b> ${GQ}</p>
+    <p>To help your region gather the goods it needs, you have to know the strengths and weaknesses of <b>every</b> region. Have your Part 3 chart and a pencil ready.</p>
+    <p>Stuck on a word? Click any <span class="term">underlined word</span> or the 📖 at the top for a definition at your reading level. Want easier-to-read letters? Click <b>Aa</b> for dyslexia-friendly text.</p>
+    <ol>
+      <li><span class="num">1</span><div><b>Explore the regions</b><br>Click each region on the map and open all four hotspots. When you finish a region, fill in its row on your Part 3 chart.</div></li>
+      <li><span class="num">2</span><div><b>Match the goods</b><br>Unlocks after all five regions. Drag each good to the region that produces it.</div></li>
+      <li><span class="num">3</span><div><b>Practice the chart</b><br>Unlocks after you match all the goods. Check your chart one last time before the simulation.</div></li>
+    </ol>
+    <div class="acts"><button class="btn dark big" id="oGo">Start exploring</button></div>`;
+  if(kind==="unlock2") h=`<div class="icon" aria-hidden="true">🔓</div><h2 id="otitle">Step 2 Unlocked</h2>
+    <p>You explored all five regions. Your Part 3 chart should now have all five rows filled in.</p>
+    <p class="q">Now test yourself. Can you tell which region produces each good? You'll need to know this when you're looking for trading partners on Thursday.</p>
+    <div class="acts"><button class="btn dark big" id="oGo">Go to Match the goods</button></div>`;
+  if(kind==="unlock3") h=`<div class="icon" aria-hidden="true">🔓</div><h2 id="otitle">Step 3 Unlocked</h2>
+    <p>All 16 goods are matched. Before you practice the chart, look at your own notes. Did you miss anything? Add it now.</p>
+    <div class="acts"><button class="btn dark big" id="oGo">Go to Practice the chart</button></div>`;
+  if(kind==="finale") h=`<div class="icon" aria-hidden="true">⚓</div><h2 id="otitle">Ready to Trade</h2>
+    <p class="q"><b>Guiding question:</b> ${GQ}</p>
+    <p>Your chart is complete, and you know what every region has and needs. Whatever region you get on Thursday, you'll know who to trade with.</p>
+    <p>Your chart revealed a secret code. Type it here to get your trading papers.</p>
+    <form class="codeinline" id="finForm" autocomplete="off"><input id="finIn" aria-label="Secret code" spellcheck="false" autocapitalize="characters"><button class="btn dark">Enter</button></form>
+    <p class="codemsg" id="finMsg" role="status" style="text-align:center"></p>
+    <p><b>Last step:</b> answer the Part 4 Prediction Questions on your handout.</p>
+    <div class="acts"><button class="btn big" id="oGo">Back to the map</button></div>`;
+  c.classList.remove("small","cert","gloss"); glossOpen=false; o.onclick=null; c.innerHTML=h; o.hidden=false; wireWords(c);
+  const go=$("#oGo"); go.focus();
+  const ff=$("#finForm"); if(ff){ $("#finIn").focus(); ff.onsubmit=e=>{ e.preventDefault(); if(!checkSecret($("#finIn").value)){ $("#finMsg").textContent="Not quite. Check the letters in order, 1 to 7."; $("#finIn").select(); } }; }
+  go.onclick=()=>{ o.hidden=true; if(kind==="intro"){S.intro=true;save();} if(kind==="unlock2"){goHome();setMode("match");} if(kind==="unlock3") setMode("chart"); if(kind==="finale") setMode("map"); };
+}
+// Ctrl+K / Cmd+K: code popup. "triangle" unlocks every step; "reset" starts over.
+function openCode(){
+  const o=$("#overlay"), c=$("#ocard");
+  c.innerHTML=`<form class="codeform" id="codeForm" autocomplete="off"><label for="codeIn">Enter code</label>
+    <input id="codeIn" type="text" spellcheck="false" autocapitalize="off"><p class="codemsg" id="codeMsg" role="status"></p></form>`;
+  c.classList.remove("gloss","cert"); glossOpen=false; c.classList.add("small"); o.hidden=false; $("#codeIn").focus();
+  const close=()=>{ o.hidden=true; c.classList.remove("small"); };
+  o.onclick=e=>{ if(e.target===o) close(); };
+  $("#codeIn").onkeydown=e=>{ if(e.key==="Escape"){ e.preventDefault(); e.stopPropagation(); close(); } };
+  $("#codeForm").onsubmit=e=>{ e.preventDefault(); const v=$("#codeIn").value.trim().toLowerCase();
+    if(v==="triangle"){ ORDER.forEach(k=>S.done[k]=true); S.matched=true; S.intro=true; save(); refresh(); close(); toast("All steps unlocked."); }
+    else if(checkSecret(v)){}
+    else if(v==="reset"){ try{localStorage.removeItem(SKEY);}catch(err){} location.reload(); }
+    else { $("#codeMsg").textContent="That code didn't work."; $("#codeIn").select(); } };
+}
+document.addEventListener("keydown",e=>{ if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="k"){ e.preventDefault(); openCode(); } });
+$("#helpBtn").onclick=()=>showOverlay("intro");
+
+// ---------- words: definitions at the student's level ----------
+const LV=["Level 0","Level 1","Level 2","Level 3"];
+if(S.lvl==null) S.lvl=2;
+const RNAME=k=>R[k].name;
+const TERM_RX=[["mercantilism",/mercantilism/i],["rawMaterials",/raw materials?/i],["manufacturedGoods",/manufactured goods/i],["monopoly",/monopol(y|ies)/i],
+ ["cashCrop",/cash crops?/i],["navalStores",/naval stores/i],["distillery",/distiller(y|ies)/i],["molasses",/molasses/i],["duty",/\bdut(y|ies)\b/i],
+ ["motherCountry",/mother country/i],["indigo",/indigo/i],["middlePassage",/middle passage/i],["enslaved",/\benslaved\b/i],["export",/\bexport(s|ed)?\b/i]];
+function linkify(root){
+  const used=new Set();
+  const walk=node=>{
+    if(node.nodeType===3){
+      for(const [k,rx] of TERM_RX){ if(used.has(k)) continue; const m=node.data.match(rx); if(!m) continue;
+        used.add(k); const before=node.data.slice(0,m.index), after=node.data.slice(m.index+m[0].length);
+        const b=document.createElement("button"); b.className="term"; b.dataset.term=k; b.textContent=m[0];
+        const p=node.parentNode; p.insertBefore(document.createTextNode(before),node); p.insertBefore(b,node); const rest=document.createTextNode(after); p.insertBefore(rest,node); p.removeChild(node); walk(rest); return; }
+    } else if(node.nodeType===1 && !node.matches("button,h3,h2,header,.term,figcaption,.keyrows,.flips,.loop")){ [...node.childNodes].forEach(walk); }
+  };
+  walk(root);
+}
+function wireWords(root){
+  const body=root.querySelector(".body")||root; linkify(body);
+  root.querySelectorAll(".term").forEach(b=>b.onclick=e=>{ e.stopPropagation(); openDef("term",b.dataset.term); });
+  root.querySelectorAll("[data-good]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); openDef("good",b.dataset.good); });
+}
+function lvlButtons(){ return `<div class="lvls" role="group" aria-label="Reading level"><span>Reading level:</span>${LV.map((l,i)=>`<button data-lv="${i}" aria-pressed="${S.lvl===i}">${l}</button>`).join("")}</div>`; }
+function rchips(list){ return `<div class="rchips">${list.map(k=>`<span class="rchip" style="--rc:var(${R[k].d})">${RNAME(k)}</span>`).join("")}</div>`; }
+let defState=null;
+function openDef(kind,key){
+  if(!$("#defwrap").contains(document.activeElement)) defReturn=document.activeElement;
+  defState=[kind,key]; const w=WORDS[kind==="term"?"terms":"goods"][key]; const c=$("#defcard");
+  const whyL=w.why?(w.why[["g2","g5","g8","g8"][S.lvl]]):"";
+  c.innerHTML=`<div class="defhead"><span class="big" aria-hidden="true">${w.ico}</span><h3 id="deft">${w.nm}</h3><button class="x" aria-label="Close">×</button></div>
+    ${lvlButtons()}
+    ${w.img?`<img class="pic" src="${IMG[w.img]}" alt="${w.cap||w.nm}">${w.cap?`<p class="cap">${w.cap}</p>`:""}`:""}
+    <p class="def">${w.lv[S.lvl]}</p>
+    ${whyL?`<p class="sub">Why people wanted it</p><p class="def">${whyL}</p>`:""}
+    ${w.from?(w.from.length?`<p class="sub">In the simulation, it starts in</p>${rchips(w.from)}`:`<p class="sub">No region starts with it in the simulation. It has to be made or traded for.</p>`):""}
+    ${w.good?`<button class="btn" data-goodlink="${w.good}">See it as a trade good</button>`:""}`;
+  c.setAttribute("aria-labelledby","deft"); $("#defwrap").hidden=false;
+  c.querySelector(".x").onclick=closeDef; c.querySelector(".x").focus();
+  c.querySelectorAll(".lvls button").forEach(b=>b.onclick=()=>{ S.lvl=+b.dataset.lv; save(); openDef(...defState); });
+  const gl=c.querySelector("[data-goodlink]"); if(gl) gl.onclick=()=>openDef("good",gl.dataset.goodlink);
+  $("#defwrap").onclick=e=>{ if(e.target.id==="defwrap") closeDef(); };
+}
+function closeDef(){ $("#defwrap").hidden=true; if(glossOpen) renderGloss(); if(defReturn && document.contains(defReturn)) defReturn.focus(); }
+let glossOpen=false, gTab="terms", gRegion="all";
+function renderGloss(){
+  const o=$("#overlay"), c=$("#ocard"); o.onclick=e=>{ if(e.target===o){ o.hidden=true; glossOpen=false; c.classList.remove("gloss"); } };
+  c.classList.remove("small","cert"); c.classList.add("gloss");
+  const items=gTab==="terms"?Object.entries(WORDS.terms):Object.entries(WORDS.goods).filter(([k,v])=>gRegion==="all"||v.from.includes(gRegion));
+  c.innerHTML=`<h2 id="otitle">Word Bank</h2>
+    <div class="gtabs" role="group" aria-label="Word bank section"><button data-tab="terms" aria-pressed="${gTab==="terms"}">Key terms</button><button data-tab="goods" aria-pressed="${gTab==="goods"}">Trade goods</button></div>
+    ${lvlButtons()}
+    ${gTab==="goods"?`<div class="rchips" role="group" aria-label="Filter by region"><button class="rchip" data-reg="all" style="--rc:var(--ink-soft)" aria-pressed="${gRegion==="all"}">All goods</button>${ORDER.map(k=>`<button class="rchip" data-reg="${k}" style="--rc:var(${R[k].d})" aria-pressed="${gRegion===k}">${R[k].name}</button>`).join("")}</div>`:""}
+    <div class="ggrid">${items.map(([k,w])=>`<button class="gcard" data-kind="${gTab==="terms"?"term":"good"}" data-key="${k}">
+      <span class="top">${w.img?`<img src="${IMG[w.img]}" alt="">`:`<span class="e" aria-hidden="true">${w.ico}</span>`}<b>${w.nm}</b></span>
+      <p>${w.lv[S.lvl]}</p>${w.from&&w.from.length?rchips(w.from):""}</button>`).join("")}</div>
+    <div class="acts"><button class="btn dark big" id="oGo">Close</button></div>`;
+  o.hidden=false; glossOpen=true;
+  $("#oGo").onclick=()=>{ o.hidden=true; glossOpen=false; c.classList.remove("gloss"); };
+  c.querySelectorAll(".gtabs button").forEach(b=>b.onclick=()=>{ gTab=b.dataset.tab; renderGloss(); });
+  c.querySelectorAll("[data-reg]").forEach(b=>b.onclick=()=>{ gRegion=b.dataset.reg; renderGloss(); });
+  c.querySelectorAll(".lvls button").forEach(b=>b.onclick=()=>{ S.lvl=+b.dataset.lv; save(); renderGloss(); });
+  c.querySelectorAll(".gcard").forEach(b=>b.onclick=()=>openDef(b.dataset.kind,b.dataset.key));
+}
+$("#wordsBtn").onclick=()=>{ gTab="terms"; renderGloss(); };
+function setDys(on){ S.dys=on; save(); document.body.classList.toggle("dys",on); $("#dysBtn").setAttribute("aria-pressed",on); }
+$("#dysBtn").onclick=()=>setDys(!S.dys);
+setDys(!!S.dys);
+function checkSecret(v){ if(v.trim().toLowerCase()!=="mustang") return false; showReward(); return true; }
+function showReward(){
+  const o=$("#overlay"), c=$("#ocard"); o.onclick=null;
+  c.classList.remove("small","gloss"); glossOpen=false; c.classList.add("cert");
+  c.innerHTML=`<h2 id="otitle">Certified Trader</h2>
+    <div class="frame"><img src="${IMG.MRB}" alt="Mr. B giving a thumbs up"></div>
+    <p class="ready">You are ready to trade, Mustang!</p>
+    <p>You know what every region has, what it needs, and who can help it get there. See you at the docks on Thursday.</p>
+    <p class="sig">Mr. B<small>Harbormaster</small></p>
+    <div class="acts"><button class="btn dark big" id="oGo">Back to the map</button></div>`;
+  o.hidden=false; $("#oGo").focus(); $("#oGo").onclick=()=>{ o.hidden=true; c.classList.remove("cert"); setMode("map"); };
+  for(let i=0;i<5;i++) setTimeout(()=>burst(innerWidth*(.2+.15*i), innerHeight*(.25+.1*(i%2)), i%2?"var(--gold)":"var(--seal-hi)"), i*160);
+}
+
+resetPractice(true); setupMatch(true); refresh();
+if(!S.intro) showOverlay("intro");
+</script>
+
+</body>
+</html>

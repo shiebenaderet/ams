@@ -53,3 +53,24 @@ two-page student PDF and a teacher PDF) is built by `tools/build-triangle-trade-
 in `ams-planning`. Its Present button shows one panel at a time for the board, and
 `?teacher` adds the pause questions, likely misunderstandings and the debrief plan.
 The game links to it from a How to Play button.
+
+## colonial-trade-regions.html
+
+Student prep for the Triangle Trade simulation (Unit 1, Week 6). Students explore
+the five regions on the Atlantic map, fill in their Part 3 chart row by row, then
+unlock a goods-matching game and a drag-and-drop version of the chart. Seven chart
+cells spell a secret code that opens a "Certified Trader" card. Includes a word bank
+(the simulation's own VOCAB at Levels 0-3, plus a definition of every trade good),
+a dyslexia-friendly font toggle, and progress saved in each student's browser.
+Ctrl+K opens a code box: `triangle` unlocks every step, `reset` clears progress.
+
+Images and fonts live in `colonial-trade-regions/` so the page itself stays small
+(about 100 KB); nothing loads from another site. Fonts are OFL (Pirata One,
+IM Fell English, IM Fell English SC, and OpenDyslexic from `../fonts`). Region
+backgrounds are public-domain engravings and paintings from Wikimedia Commons
+(Carwitham's Boston, the 1768 Philadelphia prospect, Coram's Mulberry Plantation,
+a Library of Congress indigo works engraving); the base map is from d-maps.com.
+The other photos came from the Week 6 Day 1 slide deck.
+
+The source is a working file in the Claude session that built it, not a file in
+`ams-planning`, so edit this copy directly.
