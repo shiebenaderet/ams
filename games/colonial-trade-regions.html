@@ -252,6 +252,10 @@ body.match #mapMode{display:flex;gap:14px;align-items:flex-start;justify-content
 body.match #mapMode .stage{margin:0;flex:0 0 auto}
 body.match #mapMode .tray{margin:0;width:auto;min-width:260px;max-width:520px;flex:1 1 300px;position:sticky;top:8px}
 @media (max-width:900px){ body.match #mapMode{display:block} body.match #mapMode .tray{margin-top:10px;max-width:none} }
+.bigcode{font-family:var(--display);font-size:clamp(34px,5vw,54px);line-height:1;letter-spacing:.04em;color:var(--seal-lo);text-align:center;margin:0}
+.codeform{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center} .codeform label,.codeform .codemsg{grid-column:1 / -1}
+.codehelp{margin:6px 0 0;font-style:italic;color:var(--ink-soft);font-size:15px}
+.ocard.small{width:min(440px,100%)}
 /* Match mode */
 body.match .legend, body.match .tip, body.match .route{display:none}
 .matchmsg{position:absolute;left:50%;top:2%;transform:translateX(-50%);z-index:5;background:rgba(58,42,22,.9);color:#f6ecd2;border-radius:4px;padding:7px 18px;font-style:italic;font-size:clamp(14px,1.5vw,19px);display:none;max-width:92%;text-align:center}
@@ -331,6 +335,7 @@ tbody th{width:140px;padding:8px;font-family:var(--sc);font-weight:400;font-size
       <button id="modeMap" class="step" aria-pressed="true"><span class="num">1</span><span class="st"><b>Explore the regions</b><small id="s1meta">0 of 5 regions</small></span></button>
       <button id="modeMatch" class="step" aria-pressed="false" aria-disabled="true"><span class="num">2</span><span class="st"><b>Match the goods</b><small id="s2meta">Locked</small></span></button>
       <button id="modeChart" class="step" aria-pressed="false" aria-disabled="true"><span class="num">3</span><span class="st"><b>Practice the chart</b><small id="s3meta">Locked</small></span></button>
+      <button id="codeBtn" class="help wordsbtn" aria-label="Enter a code" title="Enter a code">🔑</button>
       <button id="wordsBtn" class="help wordsbtn" aria-label="Word bank" title="Word bank">📖</button>
       <button id="dysBtn" class="help dysbtn" aria-pressed="false" aria-label="Dyslexia-friendly text" title="Dyslexia-friendly text">Aa</button>
       <button id="helpBtn" class="help" aria-label="How this works">?</button>
@@ -612,10 +617,16 @@ function openNotes(){
     <p>In the simulation you might be ${r.name}, or you might need to trade with them. Either way, you'll need this row.</p>
     <div class="acts"><button class="btn dark" id="nDone">I filled in my row</button><button class="btn" id="nFlip">Check my row with flip cards</button></div></div></div>`;
   $("#nFlip").onclick=()=>openCard("key");
-  $("#nDone").onclick=()=>{ S.done[k]=true; save(); refresh(); m.hidden=true; m.innerHTML=""; updateProg();
+  $("#nDone").onclick=()=>{ S.done[k]=true; save(); refresh(); updateProg();
     burst(innerWidth/2, innerHeight/2);
-    if(allDone()) showOverlay("unlock2");
-    else { const left=ORDER.filter(x=>!S.done[x]).map(x=>R[x].name); toast(`${r.name} done! Still to explore: ${left.join(", ")}.`); goHome(); } };
+    m.innerHTML=`<div class="card notes" role="dialog" aria-modal="true" aria-label="Region code" style="--cc:var(${r.d})"><header><h3>🔑 You earned a code!</h3></header><div class="body">
+      <p class="lead">${r.name} code:</p><p class="bigcode">${RCODES[k].code}</p>
+      <p>Click the 🔑 at the top and enter this code to read a Merchant's Secret about ${r.name}.</p>
+      <div class="acts"><button class="btn dark" id="cGo">${allDone()?"Continue":"Back to the map"}</button></div></div></div>`;
+    $("#cGo").focus();
+    $("#cGo").onclick=()=>{ m.hidden=true; m.innerHTML="";
+      if(allDone()) showOverlay("unlock2");
+      else { const left=ORDER.filter(x=>!S.done[x]).map(x=>R[x].name); toast(`${r.name} done! Still to explore: ${left.join(", ")}.`); goHome(); } }; };
   $("#nDone").focus();
 }
 document.addEventListener("keydown",e=>{
@@ -727,7 +738,7 @@ const secretAt=(k,c)=>SECRET.findIndex(x=>x[0]===k&&x[1]===c);
 function renderCodebar(){
   const got=SECRET.filter(([k,c])=>placed[k+c]).length;
   $("#codebar").innerHTML=`<span class="lbl">Secret code</span><div class="slots">${SECRET.map(([k,c,L],i)=>`<div class="slot ${placed[k+c]?'got':''}"><small>${i+1}</small><b>${placed[k+c]?L:""}</b></div>`).join("")}</div>
-    <span class="hintc">${got<7?`Seven cells hide a sealed letter. ${got} of 7 found.`:"All 7 letters found!"}</span>
+    <span class="hintc">${got<7?`Seven cells hide a sealed letter. ${got} of 7 found. Write each letter in the matching box on your chart sheet.`:"All 7 letters found! Read them in order, 1 to 7."}</span>
     ${got===7?`<form class="codeinline" id="cbForm" autocomplete="off"><input id="cbIn" aria-label="Secret code" spellcheck="false" autocapitalize="characters"><button class="btn dark">Enter code</button></form><span class="codemsg" id="cbMsg" role="status"></span>`:""}`;
   const f=$("#cbForm"); if(f) f.onsubmit=e=>{ e.preventDefault(); if(!checkSecret($("#cbIn").value)){ $("#cbMsg").textContent="Not quite. Read the letters in order, 1 to 7."; } };
 }
@@ -762,6 +773,8 @@ function place(cell,bx,by){
     if(n===20){ S.charted=true; save(); refresh(); setTimeout(()=>showOverlay("finale"),900); }
     const r=cell.getBoundingClientRect(); burst(bx??r.left+r.width/2, by??r.top+r.height/2);
     const k=cell.dataset.k, col=activeCol;
+    const si=secretAt(cell.dataset.k,activeCol);
+    if(si>-1) setTimeout(()=>toast(`Sealed letter found! Write ${SECRET[si][2]} in box ${si+1} of the Secret code on your chart sheet.`),350);
     if(ORDER.every(k=>placed[k+activeCol])&&n<20) activeCol=COLS.findIndex((_,i)=>ORDER.some(k=>!placed[k+i]));
     renderPractice();
     const nc=$(`#chart tbody tr:nth-child(${ORDER.indexOf(k)+1}) td:nth-child(${col+2}) .cell`); if(nc) nc.classList.add("pop");
@@ -782,9 +795,9 @@ function showOverlay(kind){
   if(kind==="intro") h=`<h2 id="otitle">Get Ready to Trade</h2>
     <p class="q"><b>Guiding question:</b> ${GQ}</p>
     <p>To help your region gather the goods it needs, you have to know the strengths and weaknesses of <b>every</b> region. Have your chart sheet and a pencil ready.</p>
-    <p>Stuck on a word? Click any <span class="term">underlined word</span> or the 📖 at the top for a definition at your reading level. Want easier-to-read letters? Click <b>Aa</b> for dyslexia-friendly text.</p>
+    <p>Stuck on a word? Click any <span class="term">underlined word</span> or the 📖 at the top for a definition at your reading level. Want easier-to-read letters? Click <b>Aa</b> for dyslexia-friendly text. Found a code? Click the 🔑.</p>
     <ol>
-      <li><span class="num">1</span><div><b>Explore the regions</b><br>Click each region on the map and open its hotspots. When you finish a region, fill in its row on your chart.</div></li>
+      <li><span class="num">1</span><div><b>Explore the regions</b><br>Click each region on the map and open its hotspots. When you finish a region, fill in its row on your chart and collect its code.</div></li>
       <li><span class="num">2</span><div><b>Match the goods</b><br>Unlocks after all five regions. Drag each good to the region that produces it.</div></li>
       <li><span class="num">3</span><div><b>Practice the chart</b><br>Unlocks after you match all the goods. Check your chart one last time before the simulation.</div></li>
     </ol>
@@ -809,11 +822,32 @@ function showOverlay(kind){
   const ff=$("#finForm"); if(ff){ $("#finIn").focus(); ff.onsubmit=e=>{ e.preventDefault(); if(!checkSecret($("#finIn").value)){ $("#finMsg").textContent="Not quite. Check the letters in order, 1 to 7."; $("#finIn").select(); } }; }
   go.onclick=()=>{ o.hidden=true; if(kind==="intro"){S.intro=true;save();} if(kind==="unlock2"){goHome();setMode("match");} if(kind==="unlock3") setMode("chart"); if(kind==="finale") setMode("map"); };
 }
+// Region codes: each region gives one when its row is filled in; entering it shows a Merchant's Secret.
+// Tips use only each region's own strengths and weaknesses, never another region's secret needs list.
+const RCODES={
+ ne:{code:"HARBOR",tip:"You have the most ships in the colonies. Other regions can't move their goods without ships, so charge a fee to carry their cargo. Only you have whale oil and rum, so don't give them away cheap. Remember the rum rule: every 1 rum you trade uses up 2 molasses, so you'll need molasses from the West Indies."},
+ mid:{code:"BREADBASKET",tip:"Only you have wheat and cattle, and the sugar islands can't grow enough food to feed themselves. That makes you a strong trading partner for the West Indies. You have just 2 ships, so plan your voyages carefully, or hire New England to carry some of your cargo."},
+ so:{code:"INDIGO",tip:"You have more goods that nobody else has than any other region: tobacco, rice, naval stores, silk, and indigo. England wants cash crops like these, so bargain hard. But you have no ships. Line up a region to carry your goods before you trade for anything else."},
+ wi:{code:"SUGAR",tip:"Sugar, molasses, and citrus are yours alone, and sugar is the most valuable good in the game. You have no ships, so your first deal should be hiring someone to carry your cargo. New England needs molasses to make rum, which gives you something to bargain with."},
+ en:{code:"CROWN",tip:"You make the manufactured goods every colony wants, and you have the most ships. Everyone has to come to you. But you can't grow sugar, tobacco, or rice, so you need the colonies to keep trading with you. Push too hard and they may stop."}
+};
+function regionForCode(v){ return ORDER.find(k=>RCODES[k].code.toLowerCase()===v); }
+function showMerchant(k){
+  const o=$("#overlay"), c=$("#ocard"); o.onclick=null; glossOpen=false;
+  c.classList.remove("small","cert","gloss");
+  c.innerHTML=`<div class="icon" aria-hidden="true">🔑</div><h2 id="otitle">Merchant's Secret</h2>
+    <p class="q"><b>If you are ${R[k].name}:</b> ${RCODES[k].tip}</p>
+    <p>Keep this in mind in the simulation. If you get a different region, think about how ${R[k].name} will bargain with you.</p>
+    <div class="acts"><button class="btn dark big" id="oGo">Got it</button></div>`;
+  o.hidden=false; wireWords(c); $("#oGo").focus(); $("#oGo").onclick=()=>{ o.hidden=true; };
+}
 // Ctrl+K / Cmd+K: code popup. "triangle" unlocks every step; "reset" starts over.
 function openCode(){
-  const o=$("#overlay"), c=$("#ocard");
-  c.innerHTML=`<form class="codeform" id="codeForm" autocomplete="off"><label for="codeIn">Enter code</label>
-    <input id="codeIn" type="text" spellcheck="false" autocapitalize="off"><p class="codemsg" id="codeMsg" role="status"></p></form>`;
+  const o=$("#overlay"), c=$("#ocard"); const got=ORDER.filter(k=>S.done[k]);
+  c.innerHTML=`<form class="codeform" id="codeForm" autocomplete="off"><label for="codeIn">Enter a code</label>
+    <input id="codeIn" type="text" spellcheck="false" autocapitalize="off"><button class="btn dark">Enter</button><p class="codemsg" id="codeMsg" role="status"></p></form>
+    <p class="codehelp">Each region gives you a code when you fill in its row. The chart's seven sealed letters spell one more.</p>
+    ${got.length?`<div class="rchips">${got.map(k=>`<span class="rchip" style="--rc:var(${R[k].d})">${R[k].name}: ${RCODES[k].code}</span>`).join("")}</div>`:""}`;
   c.classList.remove("gloss","cert"); glossOpen=false; c.classList.add("small"); o.hidden=false; $("#codeIn").focus();
   const close=()=>{ o.hidden=true; c.classList.remove("small"); };
   o.onclick=e=>{ if(e.target===o) close(); };
@@ -821,11 +855,13 @@ function openCode(){
   $("#codeForm").onsubmit=e=>{ e.preventDefault(); const v=$("#codeIn").value.trim().toLowerCase();
     if(v==="triangle"){ ORDER.forEach(k=>S.done[k]=true); S.matched=true; S.intro=true; save(); refresh(); close(); toast("All steps unlocked."); }
     else if(checkSecret(v)){}
+    else if(regionForCode(v)){ showMerchant(regionForCode(v)); }
     else if(v==="reset"){ try{localStorage.removeItem(SKEY);}catch(err){} location.reload(); }
     else { $("#codeMsg").textContent="That code didn't work."; $("#codeIn").select(); } };
 }
 document.addEventListener("keydown",e=>{ if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="k"){ e.preventDefault(); openCode(); } });
 $("#helpBtn").onclick=()=>showOverlay("intro");
+$("#codeBtn").onclick=()=>openCode();
 
 // ---------- words: definitions at the student's level ----------
 const LV=["Level 0","Level 1","Level 2","Level 3"];
