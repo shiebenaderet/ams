@@ -12,7 +12,7 @@
 @font-face{font-family:"IM Fell English SC";src:url("colonial-trade-regions/fonts/im-fell-english-sc-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"OpenDyslexic";src:url("../fonts/OpenDyslexic-Regular.woff2") format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"OpenDyslexic";src:url("../fonts/OpenDyslexic-Bold.woff2") format("woff2");font-weight:700;font-display:swap}
-/* Layout: parchment sheet from the Triangle Trade simulation. Home = his blank Atlantic map inked onto parchment with pulsing region seals and toggleable routes; each region zooms into its own scene with four hotspots that open parchment pop-ups. Practice = his Part 3 chart on parchment. Deliberately single theme, like the simulation. */
+/* Layout: parchment sheet from the Triangle Trade simulation. Home = his blank Atlantic map inked onto parchment with pulsing region seals and toggleable routes; each region zooms into its own scene with four hotspots that open parchment pop-ups. Practice = the chart on parchment. Deliberately single theme, like the simulation. */
 :root{
   color-scheme:light;
   --ink:#3a2a16; --ink-soft:#5d4327; --ink-faint:#6e5736;
@@ -336,7 +336,7 @@ tbody th{width:140px;padding:8px;font-family:var(--sc);font-weight:400;font-size
       <button id="helpBtn" class="help" aria-label="How this works">?</button>
     </nav>
   </header>
-  <p class="gq"><b>Guiding question:</b> On Thursday you will represent one of these five regions in the Triangle Trade simulation. What does each region have, what does it need, and who can it trade with to get it?</p>
+  <p class="gq"><b>Guiding question:</b> In the Triangle Trade simulation, you will represent one of these five regions. What does each region have, what does it need, and who can it trade with to get it?</p>
 
   <section id="mapMode">
     <div class="stage" id="stage">
@@ -377,7 +377,7 @@ tbody th{width:140px;padding:8px;font-family:var(--sc);font-weight:400;font-size
   </section>
 
   <section id="chartMode" class="practice" hidden>
-    <h2>Part 3. Comparison Chart - ALL FIVE REGIONS:</h2>
+    <h2>Practice the Chart</h2>
     <p class="inst">Pick a column. Drag each answer card into the row where it belongs. (You can also tap a card, then tap the row.)</p>
     <div class="prow">
       <div class="cols" id="colTabs" role="group" aria-label="Chart column"></div>
@@ -440,7 +440,7 @@ const R={
    adv:{lead:"Controls all trade rules, has the most ships, and a monopoly on manufactured goods.",img:"SHIP",text:"Parliament set the rules, and England had the most powerful navy and merchant fleet."},
    chal:{lead:"Needs the colonies to cooperate. Lacks raw materials.",icon:"🤝",text:"England could not grow sugar, tobacco, rice, or indigo, and it was running short of lumber."},
    merc:true,
-   key:["Furniture, guns, books, clothing, tools, silver","Raw materials from colonies","Controls all trade rules, has the most ships, monopoly on manufactured goods","Needs colonies to cooperate, no natural resources"]}
+   key:["Furniture, guns, books, clothing, tools, silver","Raw materials from colonies","Controls all trade rules, has the most ships, monopoly on manufactured goods","Needs colonies to cooperate, lacks raw materials"]}
 };
 
 // trade routes: from, to, label, color group, bend
@@ -494,7 +494,8 @@ try{ Object.assign(S, JSON.parse(localStorage.getItem(SKEY)||"{}")); }catch(e){}
 function save(){ try{ localStorage.setItem(SKEY, JSON.stringify(S)); }catch(e){} }
 const seen=S.seen;
 const CORE=["products","needs","adv","chal"];
-const coreDone=k=>CORE.every(id=>seen[k]&&seen[k][id]);
+const reqFor=k=>R[k].labor?[...CORE,"labor"]:CORE;
+const coreDone=k=>reqFor(k).every(id=>seen[k]&&seen[k][id]);
 const allDone=()=>ORDER.every(k=>S.done[k]);
 function toast(t){ const el=$("#toast"); el.textContent=t; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,3800); }
 function refresh(){
@@ -532,9 +533,9 @@ function openScene(k){
   ph.style.backgroundImage=`url(${IMG[r.photo]})`; ph.style.backgroundPosition=r.pos||"center"; ph.classList.add("on");
   const extras=[...HOTS];
   const side=r.labor||r.merc;
-  if(r.labor) extras.push(["labor","👥","Who did the work?",[34,88]]);
-  if(r.merc) extras.push(["merc","🔄","Mercantilism",[34,88]]);
-  extras.push(["goods","⚓","Trade goods",[side?66:50,88]]);
+  if(r.labor) extras.push(["labor","👥","Who did the work?",[20,88]]);
+  if(r.merc) extras.push(["merc","🔄","Mercantilism",[20,88]]);
+  extras.push(["goods","⚓","Trade goods",[side?80:50,88]]);
   let html=`<div class="head">${r.flag?FLAG:""}<div><h2>${r.name}</h2><div class="geo">${r.geo}</div></div><span class="credit">${r.credit||""}</span></div>`;
   extras.forEach(([id,icon,label,[x,y]])=>{
     html+=`<button class="hot ${x>50?'left':''} ${seen[k][id]?'seen':''}" data-id="${id}" style="left:${x}%;top:${y}%;--hc:var(${r.d})"><span class="dot" aria-hidden="true">${seen[k][id]?'✓':icon}</span><span class="lab">${label}</span></button>`;
@@ -549,7 +550,7 @@ function openScene(k){
   $("#prev").onclick=()=>openScene(ORDER[(i+4)%5]); $("#next").onclick=()=>openScene(ORDER[(i+1)%5]);
   updateProg();
 }
-function updateProg(){ const n=CORE.filter(id=>seen[current][id]).length; $("#prog").textContent= S.done[current] ? "Chart row filled in ✓" : `${n} of 4 explored · fill in your chart as you go`; }
+function updateProg(){ const req=reqFor(current), n=req.filter(id=>seen[current][id]).length; $("#prog").textContent= S.done[current] ? "Chart row filled in ✓" : `${n} of ${req.length} explored · fill in your chart as you go`; }
 function goHome(){
   $("#homeui").inert=false; $("#scene").inert=true;
   current=null; closeCard(); $("#scene").classList.remove("on"); $("#photo").classList.remove("on");
@@ -577,7 +578,7 @@ function openCard(id){
   if(id==="key"){ title=`${r.name}: flip cards`; body=`<p>Say the answer out loud or write it in your chart, then flip to check.</p><div class="flips">${COLS.map((c,i)=>`<button class="flip" aria-pressed="false"><div class="in"><div class="f"><strong>${c}</strong><small>Tap to flip</small></div><div class="b">${r.key[i]}</div></div></button>`).join("")}</div>`; }
   else if(id==="goods"){ title="Trade goods";
     const gs=Object.entries(WORDS.goods).filter(([g,v])=>v.from.includes(current));
-    body=`<p class="lead">In Thursday's simulation, ${r.name} starts with these goods.</p>
+    body=`<p class="lead">In the simulation, ${r.name} starts with these goods.</p>
       <div class="tiles">${gs.map(([g,v])=>`<button class="tile clickable" data-good="${g}">${v.img?`<img src="${IMG[v.img]}" alt="">`:`<span class="e" aria-hidden="true">${v.ico}</span>`}<span class="n">${v.nm}</span></button>`).join("")}</div>
       <p>Click a good to learn what it is and why other regions wanted it.</p>`; }
   else if(id==="merc"){ title="Mercantilism"; body=`<p class="lead">Colonies existed to make England rich.</p>
@@ -606,9 +607,9 @@ function closeCard(user){ const m=$("#modal"); m.hidden=true; m.innerHTML="";
 function openNotes(){
   const r=R[current], k=current, m=$("#modal"); m.hidden=false;
   m.innerHTML=`<div class="card notes" role="dialog" aria-modal="true" aria-label="Fill in your chart row" style="--cc:var(${r.d})"><header><h3>📝 Fill in your chart row</h3></header><div class="body">
-    <p class="lead">You explored all four parts of ${r.name}.</p>
-    <p>Before you move on, fill in the <b>${r.name}</b> row of your Part 3 chart: Main Products, Main Needs, Biggest Advantage, and Biggest Challenge.</p>
-    <p>On Thursday you might be ${r.name}, or you might need to trade with them. Either way, you'll need this row.</p>
+    <p class="lead">You explored all the parts of ${r.name}.</p>
+    <p>Before you move on, fill in the <b>${r.name}</b> row of your chart: Main Products, Main Needs, Biggest Advantage, and Biggest Challenge.</p>
+    <p>In the simulation you might be ${r.name}, or you might need to trade with them. Either way, you'll need this row.</p>
     <div class="acts"><button class="btn dark" id="nDone">I filled in my row</button><button class="btn" id="nFlip">Check my row with flip cards</button></div></div></div>`;
   $("#nFlip").onclick=()=>openCard("key");
   $("#nDone").onclick=()=>{ S.done[k]=true; save(); refresh(); m.hidden=true; m.innerHTML=""; updateProg();
@@ -775,33 +776,33 @@ function place(cell,bx,by){
 }
 $("#reset").onclick=()=>resetPractice(false);
 
-const GQ="On Thursday you will represent one of these five regions in the Triangle Trade simulation, and you won't know which one until then. What does each region have, what does it need, and who can it trade with to get it?";
+const GQ="In the Triangle Trade simulation, you will represent one of these five regions, and you won't know which one until it starts. What does each region have, what does it need, and who can it trade with to get it?";
 function showOverlay(kind){
   const o=$("#overlay"), c=$("#ocard"); let h="";
   if(kind==="intro") h=`<h2 id="otitle">Get Ready to Trade</h2>
     <p class="q"><b>Guiding question:</b> ${GQ}</p>
-    <p>To help your region gather the goods it needs, you have to know the strengths and weaknesses of <b>every</b> region. Have your Part 3 chart and a pencil ready.</p>
+    <p>To help your region gather the goods it needs, you have to know the strengths and weaknesses of <b>every</b> region. Have your chart sheet and a pencil ready.</p>
     <p>Stuck on a word? Click any <span class="term">underlined word</span> or the 📖 at the top for a definition at your reading level. Want easier-to-read letters? Click <b>Aa</b> for dyslexia-friendly text.</p>
     <ol>
-      <li><span class="num">1</span><div><b>Explore the regions</b><br>Click each region on the map and open all four hotspots. When you finish a region, fill in its row on your Part 3 chart.</div></li>
+      <li><span class="num">1</span><div><b>Explore the regions</b><br>Click each region on the map and open its hotspots. When you finish a region, fill in its row on your chart.</div></li>
       <li><span class="num">2</span><div><b>Match the goods</b><br>Unlocks after all five regions. Drag each good to the region that produces it.</div></li>
       <li><span class="num">3</span><div><b>Practice the chart</b><br>Unlocks after you match all the goods. Check your chart one last time before the simulation.</div></li>
     </ol>
     <div class="acts"><button class="btn dark big" id="oGo">Start exploring</button></div>`;
   if(kind==="unlock2") h=`<div class="icon" aria-hidden="true">🔓</div><h2 id="otitle">Step 2 Unlocked</h2>
-    <p>You explored all five regions. Your Part 3 chart should now have all five rows filled in.</p>
-    <p class="q">Now test yourself. Can you tell which region produces each good? You'll need to know this when you're looking for trading partners on Thursday.</p>
+    <p>You explored all five regions. Your chart should now have all five rows filled in.</p>
+    <p class="q">Now test yourself. Can you tell which region produces each good? You'll need to know this when you're looking for trading partners in the simulation.</p>
     <div class="acts"><button class="btn dark big" id="oGo">Go to Match the goods</button></div>`;
   if(kind==="unlock3") h=`<div class="icon" aria-hidden="true">🔓</div><h2 id="otitle">Step 3 Unlocked</h2>
     <p>All 16 goods are matched. Before you practice the chart, look at your own notes. Did you miss anything? Add it now.</p>
     <div class="acts"><button class="btn dark big" id="oGo">Go to Practice the chart</button></div>`;
   if(kind==="finale") h=`<div class="icon" aria-hidden="true">⚓</div><h2 id="otitle">Ready to Trade</h2>
     <p class="q"><b>Guiding question:</b> ${GQ}</p>
-    <p>Your chart is complete, and you know what every region has and needs. Whatever region you get on Thursday, you'll know who to trade with.</p>
+    <p>Your chart is complete, and you know what every region has and needs. Whatever region you get, you'll know who to trade with.</p>
     <p>Your chart revealed a secret code. Type it here to get your trading papers.</p>
     <form class="codeinline" id="finForm" autocomplete="off"><input id="finIn" aria-label="Secret code" spellcheck="false" autocapitalize="characters"><button class="btn dark">Enter</button></form>
     <p class="codemsg" id="finMsg" role="status" style="text-align:center"></p>
-    <p><b>Last step:</b> answer the Part 4 Prediction Questions on your handout.</p>
+    <p><b>Last step:</b> write the secret code on your chart sheet and answer the question at the bottom.</p>
     <div class="acts"><button class="btn big" id="oGo">Back to the map</button></div>`;
   c.classList.remove("small","cert","gloss"); glossOpen=false; o.onclick=null; c.innerHTML=h; o.hidden=false; wireWords(c);
   const go=$("#oGo"); go.focus();
@@ -902,7 +903,7 @@ function showReward(){
   c.innerHTML=`<h2 id="otitle">Certified Trader</h2>
     <div class="frame"><img src="${IMG.MRB}" alt="Mr. B giving a thumbs up"></div>
     <p class="ready">You are ready to trade, Mustang!</p>
-    <p>You know what every region has, what it needs, and who can help it get there. See you at the docks on Thursday.</p>
+    <p>You know what every region has, what it needs, and who can help it get there. See you at the docks.</p>
     <p class="sig">Mr. B<small>Harbormaster</small></p>
     <div class="acts"><button class="btn dark big" id="oGo">Back to the map</button></div>`;
   o.hidden=false; $("#oGo").focus(); $("#oGo").onclick=()=>{ o.hidden=true; c.classList.remove("cert"); setMode("map"); };
