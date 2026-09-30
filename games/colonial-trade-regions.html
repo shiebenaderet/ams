@@ -263,6 +263,13 @@ body.match #mapMode .tray{margin:0;width:auto;min-width:260px;max-width:520px;fl
 .vbadge{margin-left:auto;font-family:var(--sc);font-size:13px;background:var(--seal-lo);color:#f6ecd2;border-radius:4px;padding:2px 7px}
 .hot .bin{position:static;display:flex;gap:3px;max-width:none;flex-wrap:nowrap;pointer-events:none}
 .hot .bin:empty{display:none}
+/* Routes showing: region boxes and goods step aside; dots show a region tag, explained by a small key */
+body.routes-on:not(.match) #homeui .hot .lab, body.routes-on:not(.match) #homeui .bin{display:none}
+body.routes-on:not(.match) #homeui .hot .dot{font-size:0;background:radial-gradient(circle at 35% 30%,color-mix(in srgb,var(--hc) 70%,#fff),var(--hc) 70%)}
+body.routes-on:not(.match) #homeui .hot .dot::after{content:attr(data-abbr);font-family:var(--sc);font-size:clamp(10px,1.1vw,14px);color:#fff}
+.rkey{display:none;position:absolute;left:1.2%;top:1.6%;background:var(--paper);border:1.5px solid var(--ink-soft);border-radius:4px;padding:6px 10px;box-shadow:0 2px 5px rgba(58,42,22,.25);font-family:var(--sc);font-size:clamp(12px,1.2vw,15px);line-height:1.5}
+.rkey b{display:inline-grid;place-items:center;min-width:2.6em;height:1.4em;border-radius:999px;color:#fff;font-weight:400;font-size:.85em;margin-right:6px}
+body.routes-on:not(.match) .rkey{display:block}
 /* Match mode */
 body.match .legend, body.match .tip, body.match .route{display:none}
 .matchmsg{position:absolute;left:50%;top:2%;transform:translateX(-50%);z-index:5;background:rgba(58,42,22,.9);color:#f6ecd2;border-radius:4px;padding:7px 18px;font-style:italic;font-size:clamp(14px,1.5vw,19px);display:none;max-width:92%;text-align:center}
@@ -355,9 +362,9 @@ tbody th{width:140px;padding:8px;font-family:var(--sc);font-weight:400;font-size
       <div class="maplayer" id="maplayer">
         <img src="colonial-trade-regions/img/map.png" alt="Blank map of the Atlantic Ocean showing North America, the West Indies, South America, Europe, and Africa">
         <div class="places" aria-hidden="true">
-          <span style="left:14%;top:40%">North America</span><span style="left:21%;top:85.5%">West Indies</span>
+          <span style="left:10.8%;top:33.0%">North America</span><span style="left:21%;top:85.5%">West Indies</span>
           <span style="left:26%;top:97%">South America</span><span style="left:52%;top:72%" class="sea">Atlantic Ocean</span>
-          <span style="left:88%;top:41.5%">Europe</span><span style="left:86%;top:83%">Africa</span>
+          <span style="left:95.0%;top:44.4%">Europe</span><span style="left:86%;top:83%">Africa</span>
         </div>
         <span class="credit-map">Base map: d-maps.com</span>
         <svg viewBox="0 0 1626 1228" id="routes" aria-hidden="true">
@@ -375,6 +382,7 @@ tbody th{width:140px;padding:8px;font-family:var(--sc);font-weight:400;font-size
           <button class="leg" data-g="col" aria-pressed="false" style="--sw:var(--to-col)"><span class="sw"></span>to the Colonies</button>
           <button class="leg" data-g="en" aria-pressed="false" style="--sw:var(--to-en)"><span class="sw"></span>to England</button>
         </div>
+        <div class="rkey" aria-hidden="true"><div><b style="background:var(--ne-d)">NE</b>New England</div><div><b style="background:var(--mid-d)">MID</b>Middle Colonies</div><div><b style="background:var(--so-d)">SO</b>Southern Colonies</div><div><b style="background:var(--wi-d)">WI</b>West Indies</div><div><b style="background:var(--en-d)">ENG</b>England</div></div>
         <div class="tip" id="tip">Step 1: Click a region to explore it</div>
       </div>
       <div class="scene" id="scene"></div>
@@ -485,6 +493,7 @@ const stage=$("#stage"), layer=$("#maplayer");
 document.querySelectorAll(".leg").forEach(b=>b.onclick=()=>{
   const on=b.getAttribute("aria-pressed")!=="true"; b.setAttribute("aria-pressed",on);
   document.querySelectorAll(`.route[data-g="${b.dataset.g}"]`).forEach(r=>r.classList.toggle("on",on));
+  document.body.classList.toggle("routes-on", !!document.querySelector('.leg[aria-pressed="true"]'));
 });
 
 // home hotspots
@@ -494,7 +503,7 @@ ORDER.forEach(k=>{
   b.className="hot home "+(r.lab==="left"?"left":""); b.style.left=x+"%"; b.style.top=y+"%";
   b.style.setProperty("--hc",`var(${r.d})`);
   b.innerHTML=`<span class="dot" aria-hidden="true">+</span><span class="lab">${r.name}</span>`;
-  b.dataset.k=k;
+  b.dataset.k=k; b.querySelector(".dot").dataset.abbr={ne:"NE",mid:"MID",so:"SO",wi:"WI",en:"ENG"}[k];
   b.onclick=()=>{ if(mode==="match"){ if(mPicked) tryMatch(mPicked,k,b); } else openScene(k); };
   $("#homeui").appendChild(b);
 });
