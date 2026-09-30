@@ -72,7 +72,7 @@ backgrounds are public-domain engravings and paintings from Wikimedia Commons
 a Library of Congress indigo works engraving); the base map is from d-maps.com.
 The other photos came from the Week 6 Day 1 slide deck.
 
-Videos (Mr. B previewed and approved each one): indigo (CBS Evening News), 18th-century farming at Colonial Williamsburg (shown for tobacco and wheat), the sugar plantations of Barbados (starts at 3:36), and a short history of whale oil (Kimray). They play from the Word Bank and each region's Merchant's Secret, embedded from youtube-nocookie.com with an "Open it on YouTube" link in case a school filter blocks the embed. They're listed in `VIDEOS` in the page's script.
+Videos (Mr. B chose or approved each one): making indigo dye (Story mfg.), rice processing at Hampton Plantation (SC State Parks), tobacco harvesting (George Washington's Mount Vernon), 18th-century farming at Colonial Williamsburg (for wheat), the sugar plantations of Barbados (starts at 3:36), and a short history of whale oil (Kimray). They play from the Word Bank and each region's Merchant's Secret, embedded from youtube-nocookie.com with an "Open it on YouTube" link in case a school filter blocks the embed. They're listed in `VIDEOS` in the page's script.
 
 The source is a working file in the Claude session that built it, not a file in
 `ams-planning`, so edit this copy directly.

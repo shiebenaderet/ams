@@ -898,8 +898,9 @@ function rchips(list){ return `<div class="rchips">${list.map(k=>`<span class="r
 let defState=null;
 // Videos Mr. B approved (Sep 29 2026). start = seconds into the video.
 const VIDEOS={
- indigo:{id:"cRcPFmzhnKo",title:"How indigo brings together South Carolina's past and present",ch:"CBS Evening News",start:0},
- tobacco:{id:"-LUQWBRDo-k",title:"18th-Century Farming at Colonial Williamsburg",ch:"Colonial Williamsburg",start:0},
+ indigo:{id:"FE6WI2MRwSA",title:"Extraction of Natural Indigo Dye (From Indigofera Tinctoria)",ch:"Story mfg.",start:0,note:"This video shows indigo dye being made today. Workers in colonial South Carolina used the same basic steps: soak the plants, beat the water, then dry the dye into cakes."},
+ rice:{id:"UiHuT9nnrys",title:"Hampton Plantation Rice Processing",ch:"SC State Parks",start:0},
+ tobacco:{id:"C6rq4X_zWzQ",title:"Tobacco Harvesting",ch:"George Washington's Mount Vernon",start:0},
  wheat:{id:"-LUQWBRDo-k",title:"18th-Century Farming at Colonial Williamsburg",ch:"Colonial Williamsburg",start:0},
  sugar:{id:"U32Zp4u_pNs",title:"The Sugar Plantations of British Barbados",ch:"Whitehall Moll History Clips",start:216},
  whaleOil:{id:"m30qeMboYXY",title:"A Short History of Oil: 1700-1870",ch:"Kimray",start:0}
@@ -909,7 +910,7 @@ function showVideo(key){
   const v=VIDEOS[key], c=$("#defcard"); c.classList.add("wide"); const mm=Math.floor(v.start/60), ss=String(v.start%60).padStart(2,"0");
   c.innerHTML=`<div class="defhead"><span class="big" aria-hidden="true">▶</span><h3 id="deft">${WORDS.goods[key].nm}</h3><button class="x" aria-label="Close">×</button></div>
     <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${v.id}?rel=0&start=${v.start}" title="${v.title}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
-    <p class="cap">${v.title} (${v.ch})${v.start?`. Starts at ${mm}:${ss}.`:""}</p>
+    <p class="cap">${v.title} (${v.ch})${v.start?`. Starts at ${mm}:${ss}.`:""}</p>${v.note?`<p class="def">${v.note}</p>`:""}
     <p class="cap">Video not playing? <a href="https://www.youtube.com/watch?v=${v.id}${v.start?`&t=${v.start}s`:""}" target="_blank" rel="noopener">Open it on YouTube</a>.</p>
     <button class="btn" id="vBack">Back to ${WORDS.goods[key].nm}</button>`;
   $("#defwrap").hidden=false; c.setAttribute("aria-labelledby","deft");
