@@ -65,7 +65,7 @@ h1{font-size:2rem;line-height:1.15;margin:.1rem 0 .4rem;}
 /* goal */
 .regions{list-style:none;margin:0 0 .8em;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(8.5em,1fr));gap:.5em;}
 .reg{border:1px solid var(--rule);border-radius:.5em;background:var(--card);overflow:hidden;display:flex;flex-direction:column;text-align:center;}
-.chip{display:block;color:#fff;font-weight:800;padding:.35em .3em;line-height:1.2;white-space:nowrap;text-align:center;
+.chip{display:flex;align-items:center;justify-content:center;min-height:2.95em;color:#fff;font-weight:800;padding:.3em .35em;line-height:1.15;white-space:normal;text-wrap:balance;text-align:center;
   -webkit-print-color-adjust:exact;print-color-adjust:exact;}
 .rport,.rships{padding:.2em .55em;font-size:.92em;}
 .rships{padding-bottom:.45em;display:flex;align-items:center;justify-content:center;gap:.3em;}
@@ -247,6 +247,8 @@ html.present .regions{grid-template-columns:repeat(5,1fr);gap:.4em;margin-bottom
 html.present .reg .chip{padding:.25em .5em;}
 html.present .reg .chip{font-size:.9em;}
 html.present .rport,html.present .rships{font-size:.72em;}
+html.present .reg .hp{display:block;}
+html.present .reg .rport{flex:1;}
 html.present .noship-note{font-size:.85em;margin-bottom:.4em;}
 html.present .score{font-size:.85em;}
 html.present .strip{flex:1;align-items:stretch;gap:.5em;}
@@ -423,32 +425,26 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
 <div class="slide" data-title="The goal">
 <h2 id="goal-h"><svg class="ico hico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 21.5V3"/><path d="M5 4h12l-2.5 4 2.5 4H5"/></svg>The goal</h2>
 <p class="lead">Be the <b>first region</b> to get <b>everything</b> on your <b>secret needs list</b>.</p>
-<ul class="regions"><li class="reg" data-region="newEngland" data-ships="7">
+<ul class="regions"><li class="reg" data-region="newEngland">
 <span class="chip" style="background:#1f3a5c">New England</span>
 <span class="rport"><span class="hp">Home port: </span><b>Boston</b></span>
-<span class="rships"><svg class="ico sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 16h19l-3 4.5h-13z"/><path d="M12 2.5V16"/><path d="M12 4l6.5 9.5H12z"/><path d="M12 6.5 6.5 13.5H12"/></svg><b>7</b> ships</span>
 </li>
-<li class="reg" data-region="middle" data-ships="2">
+<li class="reg" data-region="middle">
 <span class="chip" style="background:#3e6b35">Middle Colonies</span>
 <span class="rport"><span class="hp">Home port: </span><b>Philadelphia</b></span>
-<span class="rships"><svg class="ico sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 16h19l-3 4.5h-13z"/><path d="M12 2.5V16"/><path d="M12 4l6.5 9.5H12z"/><path d="M12 6.5 6.5 13.5H12"/></svg><b>2</b> ships</span>
 </li>
-<li class="reg" data-region="southern" data-ships="0">
+<li class="reg" data-region="southern">
 <span class="chip" style="background:#8a4e12">Southern Colonies</span>
 <span class="rport"><span class="hp">Home port: </span><b>Charleston</b></span>
-<span class="rships"><svg class="ico sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 16h19l-3 4.5h-13z"/><path d="M12 2.5V16"/><path d="M12 4l6.5 9.5H12z"/><path d="M12 6.5 6.5 13.5H12"/></svg><b>No ships</b></span>
 </li>
-<li class="reg" data-region="westIndies" data-ships="0">
+<li class="reg" data-region="westIndies">
 <span class="chip" style="background:#0f6b6b">West Indies</span>
 <span class="rport"><span class="hp">Home port: </span><b>Kingston</b></span>
-<span class="rships"><svg class="ico sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 16h19l-3 4.5h-13z"/><path d="M12 2.5V16"/><path d="M12 4l6.5 9.5H12z"/><path d="M12 6.5 6.5 13.5H12"/></svg><b>No ships</b></span>
 </li>
-<li class="reg" data-region="england" data-ships="8">
+<li class="reg" data-region="england">
 <span class="chip" style="background:#8c1f28">England</span>
 <span class="rport"><span class="hp">Home port: </span><b>London</b></span>
-<span class="rships"><svg class="ico sm" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 16h19l-3 4.5h-13z"/><path d="M12 2.5V16"/><path d="M12 4l6.5 9.5H12z"/><path d="M12 6.5 6.5 13.5H12"/></svg><b>8</b> ships</span>
 </li></ul>
-<p class="noship-note">The Southern Colonies and the West Indies have <b>no ships</b>. They must <b>hire a ship</b> or <b>trade for one</b>.</p>
 <ul class="score">
 <li><b>Your score</b> = how much of your needs list you have.</li>
 <li><b>Time's up and nobody finished?</b> The highest score wins. A tie goes to the team with <b>more voyages</b>.</li>
@@ -912,13 +908,17 @@ html.present .pbar kbd{font:inherit;font-size:.8em;color:var(--muted);}
     fit(slides[i]);
     setHash('#present-'+(i+1));
   }
+  var prevTheme=null;
   function start(n){
-    on=true; root.classList.add('present'); bar.hidden=false; show(n||0);
+    on=true; root.classList.add('present'); bar.hidden=false;
+    prevTheme=root.getAttribute('data-theme'); root.setAttribute('data-theme','light');   /* projectors read light pages better */
+    show(n||0);
     var st=document.getElementById('stage'); if(st) st.focus({preventScroll:true});
   }
   function stop(){
     if(!on) return;
     on=false; root.classList.remove('present'); bar.hidden=true;
+    if(prevTheme===null) root.removeAttribute('data-theme'); else root.setAttribute('data-theme',prevTheme);
     var cur=slides[i];
     slides.forEach(function(s){ s.classList.remove('on'); s.style.removeProperty('--fit'); s.removeAttribute('data-fit'); });
     setHash(location.pathname);
