@@ -256,6 +256,11 @@ body.match #mapMode .tray{margin:0;width:auto;min-width:260px;max-width:520px;fl
 .codeform{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center} .codeform label,.codeform .codemsg{grid-column:1 / -1}
 .codehelp{margin:6px 0 0;font-style:italic;color:var(--ink-soft);font-size:15px}
 .ocard.small{width:min(440px,100%)}
+.vid{position:relative;width:100%;aspect-ratio:16/9;background:#1b1208;border-radius:4px;overflow:hidden}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.defcard .cap a{color:var(--ink);font-weight:700}
+.defcard.wide{width:min(760px,100%)}
+.vbadge{margin-left:auto;font-family:var(--sc);font-size:13px;background:var(--seal-lo);color:#f6ecd2;border-radius:4px;padding:2px 7px}
 /* Match mode */
 body.match .legend, body.match .tip, body.match .route{display:none}
 .matchmsg{position:absolute;left:50%;top:2%;transform:translateX(-50%);z-index:5;background:rgba(58,42,22,.9);color:#f6ecd2;border-radius:4px;padding:7px 18px;font-style:italic;font-size:clamp(14px,1.5vw,19px);display:none;max-width:92%;text-align:center}
@@ -838,8 +843,9 @@ function showMerchant(k){
   c.innerHTML=`<div class="icon" aria-hidden="true">🔑</div><h2 id="otitle">Merchant's Secret</h2>
     <p class="q"><b>If you are ${R[k].name}:</b> ${RCODES[k].tip}</p>
     <p>Keep this in mind in the simulation. If you get a different region, think about how ${R[k].name} will bargain with you.</p>
-    <div class="acts"><button class="btn dark big" id="oGo">Got it</button></div>`;
+    <div class="acts">${RVID[k]?`<button class="btn big" id="oVid">▶ Watch: ${WORDS.goods[RVID[k]].nm}</button>`:""}<button class="btn dark big" id="oGo">Got it</button></div>`;
   o.hidden=false; wireWords(c); $("#oGo").focus(); $("#oGo").onclick=()=>{ o.hidden=true; };
+  const ov=$("#oVid"); if(ov) ov.onclick=()=>showVideo(RVID[k]);
 }
 // Ctrl+K / Cmd+K: code popup. "triangle" unlocks every step; "reset" starts over.
 function openCode(){
@@ -890,7 +896,27 @@ function wireWords(root){
 function lvlButtons(){ return `<div class="lvls" role="group" aria-label="Reading level"><span>Reading level:</span>${LV.map((l,i)=>`<button data-lv="${i}" aria-pressed="${S.lvl===i}">${l}</button>`).join("")}</div>`; }
 function rchips(list){ return `<div class="rchips">${list.map(k=>`<span class="rchip" style="--rc:var(${R[k].d})">${RNAME(k)}</span>`).join("")}</div>`; }
 let defState=null;
+// Videos Mr. B approved (Sep 29 2026). start = seconds into the video.
+const VIDEOS={
+ indigo:{id:"cRcPFmzhnKo",title:"How indigo brings together South Carolina's past and present",ch:"CBS Evening News",start:0},
+ tobacco:{id:"-LUQWBRDo-k",title:"18th-Century Farming at Colonial Williamsburg",ch:"Colonial Williamsburg",start:0},
+ wheat:{id:"-LUQWBRDo-k",title:"18th-Century Farming at Colonial Williamsburg",ch:"Colonial Williamsburg",start:0},
+ sugar:{id:"U32Zp4u_pNs",title:"The Sugar Plantations of British Barbados",ch:"Whitehall Moll History Clips",start:216},
+ whaleOil:{id:"m30qeMboYXY",title:"A Short History of Oil: 1700-1870",ch:"Kimray",start:0}
+};
+const RVID={ne:"whaleOil",mid:"wheat",so:"indigo",wi:"sugar"};
+function showVideo(key){
+  const v=VIDEOS[key], c=$("#defcard"); c.classList.add("wide"); const mm=Math.floor(v.start/60), ss=String(v.start%60).padStart(2,"0");
+  c.innerHTML=`<div class="defhead"><span class="big" aria-hidden="true">▶</span><h3 id="deft">${WORDS.goods[key].nm}</h3><button class="x" aria-label="Close">×</button></div>
+    <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${v.id}?rel=0&start=${v.start}" title="${v.title}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
+    <p class="cap">${v.title} (${v.ch})${v.start?`. Starts at ${mm}:${ss}.`:""}</p>
+    <p class="cap">Video not playing? <a href="https://www.youtube.com/watch?v=${v.id}${v.start?`&t=${v.start}s`:""}" target="_blank" rel="noopener">Open it on YouTube</a>.</p>
+    <button class="btn" id="vBack">Back to ${WORDS.goods[key].nm}</button>`;
+  $("#defwrap").hidden=false; c.setAttribute("aria-labelledby","deft");
+  c.querySelector(".x").onclick=closeDef; $("#vBack").onclick=()=>openDef("good",key); c.querySelector(".x").focus();
+}
 function openDef(kind,key){
+  $("#defcard").classList.remove("wide");
   if(!$("#defwrap").contains(document.activeElement)) defReturn=document.activeElement;
   defState=[kind,key]; const w=WORDS[kind==="term"?"terms":"goods"][key]; const c=$("#defcard");
   const whyL=w.why?(w.why[["g2","g5","g8","g8"][S.lvl]]):"";
@@ -900,14 +926,16 @@ function openDef(kind,key){
     <p class="def">${w.lv[S.lvl]}</p>
     ${whyL?`<p class="sub">Why people wanted it</p><p class="def">${whyL}</p>`:""}
     ${w.from?(w.from.length?`<p class="sub">In the simulation, it starts in</p>${rchips(w.from)}`:`<p class="sub">No region starts with it in the simulation. It has to be made or traded for.</p>`):""}
-    ${w.good?`<button class="btn" data-goodlink="${w.good}">See it as a trade good</button>`:""}`;
+    ${w.good?`<button class="btn" data-goodlink="${w.good}">See it as a trade good</button>`:""}
+    ${kind==="good"&&VIDEOS[key]?`<button class="btn dark" id="watchBtn">▶ Watch a video</button>`:""}`;
   c.setAttribute("aria-labelledby","deft"); $("#defwrap").hidden=false;
   c.querySelector(".x").onclick=closeDef; c.querySelector(".x").focus();
   c.querySelectorAll(".lvls button").forEach(b=>b.onclick=()=>{ S.lvl=+b.dataset.lv; save(); openDef(...defState); });
   const gl=c.querySelector("[data-goodlink]"); if(gl) gl.onclick=()=>openDef("good",gl.dataset.goodlink);
+  const wb=c.querySelector("#watchBtn"); if(wb) wb.onclick=()=>showVideo(key);
   $("#defwrap").onclick=e=>{ if(e.target.id==="defwrap") closeDef(); };
 }
-function closeDef(){ $("#defwrap").hidden=true; if(glossOpen) renderGloss(); if(defReturn && document.contains(defReturn)) defReturn.focus(); }
+function closeDef(){ $("#defwrap").hidden=true; $("#defcard").innerHTML=""; if(glossOpen) renderGloss(); if(defReturn && document.contains(defReturn)) defReturn.focus(); }
 let glossOpen=false, gTab="terms", gRegion="all";
 function renderGloss(){
   const o=$("#overlay"), c=$("#ocard"); o.onclick=e=>{ if(e.target===o){ o.hidden=true; glossOpen=false; c.classList.remove("gloss"); } };
@@ -918,7 +946,7 @@ function renderGloss(){
     ${lvlButtons()}
     ${gTab==="goods"?`<div class="rchips" role="group" aria-label="Filter by region"><button class="rchip" data-reg="all" style="--rc:var(--ink-soft)" aria-pressed="${gRegion==="all"}">All goods</button>${ORDER.map(k=>`<button class="rchip" data-reg="${k}" style="--rc:var(${R[k].d})" aria-pressed="${gRegion===k}">${R[k].name}</button>`).join("")}</div>`:""}
     <div class="ggrid">${items.map(([k,w])=>`<button class="gcard" data-kind="${gTab==="terms"?"term":"good"}" data-key="${k}">
-      <span class="top">${w.img?`<img src="${IMG[w.img]}" alt="">`:`<span class="e" aria-hidden="true">${w.ico}</span>`}<b>${w.nm}</b></span>
+      <span class="top">${w.img?`<img src="${IMG[w.img]}" alt="">`:`<span class="e" aria-hidden="true">${w.ico}</span>`}<b>${w.nm}</b>${gTab==="goods"&&VIDEOS[k]?`<span class="vbadge">▶ video</span>`:""}</span>
       <p>${w.lv[S.lvl]}</p>${w.from&&w.from.length?rchips(w.from):""}</button>`).join("")}</div>
     <div class="acts"><button class="btn dark big" id="oGo">Close</button></div>`;
   o.hidden=false; glossOpen=true;
