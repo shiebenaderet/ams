@@ -270,12 +270,6 @@ body.routes-on:not(.match) #homeui .hot .dot::after{content:attr(data-abbr);font
 .rkey{display:none;position:absolute;left:1.2%;top:1.6%;background:var(--paper);border:1.5px solid var(--ink-soft);border-radius:4px;padding:6px 10px;box-shadow:0 2px 5px rgba(58,42,22,.25);font-family:var(--sc);font-size:clamp(12px,1.2vw,15px);line-height:1.5}
 .rkey b{display:inline-grid;place-items:center;min-width:2.6em;height:1.4em;border-radius:999px;color:#fff;font-weight:400;font-size:.85em;margin-right:6px}
 body.routes-on:not(.match) .rkey{display:block}
-.sealnote{display:flex;align-items:center;gap:14px;margin-top:12px;padding:10px 12px;border:2px dashed var(--seal-lo);border-radius:6px;background:rgba(176,58,48,.07)}
-.sealnote p{margin:0}
-.stamp.big{position:static;flex:none;width:52px;height:52px;font-size:26px}
-.stamp.big sup{font-size:13px}
-.flip .b{position:relative}
-.slots.mini{display:flex;gap:6px;justify-content:center;margin-top:10px}
 /* Match mode */
 body.match .legend, body.match .tip, body.match .route{display:none}
 .matchmsg{position:absolute;left:50%;top:2%;transform:translateX(-50%);z-index:5;background:rgba(58,42,22,.9);color:#f6ecd2;border-radius:4px;padding:7px 18px;font-style:italic;font-size:clamp(14px,1.5vw,19px);display:none;max-width:92%;text-align:center}
@@ -602,7 +596,7 @@ function closeOverlay(){ const o=$("#overlay"), c=$("#ocard"); o.hidden=true; c.
 function openCard(id){
   if(!$("#modal").contains(document.activeElement)) cardReturn=document.activeElement;
   const r=R[current]; let title, body;
-  if(id==="key"){ title=`${r.name}: flip cards`; body=`<p>Say the answer out loud or write it in your chart, then flip to check.</p><div class="flips">${COLS.map((c,i)=>`<button class="flip" aria-pressed="false"><div class="in"><div class="f"><strong>${c}</strong><small>Tap to flip</small></div><div class="b">${r.key[i]}${secretAt(current,i)>-1?`<span class="stamp" aria-hidden="true">${SECRET[secretAt(current,i)][2]}<sup>${secretAt(current,i)+1}</sup></span>`:""}</div></div></button>`).join("")}</div>`; }
+  if(id==="key"){ title=`${r.name}: flip cards`; body=`<p>Say the answer out loud or write it in your chart, then flip to check.</p><div class="flips">${COLS.map((c,i)=>`<button class="flip" aria-pressed="false"><div class="in"><div class="f"><strong>${c}</strong><small>Tap to flip</small></div><div class="b">${r.key[i]}</div></div></button>`).join("")}</div>`; }
   else if(id==="goods"){ title="Trade goods";
     const gs=Object.entries(WORDS.goods).filter(([g,v])=>v.from.includes(current));
     body=`<p class="lead">In the simulation, ${r.name} starts with these goods.</p>
@@ -619,9 +613,6 @@ function openCard(id){
     if(c.icon) body=`<div style="font-size:64px;line-height:1" aria-hidden="true">${c.icon}</div>`+body;
     if(c.tiles) body+=tiles(c.tiles);
     if(c.text) body+=`<p>${c.text}</p>`;
-    const si=idx>-1?secretAt(current,idx):-1;
-    if(si>-1){ S.found=S.found||{}; S.found[si]=true; save();
-      body+=`<div class="sealnote"><span class="stamp big" aria-hidden="true">${SECRET[si][2]}<sup>${si+1}</sup></span><p><b>Sealed letter found!</b> Write <b>${SECRET[si][2]}</b> in box <b>${si+1}</b> of the Secret code on your chart sheet.</p></div>`; }
   }
   const m=$("#modal"); m.hidden=false;
   m.innerHTML=`<div class="card" role="dialog" aria-modal="true" aria-label="${title}" style="--cc:var(${r.d});--cf:var(${r.c})"><header><h3>${title}</h3><button class="x" aria-label="Close">×</button></header><div class="body">${body}</div></div>`;
@@ -760,10 +751,9 @@ $("#mreset").onclick=()=>setupMatch(false);
 const SECRET=[["ne",0,"M"],["wi",1,"U"],["mid",2,"S"],["en",3,"T"],["so",0,"A"],["en",1,"N"],["ne",3,"G"]];
 const secretAt=(k,c)=>SECRET.findIndex(x=>x[0]===k&&x[1]===c);
 function renderCodebar(){
-  const has=i=>{ const [k,c]=SECRET[i]; return placed[k+c]||(S.found&&S.found[i]); };
-  const got=SECRET.filter((_,i)=>has(i)).length;
-  $("#codebar").innerHTML=`<span class="lbl">Secret code</span><div class="slots">${SECRET.map(([k,c,L],i)=>`<div class="slot ${has(i)?'got':''}"><small>${i+1}</small><b>${has(i)?L:""}</b></div>`).join("")}</div>
-    <span class="hintc">${got<7?`Seven region cards hide a sealed letter. ${got} of 7 found. Write each letter in the matching box on your chart sheet.`:"All 7 letters found! Read them in order, 1 to 7."}</span>
+  const got=SECRET.filter(([k,c])=>placed[k+c]).length;
+  $("#codebar").innerHTML=`<span class="lbl">Secret code</span><div class="slots">${SECRET.map(([k,c,L],i)=>`<div class="slot ${placed[k+c]?'got':''}"><small>${i+1}</small><b>${placed[k+c]?L:""}</b></div>`).join("")}</div>
+    <span class="hintc">${got<7?`Seven cells hide a sealed letter. ${got} of 7 found. Write each letter in the matching box on your chart sheet.`:"All 7 letters found! Read them in order, 1 to 7."}</span>
     ${got===7?`<form class="codeinline" id="cbForm" autocomplete="off"><input id="cbIn" aria-label="Secret code" spellcheck="false" autocapitalize="characters"><button class="btn dark">Enter code</button></form><span class="codemsg" id="cbMsg" role="status"></span>`:""}`;
   const f=$("#cbForm"); if(f) f.onsubmit=e=>{ e.preventDefault(); if(!checkSecret($("#cbIn").value)){ $("#cbMsg").textContent="Not quite. Read the letters in order, 1 to 7."; } };
 }
@@ -822,7 +812,7 @@ function showOverlay(kind){
     <p>To help your region gather the goods it needs, you have to know the strengths and weaknesses of <b>every</b> region. Have your chart sheet and a pencil ready.</p>
     <p>Stuck on a word? Click any <span class="term">underlined word</span> or the 📖 at the top for a definition at your reading level. Want easier-to-read letters? Click <b>Aa</b> for dyslexia-friendly text. Found a code? Click the 🔑.</p>
     <ol>
-      <li><span class="num">1</span><div><b>Explore the regions</b><br>Click each region on the map and open its hotspots. When you finish a region, fill in its row on your chart and collect its code. Watch for sealed letters on the cards.</div></li>
+      <li><span class="num">1</span><div><b>Explore the regions</b><br>Click each region on the map and open its hotspots. When you finish a region, fill in its row on your chart and collect its code.</div></li>
       <li><span class="num">2</span><div><b>Match the goods</b><br>Unlocks after all five regions. Drag each good to the region that produces it.</div></li>
       <li><span class="num">3</span><div><b>Practice the chart</b><br>Unlocks after you match all the goods. Check your chart one last time before the simulation.</div></li>
     </ol>
@@ -872,8 +862,7 @@ function openCode(){
   const o=$("#overlay"), c=$("#ocard"); const got=ORDER.filter(k=>S.done[k]);
   c.innerHTML=`<form class="codeform" id="codeForm" autocomplete="off"><label for="codeIn">Enter a code</label>
     <input id="codeIn" type="text" spellcheck="false" autocapitalize="off"><button class="btn dark">Enter</button><p class="codemsg" id="codeMsg" role="status"></p></form>
-    <p class="codehelp">Each region gives you a code when you fill in its row. Seven region cards also hide a sealed letter. Read them in order, 1 to 7, to spell one more code.</p>
-    <div class="slots mini" aria-label="Sealed letters found">${SECRET.map(([k,c,L],i)=>{const f=(S.found&&S.found[i])||(S.placed&&S.placed[k+c]);return `<div class="slot ${f?'got':''}"><small>${i+1}</small><b>${f?L:""}</b></div>`;}).join("")}</div>
+    <p class="codehelp">Each region gives you a code when you fill in its row. The chart's seven sealed letters spell one more.</p>
     ${got.length?`<div class="rchips">${got.map(k=>`<span class="rchip" style="--rc:var(${R[k].d})">${R[k].name}: ${RCODES[k].code}</span>`).join("")}</div>`:""}`;
   c.classList.remove("gloss","cert"); glossOpen=false; c.classList.add("small"); o.hidden=false; $("#codeIn").focus();
   const close=()=>{ o.hidden=true; c.classList.remove("small"); };
