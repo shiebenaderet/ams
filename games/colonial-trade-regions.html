@@ -270,6 +270,15 @@ body.routes-on:not(.match) #homeui .hot .dot::after{content:attr(data-abbr);font
 .rkey{display:none;position:absolute;left:1.2%;top:1.6%;background:var(--paper);border:1.5px solid var(--ink-soft);border-radius:4px;padding:6px 10px;box-shadow:0 2px 5px rgba(58,42,22,.25);font-family:var(--sc);font-size:clamp(12px,1.2vw,15px);line-height:1.5}
 .rkey b{display:inline-grid;place-items:center;min-width:2.6em;height:1.4em;border-radius:999px;color:#fff;font-weight:400;font-size:.85em;margin-right:6px}
 body.routes-on:not(.match) .rkey{display:block}
+.vlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:10px}
+.vtile{display:flex;flex-direction:column;gap:4px;text-align:left;padding:8px;border:1.5px solid var(--ink-soft);border-radius:6px;background:var(--paper);color:var(--ink);cursor:pointer;font-family:var(--body)}
+.vtile:hover,.vtile:focus-visible{box-shadow:0 0 0 3px var(--gold)}
+.vtile .thumb{position:relative;aspect-ratio:16/9;border-radius:4px;overflow:hidden;background:#e8d9b5;display:grid;place-items:center}
+.vtile .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vtile .thumb .e{font-size:44px}
+.vtile .play{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#f6ecd2;font-size:15px;background:radial-gradient(circle at 35% 30%,var(--seal-hi),var(--seal-lo) 70%)}
+.vtile .vt{font-family:var(--sc);font-size:19px;line-height:1.15}
+.vtile .vs{font-style:italic;color:var(--ink-soft);font-size:15px}
 /* Match mode */
 body.match .legend, body.match .tip, body.match .route{display:none}
 .matchmsg{position:absolute;left:50%;top:2%;transform:translateX(-50%);z-index:5;background:rgba(58,42,22,.9);color:#f6ecd2;border-radius:4px;padding:7px 18px;font-style:italic;font-size:clamp(14px,1.5vw,19px);display:none;max-width:92%;text-align:center}
@@ -870,6 +879,7 @@ function openCode(){
   $("#codeIn").onkeydown=e=>{ if(e.key==="Escape"){ e.preventDefault(); e.stopPropagation(); close(); } };
   $("#codeForm").onsubmit=e=>{ e.preventDefault(); const v=$("#codeIn").value.trim().toLowerCase();
     if(v==="triangle"){ ORDER.forEach(k=>S.done[k]=true); S.matched=true; S.intro=true; save(); refresh(); close(); toast("All steps unlocked."); }
+    else if(v==="videos"||v==="video"){ close(); showVideoList(); }
     else if(checkSecret(v)){}
     else if(regionForCode(v)){ showMerchant(regionForCode(v)); }
     else if(v==="reset"){ try{localStorage.removeItem(SKEY);}catch(err){} location.reload(); }
@@ -916,15 +926,30 @@ const VIDEOS={
  whaleOil:{id:"m30qeMboYXY",title:"A Short History of Oil: 1700-1870",ch:"Kimray",start:0}
 };
 const RVID={ne:"whaleOil",mid:"wheat",so:"indigo",wi:"sugar"};
-function showVideo(key){
+function showVideo(key,fromList){
   const v=VIDEOS[key], c=$("#defcard"); c.classList.add("wide"); const mm=Math.floor(v.start/60), ss=String(v.start%60).padStart(2,"0");
   c.innerHTML=`<div class="defhead"><span class="big" aria-hidden="true">▶</span><h3 id="deft">${WORDS.goods[key].nm}</h3><button class="x" aria-label="Close">×</button></div>
     <div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${v.id}?rel=0&start=${v.start}" title="${v.title}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>
     <p class="cap">${v.title} (${v.ch})${v.start?`. Starts at ${mm}:${ss}.`:""}</p>${v.note?`<p class="def">${v.note}</p>`:""}
     <p class="cap">Video not playing? <a href="https://www.youtube.com/watch?v=${v.id}${v.start?`&t=${v.start}s`:""}" target="_blank" rel="noopener">Open it on YouTube</a>.</p>
-    <button class="btn" id="vBack">Back to ${WORDS.goods[key].nm}</button>`;
+    <button class="btn" id="vBack">${fromList?"Back to all videos":`Back to ${WORDS.goods[key].nm}`}</button>`;
   $("#defwrap").hidden=false; c.setAttribute("aria-labelledby","deft");
-  c.querySelector(".x").onclick=closeDef; $("#vBack").onclick=()=>openDef("good",key); c.querySelector(".x").focus();
+  c.querySelector(".x").onclick=closeDef; $("#vBack").onclick=()=>fromList?showVideoList():openDef("good",key); c.querySelector(".x").focus();
+}
+// "videos" shortcut: every video on one page, one click each
+function showVideoList(){
+  const c=$("#defcard"); c.classList.add("wide");
+  if(!$("#defwrap").contains(document.activeElement)) defReturn=document.activeElement;
+  c.innerHTML=`<div class="defhead"><span class="big" aria-hidden="true">▶</span><h3 id="deft">Videos</h3><button class="x" aria-label="Close">×</button></div>
+    <p class="def">See how colonial goods were grown and made. Click a video to watch it.</p>
+    <div class="vlist">${Object.entries(VIDEOS).map(([k,v])=>{ const w=WORDS.goods[k]; const from=w.from.map(r=>R[r].name).join(", ");
+      return `<button class="vtile" data-v="${k}"><span class="thumb"><img src="https://i.ytimg.com/vi/${v.id}/mqdefault.jpg" alt="" onerror="this.remove()"><span class="e" aria-hidden="true">${w.ico}</span><span class="play" aria-hidden="true">▶</span></span>
+        <span class="vt">${w.nm}</span><span class="vs">${from}</span></button>`; }).join("")}</div>`;
+  c.setAttribute("aria-labelledby","deft"); $("#defwrap").hidden=false;
+  c.querySelector(".x").onclick=closeDef;
+  c.querySelectorAll(".vtile").forEach(b=>b.onclick=()=>showVideo(b.dataset.v,true));
+  $("#defwrap").onclick=e=>{ if(e.target.id==="defwrap") closeDef(); };
+  c.querySelector(".vtile").focus();
 }
 function openDef(kind,key){
   $("#defcard").classList.remove("wide");
