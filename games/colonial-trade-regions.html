@@ -261,6 +261,8 @@ body.match #mapMode .tray{margin:0;width:auto;min-width:260px;max-width:520px;fl
 .defcard .cap a{color:var(--ink);font-weight:700}
 .defcard.wide{width:min(760px,100%)}
 .vbadge{margin-left:auto;font-family:var(--sc);font-size:13px;background:var(--seal-lo);color:#f6ecd2;border-radius:4px;padding:2px 7px}
+.hot .bin{position:static;display:flex;gap:3px;max-width:none;flex-wrap:nowrap;pointer-events:none}
+.hot .bin:empty{display:none}
 /* Match mode */
 body.match .legend, body.match .tip, body.match .route{display:none}
 .matchmsg{position:absolute;left:50%;top:2%;transform:translateX(-50%);z-index:5;background:rgba(58,42,22,.9);color:#f6ecd2;border-radius:4px;padding:7px 18px;font-style:italic;font-size:clamp(14px,1.5vw,19px);display:none;max-width:92%;text-align:center}
@@ -519,7 +521,7 @@ function refresh(){
   $("#s3meta").textContent= S.charted?"Done":(S.matched?"Unlocked":"Locked");
   $("#modeChart").classList.toggle("done",!!S.charted);
   document.querySelectorAll("#homeui .hot").forEach(h=>{ const d=S.done[h.dataset.k]; h.classList.toggle("seen",!!d); h.querySelector(".dot").textContent=d?"✓":"+"; });
-  $("#tip").textContent = allDone() ? "All regions explored. Go to Step 2: Match the goods" : `Step 1: Click a region to explore it (${n} of 5 done)`;
+  $("#tip").textContent = S.charted ? "All steps done! Click any region to review it" : S.matched ? "Goods matched. Go to Step 3: Practice the chart" : allDone() ? "All regions explored. Go to Step 2: Match the goods" : `Step 1: Click a region to explore it (${n} of 5 done)`;
 }
 function zoomTo(k){
   const z=R[k].zoom;
@@ -724,8 +726,7 @@ function setupMatch(keep){
   if(!keep) { S.mDone=[]; save(); }
   const done=S.mDone||[]; matched=done.length; mPicked=null; $("#mcount").textContent=`${matched} / 16`; mmsg(matched?`${matched} of 16 matched. Keep going!`:"Drag a good onto the region that produces it.");
   document.querySelectorAll(".bin").forEach(b=>b.remove());
-  ORDER.forEach(k=>{const [x,y]=pct(R[k].hot); const left=R[k].lab==="left";
-    $("#homeui").insertAdjacentHTML("beforeend",`<div class="bin" id="bin-${k}" style="${left?`right:${100-x+2}%`:`left:${x+2}%`};top:${y+3.5}%"></div>`);});
+  ORDER.forEach(k=>{ $(`#homeui .hot[data-k="${k}"]`).insertAdjacentHTML("beforeend",`<span class="bin" id="bin-${k}" aria-label="Goods matched to ${R[k].name}"></span>`); });
   done.forEach(([i,k])=>{ const g=GOODS[i]; $(`#bin-${k}`).insertAdjacentHTML("beforeend",IMG[g[0]]?`<img src="${IMG[g[0]]}" alt="${g[1]}">`:`<span title="${g[1]}">${g[0]}</span>`); });
   const order=shuffle(GOODS.map((g,i)=>i)).filter(i=>!done.some(d=>d[0]===i));
   $("#tokens").innerHTML=order.map(i=>`<button class="token" data-i="${i}" aria-pressed="false">${tokenFace(GOODS[i])}${GOODS[i][1]}</button>`).join("");
