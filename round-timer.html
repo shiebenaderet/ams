@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triangle Trade &mdash; Round Timer</title>
+<link rel="stylesheet" href="fonts/atkinson.css">
+<!--
+  Round Timer for the Triangle Trade, run on paper (Oct 1 2026).
+
+  The round slides carry countdown GIFs, which cannot pause (teacher, Oct 1: "can I
+  pause or rewind or add a minute?"). This page is the same round on one screen with a
+  clock the teacher controls. Nothing to enter: it only knows the round, the phase and
+  the time. Keys: Space start/pause, Up/+ add a minute, Down/- take one away, R restart
+  this phase, Right/N next phase, Left/B previous phase, F full screen. Phase lengths
+  and the round number are editable; the round is remembered in this browser only.
+  The steps on each phase are the Day 21 slides' wording (build-review-slides.py).
+-->
+<style>
+:root{--deep:#1F4D3A;--accent:#3E7C5A;--tint:#E9F1EC;--hilite:#D9480F;--ink:#1A1A1A;--muted:#5A5A5A;--bg:#FBFAF7;}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;
+  display:flex;flex-direction:column;border-top:.6rem solid var(--deep);}
+main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:2.5vw;padding:3vh 4vw 1vh;align-items:center;}
+.left .round{display:inline-block;background:var(--deep);color:#fff;font-weight:700;font-size:clamp(16px,2vw,30px);
+  padding:.2em .7em;border-radius:.4em;}
+.left h1{font-size:clamp(34px,5.4vw,96px);color:var(--deep);margin:.25em 0 .35em;line-height:1;}
+.left ul{list-style:none;padding:0;margin:0;font-size:clamp(17px,2.1vw,36px);line-height:1.35;}
+.left li{margin:0 0 .45em;}
+.left li b{font-weight:700;}
+.left li.quiet{color:var(--muted);}
+.clock{text-align:center;}
+#time{font-weight:800;font-size:clamp(90px,17vw,330px);line-height:1;color:var(--deep);font-variant-numeric:tabular-nums;}
+#time.last{color:var(--hilite);}
+#status{font-size:clamp(18px,2.4vw,42px);font-weight:700;color:var(--hilite);min-height:1.4em;margin-top:.2em;}
+#status.paused{color:var(--muted);}
+.bar{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;align-items:center;padding:1.2vh 3vw 2.2vh;}
+button{font:inherit;font-weight:700;font-size:clamp(14px,1.3vw,20px);border:2px solid var(--deep);background:#fff;color:var(--deep);
+  border-radius:.5em;padding:.45em .9em;cursor:pointer;}
+button.primary{background:var(--deep);color:#fff;min-width:7.5em;}
+button:focus-visible{outline:3px solid var(--hilite);outline-offset:2px;}
+.set{font-size:clamp(13px,1.1vw,17px);color:var(--muted);display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:center;width:100%;}
+.set input{width:3.4em;font:inherit;padding:.15em .3em;border:1.5px solid #999;border-radius:.3em;}
+.keys{font-size:clamp(12px,1vw,15px);color:var(--muted);text-align:center;padding-bottom:1vh;}
+body.full .bar,body.full .keys{display:none;}
+@media (max-width:760px){main{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<main>
+  <section class="left" aria-live="polite">
+    <span class="round" id="roundTag">Round 1</span>
+    <h1 id="phase">Negotiation</h1>
+    <ul id="steps"></ul>
+  </section>
+  <section class="clock">
+    <div id="time" role="timer" aria-label="Time left">4:00</div>
+    <div id="status" class="paused">Ready: press Start</div>
+  </section>
+</main>
+<div class="bar">
+  <button id="prev" title="Previous phase (Left arrow)">&lsaquo; Back</button>
+  <button id="minus" title="Take a minute away (Down arrow)">&minus;1 min</button>
+  <button id="go" class="primary" title="Start or pause (Space)">Start</button>
+  <button id="plus" title="Add a minute (Up arrow)">+1 min</button>
+  <button id="restart" title="Restart this phase (R)">Restart</button>
+  <button id="next" title="Next phase (Right arrow)">Next &rsaquo;</button>
+  <button id="full" title="Full screen (F)">Full screen</button>
+  <div class="set">
+    <label>Round <input id="setRound" type="number" min="1" max="20" value="1"></label>
+    <label>Negotiation (min) <input id="setNeg" type="number" min="1" max="20" value="4"></label>
+    <label>Shipping (min) <input id="setShip" type="number" min="1" max="20" value="5"></label>
+    <label><input id="setSound" type="checkbox" checked> Chime at 1:00 and 0:00</label>
+  </div>
+</div>
+<p class="keys">Space start/pause &middot; &uarr; +1 min &middot; &darr; &minus;1 min &middot; R restart &middot; &rarr; next &middot; &larr; back &middot; F full screen</p>
+
+<script>
+const PHASES = {
+  negotiate: { name: 'Negotiation', steps: [
+    ['Merchant:', 'one port, one offer.'],
+    ['Harbormasters:', 'meet visitors, vote, log the deal.'],
+    ['Captain:', 'stays home.'],
+    ['', 'No goods move.', true]],
+    end: 'Time’s up: everyone back to port.' },
+  ship: { name: 'Shipping', steps: [
+    ['Record Keeper + Captain:', 'fill in the manifest.'],
+    ['Captain:', 'Dock, swap, Dock, home.'],
+    ['Merchant:', 'stays home.'],
+    ['Counter:', 'count and check off.']],
+    end: 'Time’s up: Counters, tell Mr. B your number.' }
+};
+const $ = id => document.getElementById(id);
+const store = {
+  get(k, d){ try { const v = localStorage.getItem('rt-' + k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem('rt-' + k, JSON.stringify(v)); } catch(e){} }
+};
+let round = store.get('round', 1), phase = store.get('phase', 'negotiate');
+let mins = { negotiate: store.get('neg', 4), ship: store.get('ship', 5) };
+let sound = store.get('sound', true);
+let remain = mins[phase] * 60000, running = false, endsAt = 0, warned = false, ended = false;
+
+function fmt(ms){ const s = Math.max(0, Math.ceil(ms / 1000)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+function left(){ return running ? endsAt - Date.now() : remain; }
+
+let ctx;
+function beep(freq, dur){
+  if (!sound) return;
+  try {
+    ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.frequency.value = freq; o.connect(g); g.connect(ctx.destination);
+    g.gain.setValueAtTime(0.25, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    o.start(); o.stop(ctx.currentTime + dur);
+  } catch(e){}
+}
+
+function renderPhase(){
+  const p = PHASES[phase];
+  $('roundTag').textContent = 'Round ' + round;
+  $('phase').textContent = p.name;
+  $('steps').innerHTML = p.steps.map(([b, t, q]) =>
+    `<li${q ? ' class="quiet"' : ''}>${b ? '<b>' + b + '</b> ' : ''}${t}</li>`).join('');
+  $('setRound').value = round; $('setNeg').value = mins.negotiate; $('setShip').value = mins.ship;
+  $('setSound').checked = sound;
+  document.title = 'Round ' + round + ' · ' + p.name + ' · Triangle Trade';
+}
+function renderClock(){
+  const ms = left();
+  $('time').textContent = fmt(ms);
+  $('time').classList.toggle('last', ms <= 60000);
+  const st = $('status');
+  if (ended) { st.textContent = PHASES[phase].end; st.className = ''; }
+  else if (running) { st.textContent = ''; st.className = ''; }
+  else { st.textContent = remain === mins[phase] * 60000 ? 'Ready: press Start' : 'Paused'; st.className = 'paused'; }
+  $('go').textContent = running ? 'Pause' : (remain === mins[phase] * 60000 ? 'Start' : 'Resume');
+}
+function tick(){
+  if (running) {
+    const ms = left();
+    if (!warned && ms <= 60000 && ms > 0) { warned = true; beep(660, .35); }
+    if (ms <= 0) { running = false; remain = 0; ended = true; beep(440, .9); setTimeout(() => beep(440, .9), 1000); }
+  }
+  renderClock();
+}
+function toggle(){
+  if (ended) return;
+  if (running) { remain = left(); running = false; }
+  else { endsAt = Date.now() + remain; running = true; if (ctx && ctx.state === 'suspended') ctx.resume(); }
+  renderClock();
+}
+function adjust(deltaMin){
+  const ms = Math.max(0, left() + deltaMin * 60000);
+  if (running) endsAt = Date.now() + ms; else remain = ms;
+  if (ms > 0) ended = false;
+  if (ms > 60000) warned = false;
+  if (ms === 0 && !ended) { running = false; remain = 0; ended = true; }
+  renderClock();
+}
+function reset(){ running = false; ended = false; warned = false; remain = mins[phase] * 60000; renderPhase(); renderClock(); }
+function step(dir){
+  if (dir > 0) { if (phase === 'negotiate') phase = 'ship'; else { phase = 'negotiate'; round++; } }
+  else { if (phase === 'ship') phase = 'negotiate'; else if (round > 1) { phase = 'ship'; round--; } }
+  store.set('round', round); store.set('phase', phase); reset();
+}
+function full(){
+  const on = !document.fullscreenElement;
+  if (on && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
+  else if (!on && document.exitFullscreen) document.exitFullscreen().catch(() => {});
+}
+document.addEventListener('fullscreenchange', () => document.body.classList.toggle('full', !!document.fullscreenElement));
+
+$('go').onclick = toggle; $('plus').onclick = () => adjust(1); $('minus').onclick = () => adjust(-1);
+$('restart').onclick = reset; $('next').onclick = () => step(1); $('prev').onclick = () => step(-1); $('full').onclick = full;
+$('setRound').onchange = e => { round = Math.max(1, parseInt(e.target.value) || 1); store.set('round', round); renderPhase(); };
+$('setNeg').onchange = e => { mins.negotiate = Math.max(1, parseInt(e.target.value) || 4); store.set('neg', mins.negotiate); if (phase === 'negotiate' && !running) reset(); };
+$('setShip').onchange = e => { mins.ship = Math.max(1, parseInt(e.target.value) || 5); store.set('ship', mins.ship); if (phase === 'ship' && !running) reset(); };
+$('setSound').onchange = e => { sound = e.target.checked; store.set('sound', sound); };
+
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  const k = e.key;
+  if (k === ' ') { e.preventDefault(); toggle(); }
+  else if (k === 'ArrowUp' || k === '+' || k === '=') { e.preventDefault(); adjust(1); }
+  else if (k === 'ArrowDown' || k === '-') { e.preventDefault(); adjust(-1); }
+  else if (k === 'ArrowRight' || k === 'n' || k === 'N') step(1);
+  else if (k === 'ArrowLeft' || k === 'b' || k === 'B') step(-1);
+  else if (k === 'r' || k === 'R') reset();
+  else if (k === 'f' || k === 'F') full();
+});
+
+reset();
+setInterval(tick, 200);
+</script>
+</body>
+</html>
