@@ -221,6 +221,20 @@ h1.main-title{
   animation:cardIn .45s cubic-bezier(.2,1.4,.4,1);
 }
 @keyframes cardIn{from{transform:scale(.55) rotate(-7deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.modal-card.wide{width:min(1150px,97vw);max-height:92vh;overflow:auto}
+.req-table th{text-align:left;font-family:'IM Fell English SC',serif;font-size:14px;border-bottom:1.5px solid var(--ink-faint);padding:0.25rem 0.375rem}
+.req-table td{vertical-align:top}
+.req-table td div{margin-bottom:0.2rem}
+.req-sel{font-family:'IM Fell English',serif;font-size:14px;max-width:170px;padding:0.125rem;border:1.5px solid var(--ink-faint);border-radius:3px;background:rgba(255,252,240,.9);color:var(--ink)}
+.req-sel.req-guess{border-color:var(--gold);background:#f6e7b0}
+.req-sel.req-none{border-color:var(--bad);background:#f3d5d2}
+.req-avoid{background:rgba(140,31,40,.05)}
+.req-per{font-size:12px;color:var(--ink-soft)}
+.req-periods{display:flex;gap:0.875rem;flex-wrap:wrap;justify-content:center;font-size:15px;margin:0.25rem 0 0.5rem}
+.stu-chip .req-mark{font-size:13px;min-width:1.2em;text-align:center}
+.stu-chip .req-mark.got{color:var(--good)}
+.stu-chip .req-mark.miss{color:var(--ink-soft)}
+.stu-chip .req-mark.clash{color:var(--bad);font-weight:bold}
 .modal-card h3{font-family:'Pirata One',serif;font-weight:400;font-size:30px;text-align:center;margin-bottom:0.25rem}
 .modal-card .chance-flavor{text-align:center;font-size:38px;margin:0.375rem 0}
 .modal-card .chance-text{font-size:20px;text-align:center;font-style:italic;color:var(--ink-soft);margin:0.5rem 0 1.125rem;line-height:1.4}
@@ -336,6 +350,9 @@ a.print-link{text-decoration:none;display:inline-block}
 .tb-note.warn{color:#8b1a1a;font-style:normal;font-weight:bold}
 .stu-chip .stu-move{max-width:92px;font-family:'IM Fell English',serif;font-size:12px;padding:0.125rem;border:1px solid var(--ink-faint);border-radius:3px;background:rgba(255,252,240,.9);color:var(--ink)}
 .tb-privacy{font-size:13.5px;font-style:italic;color:var(--ink-soft);max-width:760px}
+.tb-class{font-family:'IM Fell English SC',serif;font-size:16px;display:flex;gap:0.375rem;align-items:center}
+.tb-class select{font-family:'IM Fell English',serif;font-size:16px;padding:0.25rem 0.5rem;border:1.5px solid var(--ink-faint);border-radius:4px;background:rgba(255,252,240,.9);color:var(--ink)}
+.stu-chip .stu-name{cursor:text}
 .tb-note{font-style:italic;color:var(--ink-soft);min-height:1em}
 .tb-toolbar{display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center}
 .role-legend{font-size:13px;font-style:italic;color:var(--ink-soft)}
@@ -620,8 +637,10 @@ body.projector .progress-bar{height:0.8rem}
     <div class="tb-wrap">
       <div style="display:flex;align-items:baseline;gap:0.875rem;flex-wrap:wrap">
         <h2 style="font-family:'Pirata One',serif;font-weight:400;font-size:30px">👥 Muster the Crews</h2>
-        <span class="role-legend">Drag a name, or use its “move to” menu · click the role icon to cycle ⚓ Harbormaster → 🤝 Merchant → 🧭 Captain</span>
+        <label class="tb-class">Class <select id="tbClass" aria-label="Class to build teams for"></select></label>
+        <span class="role-legend">Drag a name, or use its “move to” menu · click the role icon to cycle ⚓ Harbormaster → 🤝 Merchant → 🧭 Captain · double-click a name to rename</span>
         <span class="spacer" style="flex:1"></span>
+        <button class="seal-btn quiet small" id="btnPrintCrews">🖨 Print crew sheets</button>
         <button class="seal-btn quiet small" id="btnTeamsBack">← Back to board</button>
       </div>
       <div class="tb-import">
@@ -629,6 +648,13 @@ body.projector .progress-bar{height:0.8rem}
           <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;margin-bottom:0.375rem">
             <button class="seal-btn small" id="btnLoadRoster">📋 Load roster (Grouping Tool export)</button>
             <button class="seal-btn quiet small" id="btnClearRoster">🗑 Clear roster</button>
+            <button class="seal-btn small" id="btnLoadRequests">📝 Load group requests (survey CSV)</button>
+            <button class="seal-btn quiet small" id="btnClearRequests">🗑 Clear requests</button>
+          </div>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;margin-bottom:0.375rem">
+            <button class="seal-btn small" id="btnTeamsBackup" title="Every class's roster, teams, roles and requests, in one file">💾 Back up rosters &amp; teams</button>
+            <button class="seal-btn quiet small" id="btnTeamsCsv" title="Class, team, role and name, for Google Sheets">⬇ Spreadsheet (CSV)</button>
+            <button class="seal-btn quiet small" id="btnTeamsRestore" title="Put rosters and teams back from a backup file, without touching game progress">📂 Restore rosters &amp; teams</button>
           </div>
           <p class="tb-privacy">The file is read on this laptop and goes nowhere. The game keeps each student's first name, last initial and reading version (for suggesting teams); student IDs, scores and everything else in the file are dropped as it is read.</p>
           <details style="margin-top:0.375rem"><summary style="cursor:pointer;font-style:italic;color:var(--ink-soft)">Add names by hand</summary>
@@ -678,6 +704,8 @@ body.projector .progress-bar{height:0.8rem}
 <div class="proj-label proj-only" id="projLabel">Projector view</div>
 <input type="file" id="fileBackup" accept="application/json,.json" hidden>
 <input type="file" id="rosterFile" accept="application/json,.json" hidden>
+<input type="file" id="teamsBackupFile" accept="application/json,.json" hidden>
+<input type="file" id="requestsFile" accept=".csv,.tsv,.txt,text/csv,text/plain" hidden>
 
 <!-- Generated by tools/build-triangle-trade.js in the ams-planning repo. Do not edit here. -->
 <!-- triangle-trade-data.js -->
@@ -1077,7 +1105,9 @@ const ROLES_TEXT = {
      q      the question
      look   "Look at:" one or two named places to find evidence (the Harbormaster
             Record's Got it boxes, the Trade Log's Going out column, paragraph 2 or 3
-            of the Group Handout, the board's map, the game's end screen)
+            of the Group Handout, the board's map, the standings chart, the England
+            tray). Not the game's end screen: from Oct 2 trading ran on paper, so the
+            end screen holds no class data (changed Oct 4).
      start  "Start with:" a sentence starter that opens the student's own answer,
             never the answer with a blank in it
    Each of the three is leveled (g2/g5/g8/hs = Level 0-3); Level 0 adds a small word
@@ -1121,10 +1151,10 @@ const REFLECT = {
       g5:"Which good did almost every region want, and what power did that give the region that had it?",
       g8:"Which good did nearly every region want, and what power did that give the region that controlled it?",
       hs:"Which good was in demand across nearly every region, and how did control of it turn into bargaining power?"},
-   look:{g2:"The most-traded goods on the game's end screen. What visiting Merchants asked you for.",
-      g5:"The most-traded goods on the game's end screen, and what visiting Merchants asked you for.",
-      g8:"The most-traded goods on the game's end screen, and what visiting Merchants kept asking you for.",
-      hs:"The most-traded goods on the game's end screen, and the requests visiting Merchants made in Negotiation."},
+   look:{g2:"Your Trade Log. What visiting Merchants asked you for.",
+      g5:"Your Trade Log, and what visiting Merchants asked you for.",
+      g8:"Your Trade Log, and what visiting Merchants kept asking you for.",
+      hs:"Your Trade Log, and the requests visiting Merchants made in Negotiation: the good that came up most."},
    start:{g2:"Almost every team wanted ___. The team with it could ___. (Words: sugar, guns, ask for more, say no)",
       g5:"Almost every region wanted ___. Because ___ had it, they could ___.",
       g8:"The good nearly everyone wanted was ___. Because ___ controlled it, they could ___.",
@@ -1137,7 +1167,7 @@ const REFLECT = {
       g5:"Your Trade Log: find one deal, count or voyage you worked on.",
       g8:"Your Trade Log and your What we have counts: find one deal, voyage or count you were part of.",
       hs:"Your Trade Log and your What we have counts: find a deal, voyage or count that shows your work."},
-   start:{g2:"My job was ___. I helped when I ___. (Jobs: Captain, Merchant, Harbormaster: Record Keeper, Counter, Port Negotiator, Strategist)",
+   start:{g2:"My job was ___. I helped when I ___. (Jobs: Captain, Merchant, Record Keeper, Counter, Negotiator, Strategist)",
       g5:"My job was ___. One thing I did that helped was ___.",
       g8:"As our ___, I helped the team when I ___.",
       hs:"As our ___, my most useful contribution was ___, because ___."}},
@@ -1181,44 +1211,122 @@ const REFLECT = {
      g8:"Without the Middle Passage, the real trade could not ___. Leaving it out of our game ___.",
      hs:"The whole triangle rested on the Middle Passage because ___; a game that never sails it ___."}},
  cer:{
-  // The question every region answers. Its "even though" keeps both sides live: the
-  // Claim must name a cost and a benefit (the level 3); the Reasoning's last sentence
-  // is where the level 4 lives (the costs landed differently on different groups).
-  q:{g2:"Why would the colonies come to resent (feel angry about) England's trade rules, even though the rules helped some colonists too?",
-     g5:"Why would the colonies come to resent England's trade rules, even though the rules helped some colonists too?",
-     g8:"Why would the colonies come to resent England's trade rules, even though the rules helped some colonists too?",
-     hs:"Why would the colonies come to resent England's trade rules, even though the rules helped some colonists too?"},
-  look:{g2:"The standings. Your Trade Log. Your Group Handout on England's rules.",
-     g5:"The final standings, your Trade Log (what you needed from England), and the part of your Group Handout about England's rules.",
-     g8:"The final standings, your Trade Log (what you needed from England, and any deal England turned down), and your Group Handout on England's trade rules.",
-     hs:"The final standings, your Trade Log, and your Group Handout on the Navigation Acts and England's trade rules."},
+  // The question every region answers (changed Oct 5: "be angry about" replaced
+  // "resent", which most students could not read). Its "even though" keeps both
+  // sides live: the Claim names a cost and a benefit (the level 3). Evidence is three
+  // labelled pieces, two from the game and one from history, each with its own
+  // starter. Reasoning is "Connect it" (the 3) then "For a 4" (the costs landed
+  // differently: who paid most).
+  q:{g2:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?",
+     g5:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?",
+     g8:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?",
+     hs:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?"},
+  // Fallback Look at; each region prints its own (lookRegion), naming the counts on
+  // its needs list and the one sentence about England's rules in its Group Handout at
+  // that level (or the Vocabulary sheet where that level's handout has none).
+  look:{g2:"Your needs list. Your Trade Log. Your Group Handout.",
+     g5:"Your needs list, your Trade Log, and your Group Handout's sentence about England's rules.",
+     g8:"Your needs list, your Trade Log, and the sentence about England's rules in your Group Handout.",
+     hs:"Your needs list, your Trade Log, and your Group Handout on England's trade laws."},
+  lookRegion:{
+   newEngland:{g2:"Your needs list (6 of 14 came only from England). Your Trade Log. Mercantilism on your Vocabulary sheet.",
+     g5:"Your needs list (6 of your 14 items came only from England), your Trade Log, and the Group Handout sentence about England's trade rules.",
+     g8:"Your needs list (6 of your 14 items were made only in England), your Trade Log, and the Navigation Acts sentence in your Group Handout.",
+     hs:"Your needs list (6 of your 14 items were made only in England), your Trade Log, and the Group Handout sentences on the Navigation Acts and the Molasses Act."},
+   middle:{g2:"Your needs list (9 of 14 came only from England). Your Trade Log. Mercantilism on your Vocabulary sheet.",
+     g5:"Your needs list (9 of your 14 items came only from England), your Trade Log, and the Group Handout sentence about England's trade rules.",
+     g8:"Your needs list (9 of your 14 items were made only in England), your Trade Log, and the Navigation Acts sentence in your Group Handout.",
+     hs:"Your needs list (9 of your 14 items were made only in England), your Trade Log, and the Group Handout sentence on furs and the Navigation Acts."},
+   southern:{g2:"Your needs list (9 of 15 came only from England). Your Trade Log. Group Handout: tobacco sold only to England.",
+     g5:"Your needs list (9 of your 15 items came only from England), your Trade Log, and the Group Handout sentence that says your tobacco could be sold only to England.",
+     g8:"Your needs list (9 of your 15 items were made only in England), your Trade Log, and the Group Handout sentence that says your tobacco could be sold only to England.",
+     hs:"Your needs list (9 of your 15 items were made only in England), your Trade Log, and the Group Handout sentence on tobacco prices and the Navigation Acts."},
+   westIndies:{g2:"Your needs list (7 of 15 came only from England). Your Trade Log. Group Handout: sugar sold only to England.",
+     g5:"Your needs list (7 of your 15 items came only from England), your Trade Log, and the word Mercantilism on your Vocabulary sheet.",
+     g8:"Your needs list (7 of your 15 items were made only in England), your Trade Log, and the Molasses Act sentence in your Group Handout: a rule that protected your sugar.",
+     hs:"Your needs list (7 of your 15 items were made only in England), your Trade Log, and the Molasses Act sentence in your Group Handout: a rule your planters asked for."},
+   england:{g2:"Your Trade Log: deals where a colony paid you for guns or tools. Group Handout: colonies had to buy from you.",
+     g5:"Your Trade Log (deals where a colony gave you its goods to get guns, tools, clothing or books), and the Group Handout sentence about what the colonies had to buy from England.",
+     g8:"Your Trade Log (deals where a colony gave you its goods to get guns, tools, clothing or books, and any duties you collected), and the mercantilism sentence in your Group Handout.",
+     hs:"Your Trade Log (what each colony gave up to get your manufactured goods, and the duties you collected), and the Navigation Acts sentence in your Group Handout."},
+  },
   claim:{
-    guide:{g2:"Say why the colonies got angry, and how some got rich.",
-      g5:"Give a reason the colonies would resent the rules, and a way the rules helped some colonists.",
-      g8:"State why the colonies would resent the rules, and how the rules also helped some colonists.",
-      hs:"State the colonies' grievance and the benefit that complicates it."},
-    start:{g2:"The colonies got angry because England ___. Some got rich because ___. (Words: buy from England, rich, planters)",
-      g5:"The colonies had reason to resent England's rules because ___, even though ___.",
-      g8:"The colonies had reason to resent England's rules because ___, even though ___.",
-      hs:"The colonies had reason to resent England's rules because ___, even though ___."}},
+    guide:{g2:"Say why colonists got angry, and who the rules helped.",
+      g5:"In one sentence: one reason colonists would be angry, and one way the rules helped.",
+      g8:"Answer the question in one sentence: one reason colonists would be angry, and one way the rules helped.",
+      hs:"Answer the question in one sentence: the colonists' grievance, and the benefit that complicates it."},
+    start:{g2:"Colonists were angry because England made them ___. The rules helped ___ because ___. (Words: buy from England, sell only to England, taxes, planters)",
+      g5:"Colonists would be angry because England's rules ___, but the rules also helped ___ by ___.",
+      g8:"Colonists would be angry because England's rules ___, but the rules also helped ___ by ___.",
+      hs:"Colonists would be angry because England's rules ___, but the rules also helped ___ by ___."}},
   evidence:{
-    guide:{g2:"One fact from our game, one from your reading.",
-      g5:"Give one example from our game and one from your Group Handout.",
-      g8:"Give evidence from our game and from your Group Handout: one cost to the colonies and one benefit.",
-      hs:"Cite evidence from both the game and the history, for a cost and for a benefit."},
-    start:{g2:"In our game, ___. My reading says ___. (Words: needed, said no, could not finish)",
-      g5:"In our game, ___. In history, ___.",
-      g8:"In our game, ___. In history, ___.",
-      hs:"In our game, ___; in history, ___."}},
+    guide:{g2:"Fill in all three.",
+      g5:"Give all three pieces of evidence.",
+      g8:"Give all three pieces of evidence: two from our game, one from history.",
+      hs:"Give all three pieces of evidence: two from the game, one from history."},
+    items:[
+     {key:'cost', lines:2,
+      label:{g2:"A cost in our game", g5:"A cost in our game", g8:"A cost in our game", hs:"A cost in the game"},
+      guide:{g2:"Pick one thing a colony needed from England.",
+        g5:"Pick one: an item on your needs list that only England had, a Trade Log row with ENG circled, or a card that made you pay England a tax.",
+        g8:"Pick one: an item on your needs list that only England made, a Trade Log row with ENG circled, or a chance card that made you pay a duty to England.",
+        hs:"Pick one: a need only England could fill, a Trade Log row with ENG circled, or a duty paid to England."},
+      start:{g2:"In our game, ___ needed ___ from England, so ___. (Words: guns, tools, books, gave up, paid a tax)",
+        g5:"In our game, ___ needed ___ from England, so ___.",
+        g8:"In our game, ___ needed ___ from England, so ___.",
+        hs:"In the game, ___ needed ___ from England, so ___."}},
+     {key:'help', lines:1,
+      label:{g2:"A help in our game", g5:"A help in our game", g8:"A help in our game", hs:"A benefit in the game"},
+      guide:{g2:"Write one time England bought goods or carried them.",
+        g5:"A deal where England bought a colony's goods or an English ship carried its cargo.",
+        g8:"A deal where England bought a colony's goods or an English ship carried its cargo.",
+        hs:"A deal where England bought a colony's goods or an English ship carried its cargo."},
+      start:{g2:"England helped when it ___. (Words: bought, carried, sugar, tobacco, whale oil, furs)",
+        g5:"England helped when ___.",
+        g8:"England helped when ___.",
+        hs:"England's rules paid off for a colony when ___."}},
+     {key:'history', lines:2,
+      label:{g2:"From history", g5:"From history", g8:"From history", hs:"From history"},
+      guide:{g2:"Use the sheet named in your Look at.",
+        g5:"Use the sentence named in your Look at.",
+        g8:"Use the sentence named in your Look at.",
+        hs:"Use the sentence named in your Look at."},
+      start:{g2:"In history, England ___. (Words: made the rules, sold only to England, buy from England)",
+        g5:"In history, ___.",
+        g8:"In history, ___.",
+        hs:"In history, ___."}},
+    ]},
   reasoning:{
-    guide:{g2:"Tell who got the most, and who paid the most.",
-      g5:"Explain who the rules helped most and who paid the most.",
-      g8:"Explain how the costs and benefits landed differently on England, the colonists, and enslaved Africans.",
-      hs:"Explain how the costs and benefits landed differently on different groups, and why that mattered for what came next."},
-    start:{g2:"England got ___. The colonies got ___. The people who paid the most were ___. (Words: rich, rules, enslaved people)",
-      g5:"The rules gave England ___ and the colonies ___. The heaviest cost fell on ___, who ___.",
-      g8:"The rules gave England ___ and the colonies ___. The heaviest cost fell on ___, who ___.",
-      hs:"The rules gave England ___, gave some colonists ___, and cost ___ the most, because ___."}},
+    guide:{g2:"Tell why your evidence shows you are right.",
+      g5:"Explain how your evidence proves your claim.",
+      g8:"Explain how your evidence proves your claim.",
+      hs:"Explain how your evidence proves your claim, and who carried the cost."},
+    items:[
+     {key:'connect', lines:2,
+      label:{g2:"Connect it", g5:"Connect it", g8:"Connect it", hs:"Connect it"},
+      guide:{g2:"Who did the rules help most, and why did that make colonists angry?",
+        g5:"Who did the rules help most, and why did that make colonists angry?",
+        g8:"Who did the rules help most, and why did that make colonists angry?",
+        hs:"Whom were the rules built to serve first, and why did that make colonists angry?"},
+      start:{g2:"The rules helped ___ the most because ___. Colonists were angry because ___. (Words: England, rich, money, unfair, choose)",
+        g5:"This shows the rules were made to help ___ first, because ___. That made colonists angry because ___.",
+        g8:"This shows the rules were made to help ___ first, because ___. That made colonists angry because ___.",
+        hs:"This shows the rules were built to serve ___ first, because ___; colonists were angry because ___."}},
+     {key:'four', lines:2,
+      label:{g2:"For a 4", g5:"For a 4", g8:"For a 4", hs:"For a 4"},
+      guide:{g2:"Who paid the most, but was not in our game?",
+        g5:"Who paid the biggest cost, one our game never showed?",
+        g8:"Who paid the biggest cost, one our game never showed?",
+        hs:"Who paid the heaviest cost, one the game never showed?"},
+      look:{g2:"Your Middle Passage answer on Side 1.",
+        g5:"Your Middle Passage answer on Side 1.",
+        g8:"Your Middle Passage answer on Side 1.",
+        hs:"Your Middle Passage answer on Side 1."},
+      start:{g2:"The people who paid the most were ___, because ___. (Words: enslaved Africans, colonists, forced to work)",
+        g5:"The people who paid the most were ___, because ___.",
+        g8:"The people who paid the most were ___, because ___.",
+        hs:"The heaviest cost fell on ___, because ___."}},
+    ]},
  },
  regions:{
   newEngland:{
@@ -1327,9 +1435,9 @@ const REFLECT = {
        g8:"Which advantage helped England most: manufactured goods, 8 ships, or duties?",
        hs:"Which advantage did the most to decide England's game: manufactured goods, the largest fleet, or duties?"},
     look:{g2:"Your Trade Log. The taxes England got.",
-       g5:"Your Trade Log, and the duties England collected, shown on the game's end screen.",
-       g8:"Your Trade Log, and England's duty and seizure haul on the game's end screen.",
-       hs:"Your Trade Log, your What we have counts, and England's duty and seizure haul on the game's end screen."},
+       g5:"Your Trade Log, and the duties in the England tray at the Dock.",
+       g8:"Your Trade Log, and the duties and seized cargo in the England tray at the Dock.",
+       hs:"Your Trade Log, your What we have counts, and the duties and seized cargo in the England tray at the Dock."},
     start:{g2:"The thing that helped us most was ___. It helped because ___. (Words: guns, tools, ships, taxes, carry)",
        g5:"Our biggest advantage was ___, because ___.",
        g8:"The advantage that helped us most was ___, because it let us ___.",
@@ -1693,6 +1801,270 @@ function medianRl(rls){
 }
 
 /* ===================================================================
+   GROUP REQUESTS — the student survey (Google Form → CSV)
+   ===================================================================
+   Columns are found by header wording, not position, so a re-ordered or re-worded
+   form still reads: name, period, "do you care which role", first choice, second
+   choice, who they want to work with, who they should NOT be grouped with.
+   PRIVACY. The timestamp is never read, and of the email only the part before the @
+   is read, to tell two students with one first name apart; it is not stored. The free-text answers are shown to
+   the teacher once, in the review window, to confirm name matches; after that only
+   roster ids and role choices are stored (g.requests), never the typed text. None of it
+   reaches the projector: publicSnapshot() builds the crew from name and role only. */
+
+/* RFC 4180-ish: quoted fields, doubled quotes, commas/newlines inside quotes. Tab-
+   separated text (pasted straight from Sheets) is detected from the header line. */
+function parseDelimited(text){
+  text = String(text == null ? "" : text).replace(/^﻿/, "");
+  const first = text.split(/\r?\n/)[0] || "";
+  const d = (first.match(/\t/g) || []).length > (first.match(/,/g) || []).length ? "\t" : ",";
+  const rows = []; let row = [], f = "", q = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(q){
+      if(c === '"'){ if(text[i + 1] === '"'){ f += '"'; i++; } else q = false; }
+      else f += c;
+    } else if(c === '"' && f === "") q = true;
+    else if(c === d){ row.push(f); f = ""; }
+    else if(c === "\n" || c === "\r"){
+      if(c === "\r" && text[i + 1] === "\n") i++;
+      row.push(f); f = ""; rows.push(row); row = [];
+    } else f += c;
+  }
+  if(f !== "" || row.length){ row.push(f); rows.push(row); }
+  return rows.filter(r => r.some(x => String(x).trim() !== ""));
+}
+
+/* "Merchant (goes to other ports)" → "merchant"; the four harbormaster jobs count as
+   Harbormaster. Anything else → null. */
+function normRole(v){
+  const s = String(v || "").toLowerCase();
+  if(/merchant|trader/.test(s)) return "merchant";
+  if(/captain|ship|sail/.test(s)) return "captain";
+  if(/harbou?r|record|counter|negotiator|strateg|port/.test(s)) return "harbor";
+  return null;
+}
+/* "Do you care which role you have?" → true / false / null (blank or unclear). */
+function normCare(v){
+  const s = String(v || "").toLowerCase().trim();
+  if(!s) return null;
+  if(/^(no|nah|nope|not really|don'?t care|i don'?t|doesn'?t matter|either|any)/.test(s)) return false;
+  if(/^(yes|yeah|yep|a little|kind of|kinda|sort of|somewhat|sure|y\b)/.test(s)) return true;
+  return null;
+}
+
+const NOBODY = /^(no|none|nope|no ?one|nobody|n\/?a|na|idk|i don'?t know|not sure|anyone|any ?one|anybody|doesn'?t matter|no preference|nah|-+|\.+|x)$/i;
+/* "Maya R, Jordan and Liz / Sam" → ["Maya R", "Jordan", "Liz", "Sam"]. */
+function splitNames(v){
+  if(NOBODY.test(String(v || "").trim())) return [];
+  return String(v || "")
+    .split(/\s*(?:,|;|\/|&|\+|\n|\band\b|\bor\b|\balso\b)\s*/i)
+    .map(x => x.replace(/[()"'.!?]+/g, " ").replace(/\s+/g, " ").trim())
+    .filter(x => x && !NOBODY.test(x))
+    .slice(0, 8);
+}
+
+/* → { rows:[{name, period, care, first, second, want:[text], avoid:[text]}], missing:[column] }.
+   Throws when there is no name column at all. */
+function parseRequests(text){
+  const rows = parseDelimited(text);
+  if(!rows.length) throw new Error("That file is empty.");
+  const head = rows[0].map(h => String(h).toLowerCase());
+  const col = re => head.findIndex(h => re.test(h));
+  const C = {
+    name: col(/\bname\b/),
+    period: col(/period|class|hour/),
+    care: col(/care/),
+    first: col(/first choice|1st choice/),
+    second: col(/second choice|2nd choice/),
+    avoid: col(/\bnot\b|avoid|shouldn|don'?t want/),
+    email: col(/e-?mail/),
+  };
+  C.want = head.findIndex((h, i) => i !== C.avoid && /want to work|work with|like to work|group with|grouped with|partner/.test(h));
+  if(C.name < 0) throw new Error("No “Name” column in that file. Is it the survey export?");
+  const missing = Object.keys(C).filter(k => k !== "email" && C[k] < 0);
+  const at = (r, k) => C[k] < 0 ? "" : String(r[C[k]] == null ? "" : r[C[k]]).trim();
+  const out = [];
+  rows.slice(1).forEach(r => {
+    const name = at(r, "name").replace(/[\u0000-\u001f\u007f<>]/g, "").slice(0, 60);
+    if(!name) return;
+    out.push({
+      name, period: at(r, "period").slice(0, 20),
+      care: normCare(at(r, "care")),
+      first: normRole(at(r, "first")), second: normRole(at(r, "second")),
+      want: splitNames(at(r, "want")), avoid: splitNames(at(r, "avoid")),
+      hint: at(r, "email").split("@")[0].slice(0, 60),   // tie-break for two same first names; never stored
+    });
+  });
+  return { rows: out, missing };
+}
+
+/* Period number, so "1", "Period 1", "P1" and "1st" all agree. */
+function periodNumber(s){ const m = String(s || "").match(/\d+/); return m ? +m[0] : null; }
+
+const NICKNAMES = { mike:"michael", mikey:"michael", liz:"elizabeth", beth:"elizabeth", lizzie:"elizabeth",
+  bella:"isabella", izzy:"isabella", abby:"abigail", jake:"jacob", tony:"anthony", maddie:"madison",
+  gabe:"gabriel", kate:"katherine", katie:"katherine", kat:"katherine", bob:"robert", bobby:"robert",
+  rob:"robert", bill:"william", billy:"william", jim:"james", jimmy:"james", jen:"jennifer", jenny:"jennifer",
+  peggy:"margaret", maggie:"margaret", meg:"margaret", dick:"richard", rick:"richard", ricky:"richard",
+  teddy:"theodore", ted:"theodore", johnny:"john", jack:"john", lexi:"alexis", ally:"allison", alli:"allison",
+  manny:"emmanuel", nate:"nathan", zach:"zachary", zack:"zachary", xander:"alexander", sasha:"alexandra",
+  mo:"mohammed", moe:"mohammed", santi:"santiago", alejo:"alejandro", pepe:"jose", lupe:"guadalupe" };
+
+function editDistance(a, b){
+  if(a === b) return 0;
+  const m = a.length, n = b.length;
+  let prev = Array.from({ length: n + 1 }, (_, j) => j);
+  for(let i = 1; i <= m; i++){
+    const cur = [i];
+    for(let j = 1; j <= n; j++)
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
+const fold = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z ]+/g, " ").replace(/\s+/g, " ").trim();
+
+/* Match a typed name to the roster (names are "Maya R." or "Maya").
+   roster: [{id, name}]. hint: optional extra text (the respondent's email) that may
+   hold a surname, used only to break a tie between two students with one first name.
+   → { id: roster id | null, sure: true when it needs no checking, options: [ids] } */
+function matchName(raw, roster, hint){
+  const t = fold(raw);
+  const none = { id: null, sure: false, options: [] };
+  if(!t) return none;
+  const parts = t.split(" "), tf = parts[0], tl = parts.length > 1 ? parts[parts.length - 1] : "";
+  const R = roster.map(s => { const p = fold(s.name).split(" "); return { id: s.id, f: p[0] || "", l: p.length > 1 ? p[p.length - 1] : "" }; });
+  const byLast = list => tl ? list.filter(r => r.l && tl.charAt(0) === r.l.charAt(0)) : list;
+  const pick = (list, sure) => {
+    if(!list.length) return null;
+    const narrowed = byLast(list);
+    if(narrowed.length === 1) return { id: narrowed[0].id, sure: sure && (list.length === 1 || !!tl), options: list.map(r => r.id) };
+    if(narrowed.length > 1 && hint){
+      const h = fold(hint).replace(/ /g, "");
+      const hit = narrowed.filter(r => r.l && h.startsWith(r.f + r.l.charAt(0)));
+      if(hit.length === 1) return { id: hit[0].id, sure: false, options: narrowed.map(r => r.id) };
+    }
+    if(list.length === 1) return { id: list[0].id, sure: false, options: [list[0].id] };
+    return { id: null, sure: false, options: (narrowed.length ? narrowed : list).map(r => r.id) };
+  };
+  const nick = NICKNAMES[tf];
+  return pick(R.filter(r => r.f === tf), true)
+    || pick(R.filter(r => nick && r.f === nick), false)
+    || pick(R.filter(r => tf.length >= 3 && (r.f.startsWith(tf) || tf.startsWith(r.f) && r.f.length >= 3)), false)
+    || pick(R.filter(r => tf.length >= 4 && editDistance(r.f, tf) <= (tf.length >= 7 ? 2 : 1)), false)
+    || none;
+}
+
+/* Deterministic random numbers for tests; the page passes Math.random. */
+function seededRandom(seed){
+  let a = seed >>> 0;
+  return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61); return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+
+/* Teams that honour requests without giving up the reading-version sort.
+   Starts from suggestTeams() (so team sizes and each region's reading target are the
+   same as without requests), then swaps pairs of students between teams while that
+   improves the score:
+     keep-apart pair on one team ........ -1000 each (effectively never)
+     asked for someone, got at least one .. +10
+     each further requested partner ....... +3
+     reading version off the team's target  -1.5 × levels² (1 off: -1.5, 2 off: -6, 3 off: -13.5)
+     moved off the reading-version team ...... -0.5 (so nobody moves without a reason)
+   so a friend is worth moving a student one level, rarely two, never three.
+   Swaps only, so sizes never change. Several random restarts; best kept.
+   students: [{rl, want:[index], avoid:[index]}] → { teams:[region id], report } */
+function suggestTeamsWithRequests(students, order, rng){
+  rng = rng || Math.random;
+  const n = students.length;
+  const base = suggestTeams(students, order);
+  if(!n) return { teams: base, report: { asked: 0, got: 0, missed: [], apart: [] } };
+  const target = {};
+  order.forEach(id => { target[id] = medianRl(students.filter((s, i) => base[i] === id).map(s => s.rl)); });
+  const want = students.map(s => (s.want || []).filter(j => j !== undefined && j >= 0 && j < n));
+  const avoid = students.map(s => (s.avoid || []).filter(j => j >= 0 && j < n));
+  if(!want.some(w => w.length) && !avoid.some(a => a.length))
+    return { teams: base, report: requestReport(students, base) };
+  const cost = (i, team) => {
+    let v = team === base[i] ? 0 : -0.5;
+    const s = students[i], tg = target[team];
+    if(Number.isInteger(s.rl) && Number.isInteger(tg)) v -= 1.5 * (s.rl - tg) * (s.rl - tg);
+    return v;
+  };
+  const score = t => {
+    let v = 0;
+    for(let i = 0; i < n; i++){
+      v += cost(i, t[i]);
+      const got = want[i].filter(j => t[j] === t[i]).length;
+      if(got) v += 10 + 3 * (got - 1);
+      avoid[i].forEach(j => { if(t[j] === t[i]) v -= 1000; });
+    }
+    return v;
+  };
+  const climb = t => {
+    let best = score(t), improved = true, guard = 0;
+    while(improved && guard++ < 200){
+      improved = false;
+      for(let i = 0; i < n; i++) for(let j = i + 1; j < n; j++){
+        if(t[i] === t[j]) continue;
+        const x = t[i]; t[i] = t[j]; t[j] = x;
+        const v = score(t);
+        if(v > best + 1e-9){ best = v; improved = true; }
+        else { t[j] = t[i]; t[i] = x; }
+      }
+    }
+    return best;
+  };
+  let bestT = base.slice(), bestV = climb(bestT);
+  for(let r = 0; r < 24; r++){
+    const t = base.slice();
+    for(let k = 0; k < n; k++){ const i = Math.floor(rng() * n), j = Math.floor(rng() * n); const x = t[i]; t[i] = t[j]; t[j] = x; }
+    const v = climb(t);
+    if(v > bestV + 1e-9 || (Math.abs(v - bestV) < 1e-9 && rng() < 0.5)){ bestV = v; bestT = t; }
+  }
+  return { teams: bestT, report: requestReport(students, bestT) };
+}
+
+/* How the requests came out for a set of teams. teams: [region id | null] per student. */
+function requestReport(students, teams){
+  const rep = { asked: 0, got: 0, missed: [], apart: [] };
+  students.forEach((s, i) => {
+    const w = (s.want || []).filter(j => j >= 0 && j < students.length);
+    if(w.length){
+      rep.asked++;
+      if(teams[i] && w.some(j => teams[j] === teams[i])) rep.got++; else rep.missed.push(i);
+    }
+    (s.avoid || []).forEach(j => { if(teams[i] && teams[j] === teams[i] && !rep.apart.some(p => p[0] === j && p[1] === i)) rep.apart.push([i, j]); });
+  });
+  return rep;
+}
+
+/* Merchant and captain for one team, from the role choices.
+   How happy a student is with a role: first choice 3, second 2, didn't care or didn't
+   answer 1, a role they care about and didn't pick 0. Tries every merchant/captain
+   pair and keeps the happiest team; ties are broken at random so Shuffle varies.
+   crew: [{first, second, care}] → array of roles, one per crew member. */
+function pickRoles(crew, rng){
+  rng = rng || Math.random;
+  const n = crew.length;
+  if(!n) return [];
+  const likes = (p, role) => {
+    if(!p || p.care === false || (!p.first && !p.second)) return 1;
+    return p.first === role ? 3 : p.second === role ? 2 : 0;
+  };
+  if(n === 1) return ["merchant"];
+  let best = null, bestV = -Infinity;
+  for(let m = 0; m < n; m++) for(let c = 0; c < n; c++){
+    if(m === c) continue;
+    let v = rng() * 0.01;
+    for(let i = 0; i < n; i++) v += likes(crew[i], i === m ? "merchant" : i === c ? "captain" : "harbor");
+    if(v > bestV){ bestV = v; best = [m, c]; }
+  }
+  return crew.map((_, i) => i === best[0] ? "merchant" : i === best[1] ? "captain" : "harbor");
+}
+
+/* ===================================================================
    VOYAGE LEDGER — every inventory change a voyage makes, so it can be reversed
    ===================================================================
    A delta is {r, k, n}: region r's count of good k changed by n. k "_free" is the
@@ -1884,12 +2256,47 @@ function publicSnapshot(g, regionDefs, extra){
   return snap;
 }
 
+/* ===================================================================
+   TEAMS BACKUP — rosters and teams on their own
+   =================================================================== */
+/* A spreadsheet of who is on which team, for Sheets or a printout: Class, Team, Role,
+   Name. No reading versions and no requests, since a spreadsheet gets shared.
+   periods: state.periods; regionNames: {id: "England"}; order: region ids. */
+function teamsCSV(periods, regionNames, order){
+  const q = v => { const t = String(v == null ? "" : v); return /[",\n\r]/.test(t) || /^[=+\-@]/.test(t) ? '"' + t.replace(/^([=+\-@])/, "'$1").replace(/"/g, '""') + '"' : t; };
+  const roleNm = { merchant: "Merchant", captain: "Captain", harbor: "Harbormaster" };
+  const rows = [["Class", "Team", "Role", "Name"]];
+  Object.keys(periods || {}).forEach(k => {
+    const g = periods[k] || {};
+    const roster = Array.isArray(g.roster) ? g.roster.filter(Boolean) : [];
+    const rank = s => { const i = order.indexOf(s.region); return i < 0 ? order.length : i; };
+    roster.slice().sort((a, b) => rank(a) - rank(b) || CREW_ROLES.indexOf(a.role) - CREW_ROLES.indexOf(b.role) || String(a.name).localeCompare(String(b.name)))
+      .forEach(s => rows.push([g.name, regionNames[s.region] || "Unassigned", s.region ? (roleNm[s.role] || "Harbormaster") : "", s.name]));
+  });
+  return rows.map(r => r.map(q).join(",")).join("\r\n") + "\r\n";
+}
+
+/* The team setup from a parsed backup (either scope), without any game progress:
+   → [{key, name, roster, requests, readLevel}] for each class that has a roster. */
+const TEAM_FIELDS = ["roster", "requests", "readLevel"];
+function teamsFromBackup(b){
+  const games = b.scope === "all" ? b.periods : { [b.periodKey || b.period || "class"]: b.game };
+  return Object.keys(games || {}).map(k => {
+    const g = games[k] || {};
+    const out = { key: k, name: String(g.name || k) };
+    TEAM_FIELDS.forEach(f => { out[f] = g[f] == null ? null : JSON.parse(JSON.stringify(g[f])); });
+    return out;
+  }).filter(t => Array.isArray(t.roster) && t.roster.length);
+}
+
 if(typeof module !== "undefined") module.exports = {
   LEVEL_KEYS, DEFAULT_LEVEL, levelKeyForRl, levelNumber, levelLabel,
   nextRoundNumber,
   BACKUP_FORMAT, BACKUP_VERSION, slugPeriod, backupFilename, uniqueBackupFilename,
   makePeriodBackup, makeAllBackup, gameProblems, parseBackup, backupPreviewText, whenText,
   shortName, reduceRoster, matchPeriods, suggestTeams, TEAM_ORDER, medianRl,
+  parseDelimited, parseRequests, normRole, normCare, splitNames, periodNumber, matchName,
+  seededRandom, suggestTeamsWithRequests, requestReport, pickRoles, teamsCSV, teamsFromBackup,
   applyDelta, netDeltas, reverseProblems, reverseDeltas,
   RUM_REGION, MOLASSES_PER_RUM, molassesCost, rumAllowance,
   rankStandings,
@@ -2211,6 +2618,7 @@ function openModal(html, opts){
   const card = $("#modalCard");
   if(!modalOpen()) MODAL.returnTo = document.activeElement;
   MODAL.locked = !!opts.locked;
+  card.classList.toggle("wide", !!opts.wide);
   card.innerHTML = (MODAL.locked ? "" : `<button class="modal-close" aria-label="Close" onclick="closeModal()">✕</button>`) + html;
   const h = card.querySelector("h3");
   if(h){ h.id = "modalTitle"; card.setAttribute("aria-labelledby","modalTitle"); } else card.removeAttribute("aria-labelledby");
@@ -3395,6 +3803,7 @@ function openRosterMapping(reduced){
       if(key==="new"){ key="p"+Date.now()+"_"+sel.dataset.map; state.periods[key]=newGame(n); }
       const g=migrate(state.periods[key]);
       g.roster=reduced[n].map((s,i)=>({id:i+1, name:s.name, rl:s.rl, region:null, role:"harbor"}));
+      delete g.requests;   // ids restart at 1, so old requests would point at the wrong students
       suggestTeamsFor(g);
       done.push(`${g.name} (${g.roster.length})`);
       if(!state.activePeriod) state.activePeriod=key;
@@ -3409,9 +3818,9 @@ function openRosterMapping(reduced){
 $("#btnClearRoster").onclick=()=>{
   const n=Object.values(state.periods).reduce((a,g)=>a+(g.roster||[]).length,0);
   confirmModal("Clear the roster?",
-    `Removes all ${n} student name${n===1?"":"s"} from every class on this laptop, with their teams and the reading levels set from them. Game progress is kept.`,
+    `Removes all ${n} student name${n===1?"":"s"} from every class on this laptop, with their teams, group requests and the reading levels set from them. Game progress is kept.`,
     "🗑 Clear roster", ()=>{
-      Object.values(state.periods).forEach(g=>{ g.roster=[]; g.readLevel={}; g.teamsSuggested=false; });
+      Object.values(state.periods).forEach(g=>{ g.roster=[]; g.readLevel={}; g.teamsSuggested=false; delete g.requests; });
       save(); renderTeams(); if(game()) renderRegions();
       tick("🗑 Roster cleared from every class.");
     });
@@ -3423,7 +3832,13 @@ $("#btnClearRoster").onclick=()=>{
 function teamOrder(){ return TEAM_ORDER.filter(id=>REGIONS[id]); }
 function suggestTeamsFor(g){
   const roster=ensureRoster(g);
-  const teams=suggestTeams(roster, teamOrder());
+  let teams;
+  if(hasRequests(g)){
+    const req=requestsOf(g), at=new Map(roster.map((s,i)=>[s.id,i]));
+    const idx=ids=>(ids||[]).map(id=>at.get(id)).filter(i=>i!=null);
+    const res=suggestTeamsWithRequests(roster.map(s=>({rl:s.rl, want:idx((req[s.id]||{}).want), avoid:idx((req[s.id]||{}).avoid)})), teamOrder());
+    teams=res.teams;
+  } else teams=suggestTeams(roster, teamOrder());
   roster.forEach((s,i)=>{ s.region=teams[i]; s.role="harbor"; });
   suggestRoles(g);
   setTeamLevels(g);
@@ -3433,6 +3848,11 @@ function suggestRoles(g){
   const roster=ensureRoster(g);
   Object.keys(REGIONS).forEach(id=>{
     const crew=roster.filter(s=>s.region===id);
+    if(hasRequests(g)){   // role choices from the survey; see pickRoles() for how ties go
+      const req=requestsOf(g);
+      pickRoles(crew.map(s=>req[s.id]||null)).forEach((r,i)=>{ crew[i].role=r; });
+      return;
+    }
     crew.forEach(s=>s.role="harbor");
     if(crew.length>1) crew[Math.floor(Math.random()*crew.length)].role="merchant";
     const rem=crew.filter(s=>s.role==="harbor");
@@ -3455,7 +3875,39 @@ function moveSailor(g, s, region){
   setTeamLevels(g);
   save(); renderTeams();
 }
+/* How the requests stand for the teams as they are now (so a hand move updates it). */
+function currentRequestReport(g){
+  const roster=ensureRoster(g), req=requestsOf(g)||{}, at=new Map(roster.map((s,i)=>[s.id,i]));
+  const idx=ids=>(ids||[]).map(id=>at.get(id)).filter(i=>i!=null);
+  return requestReport(roster.map(s=>({want:idx((req[s.id]||{}).want), avoid:idx((req[s.id]||{}).avoid)})), roster.map(s=>s.region||null));
+}
+function requestNote(g){
+  if(!hasRequests(g)) return "";
+  const rep=currentRequestReport(g);
+  g.lastRequestReport={asked:rep.asked, got:rep.got};
+  let t=` Requests: ${rep.got} of ${rep.asked} who asked are with someone they asked for (♥).`;
+  if(rep.apart.length) t+=` ⚠ ${rep.apart.length} keep-apart request${rep.apart.length===1?" is":"s are"} broken — hover the ⚠ names.`;
+  return t;
+}
+/* ♥ got a requested partner, ♡ asked and didn't, ⚠ on a team with someone they (or who)
+   asked to be kept apart from. Names only in the hover title, never on the chip. */
+function reqMark(g, s){
+  const req=requestsOf(g); if(!req || !s.region) return "";
+  const roster=ensureRoster(g), mine=req[s.id]||{};
+  const mates=roster.filter(o=>o!==s && o.region===s.region);
+  const clash=mates.filter(o=>(mine.avoid||[]).includes(o.id) || ((req[o.id]||{}).avoid||[]).includes(s.id));
+  if(clash.length) return `<span class="req-mark clash" title="Keep apart: ${esc(clash.map(o=>o.name).join(", "))}">⚠</span>`;
+  if(!(mine.want||[]).length) return "";
+  const got=mates.filter(o=>mine.want.includes(o.id));
+  return got.length ? `<span class="req-mark got" title="With ${esc(got.map(o=>o.name).join(", "))}">♥</span>`
+                    : `<span class="req-mark miss" title="Asked for ${esc(mine.want.map(id=>(roster.find(o=>o.id===id)||{}).name||"?").join(", "))}">♡</span>`;
+}
+function renderClassPicker(){
+  const keys=Object.keys(state.periods);
+  $("#tbClass").innerHTML=keys.map(k=>`<option value="${esc(k)}" ${k===state.activePeriod?"selected":""}>${esc(state.periods[k].name)}${(state.periods[k].roster||[]).length?"":" (no roster)"}</option>`).join("");
+}
 function renderTeams(){
+  renderClassPicker();
   const g=game(); if(!g) return;
   const roster=ensureRoster(g);
   // Say how many students came with a reading version: with few or none, a suggestion
@@ -3463,11 +3915,13 @@ function renderTeams(){
   const known=roster.filter(s=>Number.isInteger(s.rl)).length;
   const few=roster.length && known < roster.length/2;
   $("#tbNote").classList.toggle("warn", !!few);
+  $("#btnAutoAssign").textContent = hasRequests(g) ? "⚖ Suggest teams (reading + requests)" : "⚖ Suggest teams by reading version";
   $("#tbNote").textContent = !roster.length
     ? "No roster yet. Load the Grouping Tool's export, or type names below."
     : (few ? `Only ${known} of ${roster.length} students have a reading version, so suggested teams can't follow reading level. Load reading levels in the Grouping Tool, export again, then Load roster here. `
            : `Reading versions: ${known} of ${roster.length} students (L0 to L3 on each name; — means none). `)
-      + (g.teamsSuggested ? "Teams were suggested by reading version. Move anyone who should be elsewhere, then accept." : "");
+      + (g.teamsSuggested ? (hasRequests(g) ? "Teams were suggested by reading version and group requests. " : "Teams were suggested by reading version. ")+"Move anyone who should be elsewhere, then accept." : "")
+      + requestNote(g);
   const cols=[["unassigned","Unassigned Crew",null]].concat(teamOrder().map(id=>[id,REGIONS[id].nm,REGIONS[id].colorHex]));
   const moveOpts=s=>[["","Unassigned"]].concat(Object.entries(REGIONS).map(([id,r])=>[id,r.nm]))
     .map(([id,nm])=>`<option value="${id}" ${(s.region||"")===id?"selected":""}>${nm}</option>`).join("");
@@ -3478,8 +3932,8 @@ function renderTeams(){
       : `<div class="tb-col-head" style="background:${color}"><span>${REGIONS[id].flag} ${nm}</span><span>${members.length}</span></div>`;
     return `<div class="tb-col" data-col="${id}">${head}<div class="tb-col-body">${members.map(([s,i])=>`
       <div class="stu-chip" draggable="true" data-i="${i}">
-        ${s.region?`<button type="button" class="role-tag" title="${ROLE_NM[s.role]} — click to change" aria-label="${esc(s.name)}: ${ROLE_NM[s.role]}. Change role">${ROLE_ICO[s.role]}</button>`:""}
-        <span class="stu-name">${esc(s.name)}</span>
+        ${s.region?`<button type="button" class="role-tag" title="${ROLE_NM[s.role]}${rolePrefText((requestsOf(g)||{})[s.id])?" ("+esc(rolePrefText(requestsOf(g)[s.id]))+")":""} — click to change" aria-label="${esc(s.name)}: ${ROLE_NM[s.role]}. Change role">${ROLE_ICO[s.role]}</button>`:""}
+        <span class="stu-name">${esc(s.name)}</span>${reqMark(g, s)}
         <span class="stu-rl${Number.isInteger(s.rl)?"":" none"}" title="Reading version">${Number.isInteger(s.rl)?"L"+s.rl:"—"}</span>
         <select class="stu-move" aria-label="Move ${esc(s.name)} to">${moveOpts(s)}</select>
       </div>`).join("")}</div></div>`;
@@ -3489,6 +3943,7 @@ function renderTeams(){
     const s=roster[+c.dataset.i];
     c.ondragstart=e=>e.dataTransfer.setData("text/plain", c.dataset.i);
     c.querySelector(".stu-move").onchange=e=>moveSailor(g, s, e.target.value);
+    c.querySelector(".stu-name").ondblclick=()=>renameSailor(g, s);
     const rt=c.querySelector(".role-tag");
     if(rt) rt.onclick=()=>{
       s.role=ROLE_CYCLE[(ROLE_CYCLE.indexOf(s.role)+1)%ROLE_CYCLE.length];
@@ -3510,17 +3965,226 @@ $("#btnAutoAssign").onclick=()=>{
   const g=game(); const roster=ensureRoster(g);
   if(!roster.length){ tick("Load a roster first."); return; }
   suggestTeamsFor(g); save(); renderTeams();
-  tick("⚖ Teams suggested by reading version. Adjust, then accept.");
+  tick(hasRequests(g) ? "⚖ Teams suggested by reading version and requests. Press again for a different mix." : "⚖ Teams suggested by reading version. Adjust, then accept.");
 };
 $("#btnSuggestRoles").onclick=()=>{
   const g=game(); suggestRoles(g); save(); renderTeams();
-  tick("🎲 Roles suggested — one merchant and one captain per region. Click icons to adjust.");
+  tick(hasRequests(g) ? "🎲 Roles suggested from the survey's role choices — one merchant and one captain per region." : "🎲 Roles suggested — one merchant and one captain per region. Click icons to adjust.");
 };
 $("#btnClearTeams").onclick=()=>{
   const g=game(); ensureRoster(g).forEach(s=>{ s.region=null; s.role="harbor"; });
   g.teamsSuggested=false; setTeamLevels(g); save(); renderTeams();
 };
 
+/* ---------- Group requests (student survey CSV) ----------
+   Stored per class as g.requests = {<sailor id>: {first, second, care, want:[ids], avoid:[ids]}}.
+   Only roster ids and role choices are kept; what students typed is shown once, in the
+   review window below, and dropped when it closes. Never on the projector, board or
+   ticker: publicSnapshot() builds the crew from name and role alone. */
+const ROLE_SHORT={harbor:"Harbormaster", merchant:"Merchant", captain:"Captain"};
+function requestsOf(g){ return g && g.requests && typeof g.requests==="object" ? g.requests : null; }
+function hasRequests(g){ const r=requestsOf(g); return !!r && Object.keys(r).length>0; }
+function rolePrefText(p){
+  if(!p) return "";
+  if(p.care===false) return "doesn't mind which role";
+  if(!p.first && !p.second) return "";
+  return "wants "+[p.first,p.second].filter(Boolean).map(r=>ROLE_SHORT[r]).join(", then ");
+}
+
+function chooseRequests(){
+  const g=game(); if(!g) return;
+  if(!ensureRoster(g).length){ tick("Load the roster first, then the requests."); return; }
+  openModal(`<h3>📝 Group requests</h3>
+    <p class="dock-summary">The survey export from Google Forms or Sheets (File » Download » CSV), or copy the whole sheet and paste it here.</p>
+    <div class="modal-actions" style="margin:0.5rem 0"><button class="seal-btn small" id="reqPickFile">📂 Choose CSV file</button></div>
+    <textarea id="reqPaste" aria-label="Paste the survey" placeholder="…or paste the sheet here, header row included" style="width:100%;min-height:110px;font-family:inherit;font-size:14px;padding:0.5rem;border:1.5px solid var(--ink-faint);border-radius:4px;background:rgba(255,252,240,.85)"></textarea>
+    <div class="modal-actions" style="margin-top:0.5rem"><button class="seal-btn" id="reqPasteGo">Read pasted sheet</button>
+    <button class="seal-btn quiet" onclick="closeModal()">Cancel</button></div>`);
+  $("#reqPickFile").onclick=()=>$("#requestsFile").click();
+  $("#reqPasteGo").onclick=()=>readRequests($("#reqPaste").value);
+}
+$("#requestsFile").onchange=e=>{
+  const f=e.target.files[0]; e.target.value="";
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>readRequests(r.result);
+  r.readAsText(f);
+};
+function readRequests(text){
+  let parsed;
+  try{ parsed=parseRequests(text); }
+  catch(err){ noticeModal("⚠ Can't read those requests", esc(err.message)); return; }
+  if(!parsed.rows.length){ noticeModal("⚠ No answers found", "The file has a header row but no students in it."); return; }
+  openRequestsReview(parsed);
+}
+
+function openRequestsReview(parsed){
+  const g=game(); const roster=ensureRoster(g);
+  const R=roster.map(s=>({id:s.id, name:s.name}));
+  const nameOf=id=>{ const s=roster.find(x=>x.id===id); return s?s.name:"?"; };
+  const periods=[...new Set(parsed.rows.map(r=>r.period||"(blank)"))].sort((a,b)=>(periodNumber(a)||99)-(periodNumber(b)||99)||a.localeCompare(b));
+  const myNum=periodNumber(g.name);
+  const on=new Set(periods.filter(p=>myNum!=null && periodNumber(p)===myNum));
+  if(!on.size) periods.forEach(p=>on.add(p));
+  // One working copy per row: the respondent's match, and a match per typed name.
+  const M=parsed.rows.map(r=>({
+    r,
+    self: matchName(r.name, R, r.hint),
+    want: r.want.map(t=>({t, m:matchName(t, R)})),
+    avoid: r.avoid.map(t=>({t, m:matchName(t, R)})),
+  }));
+  /* Two students with one first name: if exactly one of them asked for this student,
+     that is the likely one. Still amber, so the teacher confirms it. */
+  const named=(id,k)=>M.filter(y=>y.self.id===id).flatMap(y=>y[k].map(w=>w.m.id));
+  M.forEach(x=>["want","avoid"].forEach(k=>x[k].forEach(w=>{
+    if(w.m.id!=null || w.m.options.length<2 || x.self.id==null) return;
+    const back=w.m.options.filter(id=>named(id,k).includes(x.self.id));
+    if(back.length===1) w.m.id=back[0];
+  })));
+  let onlyFlagged=true;
+  const flagged=x=>!x.self.sure || x.want.concat(x.avoid).some(w=>!w.m.sure);
+  const sel=(m, key, noneLabel)=>{
+    const cls=m.id==null?"req-none":(m.sure?"":"req-guess");
+    const opts=[`<option value="">${noneLabel}</option>`]
+      .concat(m.options.filter(id=>id!==m.id).length ? [`<optgroup label="Likely">`+m.options.map(id=>`<option value="${id}" ${id===m.id?"selected":""}>${esc(nameOf(id))}</option>`).join("")+`</optgroup>`] : [])
+      .concat([`<optgroup label="Whole class">`+R.map(s=>`<option value="${s.id}" ${s.id===m.id&&!(m.options.filter(id=>id!==m.id).length)?"selected":""}>${esc(s.name)}</option>`).join("")+`</optgroup>`]);
+    return `<select class="req-sel ${cls}" data-k="${key}" aria-label="Match">${opts.join("")}</select>`;
+  };
+  const draw=()=>{
+    const rows=M.map((x,i)=>[x,i]).filter(([x])=>on.has(x.r.period||"(blank)"));
+    const shown=rows.filter(([x])=>!onlyFlagged || flagged(x));
+    const nFlag=rows.filter(([x])=>flagged(x)).length;
+    const answered=new Set(rows.map(([x])=>x.self.id).filter(id=>id!=null));
+    $("#reqBody").innerHTML = `
+      <p class="dock-summary" style="text-align:left">${rows.length} answer${rows.length===1?"":"s"} for this class · ${answered.size} of ${roster.length} students matched · <b>${nFlag}</b> row${nFlag===1?"":"s"} with a name to check (amber = a guess, red = no match).
+      ${roster.length-answered.size>0?` ${roster.length-answered.size} student${roster.length-answered.size===1?"":"s"} didn't answer; they fill the teams around the requests.`:""}</p>
+      <label style="font-size:14px"><input type="checkbox" id="reqOnlyFlag" ${onlyFlagged?"checked":""}> Only show rows with a name to check</label>
+      <table class="needs-table req-table"><tr><th>Wrote</th><th>Student</th><th>Role</th><th>Wants to work with</th><th>NOT with</th></tr>
+      ${shown.map(([x,i])=>`<tr>
+        <td><i>${esc(x.r.name)}</i>${periods.length>1?` <span class="req-per">${esc(x.r.period)}</span>`:""}</td>
+        <td>${sel(x.self, i+":s", "— not in this class —")}</td>
+        <td style="font-size:13px">${esc(rolePrefText(x.r))||"—"}</td>
+        <td>${x.want.map((w,j)=>`<div><i>${esc(w.t)}</i> » ${sel(w.m, i+":w:"+j, "— ignore —")}</div>`).join("")||"—"}</td>
+        <td class="req-avoid">${x.avoid.map((w,j)=>`<div><i>${esc(w.t)}</i> » ${sel(w.m, i+":a:"+j, "— ignore —")}</div>`).join("")||"—"}</td>
+      </tr>`).join("")}</table>
+      ${!shown.length?`<p class="dock-summary">Every name matched exactly. Untick the box above to see them all.</p>`:""}`;
+    $("#reqOnlyFlag").onchange=e=>{ onlyFlagged=e.target.checked; draw(); };
+    document.querySelectorAll(".req-sel").forEach(el=>el.onchange=()=>{
+      const [i,kind,j]=el.dataset.k.split(":"); const x=M[+i];
+      const m = kind==="s" ? x.self : (kind==="w" ? x.want : x.avoid)[+j].m;
+      m.id = el.value==="" ? null : +el.value; m.sure = true;   // the teacher's pick is final
+      el.classList.remove("req-guess","req-none");
+    });
+  };
+  openModal(`<h3>📝 Check the requests — ${esc(g.name)}</h3>
+    ${periods.length>1?`<div class="req-periods">Answers from period: ${periods.map((p,k)=>`<label><input type="checkbox" data-per="${k}" ${on.has(p)?"checked":""}> ${esc(p)} (${parsed.rows.filter(r=>(r.period||"(blank)")===p).length})</label>`).join("")}</div>`:""}
+    ${parsed.missing.length?`<p class="tb-note warn">Couldn't find a column for: ${parsed.missing.map(esc).join(", ")}.</p>`:""}
+    <div id="reqBody"></div>
+    <p class="tb-privacy" style="margin:0.5rem auto;text-align:center">What students typed is shown only here. The game keeps who asked for whom and the role choices, never the text or the email.</p>
+    <div class="modal-actions"><button class="seal-btn" id="reqSave">Save requests &amp; suggest teams</button>
+    <button class="seal-btn quiet" onclick="closeModal()">Cancel</button></div>`, {wide:true});
+  document.querySelectorAll("[data-per]").forEach(cb=>cb.onchange=()=>{
+    const p=periods[+cb.dataset.per]; if(cb.checked) on.add(p); else on.delete(p); draw();
+  });
+  draw();
+  $("#reqSave").onclick=()=>{
+    const out={};
+    const ids=new Set(roster.map(s=>s.id));
+    M.filter(x=>on.has(x.r.period||"(blank)") && x.self.id!=null).forEach(x=>{
+      const me=x.self.id;
+      const pick=list=>[...new Set(list.map(w=>w.m.id).filter(id=>id!=null && id!==me && ids.has(id)))];
+      out[me]={first:x.r.first||null, second:x.r.second||null, care:x.r.care, want:pick(x.want), avoid:pick(x.avoid)};  // a later answer replaces an earlier one
+    });
+    g.requests=out;
+    suggestTeamsFor(g); save(); closeModal(); renderTeams();
+    const rep=g.lastRequestReport;
+    tick(`📝 Requests saved for ${Object.keys(out).length} students. `+(rep&&rep.asked?`${rep.got} of ${rep.asked} who asked got a requested partner.`:"Teams suggested."));
+  };
+}
+
+$("#btnLoadRequests").onclick=chooseRequests;
+$("#btnClearRequests").onclick=()=>{
+  const g=game(); if(!g) return;
+  if(!hasRequests(g)){ tick("No requests saved for this class."); return; }
+  confirmModal("Clear the requests?", `Removes the group and role requests saved for ${esc(g.name)}. The teams stay as they are.`,
+    "🗑 Clear requests", ()=>{ delete g.requests; delete g.lastRequestReport; save(); renderTeams(); tick("🗑 Requests cleared."); });
+};
+
+/* ---------- Rosters and teams: backup, spreadsheet, restore ----------
+   The backup is the game's own all-classes backup file (so the home screen's Load a
+   backup reads it too). Restoring from here puts back only rosters, teams, roles,
+   requests and reading levels, class by class; days, rounds, holdings and the ledger
+   stay as they are on this laptop. */
+$("#btnTeamsBackup").onclick=()=>backUp("all","teams");
+$("#btnTeamsCsv").onclick=()=>{
+  const names={}; Object.keys(REGIONS).forEach(id=>names[id]=REGIONS[id].nm);
+  const csv=teamsCSV(state.periods, names, teamOrder());
+  const d=new Date(), stamp=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob(["\uFEFF"+csv],{type:"text/csv"}));
+  a.download=`Triangle-Trade_teams_${stamp}.csv`; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 4000);
+  tick("⬇ Teams spreadsheet downloaded.");
+};
+$("#btnTeamsRestore").onclick=()=>$("#teamsBackupFile").click();
+$("#teamsBackupFile").onchange=e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    let teams;
+    try{ teams=teamsFromBackup(parseBackup(r.result, Object.keys(REGIONS))); }
+    catch(err){ noticeModal("⚠ Can't read that backup", esc(err.message)); return; }
+    if(!teams.length){ noticeModal("⚠ No rosters in that backup", "It is a game backup, but no class in it has students."); return; }
+    const target=t=>state.periods[t.key] ? t.key : Object.keys(state.periods).find(k=>state.periods[k].name===t.name) || null;
+    openModal(`<h3>📂 Restore rosters &amp; teams?</h3>
+      <p class="dock-summary">Rosters, teams, roles and requests come back from the file. Game progress (day, round, holdings, trades) is not touched.</p>
+      <table class="needs-table">${teams.map(t=>{ const k=target(t); return `<tr><td><b>${esc(t.name)}</b> (${t.roster.length})</td>
+        <td>${k?`replaces ${esc(state.periods[k].name)}'s roster (${(state.periods[k].roster||[]).length})`:"added as a new class"}</td></tr>`; }).join("")}</table>
+      <div class="modal-actions" style="margin-top:0.75rem"><button class="seal-btn" id="teamsRstGo">Restore</button>
+      <button class="seal-btn quiet" onclick="closeModal()">Cancel</button></div>`);
+    $("#teamsRstGo").onclick=()=>{
+      teams.forEach(t=>{
+        let k=target(t);
+        if(!k){ k="p"+Date.now()+"_"+Math.random().toString(36).slice(2,6); state.periods[k]=newGame(t.name); }
+        const g=migrate(state.periods[k]);
+        g.roster=t.roster;
+        if(t.requests) g.requests=t.requests; else delete g.requests;
+        g.readLevel=t.readLevel||{}; g.teamsSuggested=false;
+        migrate(g);
+        if(!state.activePeriod) state.activePeriod=k;
+      });
+      save(); closeModal(); renderHome(); renderTeams();
+      tick(`📂 Rosters & teams restored for ${teams.length} class${teams.length===1?"":"es"}.`);
+    };
+  };
+  r.readAsText(f);
+};
+
+/* Rename in the game itself: the board, projector and crew sheets all show the new name. */
+function renameSailor(g, s){
+  openModal(`<h3>✎ Rename</h3>
+    <p class="dock-summary">As it should appear on the board, the projector and the crew sheets.</p>
+    <div class="modal-actions" style="margin:0.5rem 0"><input id="renameIn" maxlength="40" value="${esc(s.name)}" aria-label="Name" style="font-family:'IM Fell English',serif;font-size:20px;padding:0.375rem 0.625rem;border:1.5px solid var(--ink-faint);border-radius:4px;width:min(320px,80vw)"></div>
+    <div class="modal-actions"><button class="seal-btn" id="renameGo">Save</button><button class="seal-btn quiet" onclick="closeModal()">Cancel</button></div>`);
+  const inp=$("#renameIn"); inp.focus(); inp.select();
+  const go=()=>{
+    const v=inp.value.replace(/[\u0000-\u001f\u007f<>]/g,"").replace(/\s+/g," ").trim().slice(0,40);
+    if(!v){ inp.focus(); return; }
+    s.name=v; save(); closeModal(); renderTeams(); if(game() && $("#mapPanel svg")) renderRegions();
+  };
+  $("#renameGo").onclick=go;
+  inp.onkeydown=e=>{ if(e.key==="Enter") go(); };
+}
+/* Switch class without leaving the builder. The board follows when you go back to it. */
+$("#tbClass").onchange=e=>{
+  const k=e.target.value; if(!state.periods[k]) return;
+  state.activePeriod=k; migrate(game()); save(); syncLevel(); renderTeams();
+  tick(`👥 Now building teams for ${game().name}.`);
+};
+$("#btnPrintCrews").onclick=()=>{
+  save();
+  window.open("Triangle-Trade-Crew-Sheets.html?class="+encodeURIComponent(state.activePeriod||""), "_blank", "noopener");
+};
 $("#btnTeams").onclick=()=>{ renderTeams(); show("#view-teams"); };
 $("#btnLoadRoster").onclick=chooseRosterFile;
 $("#btnHomeLoadRoster").onclick=chooseRosterFile;
@@ -3724,7 +4388,9 @@ let currentReading="newEngland";
 /* Where the printable reading pages live, relative to this page. The public game is
    games/triangle-trade.html and the readings are at the site root, so "../". In the
    planning repo this path doesn't resolve; that's expected. */
-const READINGS_BASE = "../";
+const READINGS_BASE = location.pathname.indexOf("/games/") !== -1
+  ? "../"                               // the public copy, at mrbsocialstudies.org/games/
+  : "https://mrbsocialstudies.org/";    // the planning copy, which has no readings or guide beside it
 /* The How to Play guide sits beside the readings at the site root. */
 $("#btnHowTo") && ($("#btnHowTo").onclick = ()=>window.open(READINGS_BASE + "triangle-trade-how-to-play.html", "_blank", "noopener"));
 function renderReadings(){
@@ -3853,10 +4519,12 @@ function renderEndGame(){
       </div>
       <h4>England's trade rules: answer in CER form</h4>
       <div class="refl-q"><p class="refl-ask"><b>6.</b> ${L(cer.q)}</p>
-        <p class="refl-sup"><b>Look at:</b> ${L(cer.look)}</p></div>
+        <p class="refl-sup"><b>Look at:</b> ${L((cer.lookRegion&&cer.lookRegion[id])||cer.look)}</p></div>
       ${[["Claim",cer.claim],["Evidence",cer.evidence],["Reasoning",cer.reasoning]].map(([k,p])=>`<div class="refl-cer">
         <p class="refl-ask"><b>${k}.</b> ${L(p.guide)}</p>
-        <p class="refl-sup refl-start"><b>Start with:</b> ${L(p.start)}</p></div>`).join("")}
+        ${p.items?p.items.map(it=>`<p class="refl-sup" style="margin-top:.4rem"><b>${L(it.label)}.</b> ${L(it.guide)}</p>
+        ${it.look?`<p class="refl-sup"><b>Look at:</b> ${L(it.look)}</p>`:""}
+        <p class="refl-sup refl-start"><b>Start with:</b> ${L(it.start)}</p>`).join(""):`<p class="refl-sup refl-start"><b>Start with:</b> ${L(p.start)}</p>`}</div>`).join("")}
       <h4>How we worked</h4>
       ${ask(REFLECT.common[2],"7.")}${ask(REFLECT.common[3],"8.")}
     </div>`;
@@ -4109,7 +4777,7 @@ function projectorBoot(){
   document.title="Triangular Trade — Projector";
   // Nothing that can change the game, open a secret, or pick a level stays on this page.
   ["#view-home","#view-readings","#view-endgame","#view-teams","#roundControls","#boardBtns",".hdr-controls",
-   "#modalVeil","#fileBackup","#rosterFile","footer.colophon","#timerAnnounce"]
+   "#modalVeil","#fileBackup","#rosterFile","#teamsBackupFile","#requestsFile","footer.colophon","#timerAnnounce"]
     .forEach(sel=>document.querySelectorAll(sel).forEach(el=>el.remove()));
   $("#view-board").classList.add("active");
   $("#mapPanel").innerHTML=buildMap();
