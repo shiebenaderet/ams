@@ -15,6 +15,15 @@
   this phase, Right/N next phase, Left/B previous phase, F full screen. Phase lengths
   and the round number are editable; the round is remembered in this browser only.
   The steps on each phase are the Day 21 slides' wording (build-review-slides.py).
+
+  Oct 4 2026 (teacher: the final day's agenda was "overly ambitious"; stop trading
+  12 minutes before the bell): pick the period and the timer knows when trading ends,
+  using the Mon-Thu bell schedule from Bell-Schedule-Builder.html. A strip under the
+  round shows the clock time trading ends and the minutes left; "Last round" appears
+  when another full round won't fit. After trading, Next goes to the Final count
+  (7 min) and Pack up (3 min), each with its steps. The F key or "Final count" button
+  jumps there any time. Copy of this file is public at mrbsocialstudies.org/round-timer.html
+  (ams repo); keep the two identical.
 -->
 <style>
 :root{--deep:#1F4D3A;--accent:#3E7C5A;--tint:#E9F1EC;--hilite:#D9480F;--ink:#1A1A1A;--muted:#5A5A5A;--bg:#FBFAF7;}
@@ -42,6 +51,9 @@ button.primary{background:var(--deep);color:#fff;min-width:7.5em;}
 button:focus-visible{outline:3px solid var(--hilite);outline-offset:2px;}
 .set{font-size:clamp(13px,1.1vw,17px);color:var(--muted);display:flex;gap:1rem;align-items:center;flex-wrap:wrap;justify-content:center;width:100%;}
 .set input{width:3.4em;font:inherit;padding:.15em .3em;border:1.5px solid #999;border-radius:.3em;}
+.endstrip{margin:.7em 0 0;font-size:clamp(15px,1.6vw,26px);font-weight:700;color:var(--deep);}
+.endstrip .last{display:inline-block;margin-left:.5em;background:var(--hilite);color:#fff;padding:.05em .5em;border-radius:.35em;}
+.endstrip.over{color:var(--hilite);}
 .keys{font-size:clamp(12px,1vw,15px);color:var(--muted);text-align:center;padding-bottom:1vh;}
 body.full .bar,body.full .keys{display:none;}
 @media (max-width:760px){main{grid-template-columns:1fr;}}
@@ -53,6 +65,7 @@ body.full .bar,body.full .keys{display:none;}
     <span class="round" id="roundTag">Round 1</span>
     <h1 id="phase">Negotiation</h1>
     <ul id="steps"></ul>
+    <p class="endstrip" id="endstrip" hidden></p>
   </section>
   <section class="clock">
     <div id="time" role="timer" aria-label="Time left">4:00</div>
@@ -66,15 +79,18 @@ body.full .bar,body.full .keys{display:none;}
   <button id="plus" title="Add a minute (Up arrow)">+1 min</button>
   <button id="restart" title="Restart this phase (R)">Restart</button>
   <button id="next" title="Next phase (Right arrow)">Next &rsaquo;</button>
+  <button id="final" title="Go to the final count (C)">Final count</button>
   <button id="full" title="Full screen (F)">Full screen</button>
   <div class="set">
     <label>Round <input id="setRound" type="number" min="1" max="20" value="1"></label>
     <label>Negotiation (min) <input id="setNeg" type="number" min="1" max="20" value="4"></label>
     <label>Shipping (min) <input id="setShip" type="number" min="1" max="20" value="5"></label>
+    <label>Period <select id="setPeriod"><option value="">none</option><option value="1">1 (bell 8:55)</option><option value="2">2 (bell 10:25)</option><option value="3">3 (bell 11:20)</option><option value="5">5 (bell 1:40)</option><option value="custom">other time</option></select></label>
+    <label>Trading ends at <input id="setStop" type="time" style="width:7em"></label>
     <label><input id="setSound" type="checkbox" checked> Chime at 1:00 and 0:00</label>
   </div>
 </div>
-<p class="keys">Space start/pause &middot; &uarr; +1 min &middot; &darr; &minus;1 min &middot; R restart &middot; &rarr; next &middot; &larr; back &middot; F full screen</p>
+<p class="keys">Space start/pause &middot; &uarr; +1 min &middot; &darr; &minus;1 min &middot; R restart &middot; &rarr; next &middot; &larr; back &middot; C final count &middot; F full screen</p>
 
 <script>
 const PHASES = {
@@ -89,15 +105,31 @@ const PHASES = {
     ['Captain:', 'Dock, swap, Dock, home.'],
     ['Merchant:', 'stays home.'],
     ['Counter:', 'count and check off.']],
-    end: 'Time’s up: Counters, tell Mr. B your number.' }
+    end: 'Time’s up: Counters, tell Mr. B your number.' },
+  count: { name: 'Final count', steps: [
+    ['Counter:', 'count your region’s goods cards by type.'],
+    ['Record Keeper:', 'check off each need you have on the Harbormaster Record.'],
+    ['Merchant:', 'tell Mr. B your region’s number.'],
+    ['', 'The Dock’s count is the official count.', true]],
+    end: 'Time’s up: every number on the standings chart.' },
+  pack: { name: 'Pack up', steps: [
+    ['Goods cards:', 'counted and bagged.'],
+    ['Group folder:', 'Record, Needs Card, Goods Guide, Region Notes, spare manifests.'],
+    ['Exit ticket, out loud:', 'Who won, and what did winning actually require?']],
+    end: 'See you tomorrow: Reflection and debrief.' }
 };
+// Mon-Thu bell (Bell-Schedule-Builder.html). Trading stops 12 minutes before it.
+const BELL = { '1': '08:55', '2': '10:25', '3': '11:20', '5': '13:40' };
+const STOP_BEFORE_BELL = 12;
 const $ = id => document.getElementById(id);
 const store = {
   get(k, d){ try { const v = localStorage.getItem('rt-' + k); return v === null ? d : JSON.parse(v); } catch(e){ return d; } },
   set(k, v){ try { localStorage.setItem('rt-' + k, JSON.stringify(v)); } catch(e){} }
 };
 let round = store.get('round', 1), phase = store.get('phase', 'negotiate');
-let mins = { negotiate: store.get('neg', 4), ship: store.get('ship', 5) };
+let mins = { negotiate: store.get('neg', 4), ship: store.get('ship', 5), count: 7, pack: 3 };
+let period = store.get('period', ''), stopAt = store.get('stopAt', '');   // stopAt 'HH:MM'
+if (phase !== 'negotiate' && phase !== 'ship' && phase !== 'count' && phase !== 'pack') phase = 'negotiate';
 let sound = store.get('sound', true);
 let remain = mins[phase] * 60000, running = false, endsAt = 0, warned = false, ended = false;
 
@@ -116,14 +148,34 @@ function beep(freq, dur){
   } catch(e){}
 }
 
+function stopDate(){
+  if (!stopAt) return null;
+  const [h, m] = stopAt.split(':').map(Number), d = new Date();
+  d.setHours(h, m, 0, 0); return d;
+}
+function hhmm(t){ let [h, m] = t.split(':').map(Number); h = h % 12 || 12; return h + ':' + String(m).padStart(2, '0'); }
+function renderEnd(){
+  const el = $('endstrip'), sd = stopDate();
+  if (!sd || phase === 'count' || phase === 'pack') { el.hidden = true; return; }
+  el.hidden = false;
+  const minsLeft = Math.ceil((sd - Date.now()) / 60000);
+  if (minsLeft <= 0) { el.className = 'endstrip over'; el.textContent = 'Trading is over: press Final count.'; return; }
+  el.className = 'endstrip';
+  el.textContent = 'Trading ends at ' + hhmm(stopAt) + ' · ' + minsLeft + ' min left';
+  // Last round: from the start of this round's Negotiation, a whole round no longer fits.
+  const roundLeft = phase === 'negotiate' ? left() / 60000 + mins.ship : left() / 60000;
+  const nextFits = minsLeft - roundLeft >= mins.negotiate + mins.ship;
+  if (!nextFits) { const b = document.createElement('span'); b.className = 'last'; b.textContent = 'Last round'; el.appendChild(b); }
+}
 function renderPhase(){
   const p = PHASES[phase];
-  $('roundTag').textContent = 'Round ' + round;
+  $('roundTag').textContent = (phase === 'count' || phase === 'pack') ? 'After round ' + round : 'Round ' + round;
   $('phase').textContent = p.name;
   $('steps').innerHTML = p.steps.map(([b, t, q]) =>
     `<li${q ? ' class="quiet"' : ''}>${b ? '<b>' + b + '</b> ' : ''}${t}</li>`).join('');
   $('setRound').value = round; $('setNeg').value = mins.negotiate; $('setShip').value = mins.ship;
   $('setSound').checked = sound;
+  $('setPeriod').value = period; $('setStop').value = stopAt;
   document.title = 'Round ' + round + ' · ' + p.name + ' · Triangle Trade';
 }
 function renderClock(){
@@ -135,6 +187,7 @@ function renderClock(){
   else if (running) { st.textContent = ''; st.className = ''; }
   else { st.textContent = remain === mins[phase] * 60000 ? 'Ready: press Start' : 'Paused'; st.className = 'paused'; }
   $('go').textContent = running ? 'Pause' : (remain === mins[phase] * 60000 ? 'Start' : 'Resume');
+  renderEnd();
 }
 function tick(){
   if (running) {
@@ -159,10 +212,29 @@ function adjust(deltaMin){
   renderClock();
 }
 function reset(){ running = false; ended = false; warned = false; remain = mins[phase] * 60000; renderPhase(); renderClock(); }
+function tradingOver(){ const sd = stopDate(); return !!sd && Date.now() >= sd.getTime(); }
 function step(dir){
-  if (dir > 0) { if (phase === 'negotiate') phase = 'ship'; else { phase = 'negotiate'; round++; } }
-  else { if (phase === 'ship') phase = 'negotiate'; else if (round > 1) { phase = 'ship'; round--; } }
+  if (dir > 0) {
+    if (phase === 'negotiate') phase = 'ship';
+    else if (phase === 'ship') { if (tradingOver()) phase = 'count'; else { phase = 'negotiate'; round++; } }
+    else if (phase === 'count') phase = 'pack';
+    else return;
+  } else {
+    if (phase === 'pack') phase = 'count';
+    else if (phase === 'count') phase = 'ship';
+    else if (phase === 'ship') phase = 'negotiate';
+    else if (round > 1) { phase = 'ship'; round--; }
+  }
   store.set('round', round); store.set('phase', phase); reset();
+}
+function toFinal(){ phase = 'count'; store.set('phase', phase); reset(); }
+function setPeriod(v){
+  period = v; store.set('period', period);
+  if (BELL[v]) {
+    const [h, m] = BELL[v].split(':').map(Number), d = new Date(2000, 0, 1, h, m - STOP_BEFORE_BELL);
+    stopAt = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  } else if (!v) stopAt = '';
+  store.set('stopAt', stopAt); renderPhase(); renderClock();
 }
 function full(){
   const on = !document.fullscreenElement;
@@ -173,6 +245,9 @@ document.addEventListener('fullscreenchange', () => document.body.classList.togg
 
 $('go').onclick = toggle; $('plus').onclick = () => adjust(1); $('minus').onclick = () => adjust(-1);
 $('restart').onclick = reset; $('next').onclick = () => step(1); $('prev').onclick = () => step(-1); $('full').onclick = full;
+$('final').onclick = toFinal;
+$('setPeriod').onchange = e => setPeriod(e.target.value);
+$('setStop').onchange = e => { stopAt = e.target.value; period = 'custom'; store.set('stopAt', stopAt); store.set('period', period); renderPhase(); renderClock(); };
 $('setRound').onchange = e => { round = Math.max(1, parseInt(e.target.value) || 1); store.set('round', round); renderPhase(); };
 $('setNeg').onchange = e => { mins.negotiate = Math.max(1, parseInt(e.target.value) || 4); store.set('neg', mins.negotiate); if (phase === 'negotiate' && !running) reset(); };
 $('setShip').onchange = e => { mins.ship = Math.max(1, parseInt(e.target.value) || 5); store.set('ship', mins.ship); if (phase === 'ship' && !running) reset(); };
@@ -188,6 +263,7 @@ document.addEventListener('keydown', e => {
   else if (k === 'ArrowLeft' || k === 'b' || k === 'B') step(-1);
   else if (k === 'r' || k === 'R') reset();
   else if (k === 'f' || k === 'F') full();
+  else if (k === 'c' || k === 'C') toFinal();
 });
 
 reset();
