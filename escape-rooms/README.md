@@ -24,4 +24,4 @@ too.
 3. Add a card under the unit's heading in `index.html` (add the heading if it's the
    unit's first room), a card on `units/<unit>.html`, and a row above.
 
-Group progress saves in each Chromebook's browser; Teacher » Reset clears it between periods.
+Group progress saves in each Chromebook's browser. Teacher tools (Skip lock, Reset) are hidden: press Ctrl+K on a lock page, or tap its title five times on a touchscreen, then enter the teacher code. Reset each Chromebook between periods.

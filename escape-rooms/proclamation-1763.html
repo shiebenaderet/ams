@@ -134,7 +134,6 @@ function render(){
     }
     h+='</section>';
   }
-  h+=`<footer><button class="link" id="tlink">Teacher</button></footer>`;
   if(teacherOpen){
     h+=`<section class="card teacher">`+(teacherOk?
       `<p><b>Teacher tools.</b> Skip moves this group past the current lock. Reset clears this Chromebook for the next period.</p>
@@ -156,7 +155,7 @@ function bind(){
   $('try')&&($('try').onclick=check);
   $('hint')&&($('hint').onclick=()=>{if(S.hints[S.lock]<2){S.hints[S.lock]++;save();render();}});
   $('next')&&($('next').onclick=()=>{if(S.lock+1<LOCKS.length){S.lock++;S.revealed=false;}else{S.finished=Date.now();}flash='';save();render();});
-  $('tlink').onclick=()=>{teacherOpen=!teacherOpen;teacherOk=false;render();};
+  $('tcode')&&$('tcode').focus();
   $('tgo')&&($('tgo').onclick=()=>{if(fnv(SALT+'teacher|'+$('tcode').value.trim().toLowerCase())===TEACHER){teacherOk=true;}else{$('tcode').value='';$('tcode').placeholder='That code isn’t right';}render();});
   $('tcode')&&$('tcode').addEventListener('keydown',e=>{if(e.key==='Enter')$('tgo').click();});
   $('skip')&&($('skip').onclick=()=>{S.revealed=true;S.frozenUntil=0;teacherOpen=false;save();render();});
@@ -199,6 +198,10 @@ function renderBoard(){
 }
 function tickBoard(){const c=document.getElementById('clock');if(!c)return;const l=tLeft();if(l<=0&&T.runningSince){T.left=0;T.runningSince=0;}c.textContent=l<=0?'Time!':mmss(l);c.classList.toggle('low',l<5*60000);}
 window.addEventListener('hashchange',render);
+/* Teacher tools are hidden: Ctrl+K (or Cmd+K) opens them, or five quick taps on the title on a touchscreen. */
+function toggleTeacher(){if(location.hash==='#board')return;teacherOpen=!teacherOpen;teacherOk=false;render();}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();toggleTeacher();}});
+let taps=[];document.addEventListener('click',e=>{if(!e.target.closest('h1'))return;const t=Date.now();taps=taps.filter(x=>t-x<2000);taps.push(t);if(taps.length>=5){taps=[];toggleTeacher();}});
 render();
 </script>
 
