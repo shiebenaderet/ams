@@ -10,6 +10,20 @@ live in the private `ams-planning` repo with the build script, which writes the
 lock page here directly. Codes are stored only as hashes, and the teacher code
 too.
 
+## Leaderboard
+
+`dashboard.html` is one live leaderboard for every room. When a group signs in on a lock
+page (period + each member's favorite character), the page reports every unlock, hint and
+wrong code to the `study-tools` Supabase project through the `escape_*` functions. The
+tables are closed to the public; the page's key can only call those functions, and a group
+can only update its own row (each run has a secret). Times come from the server clock.
+Ranking: most locks, then time to the last lock plus one minute per hint.
+
+Teacher tools on the dashboard (Ctrl+K, or the Teacher link): rename or hide a group,
+clear a period's board (hidden, not erased), download a CSV. The passphrase is checked in
+the database and stored only as a bcrypt hash. Built by `tools/build-escape-dashboard.py`
+in `ams-planning` from `tools/escape-rooms.json`; add new rooms there.
+
 ## Rooms
 
 | Room | Unit | Lock page | Built by (ams-planning) |

@@ -42,6 +42,9 @@ input.plain{text-transform:none;letter-spacing:0;font-size:20px;font-weight:600;
 input:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
 .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
 .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+select{font:inherit;font-size:20px;font-weight:600;padding:10px 12px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;max-width:320px;}
+.chars{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;}
+.note{font-size:15px;color:var(--muted);}
 button{font:inherit;font-weight:800;font-size:18px;border-radius:8px;padding:12px 20px;cursor:pointer;border:2px solid var(--deep);}
 button.primary{background:var(--deep);color:var(--surface);}
 button.ghost{background:transparent;color:var(--deep);}
@@ -78,20 +81,50 @@ footer{display:flex;justify-content:flex-end;}
 <script>
 const LOCKS = [{"n": 1, "title": "The Line", "ask": "Which places are west of the line, on land the King reserved for Native nations?", "fields": ["Lock 1 code (4 digits)"], "sort": false, "h": ["f97577ee"], "hints": ["Read each card’s clue and find its pin on the map. The lakes, the rivers and the coast are your landmarks.", "The dashed line runs along the mountains. Four pins are west of it. Read their cards’ digits in pin order, A to H."], "reveal": "Every place west of the line was home to Native nations, and British forts there were under attack in 1763. The King closed this land to colonial settlement."}, {"n": 2, "title": "The King’s Order", "ask": "What does the King’s order spell?", "fields": ["Lock 2 code (a word)"], "sort": false, "h": ["3906131a"], "hints": ["Lines 1, 2 and 3 are one long sentence split in three. Start with the strip that says the order is “just and reasonable.”", "Look for the same idea in both: “molested or disturbed” = left alone; “Hunting Grounds” = lands to hunt on; “forthwith … remove” = leave right away. Then read the letters in order, 1 to 5."], "reveal": "PEACE. The King wanted peace with the Native nations. Pontiac’s War had begun that spring, and Britain, already deep in debt, could not afford another long war."}, {"n": 3, "title": "Washington’s Secret", "ask": "What did Washington plan to do?", "fields": ["Lock 3 code (a word)"], "sort": false, "h": ["86c993cb"], "hints": ["Check the box at the top of the letter: who wrote it, to whom, and when. The Proclamation was 1763.", "Five statements are supported and three are not. Look at who the letter was for, and whether Washington wanted to obey the line."], "reveal": "CLAIM. Washington planned to claim western land the Proclamation had closed, and he bet the line would not last. Can we trust this letter? It was private, so it may show what he really thought."}, {"n": 4, "title": "Three Voices", "ask": "Which cards belong to Washington, and which to Pontiac?", "fields": ["Washington’s 3 card letters", "Pontiac’s 3 card letters"], "sort": true, "h": ["8a6ba812", "05b1d62b"], "hints": ["For each card, ask: is this the person who made the rule, the colonist who wanted land, or the leader whose people lived there?", "Each person has exactly three cards. The King’s cards are about peace, safety and control. Washington’s are about land and secrets."], "reveal": "All three wanted the same land, for different reasons. Before you open Envelope 5, talk it out: whose claim to this land was strongest, and why? Write it on your group sheet."}, {"n": 5, "title": "The Bill Comes Due", "ask": "What happened when Britain made the colonists help pay the bill?", "fields": ["Lock 5 code (3 digits)"], "sort": false, "h": ["36610640"], "hints": ["Put the events in cause-and-effect order first. What had to happen before colonists stopped buying British goods?", "One word card does not belong: check its date. Then read the word cards’ digits in the order of the events."], "reveal": "You escaped. The boycott helped: Parliament repealed the Stamp Act in 1766. But Britain still needed money, and in 1767 Parliament passed new taxes. Tomorrow’s question: should you have to pay for something you don’t get a vote on?"}];
 const MISSION = ["October 1763. Britain has won the French &amp; Indian War, and it owes more money than ever. One thing is true about all wars: they’re expensive. Now King George III has drawn a line on the map.", "Your group will find out what that line meant to the King, to colonists like George Washington, and to Native nations like Pontiac’s, and what Britain did next to pay its bill."];
-const RULES = ["Open <b>one envelope at a time</b>. Each puzzle gives you a code.", "Type the code into the lock page. Right: open the next envelope. Wrong: the lock freezes for one minute.", "Write your work on the group sheet. Every person in the group does some of the reading.", "Stuck? The lock page has two hints for every lock."];
+const RULES = ["Open <b>one envelope at a time</b>. Each puzzle gives you a code.", "Type the code into the lock page. Right: open the next envelope. Wrong: the lock freezes for one minute.", "Write your work on the group sheet. Every person in the group does some of the reading.", "Stuck? The lock page has two hints for every lock. Each hint adds one minute to your time on the class leaderboard."];
 const SALT = "proc1763|";
 const TEACHER = "45d3d892";   // hash of the teacher code; set TEACHER_CODE in the build script
 const FREEZE_SECONDS = 60;
+const ROOM = {"id": "proclamation-1763", "title": "The Proclamation Line", "kicker": "Unit 2 · Proclamation of 1763", "periods": ["1", "2", "3", "5"]};          // id, title, periods
+const DB = {"url": "https://opfzhgqbaomakovocpeb.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZnpoZ3FiYW9tYWtvdm9jcGViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2ODQ5NjIsImV4cCI6MjA4ODI2MDk2Mn0.iVRzgVaz6Sk2M9FRu0O-zfWTuelWfG4zx-Q714oPYfw"};              // leaderboard database (public key; it can only call the escape_* functions)
+const HINT_MINUTES = 1;
 const KEY = 'proclamation-escape-v1';
 
 function fnv(s){let h=0x811c9dc5;for(const b of new TextEncoder().encode(s)){h^=b;h=Math.imul(h,0x01000193)>>>0;}return h.toString(16).padStart(8,'0');}
 function norm(s,sort){s=s.toUpperCase().replace(/[^A-Z0-9]/g,'');return sort?s.split('').sort().join(''):s;}
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-function fresh(){return {group:'',started:0,lock:0,revealed:false,hints:[0,0,0,0,0],wrong:0,frozenUntil:0,finished:0};}
+function fresh(){return {group:'',period:'',chars:['','','','',''],started:0,lock:0,revealed:false,hints:[0,0,0,0,0],wrong:0,frozenUntil:0,finished:0,runId:'',secret:''};}
 let S=fresh();
 try{const raw=localStorage.getItem(KEY);if(raw)S=Object.assign(fresh(),JSON.parse(raw));}catch(e){}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}queueSync();}
+
+/* ---------- leaderboard sync: the page works the same if the network is down ---------- */
+let net='', syncing=false, syncAgain=false, syncTimer=0;
+async function rpc(fn,body){
+  const r=await fetch(DB.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':DB.key,'Authorization':'Bearer '+DB.key,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  if(!r.ok) throw new Error(fn+' '+r.status);
+  const t=await r.text(); return t?JSON.parse(t):null;
+}
+function locksOpened(){return S.finished?LOCKS.length:S.lock+(S.revealed?1:0);}
+function queueSync(){clearTimeout(syncTimer);syncTimer=setTimeout(sync,150);}
+async function sync(){
+  if(!DB.url||!S.started) return;
+  if(syncing){syncAgain=true;return;}
+  syncing=true;
+  try{
+    if(!S.runId){
+      const r=await rpc('escape_join',{p_room:ROOM.id,p_period:S.period,p_team:S.group,p_lock_count:LOCKS.length});
+      S.runId=r[0].id;S.secret=r[0].secret;try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+    }
+    await rpc('escape_update',{p_id:S.runId,p_secret:S.secret,p_locks:locksOpened(),p_hints:S.hints.reduce((a,b)=>a+b,0),p_wrong:S.wrong});
+    setNet('ok');
+  }catch(e){setNet('off');clearTimeout(syncTimer);syncTimer=setTimeout(sync,10000);}
+  syncing=false;
+  if(syncAgain){syncAgain=false;sync();}
+}
+function setNet(v){net=v;const el=document.getElementById('net');if(el)el.textContent=netText();}
+function netText(){return !S.started||!DB.url?'':net==='ok'?'Leaderboard: connected':net==='off'?'Leaderboard: offline. Keep going; it will catch up.':'';}
 
 const app=document.getElementById('app');
 let teacherOpen=false, teacherOk=false, flash='';
@@ -106,10 +139,15 @@ function render(){
   if(location.hash==='#board'){return renderBoard();}
   document.body.classList.remove('board');
   let h='';
-  h+=`<header><div><div class="kicker">${S.group?esc(S.group):'Unit 2'}</div><h1>The Proclamation Line</h1></div>${seals()}</header>`;
+  h+=`<header><div><div class="kicker">${S.started?'Period '+esc(S.period)+' · '+esc(S.group):'Unit 2'}</div><h1>${esc(ROOM.title)}</h1></div>${seals()}</header>`;
   if(!S.started){
     h+=`<section class="card">${MISSION.map(p=>`<p>${p}</p>`).join('')}<ol>${RULES.map(r=>`<li>${r}</li>`).join('')}</ol>
-      <div><label for="group">Your group (table number or names)</label><input class="plain" type="text" id="group" placeholder="Table 3" autocomplete="off"></div>
+      <h2 style="margin-top:6px">Sign in your group</h2>
+      <div><label for="period">Period</label><select id="period" class="plain">${['',...ROOM.periods].map(p=>`<option value="${p}" ${p===S.period?'selected':''}>${p?'Period '+p:'Choose your period'}</option>`).join('')}</select></div>
+      <div><label>Your group’s name: each person types a favorite character from a movie, show or book</label>
+        <div class="chars">${S.chars.map((c,i)=>`<input class="plain" type="text" id="ch${i}" maxlength="24" autocomplete="off" placeholder="${i<2?'Person '+(i+1):'Person '+(i+1)+' (optional)'}" value="${esc(c)}">`).join('')}</div>
+        <p class="note">Keep it school-appropriate. Your names show on the class leaderboard, and Mr. B can rename any group.</p></div>
+      ${flash?`<div class="msg bad">${flash}</div>`:''}
       <div class="row"><button class="primary" id="start">Start Lock 1</button></div></section>`;
   } else if(S.finished){
     const L=LOCKS[LOCKS.length-1];
@@ -130,6 +168,7 @@ function render(){
         <button class="ghost" id="hint" ${S.hints[S.lock]>=2?'disabled':''}>${S.hints[S.lock]>=2?'No more hints':`Show hint ${S.hints[S.lock]+1} of 2`}</button></div>`;
       if(frozen) h+=`<div class="msg bad" id="freeze">Not yet. The lock is frozen for <span id="left">${mmss(S.frozenUntil-Date.now())}</span>. Check your work on the group sheet while you wait.</div>`;
       else if(flash) h+=`<div class="msg bad">${flash}</div>`;
+      h+=`<p class="note">Each hint adds ${HINT_MINUTES} minute to your leaderboard time.</p>`;
       for(let i=0;i<S.hints[S.lock];i++) h+=`<div class="hint"><b>Hint ${i+1}.</b> ${esc(L.hints[i])}</div>`;
     }
     h+='</section>';
@@ -140,14 +179,21 @@ function render(){
        <div class="row"><button class="ghost" id="skip" ${!S.started||S.finished?'disabled':''}>Skip lock</button><button class="ghost" id="reset">Reset for next group</button><button class="ghost" id="tclose">Close</button></div>`
       :`<div><label for="tcode">Teacher code</label><input class="plain" type="password" id="tcode" autocomplete="off"></div><div class="row"><button class="ghost" id="tgo">Open teacher tools</button></div>`)+`</section>`;
   }
+  h+=`<p class="note" id="net" aria-live="polite">${netText()}</p>`;
   app.innerHTML=h;
   bind();
 }
 
 function bind(){
   const $=id=>document.getElementById(id);
-  $('start')&&($('start').onclick=()=>{S.group=($('group').value||'').trim().slice(0,40);S.started=Date.now();save();render();});
-  $('group')&&$('group').addEventListener('keydown',e=>{if(e.key==='Enter')$('start').click();});
+  if($('start')){
+    const grab=()=>{S.period=$('period').value;S.chars=S.chars.map((_,i)=>($('ch'+i).value||'').trim().slice(0,24));};
+    $('start').onclick=()=>{grab();const names=S.chars.filter(Boolean);
+      if(!S.period){flash='Choose your period first.';render();return;}
+      if(names.length<2){flash='Everyone in your group types a character. You need at least two.';render();return;}
+      S.group=names.join(' · ');S.started=Date.now();flash='';save();render();};
+    for(let i=0;i<5;i++)$('ch'+i).addEventListener('keydown',e=>{if(e.key==='Enter')$('start').click();});
+  }
   const f=$('f');
   if(f){f.addEventListener('submit',e=>{e.preventDefault();check();});
     f.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();check();}}));
@@ -159,7 +205,7 @@ function bind(){
   $('tgo')&&($('tgo').onclick=()=>{if(fnv(SALT+'teacher|'+$('tcode').value.trim().toLowerCase())===TEACHER){teacherOk=true;}else{$('tcode').value='';$('tcode').placeholder='That code isn’t right';}render();});
   $('tcode')&&$('tcode').addEventListener('keydown',e=>{if(e.key==='Enter')$('tgo').click();});
   $('skip')&&($('skip').onclick=()=>{S.revealed=true;S.frozenUntil=0;teacherOpen=false;save();render();});
-  $('reset')&&($('reset').onclick=()=>{S=fresh();save();teacherOpen=false;flash='';render();});
+  $('reset')&&($('reset').onclick=()=>{S=fresh();save();teacherOpen=false;flash='';net='';render();});
   $('tclose')&&($('tclose').onclick=()=>{teacherOpen=false;render();});
 }
 
@@ -185,7 +231,7 @@ let T={total:28*60*1000,left:28*60*1000,runningSince:0};
 function tLeft(){return T.runningSince?T.left-(Date.now()-T.runningSince):T.left;}
 function renderBoard(){
   document.body.classList.add('board');
-  app.innerHTML=`<header><div><div class="kicker">Unit 2 · Proclamation of 1763</div><h1>The Proclamation Line</h1></div>${''}</header>
+  app.innerHTML=`<header><div><div class="kicker">${esc(ROOM.kicker)}</div><h1>${esc(ROOM.title)}</h1></div></header>
   <div class="board-grid"><section class="card">${MISSION.map(p=>`<p>${p}</p>`).join('')}<ol>${RULES.map(r=>`<li>${r}</li>`).join('')}</ol></section>
   <section class="card"><div class="timer" id="clock">${mmss(tLeft())}</div>
    <div class="row" style="justify-content:center"><button class="primary" id="go">${T.runningSince?'Pause':'Start'}</button><button class="ghost" id="rs">Reset</button></div>
@@ -203,6 +249,7 @@ function toggleTeacher(){if(location.hash==='#board')return;teacherOpen=!teacher
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();toggleTeacher();}});
 let taps=[];document.addEventListener('click',e=>{if(!e.target.closest('h1'))return;const t=Date.now();taps=taps.filter(x=>t-x<2000);taps.push(t);if(taps.length>=5){taps=[];toggleTeacher();}});
 render();
+sync();
 </script>
 
 </html>

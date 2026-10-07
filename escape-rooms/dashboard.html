@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escape Room Leaderboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap">
+<style>
+/* Layout: a control strip, then one ranked row per group; projector view hides the strip and scales everything up. */
+:root{
+  --bg:#F5F0E8; --surface:#FEFCF8; --ink:#1A1A1A; --muted:#5C564E; --line:#D6CFC3;
+  --navy:#1B2D45; --gold:#B8862B; --gold-soft:#F3E7CC; --ok:#2F6B45; --ok-tint:#E2EFE6; --warn:#8A3B12; --warn-tint:#F8E6DC;
+  --display:'Fraunces',Georgia,'Times New Roman',serif;
+  --body:'Atkinson Hyperlegible Next','Atkinson Hyperlegible',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141A22; --surface:#1D2530; --ink:#EEF1F5; --muted:#A9B3C0; --line:#34404F;
+  --navy:#C9D8EE; --gold:#E2B862; --gold-soft:#3A3122; --ok:#8FD0A5; --ok-tint:#1E3328; --warn:#F0A982; --warn-tint:#3B2619; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#141A22; --surface:#1D2530; --ink:#EEF1F5; --muted:#A9B3C0; --line:#34404F;
+  --navy:#C9D8EE; --gold:#E2B862; --gold-soft:#3A3122; --ok:#8FD0A5; --ok-tint:#1E3328; --warn:#F0A982; --warn-tint:#3B2619; color-scheme:dark;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.4;padding-inline:16px;padding-block:20px 40px;}
+.wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:16px;}
+h1{font-family:var(--display);color:var(--navy);font-size:clamp(28px,5vw,44px);margin:0;line-height:1.1;text-wrap:balance;}
+.sub{color:var(--muted);font-weight:600;}
+header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:12px;}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;}
+.controls > div{display:flex;flex-direction:column;gap:4px;min-width:0;}
+label,.lab{font-size:14px;font-weight:700;color:var(--muted);}
+select,input{font:inherit;font-size:17px;padding:8px 10px;border:2px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);}
+.chips{display:flex;gap:6px;flex-wrap:wrap;}
+button{font:inherit;font-weight:700;font-size:16px;border-radius:8px;padding:8px 14px;cursor:pointer;border:2px solid var(--navy);background:transparent;color:var(--navy);}
+button.on,button.primary{background:var(--navy);color:var(--surface);}
+button.small{font-size:14px;padding:5px 10px;}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.status{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.board{display:flex;flex-direction:column;gap:10px;}
+.row{display:grid;grid-template-columns:64px minmax(0,1fr) auto auto;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;}
+.row.escaped{border-left:8px solid var(--gold);}
+.row.hidden{opacity:.5;}
+.rank{font-family:var(--display);font-size:36px;color:var(--navy);text-align:center;font-variant-numeric:tabular-nums;}
+.team{font-weight:800;font-size:22px;overflow-wrap:anywhere;}
+.meta{font-size:15px;color:var(--muted);margin-top:2px;}
+.seals{display:flex;gap:6px;}
+.seal{width:30px;height:30px;border-radius:50%;border:2px dashed var(--line);display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--muted);}
+.seal.open{background:var(--navy);border:2px solid var(--navy);color:var(--surface);}
+.time{text-align:right;font-variant-numeric:tabular-nums;min-width:120px;}
+.time b{display:block;font-family:var(--display);font-size:30px;color:var(--navy);line-height:1;}
+.badge{display:inline-block;font-size:13px;font-weight:800;padding:2px 8px;border-radius:999px;background:var(--gold-soft);color:var(--ink);}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:28px;text-align:center;color:var(--muted);}
+.teacher{background:var(--surface);border:1px dashed var(--line);border-radius:10px;padding:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;}
+.edit{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+.edit input{flex:1 1 220px;min-width:0;}
+.msg{border-radius:8px;padding:10px 12px;font-weight:600;}
+.msg.bad{background:var(--warn-tint);color:var(--warn);}
+.msg.good{background:var(--ok-tint);color:var(--ok);}
+footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--muted);}
+.link{background:none;border:none;color:var(--muted);font-weight:600;font-size:14px;padding:2px;text-decoration:underline;}
+/* projector */
+body.proj{font-size:22px;}
+body.proj .controls,body.proj footer,body.proj .teacher{display:none;}
+body.proj .team{font-size:30px;}
+body.proj .rank{font-size:46px;}
+body.proj .time b{font-size:40px;}
+body.proj .seal{width:38px;height:38px;font-size:16px;}
+@media (max-width:640px){.row{grid-template-columns:44px minmax(0,1fr);}.row .seals,.row .time{grid-column:2;}.time{text-align:left;}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+const REG = {"database": {"url": "https://opfzhgqbaomakovocpeb.supabase.co", "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZnpoZ3FiYW9tYWtvdm9jcGViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2ODQ5NjIsImV4cCI6MjA4ODI2MDk2Mn0.iVRzgVaz6Sk2M9FRu0O-zfWTuelWfG4zx-Q714oPYfw", "note": "Supabase project study-tools. Public anon key: it can only call the escape_* functions; the tables themselves are closed."}, "periods": ["1", "2", "3", "5"], "rooms": [{"id": "proclamation-1763", "title": "The Proclamation Line", "kicker": "Unit 2 · Proclamation of 1763", "unit": 2, "locks": 5, "page": "proclamation-1763.html"}]};
+const DB = REG.database;
+const KEY = 'escape-dashboard-v1';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function today(){const d=new Date(Date.now()-new Date().getTimezoneOffset()*60000);return d.toISOString().slice(0,10);}
+let V={room:REG.rooms[0].id,period:REG.periods[0],day:today(),proj:false};
+try{Object.assign(V,JSON.parse(localStorage.getItem(KEY)||'{}'));V.day=today();V.proj=false;}catch(e){}
+function keep(){try{localStorage.setItem(KEY,JSON.stringify({room:V.room,period:V.period}));}catch(e){}}
+let pass='';try{pass=sessionStorage.getItem(KEY+'-p')||'';}catch(e){}
+let rows=[], lastOk=0, err='', teacherOpen=!!pass, flash='', confirmClear=false, editing='';
+
+async function rpc(fn,body){
+  const r=await fetch(DB.url+'/rest/v1/rpc/'+fn,{method:'POST',headers:{'apikey':DB.key,'Authorization':'Bearer '+DB.key,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const t=await r.text(); const j=t?JSON.parse(t):null;
+  if(!r.ok) throw new Error(j&&j.message||('error '+r.status));
+  return j;
+}
+const room=()=>REG.rooms.find(r=>r.id===V.room)||REG.rooms[0];
+function mmss(s){s=Math.max(0,Math.round(s));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+':'+String(m).padStart(2,'0'):m)+':'+String(x).padStart(2,'0');}
+
+let seq=0;
+async function load(){
+  if(editing) return;           // don't redraw under a teacher typing a new name
+  const mine=++seq;             // a slow answer for an earlier period must not overwrite a newer one
+  try{
+    const got = pass ? await rpc('escape_admin_board',{p_pass:pass,p_room:V.room,p_period:V.period,p_day:V.day})
+                     : await rpc('escape_board',{p_room:V.room,p_period:V.period,p_day:V.day});
+    if(mine!==seq) return;
+    rows=got; lastOk=Date.now(); err='';
+  }catch(e){
+    if(/passphrase/.test(e.message)){pass='';try{sessionStorage.removeItem(KEY+'-p');}catch(x){} flash='That passphrase didn’t work.';}
+    else err='Can’t reach the leaderboard right now. Retrying.';
+  }
+  render();
+}
+
+function render(){
+  document.body.classList.toggle('proj',V.proj);
+  const R=room(); let h='';
+  h+=`<header><div><div class="sub">${esc(R.kicker)} · Period ${esc(V.period)}${V.day!==today()?' · '+esc(V.day):''}</div><h1>${esc(R.title)} leaderboard</h1></div>
+      <button id="proj">${V.proj?'Exit projector view':'Projector view'}</button></header>`;
+  h+=`<div class="controls">
+    <div><label for="room">Room</label><select id="room">${REG.rooms.map(r=>`<option value="${r.id}" ${r.id===V.room?'selected':''}>${esc(r.title)} (Unit ${r.unit})</option>`).join('')}</select></div>
+    <div><span class="lab">Period</span><div class="chips">${REG.periods.map(p=>`<button class="${p===V.period?'on':''}" data-p="${p}">${p}</button>`).join('')}</div></div>
+    <div><label for="day">Day</label><input type="date" id="day" value="${V.day}"></div>
+    <div class="status" id="st">${statusText()}</div></div>`;
+  if(err) h+=`<div class="msg bad">${err}</div>`;
+  if(flash) h+=`<div class="msg ${/didn|wrong/.test(flash)?'bad':'good'}">${esc(flash)}</div>`;
+  if(!rows.length){
+    h+=`<div class="empty">No groups have signed in for Period ${esc(V.period)} yet. Groups appear here as soon as they start Lock 1 on the lock page.</div>`;
+  } else {
+    let rank=0;
+    h+='<div class="board">'+rows.filter(r=>!(V.proj&&r.hidden)).map(r=>{
+      if(!r.hidden) rank++;
+      const done=!!r.finished_at, hintMin=r.hints;
+      const seals=Array.from({length:r.lock_count},(_,i)=>`<span class="seal ${i<r.locks?'open':''}">${i+1}</span>`).join('');
+      const status=done?`<span class="badge">Escaped</span>`:r.locks?`Opened ${r.locks} of ${r.lock_count}`:'Working on Lock 1';
+      let row=`<div class="row ${done?'escaped':''} ${r.hidden?'hidden':''}">
+        <div class="rank">${r.hidden?'–':rank}</div>
+        <div style="min-width:0"><div class="team">${esc(r.team)}</div><div class="meta">${status}${r.hints?` · ${r.hints} hint${r.hints>1?'s':''} (+${hintMin} min)`:''}${r.wrong?` · ${r.wrong} wrong code${r.wrong>1?'s':''}`:''}${r.hidden?' · hidden from the board':''}</div></div>
+        <div class="seals" aria-label="${r.locks} of ${r.lock_count} locks open">${seals}</div>
+        <div class="time"><b>${r.locks?mmss(r.score_seconds):'–'}</b><span class="meta">${done?'final time':r.locks?'time to last lock':''}</span></div>`;
+      if(pass&&!V.proj) row+= editing===r.id
+        ? `<div class="edit"><input id="nm" maxlength="140" value="${esc(r.team)}" aria-label="New name"><button class="small primary" data-save="${r.id}">Save name</button><button class="small" data-cancel="1">Cancel</button></div>`
+        : `<div class="edit"><button class="small" data-edit="${r.id}">Rename</button><button class="small" data-hide="${r.id}" data-h="${r.hidden?0:1}">${r.hidden?'Show on board':'Hide from board'}</button></div>`;
+      return row+'</div>';
+    }).join('')+'</div>';
+  }
+  if(teacherOpen){
+    h+=`<section class="teacher">`+(pass
+      ? `<b style="flex-basis:100%">Teacher tools</b>
+         ${confirmClear?`<span>Take all ${rows.length} groups off the Period ${esc(V.period)} board for ${esc(V.day)}?</span><button class="small primary" id="clearyes">Yes, clear the board</button><button class="small" id="clearno">Keep them</button>`
+                       :`<button class="small" id="clear">Clear this period’s board</button>`}
+         <button class="small" id="csv">Download results (CSV)</button><button class="small" id="out">Sign out</button>`
+      : `<div><label for="pw">Teacher passphrase</label><input type="password" id="pw" autocomplete="off"></div><button class="small primary" id="in">Sign in</button>`)+`</section>`;
+  }
+  h+=`<footer><span>Each hint adds 1 minute. Most locks ranks first, then the fastest time.</span><button class="link" id="tlink">${pass?'Teacher tools':'Teacher'}</button></footer>`;
+  app.innerHTML=h; bind();
+}
+function statusText(){if(!lastOk)return 'Loading…';const s=Math.round((Date.now()-lastOk)/1000);return 'Updated '+(s<3?'just now':s+' s ago')+' · refreshes every 5 s';}
+
+function bind(){
+  const $=id=>document.getElementById(id);
+  $('proj').onclick=()=>{V.proj=!V.proj;render();};
+  $('room')&&($('room').onchange=e=>{V.room=e.target.value;keep();rows=[];lastOk=0;render();load();});
+  document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{V.period=b.dataset.p;keep();rows=[];lastOk=0;confirmClear=false;render();load();});
+  $('day')&&($('day').onchange=e=>{V.day=e.target.value||today();rows=[];lastOk=0;render();load();});
+  $('tlink').onclick=()=>{teacherOpen=!teacherOpen;render();if(teacherOpen&&$('pw'))$('pw').focus();};
+  $('in')&&($('in').onclick=signIn);
+  $('pw')&&$('pw').addEventListener('keydown',e=>{if(e.key==='Enter')signIn();});
+  $('out')&&($('out').onclick=()=>{pass='';editing='';try{sessionStorage.removeItem(KEY+'-p');}catch(e){}flash='';load();});
+  $('clear')&&($('clear').onclick=()=>{confirmClear=true;render();});
+  $('clearno')&&($('clearno').onclick=()=>{confirmClear=false;render();});
+  $('clearyes')&&($('clearyes').onclick=async()=>{try{const n=await rpc('escape_admin_clear',{p_pass:pass,p_room:V.room,p_period:V.period,p_day:V.day});flash=`Cleared ${n} group${n===1?'':'s'} from the board.`;}catch(e){flash='Couldn’t clear the board: '+e.message;}confirmClear=false;load();});
+  $('csv')&&($('csv').onclick=csv);
+  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>{editing=b.dataset.edit;render();const i=$('nm');if(i){i.focus();i.select();}});
+  document.querySelectorAll('[data-cancel]').forEach(b=>b.onclick=()=>{editing='';load();});
+  document.querySelectorAll('[data-save]').forEach(b=>b.onclick=()=>saveName(b.dataset.save));
+  $('nm')&&$('nm').addEventListener('keydown',e=>{if(e.key==='Enter')saveName(editing);if(e.key==='Escape'){editing='';load();}});
+  document.querySelectorAll('[data-hide]').forEach(b=>b.onclick=async()=>{const r=rows.find(x=>x.id===b.dataset.hide);try{await rpc('escape_admin_edit',{p_pass:pass,p_id:r.id,p_team:r.team,p_hidden:b.dataset.h==='1'});flash='';}catch(e){flash='Couldn’t change that group: '+e.message;}load();});
+}
+async function signIn(){
+  const v=document.getElementById('pw').value.trim(); if(!v) return;
+  try{await rpc('escape_admin_board',{p_pass:v,p_room:V.room,p_period:V.period,p_day:V.day});pass=v;try{sessionStorage.setItem(KEY+'-p',v);}catch(e){}flash='Signed in. You can rename or hide groups.';}
+  catch(e){flash='That passphrase didn’t work.';}
+  load();
+}
+async function saveName(id){
+  const r=rows.find(x=>x.id===id), v=(document.getElementById('nm').value||'').trim();
+  editing='';
+  if(v){try{await rpc('escape_admin_edit',{p_pass:pass,p_id:id,p_team:v,p_hidden:r.hidden});flash='Renamed.';}catch(e){flash='Couldn’t rename that group: '+e.message;}}
+  load();
+}
+function csv(){
+  const q=s=>'"'+String(s).replace(/"/g,'""')+'"';
+  const lines=[['Room','Period','Day','Rank','Group','Locks opened','Hints','Wrong codes','Score (min:sec, hints included)','Escaped','Hidden'].map(q).join(',')];
+  let rank=0;
+  rows.forEach(r=>{if(!r.hidden)rank++;lines.push([room().title,V.period,V.day,r.hidden?'':rank,r.team,r.locks+'/'+r.lock_count,r.hints,r.wrong,r.locks?mmss(r.score_seconds):'',r.finished_at?'yes':'no',r.hidden?'yes':'no'].map(q).join(','));});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/csv'}));
+  a.download=`escape-${V.room}-period-${V.period}-${V.day}.csv`;document.body.appendChild(a);a.click();a.remove();
+}
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();teacherOpen=!teacherOpen;render();const p=document.getElementById('pw');if(p)p.focus();}
+  if(e.key==='Escape'&&V.proj){V.proj=false;render();}});
+setInterval(load,5000);
+setInterval(()=>{const s=document.getElementById('st');if(s)s.textContent=statusText();},1000);
+render(); load();
+</script>
+
+</html>
