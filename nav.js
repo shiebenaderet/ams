@@ -18,10 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var path = window.location.pathname;
   var isUnitPage = path.indexOf("/units/") !== -1;
-  var homeHref = isUnitPage ? "../index.html" : "index.html";
-  var unitBase = isUnitPage ? "" : "units/";
-  var rootBase = isUnitPage ? "../" : "";
-  var familiesHref = isUnitPage ? "../families.html" : "families.html";
+  // Pages one folder down (units/, escape-rooms/) link back up with "../".
+  var inSubfolder = isUnitPage || path.indexOf("/escape-rooms/") !== -1;
+  var homeHref = inSubfolder ? "../index.html" : "index.html";
+  var unitBase = isUnitPage ? "" : (inSubfolder ? "../units/" : "units/");
+  var rootBase = inSubfolder ? "../" : "";
+  var familiesHref = rootBase + "families.html";
   var standardsHref = rootBase + "standards.html";
 
   var currentSlug = "";
@@ -49,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
   homeLink.className = "nav-link";
   homeLink.href = homeHref;
   homeLink.textContent = "Home";
-  if (!isUnitPage && (currentPage === "" || currentPage === "index.html")) {
+  if (!inSubfolder && (currentPage === "" || currentPage === "index.html")) {
     homeLink.classList.add("active");
   }
   linksContainer.appendChild(homeLink);
@@ -143,6 +145,15 @@ document.addEventListener("DOMContentLoaded", function () {
   studyLink.rel = "noopener";
   studyLink.textContent = "Study Site";
   linksContainer.appendChild(studyLink);
+
+  var escapeLink = document.createElement("a");
+  escapeLink.className = "nav-link";
+  escapeLink.href = rootBase + "escape-rooms/index.html";
+  escapeLink.textContent = "Escape Rooms";
+  if (path.indexOf("/escape-rooms/") !== -1) {
+    escapeLink.classList.add("active");
+  }
+  linksContainer.appendChild(escapeLink);
 
   var standardsLink = document.createElement("a");
   standardsLink.className = "nav-link";
