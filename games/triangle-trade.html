@@ -1121,8 +1121,8 @@ const ROLES_TEXT = {
                 (the board's map draws it as a line nobody sails). The game's end
                 screen marks it REQUIRED.
      cer        the graded CER, assessed on E4.6-8.6 (Explaining what trade policies
-                cost and give): why the colonies would come to resent England's trade
-                rules, even though they helped some colonists, so it leads into the road to revolution;
+                cost and give): why colonists were angry about England's trade
+                laws, even though they helped some colonists, so it leads into the road to revolution;
                 then Claim, Evidence and Reasoning, each with its guidance and its
                 starter. The Claim names a cost and a benefit (the level 3); the
                 Reasoning is where the level 4 lives (they land differently on
@@ -1212,87 +1212,124 @@ const REFLECT = {
      g8:"Without the Middle Passage, the real trade could not ___. Our game makes the trade look ___, but really ___.",
      hs:"The whole triangle rested on the Middle Passage because ___; our game makes the trade look ___, when really ___."}},
  cer:{
-  // The question every region answers (changed Oct 5: "be angry about" replaced
-  // "resent", which most students could not read). Its "even though" keeps both
+  // The question every region answers. Oct 5: "be angry about" replaced "resent",
+  // which most students could not read. Oct 6: "England's trade laws" replaced
+  // "England's trade rules", because every Group Handout has a "Rules for <region>"
+  // box (the game's rules) and students went there instead of to the Navigation
+  // Acts; "rule" now means only the game. "Why did ... make colonists angry" replaced
+  // the hypothetical "Why would colonists be angry". Its "even though" keeps both
   // sides live: the Claim names a cost and a benefit (the level 3). Evidence is three
   // labelled pieces, two from the game and one from history, each with its own
-  // starter. Reasoning is "Connect it" (the 3) then "For a 4" (the costs landed
-  // differently: who paid most).
-  q:{g2:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?",
-     g5:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?",
-     g8:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?",
-     hs:"Why would colonists be angry about England's trade rules, even though the rules helped some colonists too?"},
+  // starter; the history piece names its own sentence per region (guideRegion), so no
+  // one hunts back up the page. Reasoning is "Connect it" (the 3) then "For a 4": the
+  // laws landed differently on different groups (who they helped most, who they hurt
+  // most), the outcome's level 4, with the Middle Passage answer as a Look at.
+  q:{g2:"Why did England's trade laws make colonists angry, even though the laws helped some colonists?",
+     g5:"Why did England's trade laws make colonists angry, even though the laws helped some colonists?",
+     g8:"Why did England's trade laws make colonists angry, even though the laws helped some colonists?",
+     hs:"Why did England's trade laws make colonists angry, even though the laws helped some colonists?"},
   // Fallback Look at; each region prints its own (lookRegion), naming the counts on
-  // its needs list and the one sentence about England's rules in its Group Handout at
-  // that level (or the Vocabulary sheet where that level's handout has none).
+  // its needs list and the one sentence about England's trade laws in its Group
+  // Handout at that level (or the Vocabulary sheet where that level's handout has none).
   look:{g2:"Your needs list. Your Trade Log. Your Group Handout.",
-     g5:"Your needs list, your Trade Log, and your Group Handout's sentence about England's rules.",
-     g8:"Your needs list, your Trade Log, and the sentence about England's rules in your Group Handout.",
+     g5:"Your needs list, your Trade Log, and your Group Handout's sentence about England's trade laws.",
+     g8:"Your needs list, your Trade Log, and the sentence about England's trade laws in your Group Handout.",
      hs:"Your needs list, your Trade Log, and your Group Handout on England's trade laws."},
+  // Oct 6: Level 0 and Level 1 handouts call these laws "England's trade rules", and
+  // only Levels 2 and 3 name the Navigation Acts, so g8 (the sheet Levels 1-3 share)
+  // names a sentence every one of those handouts has, and g2 quotes its own handout.
   lookRegion:{
-   newEngland:{g2:"Your needs list (6 of 14 came only from England). Your Trade Log. Mercantilism on your Vocabulary sheet.",
-     g5:"Your needs list (6 of your 14 items came only from England), your Trade Log, and the Group Handout sentence about England's trade rules.",
-     g8:"Your needs list (6 of your 14 items were made only in England), your Trade Log, and the Navigation Acts sentence in your Group Handout.",
+   newEngland:{g2:"Your needs list (6 of 14 came only from England). Your Trade Log. Your Group Handout.",
+     g5:"Your needs list (6 of your 14 items came only from England), your Trade Log, and the Group Handout sentence that starts \"England's trade rules said.\"",
+     g8:"Your needs list (6 of your 14 items were made only in England), your Trade Log, and the Group Handout sentence that says the colonies had to buy manufactured goods from England.",
      hs:"Your needs list (6 of your 14 items were made only in England), your Trade Log, and the Group Handout sentences on the Navigation Acts and the Molasses Act."},
-   middle:{g2:"Your needs list (9 of 14 came only from England). Your Trade Log. Mercantilism on your Vocabulary sheet.",
-     g5:"Your needs list (9 of your 14 items came only from England), your Trade Log, and the Group Handout sentence about England's trade rules.",
-     g8:"Your needs list (9 of your 14 items were made only in England), your Trade Log, and the Navigation Acts sentence in your Group Handout.",
+   middle:{g2:"Your needs list (9 of 14 came only from England). Your Trade Log. Your Group Handout.",
+     g5:"Your needs list (9 of your 14 items came only from England), your Trade Log, and the Group Handout sentence that starts \"England's trade rules said.\"",
+     g8:"Your needs list (9 of your 14 items were made only in England), your Trade Log, and the Group Handout sentence that says the colonies had to buy manufactured goods from England.",
      hs:"Your needs list (9 of your 14 items were made only in England), your Trade Log, and the Group Handout sentence on furs and the Navigation Acts."},
    southern:{g2:"Your needs list (9 of 15 came only from England). Your Trade Log. Group Handout: tobacco sold only to England.",
      g5:"Your needs list (9 of your 15 items came only from England), your Trade Log, and the Group Handout sentence that says your tobacco could be sold only to England.",
      g8:"Your needs list (9 of your 15 items were made only in England), your Trade Log, and the Group Handout sentence that says your tobacco could be sold only to England.",
      hs:"Your needs list (9 of your 15 items were made only in England), your Trade Log, and the Group Handout sentence on tobacco prices and the Navigation Acts."},
    westIndies:{g2:"Your needs list (7 of 15 came only from England). Your Trade Log. Group Handout: sugar sold only to England.",
-     g5:"Your needs list (7 of your 15 items came only from England), your Trade Log, and the word Mercantilism on your Vocabulary sheet.",
-     g8:"Your needs list (7 of your 15 items were made only in England), your Trade Log, and the Molasses Act sentence in your Group Handout: a rule that protected your sugar.",
-     hs:"Your needs list (7 of your 15 items were made only in England), your Trade Log, and the Molasses Act sentence in your Group Handout: a rule your planters asked for."},
-   england:{g2:"Your Trade Log: deals where a colony paid you for guns or tools. Group Handout: colonies had to buy from you.",
+     g5:"Your needs list (7 of your 15 items came only from England), your Trade Log, and the Group Handout sentence that starts \"England's trade rules said.\"",
+     g8:"Your needs list (7 of your 15 items were made only in England), your Trade Log, and the Group Handout sentence about who your sugar could be sold to, or the Molasses Act: a law that protected your sugar.",
+     hs:"Your needs list (7 of your 15 items were made only in England), your Trade Log, and the Molasses Act sentence in your Group Handout: a law your planters asked for."},
+   england:{g2:"Your Trade Log: deals where a colony paid you for guns or tools. Your Group Handout.",
      g5:"Your Trade Log (deals where a colony gave you its goods to get guns, tools, clothing or books), and the Group Handout sentence about what the colonies had to buy from England.",
-     g8:"Your Trade Log (deals where a colony gave you its goods to get guns, tools, clothing or books, and any duties you collected), and the mercantilism sentence in your Group Handout.",
+     g8:"Your Trade Log (deals where a colony gave you its goods to get guns, tools, clothing or books, and any duties you collected), and the Group Handout sentence about what the colonies had to buy from England.",
      hs:"Your Trade Log (what each colony gave up to get your manufactured goods, and the duties you collected), and the Navigation Acts sentence in your Group Handout."},
   },
   claim:{
-    guide:{g2:"Say why colonists got angry, and who the rules helped.",
-      g5:"In one sentence: one reason colonists would be angry, and one way the rules helped.",
-      g8:"Answer the question in one sentence: one reason colonists would be angry, and one way the rules helped.",
+    guide:{g2:"Say why colonists got angry, and who the laws helped.",
+      g5:"In one sentence: one reason colonists were angry, and one way the laws helped.",
+      g8:"Answer the question in one sentence: one reason colonists were angry, and one way the laws helped.",
       hs:"Answer the question in one sentence: the colonists' grievance, and the benefit that complicates it."},
-    start:{g2:"Colonists were angry because England made them ___. The rules helped ___ because ___. (Words: buy from England, sell only to England, taxes, planters)",
-      g5:"Colonists would be angry because England's rules ___, but the rules also helped ___ by ___.",
-      g8:"Colonists would be angry because England's rules ___, but the rules also helped ___ by ___.",
-      hs:"Colonists would be angry because England's rules ___, but the rules also helped ___ by ___."}},
+    start:{g2:"Colonists were angry because England made them ___. The laws helped ___ because ___. (Words: buy from England, sell only to England, taxes, planters)",
+      g5:"Colonists were angry because England's trade laws ___, but the laws also helped ___ by ___.",
+      g8:"Colonists were angry because England's trade laws ___, but the laws also helped ___ by ___.",
+      hs:"Colonists were angry because England's trade laws ___, but the laws also helped ___ by ___."}},
   evidence:{
     guide:{g2:"Fill in all three.",
       g5:"Give all three pieces of evidence.",
       g8:"Give all three pieces of evidence: two from our game, one from history.",
       hs:"Give all three pieces of evidence: two from the game, one from history."},
     items:[
+     // "A colony", not "your team", so England's students can answer from their Trade Log.
+     // A Trade Log row with ENG circled was dropped as a choice: it only shows a trade
+     // with England, not a cost.
      {key:'cost', lines:2,
       label:{g2:"A cost in our game", g5:"A cost in our game", g8:"A cost in our game", hs:"A cost in the game"},
-      guide:{g2:"Pick one thing a colony needed from England.",
-        g5:"Pick one: an item on your needs list that only England had, a Trade Log row with ENG circled, or a card that made you pay England a tax.",
-        g8:"Pick one: an item on your needs list that only England made, a Trade Log row with ENG circled, or a chance card that made you pay a duty to England.",
-        hs:"Pick one: a need only England could fill, a Trade Log row with ENG circled, or a duty paid to England."},
+      guide:{g2:"Pick one thing a colony needed that only England had.",
+        g5:"Pick one: something a colony needed that only England had, or a tax (a duty) a colony paid to England.",
+        g8:"Pick one: something a colony needed that only England had, or a duty a colony paid to England.",
+        hs:"Pick one: a need only England could fill, or a duty a colony paid to England."},
       start:{g2:"In our game, ___ needed ___ from England, so ___. (Words: guns, tools, books, gave up, paid a tax)",
         g5:"In our game, ___ needed ___ from England, so ___.",
         g8:"In our game, ___ needed ___ from England, so ___.",
         hs:"In the game, ___ needed ___ from England, so ___."}},
+     // Allows the honest outcome: a team may never have traded with England.
      {key:'help', lines:1,
       label:{g2:"A help in our game", g5:"A help in our game", g8:"A help in our game", hs:"A benefit in the game"},
-      guide:{g2:"Write one time England bought goods or carried them.",
-        g5:"A deal where England bought a colony's goods or an English ship carried its cargo.",
-        g8:"A deal where England bought a colony's goods or an English ship carried its cargo.",
-        hs:"A deal where England bought a colony's goods or an English ship carried its cargo."},
-      start:{g2:"England helped when it ___. (Words: bought, carried, sugar, tobacco, whale oil, furs)",
-        g5:"England helped when ___.",
-        g8:"England helped when ___.",
-        hs:"England's rules paid off for a colony when ___."}},
+      guide:{g2:"A time trading with England helped a team. None? Name a thing England had.",
+        g5:"A time trading with England got a colony something it needed. Never happened? Write what England had that colonies wanted.",
+        g8:"A time trading with England got a colony something it needed. None? Name what England had that colonies wanted.",
+        hs:"A time trade with England gave a colony something it needed, or a buyer for its goods. None happened? Name what England offered."},
+      start:{g2:"Trading with England helped when ___. (Words: sold, bought, carried, guns, tools, sugar, tobacco)",
+        g5:"Trading with England helped when ___.",
+        g8:"Trading with England helped when ___.",
+        hs:"Trade with England paid off for a colony when ___."}},
+     // The history piece names its sentence here, per region (guideRegion); guide is
+     // the fallback.
      {key:'history', lines:2,
       label:{g2:"From history", g5:"From history", g8:"From history", hs:"From history"},
-      guide:{g2:"Use the sheet named in your Look at.",
-        g5:"Use the sentence named in your Look at.",
-        g8:"Use the sentence named in your Look at.",
-        hs:"Use the sentence named in your Look at."},
-      start:{g2:"In history, England ___. (Words: made the rules, sold only to England, buy from England)",
+      guide:{g2:"Use the sentence about England's laws in your Group Handout.",
+        g5:"Use the Group Handout sentence about England's trade laws.",
+        g8:"Use the sentence about England's trade laws in your Group Handout.",
+        hs:"Use your Group Handout's sentence on England's trade laws."},
+      guideRegion:{
+       newEngland:{g2:"Use the Group Handout sentence: \"England made the trade rules.\"",
+         g5:"Use the Group Handout sentence that starts \"England's trade rules said.\"",
+         g8:"Use the Group Handout sentence that says the colonies had to buy manufactured goods from England.",
+         hs:"Use the Navigation Acts or Molasses Act sentence in your Group Handout."},
+       middle:{g2:"Use the Group Handout sentence: \"England made the trade rules.\"",
+         g5:"Use the Group Handout sentence that starts \"England's trade rules said.\"",
+         g8:"Use the Group Handout sentence that says the colonies had to buy manufactured goods from England.",
+         hs:"Use the Group Handout sentence on furs and the Navigation Acts."},
+       southern:{g2:"Use the Group Handout sentence: tobacco could be sold only to England.",
+         g5:"Use the Group Handout sentence that says your tobacco could be sold only to England.",
+         g8:"Use the Group Handout sentence that says your tobacco could be sold only to England.",
+         hs:"Use the Group Handout sentence on tobacco prices and the Navigation Acts."},
+       westIndies:{g2:"Use the Group Handout sentence: sugar could be sold only to England.",
+         g5:"Use the Group Handout sentence that starts \"England's trade rules said.\"",
+         g8:"Use the Group Handout sentence about who your sugar could be sold to, or the Molasses Act.",
+         hs:"Use the Molasses Act sentence in your Group Handout."},
+       england:{g2:"Use the Group Handout sentence: \"England made the trade rules.\"",
+         g5:"Use the Group Handout sentence about what the colonies had to buy from England.",
+         g8:"Use the Group Handout sentence about what the colonies had to buy from England.",
+         hs:"Use the Navigation Acts sentence in your Group Handout."},
+      },
+      start:{g2:"In history, England ___. (Words: made the laws, sold only to England, buy from England)",
         g5:"In history, ___.",
         g8:"In history, ___.",
         hs:"In history, ___."}},
@@ -1303,96 +1340,110 @@ const REFLECT = {
       g8:"Explain how your evidence proves your claim.",
       hs:"Explain how your evidence proves your claim, and who carried the cost."},
     items:[
+     // Oct 6: was "Who did the rules help most", which had one answer (England) and a
+     // starter that was that answer with a blank. Now it works for either view.
      {key:'connect', lines:2,
       label:{g2:"Connect it", g5:"Connect it", g8:"Connect it", hs:"Connect it"},
-      guide:{g2:"Who did the rules help most, and why did that make colonists angry?",
-        g5:"Who did the rules help most, and why did that make colonists angry?",
-        g8:"Who did the rules help most, and why did that make colonists angry?",
-        hs:"Whom were the rules built to serve first, and why did that make colonists angry?"},
-      start:{g2:"The rules helped ___ the most because ___. Colonists were angry because ___. (Words: England, rich, money, unfair, choose)",
-        g5:"This shows the rules were made to help ___ first, because ___. That made colonists angry because ___.",
-        g8:"This shows the rules were made to help ___ first, because ___. That made colonists angry because ___.",
-        hs:"This shows the rules were built to serve ___ first, because ___; colonists were angry because ___."}},
+      guide:{g2:"Why were some colonists angry, when the laws helped others?",
+        g5:"Why would laws that helped some colonists still make others angry?",
+        g8:"Why would laws that helped some colonists still make others angry?",
+        hs:"Why would laws that served some colonists still anger others?"},
+      start:{g2:"The laws helped ___, but ___ were angry because ___. (Words: planters, farmers, England, pay more, sell only to England)",
+        g5:"Even though the laws helped ___, colonists like ___ were angry because ___.",
+        g8:"Even though the laws helped ___, colonists like ___ were angry because ___.",
+        hs:"Even though the laws served ___, colonists like ___ were angry because ___."}},
+     // Oct 6: was "Who paid the biggest cost, one our game never showed?" Now the
+     // outcome's level 4 directly: the laws landed differently on different groups.
+     // The Middle Passage answer stays in the Look at, so enslaved Africans remain
+     // the strongest answer for who was hurt most.
      {key:'four', lines:2,
       label:{g2:"For a 4", g5:"For a 4", g8:"For a 4", hs:"For a 4"},
-      guide:{g2:"Who paid the most, but was not in our game?",
-        g5:"Who paid the biggest cost, one our game never showed?",
-        g8:"Who paid the biggest cost, one our game never showed?",
-        hs:"Who paid the heaviest cost, one the game never showed?"},
-      look:{g2:"Your Middle Passage answer on Side 1.",
-        g5:"Your Middle Passage answer on Side 1.",
-        g8:"Your Middle Passage answer on Side 1.",
-        hs:"Your Middle Passage answer on Side 1."},
-      start:{g2:"The people who paid the most were ___, because ___. (Words: enslaved Africans, colonists, forced to work)",
-        g5:"The people who paid the most were ___, because ___.",
-        g8:"The people who paid the most were ___, because ___.",
-        hs:"The heaviest cost fell on ___, because ___."}},
+      guide:{g2:"Who did the laws help most, and who did they hurt most?",
+        g5:"Which group did the laws help most, and which did they hurt most?",
+        g8:"Which group did the laws help most, and which did they hurt most?",
+        hs:"Which group did England's trade laws serve most, and which group did they cost most?"},
+      look:{g2:"Your Middle Passage answer.",
+        g5:"The standings chart, and your Middle Passage answer on Side 1.",
+        g8:"The standings chart, and your Middle Passage answer.",
+        hs:"The standings chart, and your Middle Passage answer on Side 1: the people whose cost the game never counted."},
+      start:{g2:"The laws helped ___ most and hurt ___ most, because ___. (Words: England, planters, farmers, enslaved Africans)",
+        g5:"The laws helped ___ the most but hurt ___ the most, because ___.",
+        g8:"The laws helped ___ the most but hurt ___ the most, because ___.",
+        hs:"The laws served ___ most and cost ___ most, because ___."}},
     ]},
  },
  regions:{
+  // Oct 6: the (a) questions asked how something "changed" the trades, with nothing
+  // to compare against; each now asks what it made the team do. New England (a) asked
+  // about the rum rule and the ships at once; (b) asked about rum, fish and ships at
+  // once, so students now pick one.
   newEngland:{
-   a:{q:{g2:"How did the rum rule and your ships change your trades?",
-       g5:"How did the rum rule and your 7 ships change the trades your team made?",
-       g8:"How did the rum rule and your 7 ships change the trades your team made?",
-       hs:"How did the rum rule's drain on molasses, and your fleet's value to regions with no ships, shape your strategy?"},
+   a:{q:{g2:"How did the rum rule make trading harder, and what did you do?",
+       g5:"How did the rum rule make trading harder for your team, and what did you do about it?",
+       g8:"How did the rum rule make trading harder for your team, and what did you do about it?",
+       hs:"How did the rum rule's drain on molasses make trading harder, and how did your team respond?"},
     look:{g2:"The Rules box on your Group Handout. Your Trade Log. (Rum rule: each 1 rum you trade uses up 2 molasses.)",
-       g5:"The Rules box on your Group Handout (each rum traded uses up 2 molasses) and your Trade Log.",
-       g8:"The Rules box on your Group Handout, and your Trade Log: molasses used, and any cargo you carried for others.",
-       hs:"The Rules box on your Group Handout, and your Trade Log: the molasses you had to secure, and any voyages you sailed for hire."},
-    start:{g2:"To trade rum, we had to ___. We used our ships to ___. (Words: molasses, carry, hire, trade, wait)",
-       g5:"Our ships let us ___. The rum rule meant we had to ___.",
-       g8:"Because every rum used up 2 molasses, we ___. Our ships helped us ___.",
-       hs:"The rum rule tied us to ___, while our fleet let us ___."}},
-   b:{q:{g2:"How were New England's rum, fish and ships part of slavery?",
-       g5:"How were New England's rum, fish and ships tied to slavery?",
-       g8:"How did New England's rum, fish and ships depend on the work of enslaved people?",
-       hs:"How did New England's rum distilleries, fishing fleets and merchant ships depend on enslaved people's forced labor?"},
-    look:{g2:"Paragraph 3 of your Group Handout. (Words: molasses, Africa, captive, enslaved)",
-       g5:"Paragraph 3 of your Group Handout, and New England's rum route on the historical routes map.",
-       g8:"Paragraph 3 of your Group Handout, and New England's rum route on the historical routes map.",
-       hs:"Paragraph 3 of your Group Handout, and New England's rum route on the historical routes map."},
-    start:{g2:"The molasses for rum was made by ___. New England ships took rum to ___.",
-       g5:"New England's rum was made from molasses that ___. Its ships ___.",
-       g8:"New England's rum depended on ___, and its fish fed ___. Its ships ___.",
-       hs:"New England's rum depended on ___, and its ships ___."}}},
+       g5:"The Rules box on your Group Handout (each rum traded uses up 2 molasses), and the rum and molasses rows in your Trade Log.",
+       g8:"The rum rule in your Group Handout's Rules box, and the rows in your Trade Log with rum or molasses.",
+       hs:"The rum rule in your Group Handout's Rules box, and your Trade Log: the molasses you had to secure, and whether your ships helped you get it."},
+    start:{g2:"The rum rule made trading hard because ___. So we ___. (Words: molasses, ran out, traded, used our ships)",
+       g5:"The rum rule made trading harder because ___, so we ___.",
+       g8:"The rum rule made trading harder because ___, so we ___.",
+       hs:"The rum rule tied us to ___, so we ___."}},
+   b:{q:{g2:"How was one New England good (rum, fish or ships) tied to slavery?",
+       g5:"Which part of New England's trade (rum, fish or ships) was tied to slavery, and how?",
+       g8:"Which part of New England's trade (rum, fish or ships) was tied to slavery, and how?",
+       hs:"Which part of New England's trade (rum, fish or ships) depended most on slavery, and how?"},
+    look:{g2:"Paragraph 3 of your Group Handout. Pick one: rum, fish or ships. (Words: molasses, Africa, captive, enslaved, fed)",
+       g5:"Paragraph 3 of your Group Handout. Pick one: rum, fish or ships.",
+       g8:"Paragraph 3 of your Group Handout. Pick one: rum, fish or ships.",
+       hs:"Paragraph 3 of your Group Handout, and New England's rum route on the historical routes map. Pick one: rum, fish or ships."},
+    start:{g2:"New England's ___ was tied to slavery because ___.",
+       g5:"New England's ___ was tied to slavery because ___.",
+       g8:"New England's ___ was tied to slavery because ___.",
+       hs:"New England's ___ depended on slavery because ___."}}},
+  // Oct 6: (a) glosses manufactured goods and asks why, since "That cost us ___" read
+  // as money; (b) asks who the flour fed, which paragraph 3 answers directly.
   middle:{
-   a:{q:{g2:"How did your team get things made in shops, and what did you give for them?",
-       g5:"How did your team get manufactured goods, and what did you have to give for them?",
-       g8:"How did your team get manufactured goods, and what did you have to give for them?",
-       hs:"How did your team get the manufactured goods only England held, and what did you have to give for them?"},
+   a:{q:{g2:"What did your team give to get guns, tools, clothing or books, and why?",
+       g5:"What did your team give up to get manufactured goods (guns, tools, clothing, books), and why did you have to?",
+       g8:"What did your team give up to get manufactured goods (guns, tools, clothing, books), and why did you have to?",
+       hs:"What did your team give up to get the manufactured goods only England held, and why did you have to?"},
     look:{g2:"Your Trade Log: every trade that brought in guns, tools, clothing or books.",
-       g5:"Your Trade Log: every trade that brought in manufactured goods.",
-       g8:"Your Trade Log: every trade that brought in manufactured goods, and what went out for it.",
+       g5:"Your Trade Log: every trade that brought in manufactured goods. Never got any? Write what you would have had to give.",
+       g8:"Your Trade Log: every trade that brought in manufactured goods. Never got any? Say what it would have cost.",
        hs:"Your Trade Log: every trade that brought in manufactured goods, and what went out for it; your What we have counts for food and lumber."},
-    start:{g2:"We got ___ by giving ___. It cost us ___. (Words: wheat, lumber, a lot, a little, never got any)",
-       g5:"We got manufactured goods by ___. It cost us ___, because ___.",
-       g8:"To get manufactured goods, we gave ___. That cost us ___, because ___.",
-       hs:"To get manufactured goods we gave up ___, which cost us ___, because ___."}},
-   b:{q:{g2:"How did Middle Colonies wheat help slavery on the sugar islands?",
-       g5:"How did Middle Colonies food and lumber help slavery on the sugar islands?",
-       g8:"How did Middle Colonies flour, grain and lumber help keep slavery running on the sugar islands?",
-       hs:"How did Middle Colonies grain, flour and lumber sustain slavery on the sugar islands?"},
-    look:{g2:"Paragraph 3 of your Group Handout. (Words: enslaved, sugar, fed, forced)",
+    start:{g2:"To get ___, we gave ___. We had to because ___. (Words: wheat, lumber, cattle, only England had it, never got any)",
+       g5:"To get ___, we gave up ___. We had to because ___.",
+       g8:"To get ___, we gave up ___. We had to because ___.",
+       hs:"To get ___ we gave up ___, because ___."}},
+   b:{q:{g2:"Who ate our flour on the sugar islands, and why did the islands buy food?",
+       g5:"Who ate Middle Colonies flour on the sugar islands, and why did the islands have to buy their food?",
+       g8:"Who ate Middle Colonies flour on the sugar islands, and why did the islands have to buy their food?",
+       hs:"Whom did Middle Colonies flour feed on the sugar islands, and why did the islands have to buy their food?"},
+    look:{g2:"Paragraph 3 of your Group Handout. (Words: enslaved, sugar, cane, fed, forced)",
        g5:"Paragraph 3 of your Group Handout.",
        g8:"Paragraph 3 of your Group Handout, and the route to the West Indies on the historical routes map.",
        hs:"Paragraph 3 of your Group Handout, and the historical routes linking the mainland colonies to the West Indies."},
-    start:{g2:"On the sugar islands, our wheat fed ___. They had to ___.",
-       g5:"Our food fed ___ on the sugar islands. The islands bought food because ___.",
-       g8:"Middle Colonies food and lumber went to the sugar islands, where ___.",
-       hs:"Our grain and lumber kept the plantations running by ___."}}},
+    start:{g2:"Our flour fed ___. The islands bought food because ___.",
+       g5:"Middle Colonies flour fed ___ on the sugar islands. The islands had to buy food because ___.",
+       g8:"Middle Colonies flour fed ___ on the sugar islands. The islands had to buy food because ___.",
+       hs:"Our flour fed ___, because the planters ___."}}},
   southern:{
-   a:{q:{g2:"How did having 8 kinds of goods but no ships change the way you traded?",
-       g5:"How did having eight kinds of goods but no ships change the way your team traded?",
-       g8:"How did having eight kinds of goods but no ships change the way your team traded?",
-       hs:"How did holding the most varied supply in the game, but no ships, shape your strategy?"},
-    look:{g2:"Your Trade Log: whose ship took your goods, if any ship did.",
-       g5:"The Rules box on your Group Handout, and your Trade Log: whose ship carried each cargo, if any.",
-       g8:"Your Trade Log (whose ship carried each cargo and what you paid, if you hired one) and your What we have counts.",
-       hs:"Your Trade Log: whose ships carried your cargo and at what fee, if any did, and how long goods waited in port."},
-    start:{g2:"We had no ships, so we ___. It cost us ___. (Words: hire, pay, wait, trade for a ship)",
-       g5:"Because we had no ships, we had to ___. That cost us ___.",
-       g8:"Having no ships meant we ___. Even with eight kinds of goods, ___.",
-       hs:"Depending on other regions' ships cost us ___, which suggests ___."}},
+   // Oct 6: was "How did having eight kinds of goods but no ships change...", with
+   // nothing to compare against. Allows the honest outcome: no one carried their goods.
+   a:{q:{g2:"With no ships, how did you get your goods to other teams, and what did it cost?",
+       g5:"With no ships, how did your team get its goods to other regions, and what did that cost you?",
+       g8:"With no ships, how did your team get its goods to other regions, and what did that cost you?",
+       hs:"With no ships, how did your team move its goods to other regions, and what did that dependence cost you?"},
+    look:{g2:"Your Trade Log: whose ship took your goods. No ship? Say what happened.",
+       g5:"Your Trade Log: whose ship carried each cargo, if any. If no one carried your goods, write what happened instead.",
+       g8:"Your Trade Log: whose ship carried each cargo and what you paid. No ship? Say what happened.",
+       hs:"Your Trade Log: whose ships carried your cargo and at what fee, and how long goods waited in port. If none did, say what that cost you."},
+    start:{g2:"We got our goods out by ___. It cost us ___. (Words: hire, pay, wait, trade for a ship, stuck)",
+       g5:"With no ships, we got our goods out by ___. It cost us ___.",
+       g8:"With no ships, we got our goods out by ___. It cost us ___.",
+       hs:"Without ships we depended on ___, which cost us ___."}},
    b:{q:{g2:"Who grew the tobacco and rice, and who got the money?",
        g5:"Who grew the tobacco, rice and indigo, and who got rich from their work?",
        g8:"Who did the work that grew the South's tobacco, rice and indigo, and who kept the money?",
@@ -1406,18 +1457,20 @@ const REFLECT = {
        g8:"The work was done by ___, but the money went to ___, because ___.",
        hs:"The planters' wealth depended on ___, who ___."}}},
   westIndies:{
-   a:{q:{g2:"How did you use your sugar to make up for having no ships?",
-       g5:"How did your team use sugar, the good almost everyone wanted, to make up for having no ships?",
-       g8:"How did your team use sugar, the most wanted good, to make up for having no ships?",
-       hs:"How far did sugar, the game's most wanted good, make up for your narrow economy and your lack of ships?"},
+   // Oct 6: "get around" replaced "make up for", which assumed sugar worked; the g8
+   // starter no longer brings in a new fact ("only three goods").
+   a:{q:{g2:"How did you use your sugar to get around having no ships?",
+       g5:"How did your team use sugar, the good almost everyone wanted, to get around having no ships?",
+       g8:"How did your team use sugar, the good everyone wanted, to get around having no ships?",
+       hs:"How did your team use sugar, the game's most wanted good, to get around having no ships?"},
     look:{g2:"Your Trade Log: what you got for your sugar, and whose ship carried it, if any did.",
        g5:"Your Trade Log: what you got for each sugar, and whose ship carried it, if any did.",
        g8:"Your Trade Log: what each sugar bought, and whose ship carried it, if any did.",
        hs:"Your Trade Log (what each sugar fetched, and any ships you hired) and your What we have counts for molasses."},
     start:{g2:"Teams wanted our sugar, so we ___. With no ships, we had to ___. (Words: hire, trade, wait, ask for more)",
-       g5:"Other regions wanted our sugar, so we could ___. Having no ships meant ___.",
-       g8:"Because everyone wanted sugar, we ___. But with only three goods and no ships, ___.",
-       hs:"Sugar gave us the power to ___, but our narrow economy ___."}},
+       g5:"Because other regions wanted our sugar, we could ___. Having no ships still meant ___.",
+       g8:"Because everyone wanted our sugar, we ___. Having no ships still meant ___.",
+       hs:"Sugar let us ___, but having no ships still ___."}},
    b:{q:{g2:"Who made the sugar, and what did it cost them?",
        g5:"Who made the West Indies' sugar, and what did the work cost them?",
        g8:"Who made the West Indies' sugar, and what did making it cost them?",
@@ -4519,18 +4572,18 @@ function renderEndGame(){
       <h4>How it ended</h4>
       ${ask(REFLECT.common[0],"1.")}${ask(REFLECT.common[1],"2.")}${ask(REFLECT.scarcity,"3.")}
       <h4>Our region: the game, then the history</h4>
-      ${ask(reg.a,"4a.")}${ask(reg.b,"4b.")}
+      ${ask(reg.a,"4a. In our game:")}${ask(reg.b,"4b. In real history:")}
       <div class="refl-required">
         <p style="margin:0"><span class="secret-stamp" style="border-color:var(--bad)">REQUIRED</span></p>
         <h4>⛓ The Middle Passage: the leg no team sailed</h4>
         ${ask(REFLECT.humanCost,"5.")}
       </div>
-      <h4>England's trade rules: answer in CER form</h4>
+      <h4>England's trade laws: answer in CER form</h4>
       <div class="refl-q"><p class="refl-ask"><b>6.</b> ${L(cer.q)}</p>
         <p class="refl-sup"><b>Look at:</b> ${L((cer.lookRegion&&cer.lookRegion[id])||cer.look)}</p></div>
       ${[["Claim",cer.claim],["Evidence",cer.evidence],["Reasoning",cer.reasoning]].map(([k,p])=>`<div class="refl-cer">
         <p class="refl-ask"><b>${k}.</b> ${L(p.guide)}</p>
-        ${p.items?p.items.map(it=>`<p class="refl-sup" style="margin-top:.4rem"><b>${L(it.label)}.</b> ${L(it.guide)}</p>
+        ${p.items?p.items.map(it=>`<p class="refl-sup" style="margin-top:.4rem"><b>${L(it.label)}.</b> ${L((it.guideRegion&&it.guideRegion[id])||it.guide)}</p>
         ${it.look?`<p class="refl-sup"><b>Look at:</b> ${L(it.look)}</p>`:""}
         <p class="refl-sup refl-start"><b>Start with:</b> ${L(it.start)}</p>`).join(""):`<p class="refl-sup refl-start"><b>Start with:</b> ${L(p.start)}</p>`}</div>`).join("")}
       <h4>How we worked</h4>
