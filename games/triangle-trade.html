@@ -528,10 +528,10 @@ body.projector .progress-bar{height:0.8rem}
     </div>
     <div class="hdr-controls">
       <div class="lvl-toggle" id="lvlToggle" role="group" aria-label="Reading level">
-        <button data-lvl="g2" aria-pressed="false">Level 0</button>
-        <button data-lvl="g5" aria-pressed="false">Level 1</button>
-        <button data-lvl="g8" aria-pressed="true" class="on">Level 2</button>
-        <button data-lvl="hs" aria-pressed="false">Level 3</button>
+        <button data-lvl="g2" aria-pressed="false">Quick</button>
+        <button data-lvl="g5" aria-pressed="false">Clear</button>
+        <button data-lvl="g8" aria-pressed="true" class="on">Full</button>
+        <button data-lvl="hs" aria-pressed="false">Deep</button>
       </div>
       <div class="proj-ctl">
         <button class="seal-btn quiet small" id="btnProject" title="Open the public board in a second window for the smartboard">📽 Project</button>
@@ -614,7 +614,7 @@ body.projector .progress-bar{height:0.8rem}
   <section class="view" id="view-readings">
     <div style="display:flex;align-items:baseline;gap:0.875rem;flex-wrap:wrap">
       <h2 style="font-family:'Pirata One',serif;font-weight:400;font-size:30px">📖 Regional Readings</h2>
-      <span class="role-legend">Each region opens at its team's level · switch with Level 0–3 above</span>
+      <span class="role-legend">Each region opens at its team's level · switch with Quick / Clear / Full / Deep above</span>
       <span class="spacer" style="flex:1"></span>
       <a class="seal-btn quiet small print-link" id="printLink" target="_blank" rel="noopener">🖨 Printable readings / PDF</a>
       <button class="seal-btn quiet small" id="btnReadingsBack">← Back to board</button>
@@ -715,7 +715,8 @@ body.projector .progress-bar{height:0.8rem}
    script) and tools/build-triangle-readings.py, which prints the readings from
    READINGS, VOCAB, READING_VOCAB and REGIONS. The public copy (games/triangle-trade.html
    in the ams repo) is built by tools/build-triangle-trade.js, which inlines this file.
-   Reading levels: the keys g2/g5/g8/hs are shown to students as Level 0/1/2/3.
+   Reading levels: the keys g2/g5/g8/hs are shown to students as Quick/Clear/Full/Deep
+   (Level 0/1/2/3 before Oct 15 2026).
    This is Unit 1, Week 5 (Days 17-21) of 8th grade American Studies.
    tests/triangle-trade-readings.test.js checks the leveled text against REGIONS. */
 "use strict";
@@ -961,7 +962,7 @@ const PHASE_TEXT = {
 
 
 /* ===================================================================
-   READING CONTENT — 4 levels (g2/g5/g8/hs = Level 0/1/2/3).
+   READING CONTENT — 4 levels (g2/g5/g8/hs = Quick/Clear/Full/Deep).
    Restructured Sep 2026 on the model of the Huntington Library's "Triangular
    Trade" region briefing (teacher review: docs/triangle-trade-reading-edits.html).
    Same three paragraphs, in the same order, at every level, so a student who
@@ -1110,7 +1111,7 @@ const ROLES_TEXT = {
             end screen holds no class data (changed Oct 4).
      start  "Start with:" a sentence starter that opens the student's own answer,
             never the answer with a blank in it
-   Each of the three is leveled (g2/g5/g8/hs = Level 0-3); Level 0 adds a small word
+   Each of the three is leveled (g2/g5/g8/hs = Quick/Clear/Full/Deep); Quick adds a small word
    bank in brackets and a fuller frame. A Look at never assumes the game went a
    particular way: a team may never have hired a ship or got the good it wanted.
      common     four questions every region answers: two on how the game ended,
@@ -1530,17 +1531,21 @@ const MONOPOLIES = {
 "use strict";
 
 /* ===================================================================
-   READING LEVELS — keys g2/g5/g8/hs, shown to students as Level 0–3
+   READING LEVELS — keys g2/g5/g8/hs, shown to students as Quick / Clear / Full /
+   Deep (Oct 15 2026; "Level 0–3" before that). The names describe the text, never
+   the reader. The keys and the 0–3 numbers stay internal: saved games, the Grouping
+   Tool's reading.rl and the reading page URLs all use them.
    =================================================================== */
 const LEVEL_KEYS = ["g2", "g5", "g8", "hs"];
-const DEFAULT_LEVEL = "g8"; // Level 2
+const LEVEL_NAMES = ["Quick", "Clear", "Full", "Deep"];
+const DEFAULT_LEVEL = "g8"; // Full
 
 /* The reading version (0–3) the Grouping Tool stores as reading.rl → a text key. */
 function levelKeyForRl(rl){
   return (Number.isInteger(rl) && rl >= 0 && rl <= 3) ? LEVEL_KEYS[rl] : DEFAULT_LEVEL;
 }
 function levelNumber(key){ const i = LEVEL_KEYS.indexOf(key); return i < 0 ? 2 : i; }
-function levelLabel(key){ return "Level " + levelNumber(key); }
+function levelLabel(key){ return LEVEL_NAMES[levelNumber(key)]; }
 
 /* ===================================================================
    ROUNDS — a round is one Negotiation + one Shipping pair
@@ -1710,7 +1715,8 @@ function shortName(raw){
 }
 
 /* The reading version as a whole number 0-3, or null. Accepts it stored as a number or
-   as text ("2"), and falls back to the label ("Level 2 · gr 7-8") when the number is
+   as text ("2"), and falls back to the label ("Level 2 · gr 7-8", or a level's name,
+   "Full") when the number is
    missing, so one file format quirk can't silently drop every version and leave the
    teams in roster order. Nothing else from the reading record is kept. */
 function cleanRl(rec){
@@ -1720,7 +1726,9 @@ function cleanRl(rec){
   if(typeof rl === "string" && /^\s*[0-3]\s*$/.test(rl)) rl = Number(rl);
   if(!(Number.isInteger(rl) && rl >= 0 && rl <= 3) && typeof rd.rlLabel === "string"){
     const m = /\bLevel\s*([0-3])\b/i.exec(rd.rlLabel);
-    rl = m ? Number(m[1]) : null;
+    const n = /\b(Quick|Clear|Full|Deep)\b/i.exec(rd.rlLabel);
+    rl = m ? Number(m[1])
+       : n ? LEVEL_NAMES.findIndex(x => x.toLowerCase() === n[1].toLowerCase()) : null;
   }
   return (Number.isInteger(rl) && rl >= 0 && rl <= 3) ? rl : null;
 }
@@ -2290,7 +2298,7 @@ function teamsFromBackup(b){
 }
 
 if(typeof module !== "undefined") module.exports = {
-  LEVEL_KEYS, DEFAULT_LEVEL, levelKeyForRl, levelNumber, levelLabel,
+  LEVEL_KEYS, LEVEL_NAMES, DEFAULT_LEVEL, levelKeyForRl, levelNumber, levelLabel,
   nextRoundNumber,
   BACKUP_FORMAT, BACKUP_VERSION, slugPeriod, backupFilename, uniqueBackupFilename,
   makePeriodBackup, makeAllBackup, gameProblems, parseBackup, backupPreviewText, whenText,
@@ -2309,7 +2317,7 @@ if(typeof module !== "undefined") module.exports = {
 /* ===================================================================
    READING LEVELS
    =================================================================== */
-/* Leveled strings are {g2,g5,g8,hs}, shown to students as Level 0/1/2/3. L() picks the
+/* Leveled strings are {g2,g5,g8,hs}, shown to students as Quick/Clear/Full/Deep. L() picks the
    current one. The level is saved per class (g.level) and, for the readings, per region
    (g.readLevel, set from each team's reading version when teams are accepted). */
 let READING_LEVEL = DEFAULT_LEVEL;
@@ -3859,7 +3867,7 @@ function suggestRoles(g){
     if(rem.length) rem[Math.floor(Math.random()*rem.length)].role="captain";
   });
 }
-/* Each region's reading level for this class: the team's median version (none known → Level 2). */
+/* Each region's reading level for this class: the team's median version (none known → Full). */
 function setTeamLevels(g){
   g.readLevel={};
   Object.keys(REGIONS).forEach(id=>{
@@ -3919,7 +3927,7 @@ function renderTeams(){
   $("#tbNote").textContent = !roster.length
     ? "No roster yet. Load the Grouping Tool's export, or type names below."
     : (few ? `Only ${known} of ${roster.length} students have a reading version, so suggested teams can't follow reading level. Load reading levels in the Grouping Tool, export again, then Load roster here. `
-           : `Reading versions: ${known} of ${roster.length} students (L0 to L3 on each name; — means none). `)
+           : `Reading versions: ${known} of ${roster.length} students (Quick, Clear, Full or Deep on each name; — means none). `)
       + (g.teamsSuggested ? (hasRequests(g) ? "Teams were suggested by reading version and group requests. " : "Teams were suggested by reading version. ")+"Move anyone who should be elsewhere, then accept." : "")
       + requestNote(g);
   const cols=[["unassigned","Unassigned Crew",null]].concat(teamOrder().map(id=>[id,REGIONS[id].nm,REGIONS[id].colorHex]));
@@ -3934,7 +3942,7 @@ function renderTeams(){
       <div class="stu-chip" draggable="true" data-i="${i}">
         ${s.region?`<button type="button" class="role-tag" title="${ROLE_NM[s.role]}${rolePrefText((requestsOf(g)||{})[s.id])?" ("+esc(rolePrefText(requestsOf(g)[s.id]))+")":""} — click to change" aria-label="${esc(s.name)}: ${ROLE_NM[s.role]}. Change role">${ROLE_ICO[s.role]}</button>`:""}
         <span class="stu-name">${esc(s.name)}</span>${reqMark(g, s)}
-        <span class="stu-rl${Number.isInteger(s.rl)?"":" none"}" title="Reading version">${Number.isInteger(s.rl)?"L"+s.rl:"—"}</span>
+        <span class="stu-rl${Number.isInteger(s.rl)?"":" none"}" title="Reading version">${Number.isInteger(s.rl)?levelLabel(levelKeyForRl(s.rl)):"—"}</span>
         <select class="stu-move" aria-label="Move ${esc(s.name)} to">${moveOpts(s)}</select>
       </div>`).join("")}</div></div>`;
   }).join("");
