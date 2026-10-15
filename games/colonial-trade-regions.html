@@ -911,7 +911,7 @@ $("#helpBtn").onclick=()=>showOverlay("intro");
 $("#codeBtn").onclick=()=>openCode();
 
 // ---------- words: definitions at the student's level ----------
-const LV=["Level 0","Level 1","Level 2","Level 3"];
+const LV=["Quick","Clear","Full","Deep"];  // display names; S.lvl stays 0-3
 if(S.lvl==null) S.lvl=2;
 const RNAME=k=>R[k].name;
 const TERM_RX=[["mercantilism",/mercantilism/i],["rawMaterials",/raw materials?/i],["manufacturedGoods",/manufactured goods/i],["monopoly",/monopol(y|ies)/i],

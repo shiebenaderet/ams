@@ -60,7 +60,7 @@ Student prep for the Triangle Trade simulation (Unit 1, Week 6). Students explor
 the five regions on the Atlantic map, fill in their Part 3 chart row by row, then
 unlock a goods-matching game and a drag-and-drop version of the chart. Seven chart
 cells spell a secret code that opens a "Certified Trader" card. Includes a word bank
-(the simulation's own VOCAB at Levels 0-3, plus a definition of every trade good),
+(the simulation's own VOCAB at all four levels, Quick, Clear, Full and Deep, plus a definition of every trade good),
 a dyslexia-friendly font toggle, and progress saved in each student's browser.
 The 🔑 button opens a code box. Each region gives a code when its row is filled in (HARBOR, BREADBASKET, INDIGO, SUGAR, CROWN), and each shows a Merchant's Secret, a trading tip for that region. Teacher codes, also on Ctrl+K: `triangle` unlocks every step, `reset` clears progress, `videos` opens a page of all six word bank videos.
 
